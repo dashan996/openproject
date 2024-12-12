@@ -26,32 +26,39 @@
 # See COPYRIGHT and LICENSE files for more details.
 #++
 
-class Meeting::Duration < ApplicationForm
-  form do |meeting_form|
-    meeting_form.text_field(
-      name: :duration,
-      type: :number,
-      min: 0,
-      max: 24,
-      step: 0.05,
-      value: @value,
-      placeholder: Meeting.human_attribute_name(:duration),
-      label: Meeting.human_attribute_name(:duration),
-      visually_hide_label: false,
-      required: true,
-      leading_visual: { icon: :stopwatch },
-      caption: I18n.t("text_in_hours")
-    )
+require_relative "../spec_helper"
+require_relative "support/pages/cost_report_page"
+
+RSpec.describe "Timesheet PDF export", :js do
+  shared_let(:project) { create(:project) }
+  shared_let(:user) { create(:admin) }
+  shared_let(:cost_type) { create(:cost_type, name: "Post-war", unit: "cap", unit_plural: "caps") }
+  shared_let(:work_package) { create(:work_package, project:, subject: "Some task") }
+  shared_let(:cost_entry) { create(:cost_entry, user:, work_package:, project:, cost_type:) }
+  let(:report_page) { Pages::CostReportPage.new project }
+
+  subject { @download_list.refresh_from(page).latest_download.to_s } # rubocop:disable RSpec/InstanceVariable
+
+  before do
+    @download_list = DownloadList.new
+    login_as(user)
   end
 
-  def initialize(meeting:)
-    super()
+  after do
+    DownloadList.clear
+  end
 
-    @value =
-      if meeting.is_a?(RecurringMeeting) && meeting.template
-        meeting.template.duration
-      else
-        meeting.duration
-      end
+  it "can download the PDF" do
+    report_page.visit!
+    click_on I18n.t("export.timesheet.button")
+
+    expect(page).to have_content I18n.t("job_status_dialog.generic_messages.in_queue"),
+                                 wait: 10
+    perform_enqueued_jobs
+
+    expect(page).to have_text(I18n.t("export.succeeded"),
+                              wait: 10)
+
+    expect(subject).to have_text(".pdf")
   end
 end

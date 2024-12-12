@@ -2204,6 +2204,7 @@ zh-CN:
   label_delete: "删除"
   label_deleted: "已删除"
   label_deleted_custom_field: "（删除自定义字段）"
+  label_deleted_custom_item: "(deleted item)"
   label_deleted_custom_option: "（删除的选项）"
   label_empty_element: "（空）"
   label_missing_or_hidden_custom_option: "（缺少值或缺少访问权限）"

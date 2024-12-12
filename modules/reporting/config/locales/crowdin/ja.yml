@@ -86,6 +86,11 @@ ja:
   validation_failure_date: "は有効な日付ではありません。"
   validation_failure_integer: "は有効な整数ではありません。"
   export:
+    timesheet:
+      title: "Your PDF timesheet export"
+      button: "Export PDF timesheet"
+      timesheet: "Timesheet"
+      time: "Time"
     cost_reports:
       title: "あなたのコストレポートXLSのエクスポート"
   reporting:

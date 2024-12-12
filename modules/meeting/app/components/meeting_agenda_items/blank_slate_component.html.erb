@@ -8,14 +8,15 @@
           flex.with_row(mb: 2) do
             render(Primer::Beta::Text.new(color: :subtle)) { t(:"recurring_meeting.template.description") }
           end
+        else
+          flex.with_row(mb: 2) do
+            render(Primer::Beta::Text.new(color: :subtle)) { t(:text_meeting_empty_description_1) }
+          end
+          flex.with_row do
+            render(Primer::Beta::Text.new(color: :subtle)) { t(:text_meeting_empty_description_2) }
+          end
         end
 
-        flex.with_row(mb: 2) do
-          render(Primer::Beta::Text.new(color: :subtle)) { t(:text_meeting_empty_description_1) }
-        end
-        flex.with_row do
-          render(Primer::Beta::Text.new(color: :subtle)) { t(:text_meeting_empty_description_2) }
-        end
         if can_finalize_template?
           flex.with_row(mt: 2) do
             render(Primer::Beta::Text.new(font_weight: :bold, color: :subtle)) do

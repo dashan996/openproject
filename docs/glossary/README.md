@@ -49,7 +49,7 @@ OpenProject offers Attribute help texts that provide additional information for 
 
 ### Authentication
 
-In OpenProject, authentication is an important element to guarantee a data protected usage. To adapt these authentication settings, you need to have [admin](#admin) rights. Navigate to your username and select -> Administration -> Authentication. At OpenProject, we use [OAuth 2.0](#oauth) as this is the definitive industry standard for online authorization.
+In OpenProject, authentication is an important element to guarantee a data protected usage. To adapt these authentication settings, you need to have [admin](#admin) rights. Navigate to your username and select --> Administration --> Authentication. At OpenProject, we use [OAuth 2.0](#oauth) as this is the definitive industry standard for online authorization.
 
 **More information on authentication in OpenProject**
 
@@ -122,9 +122,7 @@ A custom action in OpenProject is defined as customizable buttons which trigger 
 
 ### Custom field
 
-In OpenProject, a custom field is defined as an additional field which can be added to existing fields. Custom fields can be created for the following resources: [work packages](#work-package), [spent time](#time-and-costs), [versions](#versions), [users](#user), and [groups](#group).
-
-![Custom fields in OpenProject](glossary-openproject-custom-field.png)
+In OpenProject, a custom field is defined as an additional field which can be added to existing fields. Custom fields can be created for the following resources: [work packages](#work-package), [spent time](#time-and-costs), [versions](#versions), [users](#user), and [groups](#group). If you want to add a custom field that refers to a project (or several projects), navigate to Administration --> Projects and create a [project attribute](#project-attribute).
 
 **More information on custom fields in OpenProject**
 
@@ -360,6 +358,10 @@ The quick context menu in OpenProject opens when you open a [work package table]
 
 ## R
 
+## Relations
+
+In OpenProject, you can set work packages in relation to each other. Some relation types simply create a visible link between the two work packages. Others have an additional effect, e.g. force one work package to be finished before the other one starts (Predecessor). The simpliest way to add a relation between two existing work packages is to click the +Relation button on the Relations tab of one of the work packages. [Read more about work package relations and hierarchies in our user guide](../user-guide/work-packages/work-package-relations-hierarchies/).
+
 ## Repository
 
 A repository is defined as a document or source code management system that allows users to manage files and folders via different version control systems (such as Subversion or Git). [Read more about Repository for source code control](../user-guide/repository/).
@@ -485,3 +487,9 @@ A list of work packages is considered a view. The containing work packages in an
 ### WYSIWYG editor
 
 WYSIWYG stands for 'What you see is what you get'. A WYSIWYG editor is a content editing interface that allows users to create and edit content so that it visually resembles the final result. In OpenProject, you can use WYSIWYG editors in [wikis](#wiki), [forums](#forum) and [work package](#work-package) descriptions and comments.
+
+## Z
+
+### Zen mode
+
+In OpenProject, Zen mode allows users to focus on a certain page, as all other menu items and elements are hidden, and the page is displayed in full screen. OpenProject offers zen mode for other modules like work packages, boards, Gantt charts, calendars, and project lists.

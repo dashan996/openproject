@@ -35,7 +35,7 @@ module WorkPackage::PDFExport::Common::Common
 
   private
 
-  def get_pdf(_language)
+  def get_pdf
     ::WorkPackage::PDFExport::Common::View.new(current_language)
   end
 
@@ -164,6 +164,13 @@ module WorkPackage::PDFExport::Common::Common
     measure_text_height(line, text_style)
   end
 
+  def ellipsis_if_longer(text, available_width, text_style)
+    title_text_width = measure_text_width(text, text_style)
+    return text if title_text_width < available_width
+
+    truncate_ellipsis(text, available_width, text_style)
+  end
+
   def truncate_ellipsis(text, available_width, text_style)
     line = text.dup
     while line.present? && (measure_text_width("#{line}...", text_style) > available_width)
@@ -284,5 +291,13 @@ module WorkPackage::PDFExport::Common::Common
 
   def current_page_nr
     pdf.page_number + @page_count - (with_cover? ? 1 : 0)
+  end
+
+  def write_horizontal_line(y_position, height, color)
+    draw_horizontal_line(
+      y_position,
+      pdf.bounds.left, pdf.bounds.right,
+      height, color
+    )
   end
 end

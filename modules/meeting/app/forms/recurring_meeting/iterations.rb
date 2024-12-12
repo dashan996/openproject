@@ -31,6 +31,8 @@ class RecurringMeeting::Iterations < ApplicationForm
     meeting_form.text_field(
       name: :iterations,
       type: :number,
+      step: 1,
+      max: RecurringMeeting::MAX_ITERATIONS,
       label: I18n.t("activerecord.attributes.recurring_meeting.iterations")
     )
   end

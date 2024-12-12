@@ -40,6 +40,10 @@ module MeetingAgendaItems
       @form_type = form_type
     end
 
+    def empty?
+      @meeting.agenda_items.empty? && @meeting.sections.empty?
+    end
+
     private
 
     def wrapper_data_attributes

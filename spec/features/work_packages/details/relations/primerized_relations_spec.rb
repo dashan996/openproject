@@ -316,7 +316,7 @@ RSpec.describe "Primerized work package relations tab",
                             results_selector: "body")
 
         expect_no_ng_option(autocomplete_field,
-                            work_package.id,
+                            work_package.subject,
                             results_selector: "body")
       end
     end

@@ -52,7 +52,8 @@ ja:
       recurring_meeting:
         frequency: "Frequency"
         interval: "Interval"
-        end_after: "End after"
+        start_date: "Starts on"
+        end_after: "End series after"
         iterations: "Occurrences"
     errors:
       messages:
@@ -123,6 +124,11 @@ ja:
   label_recurring_occurrence_delete_confirmation: >
     Any meeting information not in the template will be lost. Do you want to continue?
   label_recurring_meeting_restore: "Restore this occurrence"
+  label_recurring_meeting_more: "There are %{count} more scheduled meetings (%{schedule})."
+  label_recurring_meeting_more_singular: "There is %{count} more scheduled meeting (%{schedule})."
+  label_recurring_meeting_more_past: "There are %{count} more past meetings."
+  label_recurring_meeting_more_past_singular: "There is %{count} more past meeting."
+  label_recurring_meeting_show_more: "Show more"
   label_recurring_meeting_series_edit: "Edit meeting series"
   label_recurring_meeting_series_delete: "Delete meeting series"
   label_my_meetings: "My meetings"
@@ -187,9 +193,6 @@ ja:
     placeholder_title: "新しいセクション"
     empty_text: "アイテムをここにドラッグするか、新しいアイテムを作成してください"
   recurring_meeting:
-    interval:
-      instructions: >
-        Enter the number of days or weeks between each occurrence.
     occurrence:
       infoline: "This meeting is part of a recurring meeting series."
       error_no_next: "There is no next occurrence for this meeting."
@@ -206,22 +209,23 @@ ja:
       label_view_template: "View template"
       label_edit_template: "Edit template"
       banner_html: >
-        You are currently editing a template of a meeting series: %{link}. Every new instance of a meeting in this series will use this template. Changes will not affect past or already created meetings.
+        You are currently editing a template of a meeting series: %{link}. Every new occurrence of a meeting in the series will use this template. Changes will not affect past or already created meetings.
     frequency:
       every_weekday: "Every %{day_of_the_week}"
       daily: "Daily"
-      working_days: "Working Days"
+      working_days: "Every working day"
       weekly: "Weekly"
     end_after:
-      specific_date: "A specific date"
-      iterations: "A number of occurrences"
+      specific_date: "a specific date"
+      iterations: "a number of occurrences"
     starts: "Starts"
     in_words:
-      daily_interval: "Every %{interval} day"
+      daily_interval: "Every %{interval} days"
       working_days: "Every working day"
       working_days_interval: "Every %{interval} working day"
-      weekly: "Weekly on %{weekday}"
-      weekly_interval: "Every %{interval} week on %{weekday}"
+      weekly: "Every week on %{weekday}"
+      weekly_interval: "Every %{interval} weeks on %{weekday}"
+      frequency: "%{base} at %{time}"
       full: "%{base} at %{time}, ends on %{end_date}"
   notice_successful_notification: "通知が正常に送信されました"
   notice_timezone_missing: タイムゾーンが設定されていない場合、%{zone} が使用されます。タイムゾーンを選択するには、ここをクリックしてください。
@@ -275,6 +279,7 @@ ja:
   text_deleted_agenda_item: '削除された議題項目'
   label_initial_meeting_details: "会議"
   label_meeting_details: "会議詳細"
+  label_meeting_series_details: "Meeting series details"
   label_meeting_details_edit: "会議詳細を編集"
   label_meeting_state: "会議のステータス"
   label_meeting_state_open: "開く"

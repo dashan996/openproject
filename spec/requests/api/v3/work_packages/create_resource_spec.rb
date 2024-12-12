@@ -113,7 +113,7 @@ RSpec.describe "API v3 Work package resource",
     end
 
     it "creates a work package" do
-      expect(WorkPackage.all.count).to eq(1)
+      expect(WorkPackage.count).to eq(1)
     end
 
     it "uses the given parameters" do
@@ -152,7 +152,7 @@ RSpec.describe "API v3 Work package resource",
       it_behaves_like "multiple errors", 422
 
       it "does not create a work package" do
-        expect(WorkPackage.all.count).to eq(0)
+        expect(WorkPackage.count).to eq(0)
       end
     end
 
@@ -176,7 +176,7 @@ RSpec.describe "API v3 Work package resource",
       end
 
       it "does not create a work package" do
-        expect(WorkPackage.all.count).to eq(0)
+        expect(WorkPackage.count).to eq(0)
       end
     end
 
@@ -227,7 +227,7 @@ RSpec.describe "API v3 Work package resource",
       end
 
       it "does not create a work package" do
-        expect(WorkPackage.all.count).to eq(0)
+        expect(WorkPackage.count).to eq(0)
       end
     end
 
@@ -310,7 +310,7 @@ RSpec.describe "API v3 Work package resource",
           expect(last_response.body).to be_json_eql(
             api_v3_paths.file_links(work_package.id).to_json
           ).at_path("_links/fileLinks/href")
-          expect(last_response.body).to be_json_eql("1").at_path("_embedded/fileLinks/total")
+          expect(last_response.body).to have_json_path("_links/addFileLink")
         end
       end
     end

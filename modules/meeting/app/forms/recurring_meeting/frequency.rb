@@ -33,7 +33,8 @@ class RecurringMeeting::Frequency < ApplicationForm
       label: I18n.t("activerecord.attributes.recurring_meeting.frequency"),
       data: {
         target_name: "frequency",
-        "show-when-value-selected-target": "cause"
+        "show-when-value-selected-target": "cause",
+        action: "input->recurring-meetings--form#updateFrequencyText"
       }
     ) do |list|
       RecurringMeeting.frequencies.each_key do |value|

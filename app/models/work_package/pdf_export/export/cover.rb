@@ -40,17 +40,34 @@ module WorkPackage::PDFExport::Export::Cover
   def write_cover_hero
     max_width = pdf.bounds.width - styles.cover_hero_padding[:right_padding]
     float_top = write_background_image
-    float_top -= write_hero_title(float_top, max_width) if project
+    float_top -= write_hero_title(float_top, max_width)
     float_top -= write_hero_heading(float_top, max_width)
-    write_hero_subheading(float_top, max_width) unless User.current.nil?
+    float_top -= write_hero_dates(float_top, max_width)
+    write_hero_subheading(float_top, max_width)
   end
 
   def available_title_height(current_y)
     current_y -
-      styles.cover_hero_title_max_height -
-      styles.cover_hero_title_spacing -
-      styles.cover_hero_heading_spacing -
-      styles.cover_hero_subheading_max_height
+      cover_hero_title_max_height -
+      cover_hero_heading_max_height -
+      cover_hero_dates_max_height -
+      cover_hero_subheading_max_height
+  end
+
+  def cover_hero_title_max_height
+    cover_page_title&.then { styles.cover_hero_title_max_height + styles.cover_hero_title_spacing } || 0
+  end
+
+  def cover_hero_heading_max_height
+    cover_page_heading&.then { styles.cover_hero_heading_spacing } || 0
+  end
+
+  def cover_hero_dates_max_height
+    cover_page_dates&.then { styles.cover_hero_dates_max_height } || 0
+  end
+
+  def cover_hero_subheading_max_height
+    cover_page_title&.then { styles.cover_hero_title_max_height + styles.cover_hero_title_spacing } || 0
   end
 
   def write_cover_hr
@@ -81,27 +98,44 @@ module WorkPackage::PDFExport::Export::Cover
   end
 
   def write_hero_title(top, width)
+    return 0 if cover_page_title.blank?
+
     write_hero_text(
       top:, width:,
-      text: project.name,
+      text: cover_page_title,
       text_style: styles.cover_hero_title,
       height: styles.cover_hero_title_max_height
     ) + styles.cover_hero_title_spacing
   end
 
   def write_hero_heading(top, width)
+    return 0 if cover_page_heading.blank?
+
     write_hero_text(
       top:, width:,
-      text: heading,
+      text: cover_page_heading,
       text_style: styles.cover_hero_heading,
       height: available_title_height(top)
     ) + styles.cover_hero_heading_spacing
   end
 
-  def write_hero_subheading(top, width)
+  def write_hero_dates(top, width)
+    return 0 if cover_page_dates.blank?
+
     write_hero_text(
       top:, width:,
-      text: User.current.name,
+      text: cover_page_dates,
+      text_style: styles.cover_hero_dates,
+      height: styles.cover_hero_dates_max_height
+    ) + styles.cover_hero_dates_spacing
+  end
+
+  def write_hero_subheading(top, width)
+    return 0 if cover_page_subheading.blank?
+
+    write_hero_text(
+      top:, width:,
+      text: cover_page_subheading,
       text_style: styles.cover_hero_subheading,
       height: styles.cover_hero_subheading_max_height
     )

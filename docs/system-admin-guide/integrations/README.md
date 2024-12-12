@@ -5,7 +5,7 @@ sidebar_navigation:
 description: Integration to OpenProject.
 keywords: projects, integration, Jira
 ---
-# Integrations and community plugins
+# Integrations and Community plugins
 
 There are various integrations and Community plugins out there. Please [contact us](https://www.openproject.org/contact/) if you want to have your plugin to be added to this list.
 

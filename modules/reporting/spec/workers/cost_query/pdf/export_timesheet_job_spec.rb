@@ -30,7 +30,7 @@
 
 require "spec_helper"
 
-RSpec.describe CostQuery::ExportJob do
+RSpec.describe CostQuery::PDF::ExportTimesheetJob do
   let(:user) { build_stubbed(:user) }
   let(:project) { build_stubbed(:project) }
 
@@ -65,7 +65,7 @@ RSpec.describe CostQuery::ExportJob do
     job = described_class.new(
       export: CostQuery::Export.create,
       user:,
-      mime_type: :xls,
+      mime_type: :pdf,
       query:,
       project:,
       cost_types: [-1, 0]
@@ -91,36 +91,10 @@ RSpec.describe CostQuery::ExportJob do
     end
   end
 
-  it "generates an XLS export successfully" do
+  it "generates an PDF export successfully" do
     job = perform_cost_export
 
     expect(job.job_status).to be_success, job.job_status.message
-    expect(job).to have_one_attachment_with_content_type("application/vnd.ms-excel")
-  end
-
-  context "when filtering with a work package custom field" do
-    it "generates an XLS report successfully" do
-      custom_field = create(:string_wp_custom_field)
-      job = perform_cost_export(extra_filters: { custom_field.attribute_name => ["=", ""] })
-
-      expect(job.job_status).to be_success, job.job_status.message
-      expect(job).to have_one_attachment_with_content_type("application/vnd.ms-excel")
-    end
-  end
-
-  context "when filtering with a work package custom field defined after having exported once (Bug #54500)" do
-    it "generates an XLS report successfully" do
-      job = perform_cost_export
-      expect(job.job_status).to be_success, job.job_status.message
-
-      # Do it again with a custom field. This is to simulate the bug #54500
-      # where the filter for the custom field is not found because they have
-      # already been built up and cached.
-      custom_field = create(:string_wp_custom_field)
-      second_job = perform_cost_export(extra_filters: { custom_field.attribute_name => ["=", ""] })
-
-      expect(second_job.job_status).to be_success, second_job.job_status.message
-      expect(second_job).to have_one_attachment_with_content_type("application/vnd.ms-excel")
-    end
+    expect(job).to have_one_attachment_with_content_type("application/pdf")
   end
 end

@@ -2,10 +2,10 @@ ms:
   activemodel:
     attributes:
       saml/provider:
-        display_name: Name
-        identifier: Identifier
-        secret: Secret
-        scope: Scope
+        display_name: Nama
+        identifier: Pengenalan
+        secret: Sulit
+        scope: Skop
         assertion_consumer_service_url: ACS (Assertion consumer service) URL
         limit_self_registration: Limit self registration
         sp_entity_id: Service entity ID

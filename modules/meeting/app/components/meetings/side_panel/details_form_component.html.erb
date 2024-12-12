@@ -18,10 +18,6 @@
             end
 
             modal_body.with_row(mt: 3) do
-              render(Meeting::Duration.new(f, meeting: @meeting))
-            end
-
-            modal_body.with_row(mt: 3) do
               render(Meeting::Location.new(f, meeting: @meeting))
             end
 

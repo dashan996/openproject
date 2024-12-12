@@ -31,8 +31,12 @@ class RecurringMeeting::Interval < ApplicationForm
     meeting_form.text_field(
       name: :interval,
       type: :number,
+      step: 1,
+      max: RecurringMeeting::MAX_INTERVAL,
       label: I18n.t("activerecord.attributes.recurring_meeting.interval"),
-      caption: I18n.t("recurring_meeting.interval.instructions")
+      data: {
+        action: "input->recurring-meetings--form#updateFrequencyText"
+      }
     )
   end
 end

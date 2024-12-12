@@ -53,7 +53,8 @@ de:
       recurring_meeting:
         frequency: "Häufigkeit"
         interval: "Intervall"
-        end_after: "Ende nach"
+        start_date: "Starts on"
+        end_after: "End series after"
         iterations: "Ereignisse"
     errors:
       messages:
@@ -124,6 +125,11 @@ de:
   label_recurring_occurrence_delete_confirmation: >
     Alle Besprechungsinformationen, die nicht in der Vorlage enthalten sind, gehen verloren. Möchten Sie fortfahren?
   label_recurring_meeting_restore: "Dieses Ereignis wiederherstellen"
+  label_recurring_meeting_more: "There are %{count} more scheduled meetings (%{schedule})."
+  label_recurring_meeting_more_singular: "There is %{count} more scheduled meeting (%{schedule})."
+  label_recurring_meeting_more_past: "There are %{count} more past meetings."
+  label_recurring_meeting_more_past_singular: "There is %{count} more past meeting."
+  label_recurring_meeting_show_more: "Show more"
   label_recurring_meeting_series_edit: "Besprechungsreihe bearbeiten"
   label_recurring_meeting_series_delete: "Besprechungsreihe löschen"
   label_my_meetings: "Meine Besprechungen"
@@ -188,9 +194,6 @@ de:
     placeholder_title: "Neuer Abschnitt"
     empty_text: "Neue Agendapunkte hierhin bewegen oder neu erstellen"
   recurring_meeting:
-    interval:
-      instructions: >
-        Geben Sie die Anzahl der Tage oder Wochen zwischen den einzelnen Ereignissen an.
     occurrence:
       infoline: "Diese Besprechung ist Teil einer wiederkehrenden Besprechungsreihe."
       error_no_next: "There is no next occurrence for this meeting."
@@ -198,7 +201,7 @@ de:
       first_created: >
         The first meeting has been successfuly created from template. All future meetings will be created automatically at the time of the previous occurrence.
     template:
-      button_finalize: "Finish template"
+      button_finalize: "Vorlage fertigstellen"
       blank_title: "Your meeting series template is empty"
       description: >
         This template will be used whenever new meetings in the series get created. You can add agenda items, participants, and attachments to this template.
@@ -207,22 +210,23 @@ de:
       label_view_template: "Vorlagen ansehen"
       label_edit_template: "Vorlage bearbeiten"
       banner_html: >
-        Sie bearbeiten gerade eine Vorlage für eine Besprechungsserie: %{link}. Jede neue Instanz einer Besprechung in dieser Serie verwendet diese Vorlage. Änderungen wirken sich nicht auf frühere oder bereits erstellte Besprechungen aus.
+        You are currently editing a template of a meeting series: %{link}. Every new occurrence of a meeting in the series will use this template. Changes will not affect past or already created meetings.
     frequency:
       every_weekday: "Jeden %{day_of_the_week}"
       daily: "Täglich"
-      working_days: "Arbeitstage"
+      working_days: "Every working day"
       weekly: "Wöchentlich"
     end_after:
-      specific_date: "Ein bestimmtes Datum"
-      iterations: "Eine Reihe von Ereignissen"
+      specific_date: "a specific date"
+      iterations: "a number of occurrences"
     starts: "Beginnt"
     in_words:
-      daily_interval: "Every %{interval} day"
+      daily_interval: "Every %{interval} days"
       working_days: "Jeden Arbeitstag"
       working_days_interval: "Every %{interval} working day"
-      weekly: "Wöchentlich am %{weekday}"
-      weekly_interval: "Every %{interval} week on %{weekday}"
+      weekly: "Every week on %{weekday}"
+      weekly_interval: "Every %{interval} weeks on %{weekday}"
+      frequency: "%{base} at %{time}"
       full: "%{base} at %{time}, ends on %{end_date}"
   notice_successful_notification: "Benachrichtigung erfolgreich gesendet"
   notice_timezone_missing: Keine Zeitzone eingestellt und daher %{zone} angenommen. Um Ihre Zeitzone einzustellen, klicken Sie bitte hier.
@@ -276,6 +280,7 @@ de:
   text_deleted_agenda_item: 'Gelöschter Tagesordnungspunkt'
   label_initial_meeting_details: "Besprechung"
   label_meeting_details: "Besprechungsdetails"
+  label_meeting_series_details: "Meeting series details"
   label_meeting_details_edit: "Besprechungsdetails bearbeiten"
   label_meeting_state: "Besprechungsstatus"
   label_meeting_state_open: "Offen"

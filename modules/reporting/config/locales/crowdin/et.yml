@@ -86,6 +86,11 @@ et:
   validation_failure_date: "pole korrektne kuupäev"
   validation_failure_integer: "pole täisarv"
   export:
+    timesheet:
+      title: "Your PDF timesheet export"
+      button: "Export PDF timesheet"
+      timesheet: "Timesheet"
+      time: "Time"
     cost_reports:
       title: "Your Cost Reports XLS export"
   reporting:

@@ -69,7 +69,7 @@ module RecurringMeetings
     end
 
     def page_description
-      @meeting.schedule_in_words
+      @meeting.full_schedule_in_words
     end
 
     def breadcrumb_items

@@ -86,6 +86,11 @@ sk:
   validation_failure_date: "nie je platný dátum"
   validation_failure_integer: "nie je platné celé číslo"
   export:
+    timesheet:
+      title: "Your PDF timesheet export"
+      button: "Export PDF timesheet"
+      timesheet: "Timesheet"
+      time: "Time"
     cost_reports:
       title: "Váš XLS export správy o nákladoch"
   reporting:

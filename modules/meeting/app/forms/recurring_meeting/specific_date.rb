@@ -34,7 +34,6 @@ class RecurringMeeting::SpecificDate < ApplicationForm
       value: @value,
       placeholder: Meeting.human_attribute_name(:end_date),
       label: Meeting.human_attribute_name(:end_date),
-      leading_visual: { icon: :calendar },
       required: false,
       autofocus: false
     )

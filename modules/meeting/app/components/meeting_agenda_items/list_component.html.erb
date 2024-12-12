@@ -1,7 +1,7 @@
 <%=
   component_wrapper(data: wrapper_data_attributes) do
     flex_layout(mb: 3) do |flex|
-      if @meeting.template?
+      if @meeting.template? && !empty?
         flex.with_row(mb: 3) do
           render Primer::Alpha::Banner.new(scheme: :default,
                                            icon: :info,
@@ -21,7 +21,7 @@
           )
         )
       end
-      if @meeting.agenda_items.empty? && @meeting.sections.empty?
+      if empty?
         flex.with_row do
           render(border_box_container) do |border_box|
             if @form_hidden

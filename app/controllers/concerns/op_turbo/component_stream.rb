@@ -74,8 +74,8 @@ module OpTurbo
       turbo_streams << target_component.insert_as_turbo_stream(component:, view_context:, action: :before)
     end
 
-    def render_error_flash_message_via_turbo_stream(**kwargs)
-      update_flash_message_via_turbo_stream(**kwargs.merge(scheme: :danger, icon: :stop))
+    def render_error_flash_message_via_turbo_stream(**)
+      update_flash_message_via_turbo_stream(**, scheme: :danger, icon: :stop)
     end
 
     def update_flash_message_via_turbo_stream(message:, component: OpPrimer::FlashComponent, **)
@@ -86,6 +86,12 @@ module OpTurbo
     def scroll_into_view_via_turbo_stream(target, behavior: :auto, block: :start)
       turbo_streams << OpTurbo::StreamComponent
         .new(action: :scroll_into_view, target:, behavior:, block:)
+        .render_in(view_context)
+    end
+
+    def add_caption_to_input_element_via_turbo_stream(target, caption:, clean_other_captions: true)
+      turbo_streams << OpTurbo::StreamComponent
+        .new(action: :addInputCaption, target:, caption:, clean_other_captions:)
         .render_in(view_context)
     end
 

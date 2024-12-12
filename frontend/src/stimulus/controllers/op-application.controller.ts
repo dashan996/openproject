@@ -8,11 +8,11 @@ export class OpApplicationController extends ApplicationController {
 
   dynamicTargetConnected(target:HTMLElement) {
     const controllers = (target.dataset.controller as string).split(' ');
+    const registered = this.application.controllers.map((controller) => controller.identifier);
 
     controllers.forEach((controller) => {
       const path = this.derivePath(controller);
-
-      if (!this.loaded.has(controller)) {
+      if (!registered.includes(controller) && !this.loaded.has(controller)) {
         this.loaded.add(controller);
         void import(/* webpackChunkName: "[request]" */`./dynamic/${path}.controller`)
           .then((imported:{ default:ControllerConstructor }) => this.application.register(controller, imported.default))

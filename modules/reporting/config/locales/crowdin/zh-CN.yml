@@ -86,6 +86,11 @@ zh-CN:
   validation_failure_date: "不是有效的日期"
   validation_failure_integer: "不是有效的整数"
   export:
+    timesheet:
+      title: "Your PDF timesheet export"
+      button: "Export PDF timesheet"
+      timesheet: "Timesheet"
+      time: "Time"
     cost_reports:
       title: "您的成本报告 XLS 导出"
   reporting:

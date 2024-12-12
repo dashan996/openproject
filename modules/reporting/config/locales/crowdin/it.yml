@@ -86,6 +86,11 @@ it:
   validation_failure_date: "non è una data valida"
   validation_failure_integer: "non è un numero intero valido"
   export:
+    timesheet:
+      title: "Your PDF timesheet export"
+      button: "Export PDF timesheet"
+      timesheet: "Timesheet"
+      time: "Time"
     cost_reports:
       title: "Esportazione XLS dei report sui costi"
   reporting:

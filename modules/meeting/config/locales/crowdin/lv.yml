@@ -54,7 +54,8 @@ lv:
       recurring_meeting:
         frequency: "Frequency"
         interval: "Interval"
-        end_after: "End after"
+        start_date: "Starts on"
+        end_after: "End series after"
         iterations: "Occurrences"
     errors:
       messages:
@@ -125,6 +126,11 @@ lv:
   label_recurring_occurrence_delete_confirmation: >
     Any meeting information not in the template will be lost. Do you want to continue?
   label_recurring_meeting_restore: "Restore this occurrence"
+  label_recurring_meeting_more: "There are %{count} more scheduled meetings (%{schedule})."
+  label_recurring_meeting_more_singular: "There is %{count} more scheduled meeting (%{schedule})."
+  label_recurring_meeting_more_past: "There are %{count} more past meetings."
+  label_recurring_meeting_more_past_singular: "There is %{count} more past meeting."
+  label_recurring_meeting_show_more: "Show more"
   label_recurring_meeting_series_edit: "Edit meeting series"
   label_recurring_meeting_series_delete: "Delete meeting series"
   label_my_meetings: "My meetings"
@@ -189,9 +195,6 @@ lv:
     placeholder_title: "New section"
     empty_text: "Drag items here or create a new one"
   recurring_meeting:
-    interval:
-      instructions: >
-        Enter the number of days or weeks between each occurrence.
     occurrence:
       infoline: "This meeting is part of a recurring meeting series."
       error_no_next: "There is no next occurrence for this meeting."
@@ -208,22 +211,23 @@ lv:
       label_view_template: "View template"
       label_edit_template: "Edit template"
       banner_html: >
-        You are currently editing a template of a meeting series: %{link}. Every new instance of a meeting in this series will use this template. Changes will not affect past or already created meetings.
+        You are currently editing a template of a meeting series: %{link}. Every new occurrence of a meeting in the series will use this template. Changes will not affect past or already created meetings.
     frequency:
       every_weekday: "Every %{day_of_the_week}"
       daily: "Daily"
-      working_days: "Working Days"
+      working_days: "Every working day"
       weekly: "Weekly"
     end_after:
-      specific_date: "A specific date"
-      iterations: "A number of occurrences"
+      specific_date: "a specific date"
+      iterations: "a number of occurrences"
     starts: "Starts"
     in_words:
-      daily_interval: "Every %{interval} day"
+      daily_interval: "Every %{interval} days"
       working_days: "Every working day"
       working_days_interval: "Every %{interval} working day"
-      weekly: "Weekly on %{weekday}"
-      weekly_interval: "Every %{interval} week on %{weekday}"
+      weekly: "Every week on %{weekday}"
+      weekly_interval: "Every %{interval} weeks on %{weekday}"
+      frequency: "%{base} at %{time}"
       full: "%{base} at %{time}, ends on %{end_date}"
   notice_successful_notification: "Paziņojums veiksmīgi nosūtīts"
   notice_timezone_missing: No time zone is set and %{zone} is assumed. To choose your time zone, please click here.
@@ -277,6 +281,7 @@ lv:
   text_deleted_agenda_item: 'Deleted agenda item'
   label_initial_meeting_details: "Sanāksmes"
   label_meeting_details: "Meeting details"
+  label_meeting_series_details: "Meeting series details"
   label_meeting_details_edit: "Edit meeting details"
   label_meeting_state: "Meeting status"
   label_meeting_state_open: "Atvērts"

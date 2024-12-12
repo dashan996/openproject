@@ -32,7 +32,7 @@ module APITokens
   class CreateContract < BaseContract
     attribute :token_name
 
-    validates :token_name, presence: { message: I18n.t("my.access_token.errors.token_name_blank") }
+    validates :token_name, presence: { message: proc { I18n.t("my.access_token.errors.token_name_blank") } }
     validate :token_name_is_unique, unless: :token_name_is_blank?
 
     private

@@ -1,11 +1,7 @@
 require "active_storage/filename"
 
-class CostQuery::ExportJob < Exports::ExportJob
+class CostQuery::XLS::ExportJob < Exports::ExportJob
   self.model = ::CostQuery
-
-  def title
-    I18n.t("export.cost_reports.title")
-  end
 
   def project
     options[:project]
@@ -15,11 +11,15 @@ class CostQuery::ExportJob < Exports::ExportJob
     options[:cost_types]
   end
 
+  def title
+    I18n.t("export.cost_reports.title")
+  end
+
   private
 
   def prepare!
     CostQuery::Cache.check
-    self.query = build_query(query)
+    self.query = CostQuery.build_query(project, query)
   end
 
   def export!
@@ -39,24 +39,4 @@ class CostQuery::ExportJob < Exports::ExportJob
                           mime_type: "application/vnd.ms-excel",
                           content:)
   end
-
-  # rubocop:disable Metrics/AbcSize
-  def build_query(filters, groups = {})
-    query = CostQuery.new(project:)
-    query.tap do |q|
-      filters[:operators].each do |filter, operator|
-        unless filters[:values][filter] == ["<<inactive>>"]
-          values = Array(filters[:values][filter]).map { |v| v == "<<null>>" ? nil : v }
-          q.filter(filter.to_sym,
-                   operator:,
-                   values:)
-        end
-      end
-    end
-    groups[:columns].try(:reverse_each) { |c| query.column(c) }
-    groups[:rows].try(:reverse_each) { |r| query.row(r) }
-    query
-  end
-
-  # rubocop:enable Metrics/AbcSize
 end

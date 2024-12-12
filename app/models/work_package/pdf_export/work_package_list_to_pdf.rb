@@ -86,7 +86,7 @@ class WorkPackage::PDFExport::WorkPackageListToPdf < WorkPackage::Exports::Query
   private
 
   def setup_page!
-    self.pdf = get_pdf(current_language)
+    self.pdf = get_pdf
 
     configure_page_size!(wants_report? ? :portrait : :landscape)
   end
@@ -109,6 +109,22 @@ class WorkPackage::PDFExport::WorkPackageListToPdf < WorkPackage::Exports::Query
 
   def with_cover?
     wants_report?
+  end
+
+  def cover_page_title
+    project&.name
+  end
+
+  def cover_page_heading
+    heading
+  end
+
+  def cover_page_subheading
+    User.current&.name
+  end
+
+  def cover_page_dates
+    nil
   end
 
   def render_work_packages_pdfs(work_packages, filename)
