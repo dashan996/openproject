@@ -13,6 +13,7 @@ zh-TW:
       open_storage: "開啟 %{storageType}"
       select_location: "選擇位置"
       choose_location: "選擇位置"
+      new_folder: "新增資料夾"
       types:
         nextcloud: "Nextcloud"
         one_drive: "OneDrive/SharePoint"
@@ -42,6 +43,7 @@ zh-TW:
           尚未找到自動管理的專案資料夾。 請稍等一下，重新加載頁面以獲取最新數據，然後重試。
         managed_project_folder_no_access: >
           您尚無權存取託管專案資料夾。 請稍等一下，然後重試。
+        cannot_create_folder: 建立資料夾失敗。避免使用特殊字符和符號。
         upload_keep_both: "兩者都保留"
         upload_replace: "取代"
       file_links:

@@ -29,5 +29,36 @@
 class Project::Stage < Project::LifeCycleStep
   # This ensures the type cannot be changed after initialising the class.
   validates :type, inclusion: { in: %w[Project::Stage], message: :must_be_a_stage }
-  validates :start_date, :end_date, presence: true
+  validate :validate_date_range
+
+  def working_days_count
+    return nil if not_set?
+
+    Day.working.from_range(from: start_date, to: end_date).count
+  end
+
+  def date_range=(param)
+    self.start_date, self.end_date = param.split(" - ")
+    self.end_date ||= start_date # Allow single dates as range
+  end
+
+  def not_set?
+    start_date.blank? || end_date.blank?
+  end
+
+  def range_set?
+    !not_set?
+  end
+
+  def range_incomplete?
+    start_date.blank? ^ end_date.blank?
+  end
+
+  def validate_date_range
+    if range_incomplete?
+      errors.add(:date_range, :incomplete)
+    elsif range_set? && (start_date > end_date)
+      errors.add(:date_range, :start_date_must_be_before_end_date)
+    end
+  end
 end

@@ -13,6 +13,7 @@ de:
       open_storage: "Öffne %{storageType}"
       select_location: "Speicherort auswählen"
       choose_location: "Speicherort wählen"
+      new_folder: "New folder"
       types:
         nextcloud: "Nextcloud"
         one_drive: "OneDrive/SharePoint"
@@ -42,6 +43,7 @@ de:
           Der automatisch verwaltete Projektordner wurde noch nicht gefunden. Bitte warten Sie, laden Sie die Seite neu, um die neuesten Daten abzurufen und versuchen Sie es erneut.
         managed_project_folder_no_access: >
           Sie haben noch keinen Zugriff auf den verwalteten Projektordner. Bitte warten Sie ein wenig und versuchen Sie es erneut.
+        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols.
         upload_keep_both: "Beide behalten"
         upload_replace: "Ersetzen"
       file_links:

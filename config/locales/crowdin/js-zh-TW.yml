@@ -619,7 +619,7 @@ zh-TW:
         prioritized: "已優先"
         dateAlert: "日期提醒"
         shared: "參與"
-        reminder: "Reminder"
+        reminder: "提醒"
       date_alerts:
         milestone_date: "里程碑日期"
         overdue: "逾期"
@@ -651,6 +651,8 @@ zh-TW:
         new_notifications:
           message: "您有新的通知"
           link_text: "點擊此處加載。"
+      reminders:
+        note: "備註： \"%{note}\""
       settings:
         change_notification_settings: '您可以修改 <a target="_blank" href="%{url}">通知設定</a>，以確保您不會錯過重要更新。'
         title: "通知設定"
@@ -738,6 +740,7 @@ zh-TW:
         immediate:
           title: "寄發提醒郵件給我"
           mentioned: "當有人使用「@帳號」提到我，系統立即發信通知我"
+          personal_reminder: "當我收到個人提醒時立即通知"
         alerts:
           title: "其他非工作項目之提醒"
           explanation: >
@@ -769,10 +772,6 @@ zh-TW:
         upgrade_to_ee_text: "哇！如果您需要使用此功能，說明您非常專業！您是否願意成為企業版客戶來支持 OpenSource 開發人員？"
         more_information: "更多資訊"
         nevermind: "無視"
-      edit:
-        form_configuration: "表單設定"
-        projects: "專案"
-        settings: "設定"
     time_entry:
       work_package_required: "需要先選擇一個工作項目。"
       title: "日誌的時間"
@@ -801,8 +800,8 @@ zh-TW:
       duplicated: "重複於"
       blocks: "攔阻"
       blocked: "被阻擋"
-      precedes: "後置項目"
-      follows: "前置項目"
+      precedes: "優先"
+      follows: "次の項目に後続"
       includes: "包括"
       partof: "一部分"
       requires: "需要"
@@ -976,7 +975,7 @@ zh-TW:
         percentComplete: "完成度(%)"
         percentCompleteAlternative: "進度"
         dueDate: "完成日期"
-        duration: "天數"
+        duration: "時長"
         spentTime: "耗時"
         category: "類別"
         percentageDone: "完成百分比"
@@ -1041,6 +1040,12 @@ zh-TW:
           not_found: "無此查詢"
           duplicate_query_title: "此版面的名稱已存在。確定改變？"
         text_no_results: "找不到符合的版面。"
+      reminders:
+        button_label: "設定提醒"
+        title:
+          new: "設定提醒"
+          edit: "編輯提醒"
+        subtitle: "您會在選擇的時間收到此工作項目的通知。"
       scheduling:
         is_parent: "此工作包的日期會自動從其子項推導出。可啟用“手動計劃”來設置日期。"
         is_switched_from_manual_to_automatic: "由於與其他工作包的關係，在從手動計劃切換為自動計劃後，此工作包的日期可能需要重新計算。"

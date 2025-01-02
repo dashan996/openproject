@@ -22,5 +22,10 @@ module Components
     def flatpickr_container
       container.find(".flatpickr-calendar")
     end
+
+    def open(trigger)
+      input = page.find(trigger)
+      input.click
+    end
   end
 end

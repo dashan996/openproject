@@ -9,6 +9,7 @@ zh-TW:
     label_bcf: 'BCF'
     label_imported_failed: '無法匯入 BCF 主題'
     label_imported_successfully: ' '
+    label_bcf_issue_associated: "相關 BCF 問題"
     issues: "問題集"
     recommended: '推薦'
     not_recommended: '不推薦'

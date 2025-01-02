@@ -50,6 +50,10 @@ OpenProject::FeatureDecisions.add :generate_pdf_from_work_package,
 OpenProject::FeatureDecisions.add :recurring_meetings,
                                   description: "Differentiate between one-time and recurring meetings."
 
+OpenProject::FeatureDecisions.add :generate_work_package_subjects,
+                                  description: "Allows the configuration for work package types to have " \
+                                               "automatically generated work package subjects."
+
 # TODO: Remove once the feature flag primerized_work_package_activities is removed altogether
 OpenProject::FeatureDecisions.define_singleton_method(:primerized_work_package_activities_active?) do
   Rails.env.production? ||
@@ -59,3 +63,8 @@ end
 
 OpenProject::FeatureDecisions.add :stages_and_gates,
                                   description: "Enables the under construction feature of stages and gates."
+
+OpenProject::FeatureDecisions.add :oidc_token_exchange,
+                                  description: "Enables the under construction OAuth2 token exchange, allowing " \
+                                               "users to interact with storage providers without consenting " \
+                                               "in OAuth screens before first use."

@@ -109,7 +109,7 @@ module Pages::Meetings
       click_on("add-meeting-button")
 
       expect(page).to have_link("Classic")
-      expect(page).to have_link("Dynamic")
+      expect(page).to have_link("One-time")
     end
 
     def expect_copy_action(meeting)

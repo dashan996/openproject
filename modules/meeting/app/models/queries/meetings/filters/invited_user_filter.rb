@@ -46,6 +46,10 @@ class Queries::Meetings::Filters::InvitedUserFilter < Queries::Meetings::Filters
     ].join(" AND ")
   end
 
+  def human_name
+    I18n.t(:label_invited_user)
+  end
+
   def joins
     :participants
   end

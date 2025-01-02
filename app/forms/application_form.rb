@@ -40,6 +40,11 @@ class ApplicationForm < Primer::Forms::Base
     Rails.application.routes.url_helpers
   end
 
+  # @return [ActionView::Base] the view helper instance
+  def helpers
+    @view_context.helpers
+  end
+
   # @return [ActiveRecord::Base] the model instance given to the form builder
   def model
     @builder.object

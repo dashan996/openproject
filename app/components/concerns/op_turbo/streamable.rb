@@ -33,6 +33,8 @@ module OpTurbo
     # rubocop:enable OpenProject/AddPreviewForViewComponent
 
     INLINE_ACTIONS = %i[dialog flash].freeze
+    # Turbo allows the response method for these actions only:
+    ACTIONS_WITH_METHOD = %i[update replace].freeze
 
     extend ActiveSupport::Concern
 
@@ -43,7 +45,7 @@ module OpTurbo
     end
 
     included do
-      def render_as_turbo_stream(view_context:, action: :update)
+      def render_as_turbo_stream(view_context:, action: :update, method: nil)
         case action
         when :update, *INLINE_ACTIONS
           @inner_html_only = true
@@ -63,8 +65,13 @@ module OpTurbo
                 "Wrap your component in a `component_wrapper` block in order to use turbo-stream methods"
         end
 
+        if method && !action.in?(ACTIONS_WITH_METHOD)
+          raise ArgumentError, "The #{action} action does not supports a method"
+        end
+
         OpTurbo::StreamComponent.new(
           action:,
+          method:,
           target: wrapper_key,
           template:
         ).render_in(view_context)

@@ -33,7 +33,7 @@ module Meetings
 
       super
 
-      set_participants(participants) if participants
+      set_participants(participants) if participants.present?
     end
 
     def set_default_attributes(_params)

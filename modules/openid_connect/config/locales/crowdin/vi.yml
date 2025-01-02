@@ -14,6 +14,7 @@ vi:
         client_secret: Client secret
         secret: Bí mật
         scope: Phạm vi
+        grant_types_supported: Supported grant types
         limit_self_registration: Giới hạn đăng ký tự động
         authorization_endpoint: Authorization endpoint
         userinfo_endpoint: User information endpoint

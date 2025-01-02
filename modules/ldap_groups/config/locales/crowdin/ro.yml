@@ -40,19 +40,19 @@ ro:
         title: 'Elimină filtrul sincronizat %{name}'
         confirmation: "Dacă continuați, filtrul sincronizat %{name} și toate grupurile %{groups_count} create prin intermediul acestuia vor fi eliminate."
         removed_groups: "Avertisment: Acest lucru va elimina următoarele grupuri din OpenProject și le va elimina din toate proiectele!"
-        verification: "Introduceți numele filtrului %{name} pentru a verifica ștergerea."
+        verification: "Introdu numele filtrului %{name} pentru a verifica ștergerea."
       form:
-        group_name_attribute_text: 'Introduceți atributul grupului LDAP utilizat pentru a seta numele grupului OpenProject.'
-        filter_string_text: 'Introduceți filtrul LDAP RFC4515 care returnează grupurile din LDAP pentru a le sincroniza cu OpenProject.'
+        group_name_attribute_text: 'Introdu atributul grupului LDAP utilizat pentru a seta numele grupului OpenProject.'
+        filter_string_text: 'Introdu filtrul LDAP RFC4515 care returnează grupurile din LDAP pentru a le sincroniza cu OpenProject.'
         base_dn_text: >
-          Introduceți DN-ul de bază de căutare care urmează să fie utilizat pentru acest filtru. Acesta trebuie să fie sub DN de bază al conexiunii LDAP selectate. Lăsați această opțiune goală pentru a reutiliza DN-ul de bază al conexiunii
+          Introdu DN-ul de bază de căutare care urmează să fie utilizat pentru acest filtru. Acesta trebuie să fie sub DN de bază al conexiunii LDAP selectate. Lasă această opțiune goală pentru a reutiliza DN-ul de bază al conexiunii
     synchronized_groups:
-      add_new: 'Adăugarea de noi grupuri de atribute'
+      add_new: 'Adaugă grup LDAP sincronizat'
       destroy:
         title: 'Îndepărtați grupul sincronizat %{name}'
         confirmation: "Dacă continuați, grupul sincronizat %{name} și toți utilizatorii %{users_count} sincronizați prin intermediul acestuia vor fi eliminați."
         info: "Notă: Grupul OpenProject în sine și membrii adăugați în afara acestei sincronizări LDAP nu vor fi eliminați."
-        verification: "Introduceți numele grupului %{name} pentru a verifica ștergerea."
+        verification: "Introdu numele grupului %{name} pentru a verifica ștergerea."
       help_text_html: |
         Acest modul vă permite să configurați o sincronizare între grupurile LDAP și OpenProject.
         Depinde de grupurile LDAP trebuie să utilizeze setul de atribute <em>groupOfNames / memberOf</em> pentru a funcționa cu OpenProject.
@@ -67,7 +67,7 @@ ro:
         auth_source_text: 'Selectează ce conexiune LDAP trebuie utilizată.'
         sync_users_text: >
           Dacă activați această opțiune, utilizatorii găsiți vor fi, de asemenea, creați automat în OpenProject. Fără această opțiune, doar conturile existente în OpenProject vor fi adăugate la grupuri.
-        dn_text: 'Introduceți DN-ul complet al grupului în LDAP'
+        dn_text: 'Introdu DN-ul complet al grupului în LDAP'
         group_text: 'Selectați un grup OpenProject existent cu care membrii grupului LDAP trebuie să fie sincronizați'
       upsale:
         description: 'Profitați de grupurile LDAP sincronizate pentru a gestiona utilizatorii, a le modifica permisiunile și a facilita gestionarea utilizatorilor între grupuri.'

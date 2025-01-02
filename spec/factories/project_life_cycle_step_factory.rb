@@ -31,6 +31,10 @@ FactoryBot.define do
     project
     active { true }
 
+    trait :skip_validate do
+      to_create { |instance| instance.save(validate: false) }
+    end
+
     factory :project_stage, class: "Project::Stage" do
       definition factory: :project_stage_definition
       start_date { Date.current - 2.days }

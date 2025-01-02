@@ -14,6 +14,7 @@ pt-PT:
         client_secret: Client Secret
         secret: Segredo
         scope: Contexto
+        grant_types_supported: Supported grant types
         limit_self_registration: Limitar auto-registo
         authorization_endpoint: Endpoint da autorização
         userinfo_endpoint: Endpoint da informação do utilizador

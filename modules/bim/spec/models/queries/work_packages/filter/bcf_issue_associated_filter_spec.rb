@@ -35,6 +35,7 @@ RSpec.describe Bim::Queries::WorkPackages::Filter::BcfIssueAssociatedFilter do
     let(:model) { WorkPackage }
     let(:class_key) { :bcf_issue_associated }
     let(:type) { :list }
+    let(:human_name) { "BCF issue associated" }
 
     describe "#available?" do
       context "if bim is enabled", with_config: { edition: "bim" } do

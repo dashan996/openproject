@@ -48,6 +48,10 @@ module OpenProject
       def project_with_search_icon
         render_with_template
       end
+
+      def color
+        render_with_template
+      end
     end
   end
 end

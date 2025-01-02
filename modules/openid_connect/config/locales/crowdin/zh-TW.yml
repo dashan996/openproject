@@ -14,6 +14,7 @@ zh-TW:
         client_secret: 用戶端密鑰
         secret: 金鑰
         scope: 範圍
+        grant_types_supported: 支援授權類型
         limit_self_registration: 限制自行註冊
         authorization_endpoint: 授權端點
         userinfo_endpoint: 使用者資訊端點

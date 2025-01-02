@@ -656,6 +656,8 @@ uk:
         new_notifications:
           message: "Немає нових сповіщень."
           link_text: "Натисніть тут, щоб завантажити."
+      reminders:
+        note: "Note: “%{note}”"
       settings:
         change_notification_settings: 'Ви можете змінити <a target="_blank" href="%{url}">налаштування сповіщень</a>, щоб ніколи не пропускати важливі оновлення.'
         title: "Налаштування сповіщень"
@@ -743,6 +745,7 @@ uk:
         immediate:
           title: "Надсилати мені нагадування електронною поштою"
           mentioned: "Негайно, коли хтось згадує @мене"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Сповіщення електронною поштою для інших елементів (які не є пакетами робіт)"
           explanation: >
@@ -774,10 +777,6 @@ uk:
         upgrade_to_ee_text: "Оце так! Якщо вам потрібне це доповнення, ви справжній профі! Підтримайте розробників OpenSource, перейшовши на версію Enterprise!"
         more_information: "Більше інформації"
         nevermind: "Nevermind"
-      edit:
-        form_configuration: "З конфігурації"
-        projects: "Проекти"
-        settings: "Налаштування"
     time_entry:
       work_package_required: "Спочатку потрібно вибрати пакет робіт."
       title: "Час журналу"
@@ -1046,6 +1045,12 @@ uk:
           not_found: "Такого погляду немає"
           duplicate_query_title: "Ім'я цього перегляду вже існує. Змінити все одно?"
         text_no_results: "Не знайдено відповідних переглядів."
+      reminders:
+        button_label: "Set reminder"
+        title:
+          new: "Set reminder"
+          edit: "Edit reminder"
+        subtitle: "You will receive a notification for this work package at the chosen time."
       scheduling:
         is_parent: "Дати цього пакета робіт автоматично виводяться з його дочірніх елементів. Активуйте «Ручне планування», щоб установити ці дати."
         is_switched_from_manual_to_automatic: "Можливо, дати цього пакета робіт знадобиться перерахувати після переходу з ручного на автоматичне планування через зв’язок з іншими пакетами робіт."

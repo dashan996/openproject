@@ -654,6 +654,8 @@ ca:
         new_notifications:
           message: "No hi ha notificacions noves"
           link_text: "Click here to load them."
+      reminders:
+        note: "Note: “%{note}”"
       settings:
         change_notification_settings: 'Pots modificar la teva <a target="_blank" href="%{url}">configuració de notificacions</a> per assegurar-te que mai et perds informació important.'
         title: "Configuració de notificacions"
@@ -741,6 +743,7 @@ ca:
         immediate:
           title: "Envia'm un correu electrònic recordatori"
           mentioned: "Immediatament quan algú em @menciona"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Alertes en correu electrònic per altres elements (que no són paquets de treball)"
           explanation: >
@@ -772,10 +775,6 @@ ca:
         upgrade_to_ee_text: "Ostres! Si necessita aquesta funció ets un súper pro! T'importaria donar suport als nostres desenvolupadors de codi obert convertint-te en client de l'edició Enterprise?"
         more_information: "Més informació"
         nevermind: "Sense importància"
-      edit:
-        form_configuration: "Configuració del formulari"
-        projects: "Projectes"
-        settings: "Configuració"
     time_entry:
       work_package_required: "Requereix seleccionar un paquet de treball primer."
       title: "Registrar temps"
@@ -1044,6 +1043,12 @@ ca:
           not_found: "No existeix aquesta vista"
           duplicate_query_title: "El nom de la vista ja existeix. Canvia de totes formes?"
         text_no_results: "No hi ha vistes que coincideixin"
+      reminders:
+        button_label: "Set reminder"
+        title:
+          new: "Set reminder"
+          edit: "Edit reminder"
+        subtitle: "You will receive a notification for this work package at the chosen time."
       scheduling:
         is_parent: "Les dates d'aquest paquet de treball estan derivades automàticament dels seus fills. Activa la \"Planificació manual\" per canviar les dates."
         is_switched_from_manual_to_automatic: "Pot ser que les dates d'aquest paquet de treball no es tornin a calcular automàticament en canviar de planificació manual a automàtica a causa de les relacions amb altres paquets de treball."

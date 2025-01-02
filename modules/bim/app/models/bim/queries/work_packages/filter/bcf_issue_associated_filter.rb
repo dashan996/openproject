@@ -41,6 +41,10 @@ module ::Bim::Queries::WorkPackages::Filter
       ]
     end
 
+    def human_name
+      I18n.t("bcf.label_bcf_issue_associated")
+    end
+
     def where
       if associated?
         ::Queries::Operators::All.sql_for_field(values, ::Bim::Bcf::Issue.table_name, "id")

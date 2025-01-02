@@ -9,7 +9,7 @@ id:
     verify_account: "Verifikasi akun anda"
     error_captcha: "Akun anda tidak dapat diverifikasi. Silakan hubungi administrator."
     settings:
-      website_key: 'Website key (May also be called "Site key")'
+      website_key: 'Kunci situs web (Bisa juga "Kunci situs")'
       response_limit: 'Batas respon untuk HCaptcha'
       response_limit_text: 'Jumlah maksimum karakter untuk memperlakukan respon HCaptcha sebagai valid.'
       website_key_text: 'Masukkan kunci situs web yang Anda buat di konsol admin reCAPTCHA untuk domain ini.'

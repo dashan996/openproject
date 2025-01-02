@@ -654,6 +654,8 @@ si:
         new_notifications:
           message: "There are new notifications."
           link_text: "Click here to load them."
+      reminders:
+        note: "Note: “%{note}”"
       settings:
         change_notification_settings: 'You can modify your <a target="_blank" href="%{url}">notification settings</a> to ensure you never miss an important update.'
         title: "Notification settings"
@@ -741,6 +743,7 @@ si:
         immediate:
           title: "Send me an email reminder"
           mentioned: "Immediately when someone @mentions me"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Email alerts for other items (that are not work packages)"
           explanation: >
@@ -772,10 +775,6 @@ si:
         upgrade_to_ee_text: "Wow! If you need this add-on you are a super pro! Would you mind supporting us OpenSource developers by becoming an Enterprise edition client?"
         more_information: "වැඩි විස්තර"
         nevermind: "කිසි විටෙකත් මනස"
-      edit:
-        form_configuration: "ආකෘති වින්යාසය"
-        projects: "ව්‍යාපෘති"
-        settings: "සැකසුම්"
     time_entry:
       work_package_required: "පළමුව වැඩ පැකේජයක් තෝරා ගැනීම අවශ්ය වේ."
       title: "ලොග් වේලාව"
@@ -1044,6 +1043,12 @@ si:
           not_found: "එවැනි මතයක් නොමැත"
           duplicate_query_title: "මෙම දර්ශනයේ නම දැනටමත් පවතී. කෙසේ හෝ වෙනස් කරන්න?"
         text_no_results: "ගැලපෙන අදහස් කිසිවක් සොයාගත නොහැකි විය."
+      reminders:
+        button_label: "Set reminder"
+        title:
+          new: "Set reminder"
+          edit: "Edit reminder"
+        subtitle: "You will receive a notification for this work package at the chosen time."
       scheduling:
         is_parent: "The dates of this work package are automatically deduced from its children. Activate 'Manual scheduling' to set the dates."
         is_switched_from_manual_to_automatic: "The dates of this work package may need to be recalculated after switching from manual to automatic scheduling due to relationships with other work packages."

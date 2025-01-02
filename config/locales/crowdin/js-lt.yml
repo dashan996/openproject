@@ -656,6 +656,8 @@ lt:
         new_notifications:
           message: "Yra naujų pranešimų."
           link_text: "Spauskite čia, kad juos įkeltumėte."
+      reminders:
+        note: "Note: “%{note}”"
       settings:
         change_notification_settings: 'Jūs galite keisti savo <a target="_blank" href="%{url}">pranešimų nustatymus</a>, kad užtikrintumėte, jog niekada nepraleisite svarbaus atnaujinimo.'
         title: "Pranešimų nustatymai"
@@ -743,6 +745,7 @@ lt:
         immediate:
           title: "Siųsti man e-pašto priminimą"
           mentioned: "Iš karto, kai kažkas @pamini mane"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "E-pašto pranešimai kitiems (ne darbo paketų) elementams"
           explanation: >
@@ -774,10 +777,6 @@ lt:
         upgrade_to_ee_text: "Oho! Jei Jums reikia šio priedo, esate super pro! Ar nenorėtumėte paremti mus, OpenSource (atviro kodo) kūrėjus, tapdami Enterprise versijos klientu?"
         more_information: "Daugiau informacijos"
         nevermind: "Nesvarbu"
-      edit:
-        form_configuration: "Formos konfigūracija"
-        projects: "Projektai"
-        settings: "Nustatymai"
     time_entry:
       work_package_required: "Reikia pirma pasirinkti darbo paketą."
       title: "Registruoti laiką"
@@ -1046,6 +1045,12 @@ lt:
           not_found: "Nėra tokio vaizdo"
           duplicate_query_title: "Toks vaizdo vardas jau yra. Vis tiek keisti?"
         text_no_results: "Atitinkančių vaizdų nerasta."
+      reminders:
+        button_label: "Set reminder"
+        title:
+          new: "Set reminder"
+          edit: "Edit reminder"
+        subtitle: "You will receive a notification for this work package at the chosen time."
       scheduling:
         is_parent: "Šio darbų paketo datos yra automatiškai nustatomos pagal jo vaikų datas. Norėdami nustatyti kitokias datas įjunkite „Rankinį tvarkaraščio parinkimą“"
         is_switched_from_manual_to_automatic: "Po perjungimo iš rankinio į automatinį tvarkaraščio parinkimą, šio darbų paketo datas gali reikėti perskaičiuoti, nes yra sąryšių su kitais darbų paketais."

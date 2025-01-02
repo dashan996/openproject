@@ -342,6 +342,9 @@ hu:
         text: "Ez a művelet nem törli a listában szereplő projekteket. Biztos, hogy törölni szeretné ezt a projektlistát?"
     settings:
       change_identifier: Azonosító megváltoztatása
+      actions:
+        label_enable_all: "Enable all"
+        label_disable_all: "Disable all"
       activities:
         no_results_title_text: Jelenleg nincs elérhető esemény.
       forums:
@@ -352,18 +355,26 @@ hu:
         no_results_content_text: Hozzon létre egy új munkacsomag kategóriát
       custom_fields:
         no_results_title_text: Jelenleg nincs elérhető egyedi mező.
+      life_cycle:
+        header:
+          title: "Project lifecycle"
+          description_html: 'These project stages and gates in the project lifecycle will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> and are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. You can enable or disable individual attributes.'
+        non_defined: "Neither stages nor gates are currently defined."
+        section_header: "Stages and gates"
+        step:
+          use_in_project: "Use %{step} in this project"
+        filter:
+          label: "Search project stage or gate"
       project_custom_fields:
         header:
           title: "Projekt attribútumok"
-          description: 'These project attributes will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> under their respective sections. You can enable or disable individual attributes. Project attributes and sections are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. '
+          description_html: 'These project attributes will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> under their respective sections. You can enable or disable individual attributes. Project attributes and sections are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. '
         filter:
           label: "Search project attribute"
         actions:
           label_enable_single: "Active in this project, click to disable"
           label_disable_single: "Inactive in this project, click to enable"
           remove_from_project: "Remove from project"
-          label_enable_all: "Enable all"
-          label_disable_all: "Disable all"
         is_required_blank_slate:
           heading: Required in all projects
           description: This project attribute is activated in all projects since the "Required in all projects" option is checked. It cannot be deactivated for individual projects.
@@ -376,6 +387,10 @@ hu:
         no_results_content_text: Új verzió létrehozása
       storage:
         no_results_title_text: "Ebben a projektben nincs további rögzített lemezterület.\n"
+  project_stage:
+    working_days_count:
+      one: "Duration: %{count} working day"
+      other: "Duration: %{count} working days"
   lists:
     create:
       success: "The modified list has been saved as a new list"
@@ -571,17 +586,27 @@ hu:
       no_results_title_text: Jelenleg nincsenek típusok.
       no_results_content_text: Új típus létrehozása
     edit:
-      settings: "Beállítások"
-      form_configuration: "Űrlap konfiguráció"
+      form_configuration:
+        tab: "Form configuration"
       more_info_text_html: >
         Enterprise edition allows you to customize form configuration with these additional add-ons: <br> <ul class="%{list_styling_class}"> <li><b>Add new attribute groups</b></li> <li><b>Rename attribute groups</b></li> <li><b>Add a table of related work packages</b></li> </ul>
-      projects: "Projektek"
-      enabled_projects: "Engedélyezett projektek"
-      edit_query: "Táblázat szerkesztése"
-      query_group_placeholder: "Adja meg a tábla nevét"
-      reset: "Alapbeállítások visszaállítása"
-      type_color_text: |
-        A kiválasztott szín a Gantt diagramban vagy munkacsomag táblákban az eltérő típusokat különbözteti meg egymástól. Ezért javasolt az élénk színek használata.
+      projects:
+        tab: "Projects"
+        enabled_projects: "Enabled projects"
+      settings:
+        tab: "Settings"
+        type_color_text: The selected color distinguishes different types in Gantt charts or work packages tables. It is therefore recommended to use a strong color.
+      subject_configuration:
+        tab: "Subject configuration"
+        manually_editable_subjects:
+          label: "Manually editable subjects"
+          caption: "Users can manually enter and edit work package subjects without restrictions."
+        automatically_generated_subjects:
+          label: "Automatically generated subjects"
+          caption: "Define a pattern using referenced attributes and text to automatically generate work package subjects. Users will not be able to manually edit subjects."
+        pattern:
+          label: "Subject pattern"
+          caption: "Search for an attribute or add text. To create a space between elements add it as a text."
   versions:
     overview:
       work_packages_in_archived_projects: "A verzió megosztásra kerül az archivált projektekkel, amelyekhez még mindig vannak ehhez a verzióhoz rendelt munkacsomagok. Ezek számításba kerülnek, de nem jelennek meg a kapcsolódó nézetekben."
@@ -852,6 +877,9 @@ hu:
         lag: "Lag"
         from: "Feladatcsoport"
         to: "Kapcsolódó feladatcsoport"
+      reminder:
+        remind_at_date: "Date"
+        remind_at_time: "Time"
       repository:
         url: "URL"
       role:
@@ -1101,16 +1129,38 @@ hu:
           attributes:
             type:
               must_be_a_stage_or_gate: "must be either Project::StageDefinition or Project::GateDefinition"
+              type_and_class_name_mismatch: "must match the instantiated class name"
+        project/gate_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "must be a Project::GateDefinition"
+        project/stage_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "must be a Project::StageDefinition"
         project/life_cycle_step:
           attributes:
             type:
               must_be_a_stage_or_gate: "must be either Project::Stage or Project::Gate"
               must_be_a_stage: "must be a Project::Stage"
               must_be_a_gate: "must be a Project::Gate"
+              type_and_class_name_mismatch: "must match the instantiated class name"
         project/gate:
           attributes:
             base:
-              end_date_not_allowed: "Cannot assign `end_date` to a Project::Gate"
+              end_date_not_allowed: "Cannot assign end date to a Project::Gate"
+            type:
+              type_and_class_name_mismatch: "must be a Project::Gate"
+            date:
+              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+        project/stage:
+          attributes:
+            date_range:
+              start_date_must_be_before_end_date: "start date must be before the end date."
+              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+              incomplete: "is incomplete."
+            type:
+              type_and_class_name_mismatch: "must be a Project::Stage"
         query:
           attributes:
             project:
@@ -1327,6 +1377,8 @@ hu:
         other: "Értesítések"
       placeholder_user: "Teszt felhasználó"
       project: "Projekt"
+      project/gate_definition: "Gate"
+      project/stage_definition: "Stage"
       project_query:
         one: "Project list"
         other: "Project lists"
@@ -1430,6 +1482,7 @@ hu:
     login: "Felhasználónév"
     mail: "Email"
     name: "Név"
+    note: "Note"
     password: "Jelszó"
     priority: "Fontosság"
     project: "Projekt"
@@ -1526,6 +1579,7 @@ hu:
   button_print: "Nyomtatás"
   button_quote: "Idéz"
   button_remove: Eltávolítás
+  button_remove_reminder: "Remove reminder"
   button_rename: "Átnevezés"
   button_replace: "Csere"
   button_revoke: "Visszavonás"
@@ -1536,6 +1590,7 @@ hu:
   button_save_as: "Mentés másként"
   button_apply_changes: "Változások alkalmazása"
   button_save_back: "Mentés és vissza"
+  button_set_reminder: "Set reminder"
   button_show: "Mutat"
   button_sort: "Rendez"
   button_submit: "Küldés"
@@ -1741,12 +1796,12 @@ hu:
   direction: ltr
   ee:
     upsale:
+      title: "Enterprise add-on"
+      link_title: "More information"
       form_configuration:
         description: "Testre szabhatja az űrlap konfigurációját ezekkel a további bővítményekkel:"
         add_groups: "Attribútum-csoport hozzáadása"
         rename_groups: "Attribútum-csoportok átnevezése"
-      project_filters:
-        description_html: "Az egyéni mezők szűrése és rendezése a Vállalati Verzió kiegészítője."
   enumeration_activities: "Időnyilvántartási tevékenységek"
   enumeration_work_package_priorities: "Feladatcsoport fontosság"
   enumeration_reported_project_statuses: "Projekt állapot beszámoló"
@@ -1779,6 +1834,7 @@ hu:
   error_pdf_export_too_many_columns: "Túl sok oszlop lett kiválasztva a PDF exportáláshoz. Kérlek csökkentsd a sorok számát."
   error_pdf_failed_to_export: "A PDF-Exportálás mentése nem sikerült: %{error}"
   error_token_authenticity: "Nem sikerült ellenőrizni a Cross-Site Request Forgery token-t. Megpróbált adatokat küldeni több böngészőn vagy lapon keresztül? Kérjük, zárja be az összes lapot, és próbálkozzon újra."
+  error_reminder_not_found: "The reminder was not found or was already notified about."
   error_work_package_not_found_in_project: "A feladatcsoport nem található, vagy nem tartozik ehhez a projekthez"
   error_work_package_id_not_found: "The work package was not found."
   error_must_be_project_member: "projekt tagnak kell lennie"
@@ -2072,6 +2128,7 @@ hu:
       responsible: "Felelős"
       shared: "Megosztva"
       watched: "Megfigyelő"
+      reminder: "Reminder"
     facets:
       unread: "Olvasatlan"
       unread_title: "Show unread"
@@ -2279,7 +2336,6 @@ hu:
   label_enterprise_active_users: "%{current}/%{limit} foglalt aktív felhasználók"
   label_enterprise_edition: "Vállalati Verzió."
   label_enterprise_support: "Enterprise support"
-  label_enterprise_addon: "Enterprise add-on"
   label_environment: "Környezet"
   label_estimates_and_progress: "Estimates and progress"
   label_equals: "van"
@@ -2464,6 +2520,7 @@ hu:
   label_none_parentheses: "(nincs)"
   label_not_contains: "nem tartalmaz"
   label_not_equals: "nem"
+  label_life_cycle_step_plural: "Project lifecycle"
   label_on: "be"
   label_operator_all: "is not empty"
   label_operator_none: "is empty"
@@ -2628,6 +2685,7 @@ hu:
   label_this_month: "Ebben a hónapban"
   label_this_week: "ezen a héten"
   label_this_year: "Ebben az évben"
+  label_time: "Time"
   label_time_entry_plural: "Eltöltött idő"
   label_time_entry_activity_plural: "Spent time activities"
   label_title: "Cím"
@@ -2801,8 +2859,13 @@ hu:
         prefix: "Az értesítés beállítása miatt érkezett: %{reason}\n"
         date_alert_start_date: "Date alert"
         date_alert_due_date: "Date alert"
+        reminder: "Reminder"
       see_all: "Mutasd mindet"
       updated_at: "%{timestamp} időpontban %{user} frissítette"
+    reminder_notifications:
+      subject: "Reminder: %{note}"
+      heading: "You have a new reminder"
+      note: "Note: “%{note}”"
     sharing:
       work_packages:
         allowed_actions: "You may %{allowed_actions} this work package. This can change depending on your project role and permissions."
@@ -3046,6 +3109,7 @@ hu:
   permission_edit_own_time_entries: "Rögzített eltöltött időim szerkesztése"
   permission_edit_project: "Projekt szerkesztése"
   permission_edit_project_attributes: "Edit project attributes"
+  permission_edit_project_stages_and_gates: "Edit project stages and gates"
   permission_edit_reportings: "Jelentések szerkesztése"
   permission_edit_time_entries: "Edit time logs for other users"
   permission_edit_timelines: "Idővonalak szerkesztése"
@@ -3075,6 +3139,8 @@ hu:
   permission_search_project: "Search project"
   permission_select_custom_fields: "Egyedi mezők kiválasztása"
   permission_select_project_custom_fields: "Select project attributes"
+  permission_select_project_life_cycle: "Select project stages and gates"
+  permission_select_project_life_cycle_explanation: "Activate/Deactivate the stages and gates in a project. Enables the user to select the lifecycle appropriate for the project as inactive stages and gates will not be visible in the project overview page nor the project list."
   permission_select_project_modules: "Projekt modulok kiválasztása"
   permission_share_work_packages: "Share work packages"
   permission_manage_types: "Jelölje ki a típust"
@@ -3099,6 +3165,7 @@ hu:
   permission_work_package_assigned_explanation: "Munkacsomagok hozzárendelhetők a szerephez tartozó felhasználókhoz és csoportokhoz az adott projektben"
   permission_view_project_activity: "View project activity"
   permission_view_project_attributes: "View project attributes"
+  permission_view_project_stages_and_gates: "View project stages and gates"
   permission_save_bcf_queries: "Save BCF queries"
   permission_manage_public_bcf_queries: "Manage public BCF queries"
   permission_edit_attribute_help_texts: "Edit attribute help texts"
@@ -3779,6 +3846,12 @@ hu:
       edit_description: "Can view, comment and edit this work package."
       view: "Nézet"
       view_description: "Can view this work package."
+    reminders:
+      label_remind_at: "Date"
+      note_placeholder: "Why are you setting this reminder?"
+      success_creation_message: "Reminder set successfully. You will receive a notification for this work package at the chosen time."
+      success_update_message: "Reminder updated successfully."
+      success_deletion_message: "Reminder deleted successfully."
   sharing:
     count:
       zero: "0 users"

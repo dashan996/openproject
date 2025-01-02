@@ -653,6 +653,8 @@ el:
         new_notifications:
           message: "There are new notifications."
           link_text: "Click here to load them."
+      reminders:
+        note: "Note: “%{note}”"
       settings:
         change_notification_settings: 'You can modify your <a target="_blank" href="%{url}">notification settings</a> to ensure you never miss an important update.'
         title: "Notification settings"
@@ -740,6 +742,7 @@ el:
         immediate:
           title: "Send me an email reminder"
           mentioned: "Immediately when someone @mentions me"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Email alerts for other items (that are not work packages)"
           explanation: >
@@ -771,10 +774,6 @@ el:
         upgrade_to_ee_text: "Wow! If you need this add-on you are a super pro! Would you mind supporting us OpenSource developers by becoming an Enterprise edition client?"
         more_information: "Περισσότερες πληροφορίες"
         nevermind: "Δεν πειράζει"
-      edit:
-        form_configuration: "Διαμόρφωση Φόρμας"
-        projects: "Έργα"
-        settings: "Ρυθμίσεις"
     time_entry:
       work_package_required: "Πρέπει πρώτα να επιλεγεί ένα πακέτο εργασίας."
       title: "Καταγραφή χρόνου"
@@ -1043,6 +1042,12 @@ el:
           not_found: "Δεν υπάρχει τέτοια προβολή"
           duplicate_query_title: "Το όνομα αυτής της προβολής υπάρχει ήδη. Αλλαγή παρόλα αυτά;"
         text_no_results: "Δεν βρέθηκαν προβολές που να ταιριάζουν."
+      reminders:
+        button_label: "Set reminder"
+        title:
+          new: "Set reminder"
+          edit: "Edit reminder"
+        subtitle: "You will receive a notification for this work package at the chosen time."
       scheduling:
         is_parent: "Οι ημερομηνίες αυτού του πακέτου εργασίας προκύπτουν αυτόματα από τα παιδιά του. Ενεργοποιήστε τον \"Χειροκίνητο προγραμματισμό\" για να ορίσετε τις ημερομηνίες."
         is_switched_from_manual_to_automatic: "Οι ημερομηνίες αυτού του πακέτου εργασίας μπορεί να χρειαστεί να υπολογιστούν εκ νέου μετά τη μετάβαση από χειροκίνητο σε αυτόματο προγραμματισμό λόγω των σχέσεων με άλλα πακέτα εργασίας."

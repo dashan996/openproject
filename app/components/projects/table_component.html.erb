@@ -56,7 +56,7 @@ See COPYRIGHT and LICENSE files for more details.
                     </th>
                   <% else %>
                     <% if use_quick_action_table_headers? %>
-                      <%= quick_action_table_header column.attribute, order_options(column, turbo: true) %>
+                      <%= quick_action_table_header column, order_options(column, turbo: true) %>
                     <% else %>
                       <th>
                         <div class="generic-table--sort-header-outer">

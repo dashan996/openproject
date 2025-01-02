@@ -9,15 +9,16 @@ class WorkPackageRelationsTab::IndexComponent < ApplicationComponent
   include Turbo::FramesHelper
   include OpTurbo::Streamable
 
-  attr_reader :work_package, :relations, :children, :directionally_aware_grouped_relations
+  attr_reader :work_package, :relations, :children, :directionally_aware_grouped_relations, :scroll_to_id
 
-  def initialize(work_package:, relations:, children:)
+  def initialize(work_package:, relations:, children:, scroll_to_id: nil)
     super()
 
     @work_package = work_package
     @relations = relations
     @children = children
     @directionally_aware_grouped_relations = group_relations_by_directional_context
+    @scroll_to_id = scroll_to_id
   end
 
   def self.wrapper_key
@@ -47,23 +48,44 @@ class WorkPackageRelationsTab::IndexComponent < ApplicationComponent
   def any_relations? = relations.any? || children.any?
 
   def render_relation_group(title:, relation_type:, items:, &_block)
-    render(border_box_container(padding: :condensed,
-                                data: { test_selector: "op-relation-group-#{relation_type}" })) do |border_box|
-      border_box.with_header(py: 3) do
-        flex_layout(align_items: :center) do |flex|
-          flex.with_column(mr: 2) do
-            render(Primer::Beta::Text.new(font_size: :normal, font_weight: :bold)) { title }
-          end
-          flex.with_column do
-            render(Primer::Beta::Counter.new(count: items.size, round: true, scheme: :primary))
-          end
+    render(border_box_container(
+             padding: :condensed,
+             data: { test_selector: "op-relation-group-#{relation_type}" }
+           )) do |border_box|
+      render_header(border_box, title, items)
+      render_items(border_box, items, &_block)
+    end
+  end
+
+  def render_header(border_box, title, items)
+    border_box.with_header(py: 3) do
+      flex_layout(align_items: :center) do |flex|
+        flex.with_column(mr: 2) do
+          render(Primer::Beta::Text.new(font_size: :normal, font_weight: :bold)) { title }
+        end
+        flex.with_column do
+          render(Primer::Beta::Counter.new(count: items.size, round: true, scheme: :primary))
         end
       end
+    end
+  end
 
-      items.each do |item|
-        border_box.with_row(test_selector: row_test_selector(item)) do
-          yield(item)
-        end
+  def render_items(border_box, items)
+    items.each do |item|
+      related_work_package_id = find_related_work_package_id(item)
+      data_attribute = nil
+      if related_work_package_id.to_s == @scroll_to_id
+        data_attribute = {
+          controller: "work-packages--relations-tab--scroll",
+          application_target: "dynamic",
+          "work-packages--relations-tab--scroll-target": "scrollToRow"
+        }
+      end
+      border_box.with_row(
+        test_selector: row_test_selector(item),
+        data: data_attribute
+      ) do
+        yield(item)
       end
     end
   end
@@ -83,11 +105,15 @@ class WorkPackageRelationsTab::IndexComponent < ApplicationComponent
   end
 
   def row_test_selector(item)
+    related_work_package_id = find_related_work_package_id(item)
+    "op-relation-row-#{related_work_package_id}"
+  end
+
+  def find_related_work_package_id(item)
     if item.is_a?(Relation)
-      target = item.to == work_package ? item.from : item.to
-      "op-relation-row-#{target.id}"
-    else # Work Package object
-      "op-relation-row-#{item.id}"
+      item.from_id == work_package.id ? item.to_id : item.from_id
+    else
+      item.id
     end
   end
 end

@@ -6,6 +6,7 @@ module Primer
       # :nodoc:
       class Autocompleter < Primer::Forms::BaseComponent
         include AngularHelper
+        prepend WrappedInput
 
         delegate :builder, :form, :select_options, to: :@input
 

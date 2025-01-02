@@ -13,6 +13,7 @@ zh-CN:
       open_storage: "打开 %{storageType}"
       select_location: "选择位置"
       choose_location: "选择地点"
+      new_folder: "新文件夹"
       types:
         nextcloud: "Nextcloud"
         one_drive: "OneDrive/SharePoint"
@@ -42,6 +43,7 @@ zh-CN:
           尚未找到自动托管的项目文件夹。请稍等片刻，重新加载页面以获取最新数据，然后重试。
         managed_project_folder_no_access: >
           您目前还无法访问托管项目文件夹。请稍等片刻，然后重试。
+        cannot_create_folder: 创建文件夹失败。请避免使用特殊字符和符号。
         upload_keep_both: "保留两者"
         upload_replace: "替换"
       file_links:

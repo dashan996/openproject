@@ -51,6 +51,10 @@ class Queries::Meetings::Filters::TimeFilter < Queries::Meetings::Filters::Meeti
     end
   end
 
+  def human_name
+    Meeting.human_attribute_name(:start_time)
+  end
+
   def type
     :list
   end

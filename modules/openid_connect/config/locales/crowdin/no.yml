@@ -14,6 +14,7 @@
         client_secret: Client secret
         secret: Hemmelig nøkkel
         scope: Omfang
+        grant_types_supported: Supported grant types
         limit_self_registration: Begrens egenregistrering
         authorization_endpoint: Authorization endpoint
         userinfo_endpoint: User information endpoint

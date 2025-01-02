@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -42,7 +44,7 @@ RSpec.describe Type do
     end
 
     it "returns the types enabled in the provided project" do
-      expect(Type.enabled_in(project)).to contain_exactly(type)
+      expect(described_class.enabled_in(project)).to contain_exactly(type)
     end
   end
 
@@ -123,6 +125,46 @@ RSpec.describe Type do
       it "does not return the field" do
         expect(subject).not_to have_key("ignore_non_working_days")
       end
+    end
+  end
+
+  describe "#patterns" do
+    it "returns nil when no patterns are defined" do
+      type = create(:type)
+
+      expect(type.patterns).to be_nil
+    end
+
+    it "returns a PatternCollection" do
+      type = create(:type, patterns: {
+                      subject: { blueprint: "{{work_package:custom_field_123}} - {{project:custom_field_321}}", enabled: true }
+                    })
+
+      expect(type.patterns).to be_a(Types::Patterns::Collection)
+      expect(type.patterns[:subject])
+        .to eq(Types::Pattern.new("{{work_package:custom_field_123}} - {{project:custom_field_321}}", true))
+    end
+  end
+
+  describe "#patterns=" do
+    subject(:type) { build(:type) }
+
+    context "when an invalid value is passed" do
+      it "defaults to nil" do
+        type.patterns = 4
+
+        expect(type.patterns).to be_nil
+        expect { type.save! }.not_to raise_error
+      end
+    end
+
+    it "converts the incoming hash into a PatternCollection" do
+      type.patterns = { subject: { blueprint: "some_string", enabled: false } }
+
+      expect(type.patterns).to be_a(Types::Patterns::Collection)
+      expect(type.patterns[:subject]).to be_a(Types::Pattern)
+
+      expect { type.save! }.not_to raise_error
     end
   end
 end

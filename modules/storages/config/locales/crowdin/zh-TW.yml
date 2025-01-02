@@ -124,7 +124,7 @@ zh-TW:
               not_found: "%{current_path} 沒有找到。"
             set_folders_permissions:
               permission_not_set: 無法在 %{path} 上設定權限。
-          error: An unexpected error occurred. Please ensure that your Nextcloud instance is reachable and check OpenProject worker logs for more information
+          error: 發生意外錯誤。請確保您的 Nextcloud 可以連線，並檢查 OpenProject 日誌以取得更多資訊。
           group_does_not_exist: "%{group} 不存在。請檢查您的 Nextcloud 實例配置。"
           insufficient_privileges: OpenProject 沒有足夠的權限將 %{user} 加入 %{group}。請檢查 Nextcloud 中的群組設定。
           not_allowed: Nextcloud 封鎖該請求。
@@ -145,7 +145,7 @@ zh-TW:
               not_found: "%{current_path} 沒有找到。"
             set_folders_permissions:
               permission_not_set: 無法在 %{path} 上設定權限。
-          error: An unexpected error occurred. Please ensure that OneDrive/SharePoint is reachable and check OpenProject worker logs for more information
+          error: 發生意外錯誤。請確保 OneDrive/SharePoint 可以存取，並檢查 OpenProject Worker 日誌以取得更多資訊。
           not_allowed: OpenProject 不允許存取您的 OneDrive 磁碟機。請檢查 Azure 應用程式上設定的權限。
           unauthorized: OpenProject 無法與 OneDrive 同步。請檢查您的儲存空間和 Azure 應用程式設定。
           user_does_not_exist: "%{user} 在 Nextcloud 中不存在。"
@@ -343,8 +343,8 @@ zh-TW:
         subtitle: 您正被重新導向
         title: 整合設定完成
       timeout:
-        link_text: health status of the file storage setup
-        subtitle: OpenProject could not provide you access to the project folder within the expected period of time. Please, try once again.<br><br> If that problem persists please contact your OpenProject administrator to check the %{storages_health_link}.
+        link_text: 檔案儲存之健康狀態
+        subtitle: OpenProject 無法讓您在預期時間內存取專案資料夾。請再試一次。<br><br> 如果問題仍然存在，請聯絡您的 OpenProject 管理員以檢查 %{storages_health_link}。
       waiting:
         subtitle: 請稍候，這可能需要一些時間...
         title: 我們正在設定您在專案資料夾上的權限。

@@ -357,6 +357,7 @@ export class StorageComponent extends UntilDestroyedMixin implements OnInit, OnD
     const locals = {
       projectFolderHref: this.projectStorage._links.projectFolder?.href,
       projectFolderMode: this.projectStorage.projectFolderMode,
+      createFolderHref: `${this.projectStorage._links.storage.href}/folders`,
       storage,
     };
 

@@ -9,6 +9,7 @@ pt-BR:
     label_bcf: 'BCF'
     label_imported_failed: 'Importação de tópicos BCF falhou'
     label_imported_successfully: 'Tópicos BCF importados com sucesso'
+    label_bcf_issue_associated: "BCF issue associated"
     issues: "Problemas"
     recommended: 'recomendado'
     not_recommended: 'não recomendado'

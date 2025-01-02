@@ -14,6 +14,7 @@ ko:
         client_secret: 클라이언트 비밀번호
         secret: 비밀번호
         scope: 범위
+        grant_types_supported: Supported grant types
         limit_self_registration: 자체 등록 제한
         authorization_endpoint: 권한 부여 엔드포인트
         userinfo_endpoint: 사용자 정보 엔드포인트

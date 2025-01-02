@@ -66,6 +66,7 @@ class Principals::DeleteJob < ApplicationJob
     delete_notifications(principal)
     delete_private_queries(principal)
     delete_tokens(principal)
+    delete_favorites(principal)
   end
 
   def delete_notifications(principal)
@@ -75,6 +76,10 @@ class Principals::DeleteJob < ApplicationJob
   def delete_private_queries(principal)
     ::Query.where(user_id: principal.id, public: false).destroy_all
     CostQuery.where(user_id: principal.id, is_public: false).delete_all
+  end
+
+  def delete_favorites(principal)
+    Favorite.where(user_id: principal.id).delete_all
   end
 
   def delete_tokens(principal)

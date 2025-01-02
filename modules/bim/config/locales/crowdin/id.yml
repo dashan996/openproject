@@ -9,6 +9,7 @@ id:
     label_bcf: 'BCF'
     label_imported_failed: 'Gagal mengimport topik BCF'
     label_imported_successfully: 'Berhasil mengimport topik BCF'
+    label_bcf_issue_associated: "BCF issue associated"
     issues: "Masalah"
     recommended: 'Disarankan'
     not_recommended: 'Tidak disarankan'

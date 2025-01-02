@@ -14,6 +14,10 @@
                    *ngIf="displayShareButton$ | async">
   </wp-share-button>
 
+  <wp-reminder-button [workPackage]="workPackage"
+                      *ngIf="displayReminderButton$ | async">
+  </wp-reminder-button>
+
   <button class="button dropdown-relative"
           [attr.accesskey]="7"
 

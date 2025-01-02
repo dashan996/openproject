@@ -653,6 +653,8 @@ tr:
         new_notifications:
           message: "Yeni bildirimler var"
           link_text: "Click here to load them."
+      reminders:
+        note: "Note: “%{note}”"
       settings:
         change_notification_settings: 'Önemli bir güncellemeyi asla kaçırmamak için <a target="_blank" href="%{url}">bildirim ayarlarınızı</a> değiştirebilirsiniz.'
         title: "Bildirim ayarları"
@@ -740,6 +742,7 @@ tr:
         immediate:
           title: "Bana email hatırlatıcısı gönder"
           mentioned: "Birisi benden @bahsettiğinde hemen"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Diğer öğeler için e-posta uyarıları (iş paketleri olmayanlar)"
           explanation: >
@@ -771,10 +774,6 @@ tr:
         upgrade_to_ee_text: "Vay! Bu eklentiye ihtiyacınız varsa, siz bir süper profesyonelsiniz! Enterprise sürümü müşterisi olarak biz OpenSource geliştiricilerini destekler misiniz?"
         more_information: "Daha fazla bilgi"
         nevermind: "Boşver"
-      edit:
-        form_configuration: "Form Yapılandırması"
-        projects: "Projeler"
-        settings: "Ayarlar"
     time_entry:
       work_package_required: "Önce bir iş paketi seçilmesini gerektirir."
       title: "Zaman kaydet"
@@ -1043,6 +1042,12 @@ tr:
           not_found: "Böyle bir görünüm bulunmamakta"
           duplicate_query_title: "Bu isimde bir görünüm var. Yinede devam edilsin mi?"
         text_no_results: "Eşleşen görünüm bulunamadı."
+      reminders:
+        button_label: "Set reminder"
+        title:
+          new: "Set reminder"
+          edit: "Edit reminder"
+        subtitle: "You will receive a notification for this work package at the chosen time."
       scheduling:
         is_parent: "Bu çalışma paketinin tarihleri otomatik olarak çocuklarından çıkarılır. Tarihleri ayarlamak için 'Manuel zamanlama'yı etkinleştirin."
         is_switched_from_manual_to_automatic: "Bu çalışma paketinin tarihlerinin, diğer çalışma paketleriyle olan ilişkiler nedeniyle manuelden otomatik zamanlamaya geçtikten sonra yeniden hesaplanması gerekebilir."

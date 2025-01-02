@@ -29,14 +29,31 @@
 require "rails_helper"
 
 RSpec.describe Project::LifeCycleStepDefinition do
-  it "cannot be instantiated" do
-    expect { described_class.new }.to raise_error(NotImplementedError)
+  it "can be instantiated" do
+    expect { described_class.new }.not_to raise_error
   end
 
   context "with a Project::StageDefinition" do
     subject { create :project_stage_definition }
 
     it { is_expected.to have_readonly_attribute(:type) }
+  end
+
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_uniqueness_of(:name) }
+
+    it {
+      expect(subject).to validate_inclusion_of(:type)
+        .in_array(%w[Project::StageDefinition Project::GateDefinition])
+        .with_message(:must_be_a_stage_or_gate)
+    }
+
+    it "is invalid if type and class name do not match" do
+      subject.type = "Project::GateDefinition"
+      expect(subject).not_to be_valid
+      expect(subject.errors.symbols_for(:type)).to include(:type_and_class_name_mismatch)
+    end
   end
 
   # For more specs see:

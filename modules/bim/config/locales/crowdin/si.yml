@@ -9,6 +9,7 @@ si:
     label_bcf: 'BCF'
     label_imported_failed: 'BCF මාතෘකා ආනයනය අසමත්'
     label_imported_successfully: 'සාර්ථකව ආනයනය BCF මාතෘකා'
+    label_bcf_issue_associated: "BCF issue associated"
     issues: "ගැටළු"
     recommended: 'නිර්දේශ'
     not_recommended: 'නිර්දේශ කර නැත'

@@ -9,6 +9,7 @@ ko:
     label_bcf: 'BCF'
     label_imported_failed: 'BCF 항목 가져오기 실패'
     label_imported_successfully: 'BCF 항목 가져오기 성공'
+    label_bcf_issue_associated: "BCF issue associated"
     issues: "이슈"
     recommended: '추천'
     not_recommended: '추천하지 않음'

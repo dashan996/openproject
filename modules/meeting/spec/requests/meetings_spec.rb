@@ -141,8 +141,6 @@ RSpec.describe "Meeting requests",
         let(:send_notifications) { "1" }
 
         before do
-          meeting.participants.create!(user:, invited: true)
-
           subject
           perform_enqueued_jobs
         end

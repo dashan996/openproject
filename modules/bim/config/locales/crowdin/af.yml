@@ -9,6 +9,7 @@ af:
     label_bcf: 'BSF'
     label_imported_failed: 'Mislukte invoer van BSF-onderwerpe'
     label_imported_successfully: 'BSF-onderwerpe is suksesvol ingevoer'
+    label_bcf_issue_associated: "BCF issue associated"
     issues: "Kwessies"
     recommended: 'aanbeveelde'
     not_recommended: 'nie aanbeveel nie'

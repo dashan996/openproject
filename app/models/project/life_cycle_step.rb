@@ -27,23 +27,36 @@
 #++
 
 class Project::LifeCycleStep < ApplicationRecord
-  belongs_to :project, optional: false
+  belongs_to :project, optional: false, inverse_of: :available_life_cycle_steps
   belongs_to :definition,
              optional: false,
              class_name: "Project::LifeCycleStepDefinition"
   has_many :work_packages, inverse_of: :project_life_cycle_step, dependent: :nullify
 
+  delegate :name, :position, to: :definition
+
   attr_readonly :definition_id, :type
 
   validates :type, inclusion: { in: %w[Project::Stage Project::Gate], message: :must_be_a_stage_or_gate }
+  validate :validate_type_and_class_name_are_identical
 
-  def initialize(*args)
-    if instance_of? Project::LifeCycleStep
-      # Do not allow directly instantiating this class
-      raise NotImplementedError, "Cannot instantiate the base Project::LifeCycleStep class directly. " \
-                                 "Use Project::Stage or Project::Gate instead."
+  scope :active, -> { where(active: true) }
+
+  class << self
+    def visible(user = User.current)
+      allowed_projects = Project.allowed_to(user, :view_project_stages_and_gates)
+      active.where(project: allowed_projects)
     end
+  end
 
-    super
+  def validate_type_and_class_name_are_identical
+    if type != self.class.name
+      errors.add(:type, :type_and_class_name_mismatch)
+    end
+  end
+
+  def column_name
+    # The id of the associated definition is relevant for displaying the correct column headers
+    "lcsd_#{definition_id}"
   end
 end

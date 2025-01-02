@@ -14,6 +14,7 @@ zh-CN:
         client_secret: 客户端密钥
         secret: 密钥
         scope: 范围
+        grant_types_supported: 支持的授权类型
         limit_self_registration: 限制自行注册
         authorization_endpoint: 验证端点
         userinfo_endpoint: 用户信息端点

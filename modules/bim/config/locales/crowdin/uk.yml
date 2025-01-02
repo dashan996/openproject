@@ -9,6 +9,7 @@ uk:
     label_bcf: 'BCF'
     label_imported_failed: 'Не вдалося імпортувати BFC теми'
     label_imported_successfully: 'Успішно завантажено BCF теми'
+    label_bcf_issue_associated: "BCF issue associated"
     issues: "Задачі"
     recommended: 'рекомендовано'
     not_recommended: 'не рекомендується'

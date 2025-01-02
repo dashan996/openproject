@@ -64,4 +64,13 @@ export function addTurboGlobalListeners() {
     activateFlashNotice();
     activateFlashError();
   });
+
+  document.addEventListener('turbo:before-morph-element', (event) => {
+    const element = event.target as HTMLElement;
+
+    // In case the element is an OpenProject custom dom element, morphing is prevented.
+    if (element.tagName.toUpperCase().startsWith('OPCE-')) {
+      event.preventDefault();
+    }
+  });
 }

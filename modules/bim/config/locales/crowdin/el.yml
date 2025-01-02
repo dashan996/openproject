@@ -9,6 +9,7 @@ el:
     label_bcf: 'BCF'
     label_imported_failed: 'Αποτυχημένες εισαγωγές των θεμάτων BCF'
     label_imported_successfully: 'Επιτυχής εισαγωγή θέματων BCF'
+    label_bcf_issue_associated: "BCF issue associated"
     issues: "Ζητήματα"
     recommended: 'προτεινόμενο'
     not_recommended: 'δεν συνιστάται'

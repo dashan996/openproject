@@ -244,6 +244,15 @@ Rails.application.routes.draw do
             put :disable_all_of_section
           end
         end
+        resources :life_cycle_steps, only: %i[index], path: "life_cycle" do
+          member do
+            post :toggle
+          end
+          collection do
+            post :enable_all
+            post :disable_all
+          end
+        end
         resource :custom_fields, only: %i[show update]
         resource :repository, only: %i[show], controller: "repository"
         resource :versions, only: %i[show]
@@ -518,6 +527,9 @@ Rails.application.routes.draw do
           delete :unlink
         end
       end
+      # TODO: This is for now only added to be able to create a link
+      # There is no controller behind this.
+      resources :project_life_cycle_step_definitions, path: "project_life_cycles", only: %i[index]
       resources :project_custom_field_sections, controller: "/admin/settings/project_custom_field_sections",
                                                 only: %i[create update destroy] do
         member do
@@ -609,6 +621,12 @@ Rails.application.routes.draw do
     end
     resources :relations_tab, only: %i[index], controller: "work_package_relations_tab"
     resources :relations, only: %i[new create edit update destroy], controller: "work_package_relations"
+
+    resources :reminders,
+              controller: "work_packages/reminders",
+              only: %i[create update destroy] do
+      get :modal_body, on: :collection
+    end
 
     get "/export_dialog" => "work_packages#export_dialog", on: :collection, as: "export_dialog"
     get :show_conflict_flash_message, on: :collection # we don't need a specific work package for this

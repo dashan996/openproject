@@ -380,7 +380,7 @@ module Components
       def expect_upsale_banner
         within_modal do
           expect(page)
-            .to have_text(I18n.t(:label_enterprise_addon))
+            .to have_text(I18n.t(:"ee.upsale.title"))
         end
       end
 

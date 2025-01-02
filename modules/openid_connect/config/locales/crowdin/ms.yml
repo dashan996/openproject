@@ -14,6 +14,7 @@ ms:
         client_secret: Client secret
         secret: "Rahsia\n"
         scope: Skop
+        grant_types_supported: Supported grant types
         limit_self_registration: Hadkan pendaftaran sendiri
         authorization_endpoint: Authorization endpoint
         userinfo_endpoint: User information endpoint

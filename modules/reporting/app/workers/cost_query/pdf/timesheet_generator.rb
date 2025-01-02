@@ -137,7 +137,7 @@ class CostQuery::PDF::TimesheetGenerator
   def build_table_row(spent_on, entry)
     [
       { content: format_date(spent_on), rowspan: entry.comments.present? ? 2 : 1 },
-      entry.work_package.subject || "",
+      entry.work_package&.subject || "",
       with_times_column? ? format_spent_on_time(entry) : nil,
       format_hours(entry.hours),
       entry.activity&.name || ""

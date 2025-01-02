@@ -29,8 +29,8 @@
 require "rails_helper"
 
 RSpec.describe Project::LifeCycleStep do
-  it "cannot be instantiated" do
-    expect { described_class.new }.to raise_error(NotImplementedError)
+  it "can be instantiated" do
+    expect { described_class.new }.not_to raise_error(NotImplementedError)
   end
 
   describe "with an instantiated Gate" do
@@ -38,6 +38,36 @@ RSpec.describe Project::LifeCycleStep do
 
     it { is_expected.to have_readonly_attribute(:definition_id) }
     it { is_expected.to have_readonly_attribute(:type) }
+  end
+
+  describe "validations" do
+    it "is invalid if type and class name do not match" do
+      subject.type = "Project::Gate"
+      expect(subject).not_to be_valid
+      expect(subject.errors.symbols_for(:type)).to include(:type_and_class_name_mismatch)
+    end
+  end
+
+  describe ".visible" do
+    let(:project) { create(:project) }
+    let(:development_project) { create(:project) }
+    let(:user) do
+      create(:user,
+             member_with_permissions:
+             { project => %i(view_project view_project_stages_and_gates),
+               development_project => %i(view_project) })
+    end
+
+    let!(:life_cycle_gate) { create(:project_gate, project:) }
+    let!(:life_cycle_stage) { create(:project_stage, project:) }
+    let!(:life_cycle_stage_dev) { create(:project_stage, project: development_project) }
+    let!(:inactive_life_cycle_gate) { create(:project_gate, project:, active: false) }
+    let!(:inactive_life_cycle_stage) { create(:project_stage, project: development_project, active: false) }
+
+    it "returns active steps where the user has a view_project_stages_and_gates permission" do
+      expected_steps = [life_cycle_gate, life_cycle_stage]
+      expect(described_class.visible(user)).to eq(expected_steps)
+    end
   end
 
   # For more specs see:

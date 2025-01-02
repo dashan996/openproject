@@ -58,16 +58,17 @@ class Meeting::TimeGroup < ApplicationForm
       )
       group.text_field(
         name: :duration,
-        type: :number,
-        min: 0,
-        max: 24,
-        step: 0.05,
+        type: :text,
         value: @duration,
         placeholder: Meeting.human_attribute_name(:duration),
         label: Meeting.human_attribute_name(:duration),
         visually_hide_label: false,
         required: true,
-        caption: I18n.t("text_in_hours")
+        caption: I18n.t("text_in_hours"),
+        data: {
+          controller: "chronic-duration",
+          application_target: "dynamic"
+        }
       )
     end
   end
@@ -78,11 +79,18 @@ class Meeting::TimeGroup < ApplicationForm
     @meeting = meeting
     @initial_time = meeting.start_time_hour.presence || format_time(meeting.start_time, include_date: false, format: "%H:%M")
     @initial_date = meeting.start_date.presence || format_time_as_date(meeting.start_time, format: "%Y-%m-%d")
-    @duration =
-      if meeting.is_a?(RecurringMeeting) && meeting.template
-        meeting.template.duration
-      else
-        meeting.duration
-      end
+
+    duration = duration_value(meeting)
+    @duration = duration.nil? ? "" : ChronicDuration.output(duration * 3600, format: :hours_only)
+  end
+
+  private
+
+  def duration_value(meeting)
+    if meeting.is_a?(RecurringMeeting) && meeting.template
+      meeting.template.duration
+    else
+      meeting.duration
+    end
   end
 end

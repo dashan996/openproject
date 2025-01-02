@@ -9,6 +9,7 @@ sv:
     label_bcf: 'BCF'
     label_imported_failed: 'Misslyckad import av BCF-ämnen'
     label_imported_successfully: 'BCF-ämnen har importerats'
+    label_bcf_issue_associated: "BCF issue associated"
     issues: "Problem"
     recommended: 'rekommenderad'
     not_recommended: 'rekommenderas inte'

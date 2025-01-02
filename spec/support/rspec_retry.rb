@@ -76,6 +76,11 @@ def retry_block(args: {}, screenshot: false, &)
     end
   end
 
+  # By default retry_block works with StandardError, but the ExpectationNotMetError is
+  # not inherited from StandardError. Adding the RSpec::Expectations::ExpectationNotMetError
+  # will makes sure we retry if an expectation fails inside the retry_block.
+  args[:on] ||= [StandardError, RSpec::Expectations::ExpectationNotMetError]
+
   Retriable.retriable(on_retry: log_errors, **args, &)
 end
 

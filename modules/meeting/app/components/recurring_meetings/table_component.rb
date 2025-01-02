@@ -32,7 +32,7 @@ module RecurringMeetings
   class TableComponent < ::OpPrimer::BorderBoxTableComponent
     options :current_project, :count, :direction, :max_count
 
-    columns :start_time, :relative_time, :last_edited, :status, :create
+    columns :start_time, :relative_time, :status, :create
 
     def has_actions?
       true
@@ -70,7 +70,6 @@ module RecurringMeetings
       @headers ||= [
         [:start_time, { caption: I18n.t(:label_meeting_date_and_time) }],
         [:relative_time, { caption: I18n.t("recurring_meeting.starts") }],
-        [:last_edited, { caption: I18n.t(:label_meeting_last_updated) }],
         [:status, { caption: Meeting.human_attribute_name(:status) }],
         [:create, { caption: "" }]
       ].compact

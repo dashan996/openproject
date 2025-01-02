@@ -13,6 +13,7 @@ ru:
       open_storage: "Открыть %{storageType}"
       select_location: "Выберите местоположение"
       choose_location: "Выберите местоположение"
+      new_folder: "New folder"
       types:
         nextcloud: "Nextcloud"
         one_drive: "OneDrive/SharePoint"
@@ -42,6 +43,7 @@ ru:
           Автоматически управляемая папка проекта еще не найдена.  Подождите немного, перезагрузите страницу, чтобы получить последние данные, и повторите попытку.
         managed_project_folder_no_access: >
           У вас пока нет доступа к управляемой папке проекта. Пожалуйста, подождите немного и повторите попытку.
+        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols.
         upload_keep_both: "Оставить оба"
         upload_replace: "Заменить"
       file_links:

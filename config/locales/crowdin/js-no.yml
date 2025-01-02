@@ -654,6 +654,8 @@
         new_notifications:
           message: "Det finnes nye varsler."
           link_text: "Klikk her for å laste dem"
+      reminders:
+        note: "Note: “%{note}”"
       settings:
         change_notification_settings: 'Du kan endre <a target="_blank" href="%{url}">varslingsinnstillinger</a> for å sikre at du aldri går glipp av en viktig oppdatering.'
         title: "Varslingsinnstillinger"
@@ -741,6 +743,7 @@
         immediate:
           title: "Send meg en påminnelse"
           mentioned: "Umiddelbart hvis noen @nevner meg"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Epost varsler for andre produkter (som ikke er arbeidspakker)"
           explanation: >
@@ -772,10 +775,6 @@
         upgrade_to_ee_text: "Wow! Hvis du trenger dette tillegget er en superpro! Vil du støtte oss OpenSource-utviklere ved å bli en Enterpris-utgave-kunde?"
         more_information: "Mer informasjon"
         nevermind: "Glem det"
-      edit:
-        form_configuration: "Konfigurering av skjema"
-        projects: "Prosjekter"
-        settings: "Innstillinger"
     time_entry:
       work_package_required: "Valg av arbeidspakke er påkrevd"
       title: "Logg tid"
@@ -1044,6 +1043,12 @@
           not_found: "Det finnes ingen slik visning."
           duplicate_query_title: "Navnet på denne visningen finnes allerede. Endre allikevel?"
         text_no_results: "Ingen samsvarende visninger ble funnet."
+      reminders:
+        button_label: "Set reminder"
+        title:
+          new: "Set reminder"
+          edit: "Edit reminder"
+        subtitle: "You will receive a notification for this work package at the chosen time."
       scheduling:
         is_parent: "Datoene for denne arbeidspakken trekkes automatisk fra de underordnede. Aktiver 'Manuell planlegging' for å angi datoene."
         is_switched_from_manual_to_automatic: "Datoene for denne arbeidspakken må eventuelt beregnes på nytt etter å ha byttet fra manual til automatisk planlegging på grunn av relasjoner med andre arbeidspakker."

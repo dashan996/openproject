@@ -30,7 +30,7 @@ zh-TW:
       meeting:
         type: "會議類型"
         location: "地點"
-        duration: "天數"
+        duration: "時長"
         notes: "備註"
         participants: "參加人員"
         participant:
@@ -50,17 +50,17 @@ zh-TW:
       meeting_section:
         title: "標題"
       recurring_meeting:
-        frequency: "Frequency"
-        interval: "Interval"
-        start_date: "Starts on"
-        end_after: "End series after"
-        iterations: "Occurrences"
+        frequency: "頻率"
+        interval: "間隔"
+        start_date: "開始於"
+        end_after: "系列結束後"
+        iterations: "出現次數"
     errors:
       messages:
         invalid_time_format: "不是有效時間。所需格式: HH:MM"
     models:
-      recurring_meeting: "Recurring meeting"
-      structured_meeting: "會議(動態)"
+      recurring_meeting: "重複性會議"
+      structured_meeting: "一次性會議"
       meeting_agenda_item: "議程項目"
       meeting_agenda: "會議大綱"
       meeting_minutes: "會議記錄"
@@ -94,8 +94,8 @@ zh-TW:
   label_meeting: "會議"
   label_meeting_plural: "會議"
   label_meeting_new: "新增會議"
-  label_meeting_new_dynamic: "新的動態會議"
-  label_meeting_new_recurring: "New recurring meeting"
+  label_meeting_new_dynamic: "建立一次性會議"
+  label_meeting_new_recurring: "新的重複性會議"
   label_meeting_create: "新增會議"
   label_meeting_copy: "複製會議"
   label_meeting_edit: "編輯會議"
@@ -109,52 +109,54 @@ zh-TW:
   label_meeting_date_time: "日期 / 時間"
   label_meeting_date_and_time: "日期和時間"
   label_meeting_diff: "比較"
-  label_recurring_meeting: "Recurring meeting"
-  label_recurring_meeting_part_of: "Part of a meeting series"
-  label_recurring_meeting_new: "New recurring meeting"
-  label_recurring_meeting_plural: "Recurring meetings"
-  label_template: "Template"
-  label_recurring_meeting_view: "View meeting series"
-  label_recurring_meeting_create: "Create from template"
-  label_recurring_meeting_copy: "Copy as one-off"
-  label_recurring_meeting_cancel: "Cancel this occurrence"
-  label_recurring_meeting_delete: "Delete occurrence"
+  label_recurring_meeting: "重複性會議"
+  label_recurring_meeting_part_of: "系列會議的一部分"
+  label_recurring_meeting_new: "新的重複性會議"
+  label_recurring_meeting_plural: "重複性會議"
+  label_template: "模板"
+  label_recurring_meeting_view: "檢視會議系列"
+  label_recurring_meeting_create: "從模板建立"
+  label_recurring_meeting_copy: "複製為一次性"
+  label_recurring_meeting_cancel: "取消此事件"
+  label_recurring_meeting_delete: "刪除此事件"
   label_recurring_meeting_delete_confirmation: >
-    This meeting is part of a series called %{name}. This will only delete this particular occurrence and not the entire series. Do you want to continue?
+    此會議是 %{name}系列的一部分。這只會刪除此特定事件，而不會刪除整個系列。您要繼續嗎？
   label_recurring_occurrence_delete_confirmation: >
-    Any meeting information not in the template will be lost. Do you want to continue?
-  label_recurring_meeting_restore: "Restore this occurrence"
-  label_recurring_meeting_more: "There are %{count} more scheduled meetings (%{schedule})."
-  label_recurring_meeting_more_singular: "There is %{count} more scheduled meeting (%{schedule})."
-  label_recurring_meeting_more_past: "There are %{count} more past meetings."
-  label_recurring_meeting_more_past_singular: "There is %{count} more past meeting."
-  label_recurring_meeting_show_more: "Show more"
-  label_recurring_meeting_series_edit: "Edit meeting series"
-  label_recurring_meeting_series_delete: "Delete meeting series"
-  label_my_meetings: "My meetings"
-  label_all_meetings: "All meetings"
+    任何不在範本中的會議資訊將會遺失。要繼續嗎？
+  label_recurring_meeting_restore: "恢復此事件"
+  label_recurring_meeting_more: "還有 %{count} 預定會議 (%{schedule})。"
+  label_recurring_meeting_more_singular: "還有 %{count} 預定會議 (%{schedule})。"
+  label_recurring_meeting_more_past: "還有 %{count} 更多過去的會議。"
+  label_recurring_meeting_more_past_singular: "還有 %{count} 更多過去的會議。"
+  label_recurring_meeting_show_more: "顯示更多"
+  label_recurring_meeting_series_edit: "編輯系列會議"
+  label_recurring_meeting_series_delete: "刪除系列會議"
+  label_my_meetings: "我的會議"
+  label_all_meetings: "所有會議"
   label_upcoming_meetings: "即將到來的會議"
   label_past_meetings: "過去的會議"
   label_upcoming_meetings_short: "即將開會"
   label_past_meetings_short: "過往會議"
   label_involvement: "參與\n"
-  label_invitations: "Invitations"
+  label_invitations: "邀请"
+  label_invited_user: "受邀用户"
   label_past_invitations: "先前的會議邀請"
-  label_attended: "Attended"
-  label_created_by_me: "Created by me"
+  label_attended: "出席"
+  label_attended_user: "出席使用者"
+  label_created_by_me: "由我建立"
   label_notify: "送出審閱"
   label_icalendar: "發送 iCalendar"
   label_icalendar_download: "下載 iCalendar "
-  label_view_meeting_series: "View meeting series"
-  label_meeting_series: "Meeting series"
+  label_view_meeting_series: "檢視會議"
+  label_meeting_series: "會議"
   label_version: "版本"
   label_time_zone: "時區"
   label_start_date: "開始日期"
   meeting:
     participants:
-      template: "These participants will be invited automatically to all future meetings as they are created."
+      template: "這些參與者將自動被邀請參加未來所有建立的會議。"
     attachments:
-      template: "These attached files will be included in all future meetings in the series."
+      template: "這些隨附的檔案將納入所有未來的系列會議中。"
       text: "所有會議參與者都可以使用附件， 您也可以將它們拖放到議程項目註釋中。"
     copy:
       title: "複製會議 %{title}"
@@ -181,10 +183,12 @@ zh-TW:
     label_mail_all_participants: "發送電子郵件給所有參與者"
     types:
       classic: "經典"
-      classic_text: "以調整好的文字議程和程序來整理您的會議紀錄。"
-      structured: "動態"
-      recurring: "Recurring"
-      structured_text: "將您的會議整理成一個議程項目列表，並可選擇地將它們與一個工作項目連接起來。"
+      classic_text: "將會議組織為單一可格式化的文字議程和規程。"
+      structured: "結構化"
+      one_time: "一次性"
+      recurring: "重覆"
+      recurring_text: "為每次發生的事件建立具有動態範本的會議系列。"
+      structured_text: "將會議組織為動態的議程項目清單，可選擇將其連結到工作項目。"
       structured_text_copy: "目前複製會議不會複製相關會議的議程項目，只會複製會議的詳細信息。"
     copied: "從會議紀錄 #%{id} 中複製"
   meeting_section:
@@ -194,39 +198,38 @@ zh-TW:
     empty_text: "將項目拖曳至此處或建立新項目"
   recurring_meeting:
     occurrence:
-      infoline: "This meeting is part of a recurring meeting series."
-      error_no_next: "There is no next occurrence for this meeting."
-      first_already_exists: "The first occurrence of this meeting series is already instantiated."
+      infoline: "此會議為定期舉行的系列會議之一。"
+      error_no_next: "本次會議無下次會議。"
+      first_already_exists: "此會議系列的第一次出現已經實體化。"
       first_created: >
-        The first meeting has been successfuly created from template. All future meetings will be created automatically at the time of the previous occurrence.
+        第一次會議已從範本成功建立。以後所有的會議都會在前一次發生時自動建立。
     template:
-      button_finalize: "Finish template"
-      blank_title: "Your meeting series template is empty"
+      button_finalize: "完成範本"
+      blank_title: "您的會議範本是空的"
       description: >
-        This template will be used whenever new meetings in the series get created. You can add agenda items, participants, and attachments to this template.
+        每當在系列中建立新會議時，都會使用此範本。您可以在此範本中加入議程項目、與會者和附件。
       blankslate_finalize: >
-        When you're done preparing this template, click the '%{button_title}' button above to finish the setup and schedule the first meeting of the series.
-      label_view_template: "View template"
-      label_edit_template: "Edit template"
+        準備完此範本後，按一下上方的 '%{button_title}' 按鈕，即可完成設定並排定系列會議的第一次會議。
+      label_view_template: "查看範本"
+      label_edit_template: "編輯範本"
       banner_html: >
-        You are currently editing a template of a meeting series: %{link}. Every new occurrence of a meeting in the series will use this template. Changes will not affect past or already created meetings.
+        您目前正在編輯會議系列的範本： %{link}。系列會議中的每次新會議都會使用此範本。變更不會影響過去或已建立的會議。
     frequency:
-      every_weekday: "Every %{day_of_the_week}"
-      daily: "Daily"
-      working_days: "Every working day"
-      weekly: "Weekly"
+      every_weekday: "每個 %{day_of_the_week}"
+      daily: "每日"
+      working_days: "每個工作天"
+      weekly: "每週"
     end_after:
-      specific_date: "a specific date"
-      iterations: "a number of occurrences"
-    starts: "Starts"
+      specific_date: "特定日期"
+      iterations: "出現數"
+    starts: "開始"
     in_words:
-      daily_interval: "Every %{interval} days"
-      working_days: "Every working day"
-      working_days_interval: "Every %{interval} working day"
-      weekly: "Every week on %{weekday}"
-      weekly_interval: "Every %{interval} weeks on %{weekday}"
-      frequency: "%{base} at %{time}"
-      full: "%{base} at %{time}, ends on %{end_date}"
+      daily_interval: "每 %{interval} 天"
+      working_days: "每個工作天"
+      weekly: "每週 %{weekday}"
+      weekly_interval: "每 %{interval} 週 %{weekday}"
+      frequency: "%{base} 在 %{time}"
+      full: "%{base} 於 %{time}, 結束於 %{end_date}"
   notice_successful_notification: "通知傳送成功"
   notice_timezone_missing: 沒有設定時區，預設時區為 %{zone} 。請按這裡選擇您的時區。
   notice_meeting_updated: "本頁已由他人更新。重新載入以查看變更。"
@@ -246,7 +249,7 @@ zh-TW:
   permission_send_meeting_agendas_icalendar: "將議題大綱傳至行事曆"
   project_module_meetings: "會議"
   text_duration_in_hours: "持續時間 (小時)"
-  text_in_hours: "在一小時內"
+  text_in_hours: "小時數"
   text_meeting_agenda_for_meeting: '%{meeting} 的會議大綱'
   text_meeting_closing_are_you_sure: "確實要關閉議程嗎？"
   text_meeting_agenda_open_are_you_sure: "將會覆蓋所有會議紀錄中的變動！您希望繼續嗎？"
@@ -279,17 +282,17 @@ zh-TW:
   text_deleted_agenda_item: '已刪除的議程項目'
   label_initial_meeting_details: "會議"
   label_meeting_details: "會議詳情"
-  label_meeting_series_details: "Meeting series details"
+  label_meeting_series_details: "會議詳細資訊"
   label_meeting_details_edit: "編輯會議詳情"
   label_meeting_state: "會議狀態"
   label_meeting_state_open: "開啟"
   label_meeting_state_open_html: "<i>開啟</i>"
   label_meeting_state_closed: "關閉"
   label_meeting_state_closed_html: "<i>關閉</i>"
-  label_meeting_state_agenda_created: "Agenda created"
-  label_meeting_state_scheduled: "Scheduled"
-  label_meeting_state_cancelled: "Cancelled"
-  label_meeting_state_skipped: "Skipped"
+  label_meeting_state_agenda_created: "議程已建立"
+  label_meeting_state_scheduled: "已排程"
+  label_meeting_state_cancelled: "已取消"
+  label_meeting_state_skipped: "已略過"
   label_meeting_reopen_action: "重新開啟會議"
   label_meeting_close_action: "關閉會議"
   text_meeting_open_description: "本次會議已開放。您可以新增/移除議程項目並隨時編輯它們。會議結束後，關閉後鎖定起來。"

@@ -104,7 +104,7 @@ module API
           "Notification"
         end
 
-        self.to_eager_load = %i[actor journal]
+        self.to_eager_load = [:actor, :journal, :reminder, { resource: :project }]
       end
     end
   end

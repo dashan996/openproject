@@ -27,8 +27,10 @@
 //++
 
 import { WorkPackageResource } from 'core-app/features/hal/resources/work-package-resource';
+import { ProjectResource } from 'core-app/features/hal/resources/project-resource';
 import { StateService } from '@uirouter/core';
 import {
+  ChangeDetectionStrategy,
   Component,
   HostListener,
   Injector,
@@ -55,16 +57,19 @@ import { CurrentUserService } from 'core-app/core/current-user/current-user.serv
     CommentService,
     { provide: HalResourceNotificationService, useExisting: WorkPackageNotificationService },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WorkPackagesFullViewComponent extends WorkPackageSingleViewBase implements OnInit {
   // Watcher properties
   public isWatched:boolean;
 
-  public displayWatchButton = false;
+  public displayReminderButton$:false|Observable<boolean> = false;
+
+  public displayShareButton$:false|Observable<boolean> = false;
 
   public displayTimerButton = false;
 
-  public displayShareButton$:false|Observable<boolean> = false;
+  public displayWatchButton = false;
 
   public watchers:any;
 
@@ -116,7 +121,8 @@ export class WorkPackagesFullViewComponent extends WorkPackageSingleViewBase imp
     this.isWatched = Object.prototype.hasOwnProperty.call(wp, 'unwatch');
     this.displayWatchButton = Object.prototype.hasOwnProperty.call(wp, 'unwatch') || Object.prototype.hasOwnProperty.call(wp, 'watch');
     this.displayTimerButton = Object.prototype.hasOwnProperty.call(wp, 'logTime');
-    this.displayShareButton$ = this.currentUserService.hasCapabilities$('work_package_shares/index', wp.project.id);
+    this.displayShareButton$ = this.currentUserService.hasCapabilities$('work_package_shares/index', (wp.project as ProjectResource).id);
+    this.displayReminderButton$ = this.currentUserService.hasCapabilities$('work_package_reminders/modal_body', (wp.project as ProjectResource).id);
 
     // watchers
     if (wp.watchers) {

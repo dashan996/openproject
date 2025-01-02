@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -43,6 +45,7 @@ RSpec.describe WorkPackages::SetAttributesService,
 
     p
   end
+
   let(:work_package) do
     wp = build_stubbed(:work_package, project:, status: status_0_pct_complete)
     wp.type = initial_type
@@ -50,9 +53,7 @@ RSpec.describe WorkPackages::SetAttributesService,
 
     wp
   end
-  let(:new_work_package) do
-    WorkPackage.new
-  end
+  let(:new_work_package) { WorkPackage.new }
   let(:initial_type) { build_stubbed(:type) }
   let(:milestone_type) { build_stubbed(:type_milestone) }
   let(:statuses) { [] }
@@ -78,24 +79,25 @@ RSpec.describe WorkPackages::SetAttributesService,
   end
 
   shared_examples_for "service call" do |description: nil|
-    subject do
-      allow(work_package)
-        .to receive(:save)
+    subject(:service_result) { instance.call(call_attributes) }
 
-      instance.call(call_attributes)
-    end
+    before { allow(work_package).to receive(:save) }
 
     it description || "sets the value" do
       all_expected_attributes = {}
       all_expected_attributes.merge!(expected_attributes) if defined?(expected_attributes)
+
       if defined?(expected_kept_attributes)
         kept = work_package.attributes.slice(*expected_kept_attributes)
+
         if kept.size != expected_kept_attributes.size
           raise ArgumentError, "expected_kept_attributes contains attributes that are not present in the work_package: " \
                                "#{expected_kept_attributes - kept.keys} not present in #{work_package.attributes}"
         end
+
         all_expected_attributes.merge!(kept)
       end
+
       next if all_expected_attributes.blank?
 
       subject
@@ -354,9 +356,7 @@ RSpec.describe WorkPackages::SetAttributesService,
     let(:new_statuses) { [other_status, default_status] }
 
     before do
-      allow(Status)
-        .to receive(:default)
-              .and_return(default_status)
+      allow(Status).to receive(:default).and_return(default_status)
     end
 
     context "with no value set before for a new work package" do
@@ -364,9 +364,7 @@ RSpec.describe WorkPackages::SetAttributesService,
       let(:expected_attributes) { { status: default_status } }
       let(:work_package) { new_work_package }
 
-      before do
-        work_package.status = nil
-      end
+      before { work_package.status = nil }
 
       it_behaves_like "service call"
     end
@@ -447,17 +445,15 @@ RSpec.describe WorkPackages::SetAttributesService,
 
       it_behaves_like "service call" do
         it "sets the service's author" do
-          subject
+          instance.call(call_attributes)
 
-          expect(work_package.author)
-            .to eql user
+          expect(work_package.author).to eql user
         end
 
         it "notes the author to be system changed" do
           subject
 
-          expect(work_package.changed_by_system["author_id"])
-            .to eql [nil, user.id]
+          expect(work_package.changed_by_system["author_id"]).to eql [nil, user.id]
         end
       end
     end
@@ -565,7 +561,7 @@ RSpec.describe WorkPackages::SetAttributesService,
         before do
           allow(parent)
             .to receive(:soonest_start)
-                  .and_return(parent_start_date + 3.days)
+            .and_return(parent_start_date + 3.days)
         end
 
         it_behaves_like "service call" do
@@ -1475,10 +1471,10 @@ RSpec.describe WorkPackages::SetAttributesService,
 
       allow(IssuePriority)
         .to receive(:active)
-              .and_return(scope)
+        .and_return(scope)
       allow(scope)
         .to receive(:default)
-              .and_return(default_priority)
+        .and_return(default_priority)
     end
 
     context "with no value set before for a new work package" do
@@ -1639,22 +1635,22 @@ RSpec.describe WorkPackages::SetAttributesService,
       instance_double(ActiveRecord::Relation).tap do |categories_stub|
         allow(new_project)
           .to receive(:categories)
-                .and_return(categories_stub)
+          .and_return(categories_stub)
       end
     end
 
     before do
       without_partial_double_verification do
         allow(new_project_categories)
-        .to receive(:find_by)
-              .with(name: category.name)
-              .and_return nil
+          .to receive(:find_by)
+          .with(name: category.name)
+          .and_return nil
         allow(new_project)
           .to receive_messages(shared_versions: new_versions, types: new_types)
         allow(new_types)
           .to receive(:order)
-                .with(:position)
-                .and_return(new_types)
+          .with(:position)
+          .and_return(new_types)
       end
     end
 
@@ -1703,8 +1699,8 @@ RSpec.describe WorkPackages::SetAttributesService,
           before do
             allow(new_project_categories)
               .to receive(:find_by)
-                    .with(name: category.name)
-                    .and_return new_category
+              .with(name: category.name)
+              .and_return new_category
           end
 
           it "uses the equally named category" do
@@ -1859,7 +1855,7 @@ RSpec.describe WorkPackages::SetAttributesService,
 
       allow(wp)
         .to receive(:soonest_start)
-              .and_return(soonest_start)
+        .and_return(soonest_start)
 
       wp
     end
@@ -1940,7 +1936,7 @@ RSpec.describe WorkPackages::SetAttributesService,
       before do
         allow(work_package)
           .to receive(:children)
-                .and_return([child])
+          .and_return([child])
       end
 
       context "when the child`s start date is after soonest_start" do
@@ -1965,6 +1961,35 @@ RSpec.describe WorkPackages::SetAttributesService,
             expect(work_package.due_date).to eql(Time.zone.today + 11.days)
           end
         end
+      end
+    end
+  end
+
+  context "when the type defines a pattern for an attribute" do
+    let(:type) { build_stubbed(:type, patterns: { subject: { blueprint: "{{type}} {{project_name}}", enabled: true } }) }
+    let(:work_package) { WorkPackage.new(type:) }
+
+    it "assigns a to be updated value to the field" do
+      instance.call({})
+
+      expect(work_package.subject).to eq("Templated by #{type.name}")
+    end
+
+    it "overrides even a passed subject" do
+      instance.call(subject: "I will be overwritten")
+
+      expect(work_package.subject).to eq("Templated by #{type.name}")
+    end
+
+    context "when the pattern is disabled" do
+      let(:type) do
+        build_stubbed(:type, patterns: { subject: { blueprint: "{{type}} {{project_name}}", enabled: false } })
+      end
+
+      it "does not overwrite the attribute" do
+        instance.call(subject: "I will be kept")
+
+        expect(work_package.subject).to eq("I will be kept")
       end
     end
   end

@@ -9,6 +9,7 @@ tr:
     label_bcf: 'BCF'
     label_imported_failed: 'BCF konularının başarısız ithalatı'
     label_imported_successfully: 'BCF konuları başarıyla içe aktarıldı'
+    label_bcf_issue_associated: "BCF issue associated"
     issues: "Sorunlar"
     recommended: 'Tavsiye edilen'
     not_recommended: 'tavsiye edilmez'

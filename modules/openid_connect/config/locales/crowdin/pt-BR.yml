@@ -14,6 +14,7 @@ pt-BR:
         client_secret: Segredo do cliente
         secret: Chave
         scope: Escopo
+        grant_types_supported: Supported grant types
         limit_self_registration: Limitar registro automático
         authorization_endpoint: Endpoint de autorização
         userinfo_endpoint: Endpoint de informações do usuários

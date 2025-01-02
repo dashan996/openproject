@@ -13,6 +13,7 @@ pt-PT:
       open_storage: "Abrir %{storageType}"
       select_location: "Selecionar localização"
       choose_location: "Escolher localização"
+      new_folder: "New folder"
       types:
         nextcloud: "Nextcloud"
         one_drive: "OneDrive/SharePoint"
@@ -42,6 +43,7 @@ pt-PT:
           A pasta do projeto gerido automaticamente ainda não foi encontrada. Aguarde um pouco, recarregue a página para obter os dados mais recentes e tente novamente.
         managed_project_folder_no_access: >
           Ainda não tem acesso à pasta do projeto gerido. Aguarde um pouco e tente novamente.
+        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols.
         upload_keep_both: "Manter ambos"
         upload_replace: "Substituir"
       file_links:

@@ -62,7 +62,7 @@ RSpec.describe "Work package navigation", :js, :selenium do
     global_work_packages.visit!
 
     global_work_packages.expect_work_package_listed(work_package)
-    global_html_title.expect_first_segment "All open"
+    global_html_title.expect_first_segment "All open | Work Packages"
 
     # open details pane for work package
 
@@ -70,14 +70,14 @@ RSpec.describe "Work package navigation", :js, :selenium do
 
     split_work_package.expect_subject
     split_work_package.expect_current_path
-    global_html_title.expect_first_segment wp_title_segment
+    global_html_title.expect_first_segment "#{wp_title_segment} | Work Packages"
 
     # Go to full screen by double click
     full_work_package = global_work_packages.open_full_screen_by_doubleclick(work_package)
 
     full_work_package.expect_subject
     full_work_package.expect_current_path
-    global_html_title.expect_first_segment wp_title_segment
+    global_html_title.expect_first_segment "#{wp_title_segment} | Work Packages"
 
     # deep link work package details pane
 
@@ -97,17 +97,17 @@ RSpec.describe "Work package navigation", :js, :selenium do
     project_work_packages.visit!
 
     project_work_packages.expect_work_package_listed(work_package)
-    project_html_title.expect_first_segment "All open"
+    project_html_title.expect_first_segment "All open | Work Packages"
 
     # Visit query with project wp
     project_work_packages.visit_query query
     project_work_packages.expect_work_package_listed(work_package)
-    project_html_title.expect_first_segment "My fancy query"
+    project_html_title.expect_first_segment "My fancy query | Work Packages"
 
     # Go back to work packages without query
     page.execute_script("window.history.back()")
     project_work_packages.expect_work_package_listed(work_package)
-    project_html_title.expect_first_segment "All open"
+    project_html_title.expect_first_segment "All open | Work Packages"
 
     # open project work package details pane
 
@@ -115,19 +115,19 @@ RSpec.describe "Work package navigation", :js, :selenium do
 
     split_project_work_package.expect_subject
     split_project_work_package.expect_current_path
-    project_html_title.expect_first_segment wp_title_segment
+    project_html_title.expect_first_segment "#{wp_title_segment} | Work Packages"
 
     # open work package full screen by button
     full_work_package = split_project_work_package.switch_to_fullscreen
 
     full_work_package.expect_subject
     expect(page).to have_current_path project_work_package_path(project, work_package, "activity")
-    project_html_title.expect_first_segment wp_title_segment
+    project_html_title.expect_first_segment "#{wp_title_segment} | Work Packages"
 
     # Switch tabs
     full_work_package.switch_to_tab tab: :relations
     expect(page).to have_current_path project_work_package_path(project, work_package, "relations")
-    project_html_title.expect_first_segment wp_title_segment
+    project_html_title.expect_first_segment "#{wp_title_segment} | Work Packages"
 
     # Back to split screen using the button
     full_work_package.go_back

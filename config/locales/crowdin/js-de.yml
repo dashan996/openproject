@@ -653,6 +653,8 @@ de:
         new_notifications:
           message: "Es gibt neue Benachrichtigungen."
           link_text: "Hier klicken zum Aktualisieren."
+      reminders:
+        note: "Anmerkung: „%{note}“"
       settings:
         change_notification_settings: 'Sie können Ihre <a target="_blank" href="%{url}">Benachrichtigungseinstellungen</a> ändern, um sicherzustellen, dass Sie keine wichtige Aktualisierung verpassen.'
         title: "Benachrichtigungseinstellungen"
@@ -740,6 +742,7 @@ de:
         immediate:
           title: "Eine E-Mail Erinnerung an mich senden"
           mentioned: "Sofort, wenn mich jemand @erwähnt"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "E-Mail-Benachrichtigungen für andere Objekte (die keine Arbeitspakete sind)"
           explanation: >
@@ -771,10 +774,6 @@ de:
         upgrade_to_ee_text: "Wow! Wenn du dieses Add-on benötigst, bist du ein super Pro! Würdest du uns OpenProject-Entwickler unterstützen, indem du ein Enterprise Edition-Kunde wirst?"
         more_information: "Weitere Informationen"
         nevermind: "Nein danke"
-      edit:
-        form_configuration: "Formularkonfiguration"
-        projects: "Projekte"
-        settings: "Einstellungen"
     time_entry:
       work_package_required: "Benötigt zuerst die Auswahl eines Arbeitspakets."
       title: "Zeit buchen"
@@ -1043,6 +1042,12 @@ de:
           not_found: "Diese Ansicht konnte nicht gefunden werden"
           duplicate_query_title: "Eine Ansicht mit diesem Namen existiert bereits. Trotzdem ändern?"
         text_no_results: "Keine übereinstimmenden Ansichten gefunden."
+      reminders:
+        button_label: "Erinnerung einrichten"
+        title:
+          new: "Erinnerung einrichten"
+          edit: "Erinnerung bearbeiten"
+        subtitle: "Sie erhalten zum ausgewählten Zeitpunkt eine Benachrichtigung für dieses Arbeitspaket."
       scheduling:
         is_parent: "Die Termine dieses Arbeitspakets werden automatisch von seinen Kindern aggregiert. Aktivieren Sie \"Manuelle Planung\", um die Termine frei zu setzen."
         is_switched_from_manual_to_automatic: "Die Termine dieses Arbeitspakets müssen nach dem Wechsel auf automatische Planung neu berechnet werden."

@@ -14,6 +14,7 @@ ru:
         client_secret: Закрытый ключ клиента
         secret: Секретный ключ
         scope: Область
+        grant_types_supported: Supported grant types
         limit_self_registration: Ограничить саморегистрацию
         authorization_endpoint: Конечная точка авторизации
         userinfo_endpoint: Конечная точка получения информации о пользователе

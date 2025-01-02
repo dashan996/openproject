@@ -280,7 +280,7 @@ fr:
           Voulez-vous continuer ?
       work_packages_settings:
         warning_progress_calculation_mode_change_from_status_to_field_html: >-
-          Passer du mode de calcul de la progression basé sur le statut au mode basé sur le travail transformera <i>% réalisé</i> en champ librement modifiable. Si vous complétez les champs <i>Travail</i> et <i>Travail restant</i>, ils seront également liés à <i>% réalisé</i>. Changer le champ <i>Travail restant</i> peut alors changer le <i>% réalisé</i>.
+          Passer du mode de calcul de la progression basé sur le statut au mode basé sur le travail transformera <i>% réalisé</i> en champ librement modifiable. Si vous complétez les champs <i>Travail</i> et <i>Travail restant</i>, ils seront également liés à <i>% réalisé</i>. Changer le champ <i>Travail restant</i> peut alors changer le <i>% réalisé</i>.
         warning_progress_calculation_mode_change_from_field_to_status_html: >-
           Passer du mode de calcul de la progression basé sur le travail au mode basé sur le statut entraînera la perte de toutes les valeurs de <i>% réalisé</i> existantes et leur remplacement par les valeurs associées à chaque statut. Les valeurs existantes pour <i>Travail restant</i> peuvent également être recalculées pour refléter ce changement. Cette action est irréversible.
     custom_actions:
@@ -621,7 +621,7 @@ fr:
         prioritized: "Priorisé"
         dateAlert: "Alarmes"
         shared: "Partagé"
-        reminder: "Reminder"
+        reminder: "Rappel"
       date_alerts:
         milestone_date: "Date jalon"
         overdue: "En retard"
@@ -654,6 +654,8 @@ fr:
         new_notifications:
           message: "Il y a de nouvelles notifications."
           link_text: "Cliquez ici pour les télécharger."
+      reminders:
+        note: "Note : \"%{note}\""
       settings:
         change_notification_settings: 'Vous pouvez modifier vos <a target="_blank" href="%{url}">paramètres de notification</a> pour vous assurer de ne jamais manquer une mise à jour importante.'
         title: "Paramètres de notifications"
@@ -741,6 +743,7 @@ fr:
         immediate:
           title: "Envoyez-moi un rappel par e-mail"
           mentioned: "Immédiatement quand quelqu'un me @mentionne"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Alertes par e-mail pour les autres éléments (qui ne sont pas des lots de travaux)"
           explanation: >
@@ -772,10 +775,6 @@ fr:
         upgrade_to_ee_text: "Waouh ! Si vous avez besoin de cette fonctionnalité, vous êtes un véritable pro ! Cela vous dérangerait-il de soutenir les développeurs Open Source en devenant un client de la version Entreprise ?"
         more_information: "Plus d'informations"
         nevermind: "Peu importe"
-      edit:
-        form_configuration: "Configuration du formulaire"
-        projects: "Projets"
-        settings: "Paramètres"
     time_entry:
       work_package_required: "Nécessite d'abord la sélection d'un lot de travaux."
       title: "Consigner temps"
@@ -1044,6 +1043,12 @@ fr:
           not_found: "Cette vue n'existe pas"
           duplicate_query_title: "Le nom de cette vue existe déjà. Changer quand même ?"
         text_no_results: "Aucune vue correspondante n'a été trouvée."
+      reminders:
+        button_label: "Définir un rappel"
+        title:
+          new: "Définir un rappel"
+          edit: "Modifier un rappel"
+        subtitle: "Vous recevrez une notification pour ce lot de travaux au moment choisi."
       scheduling:
         is_parent: "Les dates de ce lot de travaux sont automatiquement déduites de ses enfants. Activez la « Planification manuelle » pour définir les dates."
         is_switched_from_manual_to_automatic: "Les dates de ce lot de travaux peuvent avoir besoin d'être recalculées après avoir passé de la planification manuelle à la planification automatique en raison de relations avec d'autres lots de travaux."

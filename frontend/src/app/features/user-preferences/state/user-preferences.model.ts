@@ -11,6 +11,7 @@ export interface PauseRemindersSettings {
 }
 export interface ImmediateRemindersSettings {
   mentioned:boolean;
+  personalReminder:boolean;
 }
 
 export interface IUserPreference {

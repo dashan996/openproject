@@ -13,6 +13,7 @@ vi:
       open_storage: "Mở %{storageType}"
       select_location: "Chọn vị trí"
       choose_location: "Chọn vị trí"
+      new_folder: "New folder"
       types:
         nextcloud: "Nextcloud"
         one_drive: "OneDrive/SharePoint"
@@ -42,6 +43,7 @@ vi:
           Thư mục dự án được quản lý tự động chưa được tìm thấy. Vui lòng đợi một chút, tải lại trang để lấy dữ liệu mới nhất, và thử lại.
         managed_project_folder_no_access: >
           Bạn chưa có quyền truy cập vào thư mục dự án được quản lý. Vui lòng đợi một chút và thử lại.
+        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols.
         upload_keep_both: "Giữ cả hai"
         upload_replace: "Thay thế"
       file_links:

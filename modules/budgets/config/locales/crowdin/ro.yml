@@ -59,7 +59,7 @@ ro:
     budget: "Buget editat"
   help_click_to_edit: "Câmpul %s este gol. Click aici pentru a-l edita."
   help_currency_format: "Formatul valorilor valutare afișate. %n este înlocuit cu valoarea monedei, %u este înlocuit cu unitatea monetară."
-  help_override_rate: "Introduceți o valoare aici pentru a înlocui rata implicită."
+  help_override_rate: "Introdu o valoare aici pentru a înlocui rata implicită."
   label_budget: "Buget"
   label_budget_new: "Buget nou"
   label_budget_plural: "Bugete"

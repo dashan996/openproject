@@ -9,6 +9,7 @@ ms:
     label_bcf: 'BCF'
     label_imported_failed: 'Import topik BCF yang gagal'
     label_imported_successfully: 'Import topik BCF yang berjaya'
+    label_bcf_issue_associated: "BCF issue associated"
     issues: "Isu-isu"
     recommended: 'disarankan'
     not_recommended: 'tidak disarankan'

@@ -54,6 +54,7 @@ RSpec.describe "My page", :js do
   let(:my_page) do
     Pages::My::Page.new
   end
+  let(:global_html_title) { Components::HtmlTitle.new }
 
   before do
     login_as user
@@ -98,6 +99,8 @@ RSpec.describe "My page", :js do
   end
 
   it "renders the default view, allows altering and saving" do
+    global_html_title.expect_first_segment "My page"
+
     # Waits for the default view to be created
     my_page.expect_toast(message: "Successful update")
 

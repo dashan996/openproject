@@ -91,12 +91,6 @@ module RecurringMeetings
       render(OpPrimer::RelativeTimeComponent.new(datetime: user_time_zone(time), prefix: I18n.t(:label_on)))
     end
 
-    def last_edited
-      return unless instantiated?
-
-      helpers.format_time(meeting.updated_at, include_date: true)
-    end
-
     def state
       if model.cancelled?
         "cancelled"

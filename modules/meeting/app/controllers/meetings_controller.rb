@@ -348,7 +348,7 @@ class MeetingsController < ApplicationController
   end
 
   def apply_default_filter_if_none_given(query)
-    return if query.filters.any?
+    return if params.key?(:filters)
 
     query.where("invited_user_id", "=", [User.current.id.to_s])
   end

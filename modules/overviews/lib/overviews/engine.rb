@@ -63,6 +63,20 @@ module Overviews
             "overviews/overviews/update_project_custom_values"
           )
 
+        OpenProject::AccessControl.permission(:view_project_stages_and_gates)
+          .controller_actions
+          .push(
+            "overviews/overviews/project_life_cycles_sidebar"
+          )
+
+        OpenProject::AccessControl.permission(:edit_project_stages_and_gates)
+          .controller_actions
+          .push(
+            "overviews/overviews/project_life_cycles_dialog",
+            "overviews/overviews/project_life_cycles_form",
+            "overviews/overviews/update_project_life_cycles"
+          )
+
         OpenProject::AccessControl.permission(:view_work_packages)
           .controller_actions
           .push(

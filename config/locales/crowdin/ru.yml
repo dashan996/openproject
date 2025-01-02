@@ -342,6 +342,9 @@ ru:
         text: "Это действие не приведет к удалению ни одного проекта, содержащегося в списке. Вы уверены, что хотите удалить этот список проектов?"
     settings:
       change_identifier: Идентификатор изменений
+      actions:
+        label_enable_all: "Enable all"
+        label_disable_all: "Disable all"
       activities:
         no_results_title_text: В настоящее время никакой активности.
       forums:
@@ -352,18 +355,26 @@ ru:
         no_results_content_text: Создать новую категорию пакета работ
       custom_fields:
         no_results_title_text: Нет доступных настраиваемых полей.
+      life_cycle:
+        header:
+          title: "Project lifecycle"
+          description_html: 'These project stages and gates in the project lifecycle will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> and are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. You can enable or disable individual attributes.'
+        non_defined: "Neither stages nor gates are currently defined."
+        section_header: "Stages and gates"
+        step:
+          use_in_project: "Use %{step} in this project"
+        filter:
+          label: "Search project stage or gate"
       project_custom_fields:
         header:
           title: "Атрибуты проекта"
-          description: 'Эти атрибуты проекта будут отображаться на Вашей <a href=%{overview_url} target="_blank">странице обзора проекта</a> в соответствующих разделах. Вы можете включить или отключить отдельные атрибуты. Атрибуты проекта и разделы определяются в <a href=%{admin_settings_url} target="_blank">настройках администрирования</a> администратором экземпляра.'
+          description_html: 'These project attributes will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> under their respective sections. You can enable or disable individual attributes. Project attributes and sections are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. '
         filter:
           label: "Поиск атрибута проекта"
         actions:
           label_enable_single: "Активно в этом проекте, нажмите для отключения"
           label_disable_single: "Неактивно в этом проекте, нажмите для включения"
           remove_from_project: "Удалить из проекта"
-          label_enable_all: "Включить всё"
-          label_disable_all: "Выключить всё"
         is_required_blank_slate:
           heading: Требуется во всех проектах
           description: Этот атрибут проекта активирован во всех проектах, поскольку установлен флажок «Требуется во всех проектах». Его нельзя отключить для отдельных проектов.
@@ -376,6 +387,12 @@ ru:
         no_results_content_text: Создать новую версию
       storage:
         no_results_title_text: Для этого проекта дополнительного дискового пространства не требуется.
+  project_stage:
+    working_days_count:
+      one: "Duration: %{count} working day"
+      few: "Duration: %{count} working days"
+      many: "Duration: %{count} working days"
+      other: "Duration: %{count} working days"
   lists:
     create:
       success: "Измененный список был сохранен как новый"
@@ -586,18 +603,27 @@ ru:
       no_results_title_text: В данный момент типы отсутствуют.
       no_results_content_text: Создать новый тип
     edit:
-      settings: "Настройки"
-      form_configuration: "Настройка форм"
+      form_configuration:
+        tab: "Form configuration"
       more_info_text_html: >
         Корпоративная редакция позволяет настроить конфигурацию форм с этими дополнительными возможностями: <br> <ul class="%{list_styling_class}"> <li><b>Добавить новые группы атрибутов</b></li> <li><b>Переименовать группы атрибутов</b></li> </ul>
-      projects: "Проекты"
-      enabled_projects: "Доступные проекты"
-      edit_query: "Изменить таблицу"
-      query_group_placeholder: "Дайте таблице название"
-      reset: "Восстановить значения по умолчанию"
-      type_color_text: |
-        Выбранный цвет выделяет разные типы
-        в диаграммах Ганта или таблицах пакетов работ. Поэтому рекомендуется использовать насыщенный цвет.
+      projects:
+        tab: "Projects"
+        enabled_projects: "Enabled projects"
+      settings:
+        tab: "Settings"
+        type_color_text: The selected color distinguishes different types in Gantt charts or work packages tables. It is therefore recommended to use a strong color.
+      subject_configuration:
+        tab: "Subject configuration"
+        manually_editable_subjects:
+          label: "Manually editable subjects"
+          caption: "Users can manually enter and edit work package subjects without restrictions."
+        automatically_generated_subjects:
+          label: "Automatically generated subjects"
+          caption: "Define a pattern using referenced attributes and text to automatically generate work package subjects. Users will not be able to manually edit subjects."
+        pattern:
+          label: "Subject pattern"
+          caption: "Search for an attribute or add text. To create a space between elements add it as a text."
   versions:
     overview:
       work_packages_in_archived_projects: "Эта версия используется совместно с архивными проектами, в которых все еще есть рабочие пакеты, назначенные на эту версию. Они учитываются, но не отображаются в связанных представлениях."
@@ -870,6 +896,9 @@ ru:
         lag: "Задержка"
         from: "Пакет работ"
         to: "Похожий пакет работ"
+      reminder:
+        remind_at_date: "Дата"
+        remind_at_time: "Время"
       repository:
         url: "URL"
       role:
@@ -1119,16 +1148,38 @@ ru:
           attributes:
             type:
               must_be_a_stage_or_gate: "должен быть либо Project::StageDefinition, либо Project::GateDefinition"
+              type_and_class_name_mismatch: "must match the instantiated class name"
+        project/gate_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "must be a Project::GateDefinition"
+        project/stage_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "must be a Project::StageDefinition"
         project/life_cycle_step:
           attributes:
             type:
               must_be_a_stage_or_gate: "должен быть либо Project::Stage, либо Project::Gate"
               must_be_a_stage: "должен быть Project::Stage"
               must_be_a_gate: "должен быть Project::Stage"
+              type_and_class_name_mismatch: "must match the instantiated class name"
         project/gate:
           attributes:
             base:
-              end_date_not_allowed: "Невозможно присвоить `end_date` проекту Project::Gate"
+              end_date_not_allowed: "Cannot assign end date to a Project::Gate"
+            type:
+              type_and_class_name_mismatch: "must be a Project::Gate"
+            date:
+              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+        project/stage:
+          attributes:
+            date_range:
+              start_date_must_be_before_end_date: "start date must be before the end date."
+              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+              incomplete: "is incomplete."
+            type:
+              type_and_class_name_mismatch: "must be a Project::Stage"
         query:
           attributes:
             project:
@@ -1351,6 +1402,8 @@ ru:
         other: "Уведомлений"
       placeholder_user: "Пользователь-заполнитель"
       project: "Проект"
+      project/gate_definition: "Gate"
+      project/stage_definition: "Stage"
       project_query:
         one: "Список проектов"
         few: "Списки проектов"
@@ -1468,6 +1521,7 @@ ru:
     login: "Имя пользователя"
     mail: "Электронная почта"
     name: "Имя"
+    note: "Заметка"
     password: "Пароль"
     priority: "Приоритет"
     project: "Проект"
@@ -1564,6 +1618,7 @@ ru:
   button_print: "Печать"
   button_quote: "Цитата"
   button_remove: Удалить
+  button_remove_reminder: "Удалить напоминание"
   button_rename: "Переименовать"
   button_replace: "Заменить"
   button_revoke: "Отозвать"
@@ -1574,6 +1629,7 @@ ru:
   button_save_as: "Сохранить как"
   button_apply_changes: "Применить изменения"
   button_save_back: "Сохранить и вернуться"
+  button_set_reminder: "Установить напоминание"
   button_show: "Показать"
   button_sort: "Сортировать"
   button_submit: "Отправить"
@@ -1815,12 +1871,12 @@ ru:
   direction: Слева направо
   ee:
     upsale:
+      title: "Корпоративное дополнение"
+      link_title: "Дополнительная информация"
       form_configuration:
         description: "Настройте конфигурацию формы с помощью этих дополнительных дополнений:"
         add_groups: "Добавить новую группу атрибутов"
         rename_groups: "Переименовать группу атрибутов"
-      project_filters:
-        description_html: "Фильтрация и сортировка по настраиваемым полям - это функция корпоративной версии."
   enumeration_activities: "Отслеживание времени"
   enumeration_work_package_priorities: "Приоритеты пакета работ"
   enumeration_reported_project_statuses: "Перечень отчетов о статусах проекта"
@@ -1853,6 +1909,7 @@ ru:
   error_pdf_export_too_many_columns: "Для экспорта в PDF-файл выбрано слишком много столбцов. Пожалуйста, сократите количество столбцов."
   error_pdf_failed_to_export: "Не удалось сохранить экспорт в PDF: %{error}"
   error_token_authenticity: "Не удалось проверить CSRF-токен. Возможно, вы попытались отправить данные сразу из нескольких браузеров или вкладок. Закройте все вкладки и попробуйте снова."
+  error_reminder_not_found: "Напоминание не было найдено или о нем уже было сообщено."
   error_work_package_not_found_in_project: "Пакет работ не найден или не принадлежит к этому проекту"
   error_work_package_id_not_found: "Пакет работ не найден."
   error_must_be_project_member: "должен быть участник проекта"
@@ -2146,6 +2203,7 @@ ru:
       responsible: "Ответственный"
       shared: "Общий доступ"
       watched: "Наблюдатель"
+      reminder: "Напоминания"
     facets:
       unread: "Непрочтено"
       unread_title: "Показать непрочитанные"
@@ -2316,7 +2374,7 @@ ru:
   label_delete: "Удалить"
   label_deleted: "﻿Удалено"
   label_deleted_custom_field: "(удалено настраиваемое поле)"
-  label_deleted_custom_item: "(deleted item)"
+  label_deleted_custom_item: "(удалено)"
   label_deleted_custom_option: "(удалённая опция)"
   label_empty_element: "(пусто)"
   label_missing_or_hidden_custom_option: "(отсутствует значение или недостаточно прав для доступа)"
@@ -2353,7 +2411,6 @@ ru:
   label_enterprise_active_users: "%{current}/%{limit} забронировано активных пользователей"
   label_enterprise_edition: "Корпоративная версия"
   label_enterprise_support: "Поддержка корпоративной версии"
-  label_enterprise_addon: "Корпоративное дополнение"
   label_environment: "Переменные среды"
   label_estimates_and_progress: "Оценки и прогресс"
   label_equals: "—"
@@ -2538,6 +2595,7 @@ ru:
   label_none_parentheses: "(нет)"
   label_not_contains: "не содержит"
   label_not_equals: "не"
+  label_life_cycle_step_plural: "Project lifecycle"
   label_on: "на"
   label_operator_all: "не пусто"
   label_operator_none: "пусто"
@@ -2702,6 +2760,7 @@ ru:
   label_this_month: "в этом месяце"
   label_this_week: "на этой неделе"
   label_this_year: "в этом году"
+  label_time: "Время"
   label_time_entry_plural: "Затраченное время"
   label_time_entry_activity_plural: "Потраченное время"
   label_title: "Заголовок"
@@ -2877,8 +2936,13 @@ ru:
         prefix: "Получено из-за настройки уведомления: %{reason}"
         date_alert_start_date: "Дата оповещения"
         date_alert_due_date: "Дата оповещения"
+        reminder: "Reminder"
       see_all: "Показать все"
       updated_at: "Обновлено в %{timestamp} пользователем %{user}"
+    reminder_notifications:
+      subject: "Reminder: %{note}"
+      heading: "You have a new reminder"
+      note: "Note: “%{note}”"
     sharing:
       work_packages:
         allowed_actions: "Вы можете %{allowed_actions} этот пакет работ. Это может измениться в зависимости от роли и разрешений вашего проекта."
@@ -3124,6 +3188,7 @@ ru:
   permission_edit_own_time_entries: "Редактировать собственные учетные записи о времени"
   permission_edit_project: "Редактировать проект"
   permission_edit_project_attributes: "Редактирование атрибутов проекта"
+  permission_edit_project_stages_and_gates: "Edit project stages and gates"
   permission_edit_reportings: "Редактировать отчеты"
   permission_edit_time_entries: "Править трудозатраты других пользователей"
   permission_edit_timelines: "Редактировать графики"
@@ -3153,6 +3218,8 @@ ru:
   permission_search_project: "Поиск проекта"
   permission_select_custom_fields: "Выберите настраиваемые поля"
   permission_select_project_custom_fields: "Выберите атрибуты проекта"
+  permission_select_project_life_cycle: "Select project stages and gates"
+  permission_select_project_life_cycle_explanation: "Activate/Deactivate the stages and gates in a project. Enables the user to select the lifecycle appropriate for the project as inactive stages and gates will not be visible in the project overview page nor the project list."
   permission_select_project_modules: "Выбор модулей проекта"
   permission_share_work_packages: "Поделиться пакетами работ"
   permission_manage_types: "Выберите типы"
@@ -3177,6 +3244,7 @@ ru:
   permission_work_package_assigned_explanation: "Пакеты работ могут быть привязаны к пользователям и группам в зависимости от этой роли в рамках соответствующего проекта"
   permission_view_project_activity: "Просмотр деятельности по проекту"
   permission_view_project_attributes: "Просмотр атрибутов проекта"
+  permission_view_project_stages_and_gates: "View project stages and gates"
   permission_save_bcf_queries: "Сохранить запросы BCF"
   permission_manage_public_bcf_queries: "Управление публичными BCF запросами"
   permission_edit_attribute_help_texts: "Редактировать атрибут справки"
@@ -3319,7 +3387,7 @@ ru:
       oauth_application_details_link_text: "Перейти на страницу настроек"
       setup_documentation_details: "Если вам нужна помощь в настройке нового хранилища файлов, пожалуйста, проверьте документацию: "
       setup_documentation_details_link_text: "Настройка файловых хранилищ"
-      show_warning_details: "Для использования этого хранилища файлов не забудьте активировать модуль и определенное хранилище в настройках проекта каждого желаемого проекта."
+      show_warning_details: "Для использования этого хранилища файлов не забудьте активировать модуль и конкретное хранилище в настройках проекта каждого желаемого проекта."
     subversion:
       existing_title: "Существующий репозиторий Subversion"
       existing_introduction: "Если у вас есть существующий репозиторий Subversion, вы можете связать его с OpenProject для доступа к нему из приложения."
@@ -3424,12 +3492,12 @@ ru:
   setting_work_package_done_ratio: "Режим расчета прогресса"
   setting_work_package_done_ratio_field: "На основе трудозатрат"
   setting_work_package_done_ratio_field_caption_html: >-
-    <i>% Завершения</i> может быть свободно установлен на любое значение. Если Вы опционально введете значение для параметра <i>Работа</i>, то автоматически будет выведено значение <i>Оставшаяся работа</i>.
+    <i>% Завершено</i> может быть свободно установлен на любое значение. Если Вы опционально введете значение для параметра <i>Предполагаемое время</i>, то автоматически будет выведено значение <i>Оставшиеся часы</i>.
   setting_work_package_done_ratio_status: "На основе статуса"
   setting_work_package_done_ratio_status_caption_html: >-
     С каждым статусом связано значение <i>% Завершения</i>. Изменение статуса приведет к изменению <i>% Завершения</i>.
   setting_work_package_done_ratio_explanation_html: >
-    В режиме <b>На основе трудозатрат</b> для параметра % Завершения можно свободно установить любое значение. Если вы дополнительно введете значение «Работа», «Оставшаяся работа» будет получена автоматически. В режиме <b>На основе статуса</b> с каждым статусом связано значение % Завершения. Изменение статуса приведет к изменению % Завершения.
+    В режиме <b>На основе трудозатрат</b> для параметра % Завершено можно свободно установить любое значение. Если вы дополнительно введете значение «Предполагаемое время», «Оставшиеся часы» будут получены автоматически. В режиме <b>На основе статуса</b> с каждым статусом связано значение % Завершено. Изменение статуса приведет к изменению % Завершено.
   setting_work_package_properties: "Свойства пакета работ"
   setting_work_package_startdate_is_adddate: "Использовать текущую дату как дату начала для новых пакетов работ"
   setting_work_packages_projects_export_limit: "Ограничение экспорта пакетов работ / проектов"
@@ -3448,10 +3516,10 @@ ru:
   setting_password_min_length: "Минимальная длина"
   setting_password_min_adhered_rules: "Минимальное количество необходимых классов"
   setting_per_page_options: "Количество объектов на страницу"
-  setting_percent_complete_on_status_closed: "% Завершения, когда статус закрыт"
+  setting_percent_complete_on_status_closed: "% Завершено, когда статус закрыт"
   setting_percent_complete_on_status_closed_no_change: "Без изменений"
   setting_percent_complete_on_status_closed_no_change_caption_html: >-
-    Значение <i>% Завершения</i> не изменится, даже если пакет работ будет закрыт.
+    Значение <i>% Завершено</i> не изменится, даже если пакет работ будет закрыт.
   setting_percent_complete_on_status_closed_set_100p: "Автоматически устанавливается на 100%"
   setting_percent_complete_on_status_closed_set_100p_caption: >-
     Закрытый пакет работ считается завершенным.
@@ -3478,13 +3546,13 @@ ru:
   setting_sys_api_enabled: "Разрешить веб-сервис управления репозиторием"
   setting_sys_api_description: "Веб-сервис управления репозиторием обеспечивает интеграцию и авторизацию пользователя для доступа к репозиторию."
   setting_time_format: "Время"
-  setting_total_percent_complete_mode: "Расчет общего % Завершения полной иерархии"
+  setting_total_percent_complete_mode: "Расчёт общего % Завершено по всей иерархии"
   setting_total_percent_complete_mode_work_weighted_average: "Взвешенное по работе"
   setting_total_percent_complete_mode_work_weighted_average_caption_html: >-
-    <i>Общий % Завершения</i> будет взвешен по  <i>Работе</i> каждого пакета работ в иерархии. Пакеты работ без <i>Работы</i> будут игнорироваться.
+    <i>Общий % Завершено</i> будет рассчитан как средневзвешенное значение по  <i>Предполагаемому времени</i> каждого пакета работ в иерархии. Пакеты работ без <i>Предполагаемого времени</i> будут игнорироваться.
   setting_total_percent_complete_mode_simple_average: "Среднее арифметическое"
   setting_total_percent_complete_mode_simple_average_caption_html: >-
-    <i>Работа</i> игнорируется, и <i>Общий % Завершения</i> будет средним арифметическим значением <i>% Завершения</i> пакетов работ в иерархии.
+    <i>Предполагаемое время</i> игнорируется, и <i>Общий % Завершено</i> будет средним арифметическим от значений <i>% Завершено</i> пакетов работ в иерархии.
   setting_accessibility_mode_for_anonymous: "Разрешить режим доступа людей с ограниченными возможностями для анонимных пользователей"
   setting_user_format: "Формат имени пользователя"
   setting_user_default_timezone: "Часовой пояс пользователя по умолчанию"
@@ -3856,6 +3924,12 @@ ru:
       edit_description: "Может просматривать, комментировать и редактировать этот пакет работ."
       view: "Просматривать"
       view_description: "Может просматривать этот пакет работ."
+    reminders:
+      label_remind_at: "Дата"
+      note_placeholder: "Причина установки напоминания"
+      success_creation_message: "Напоминание установлено. Вы получите уведомление о данном пакете работ в выбранное время."
+      success_update_message: "Напоминание успешно обновлено."
+      success_deletion_message: "Напоминание успешно удалено."
   sharing:
     count:
       zero: "0 пользователей"

@@ -134,6 +134,8 @@ structure.sql
 lefthook-local.yml
 .rubocop-local.yml
 
+/.lefthook-local/
+
 frontend/package-lock.json
 
 # Testing and nextcloud infrastructure

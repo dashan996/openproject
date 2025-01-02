@@ -27,6 +27,6 @@ ro:
       properties:
         overallCosts: "Costuri totale"
         spentUnits: "Unități consumate"
-    button_log_costs: "Costurile unitare ale buștenilor"
+    button_log_costs: "Înregistrare costuri unitare"
     label_hour: "oră"
     label_hours: "ore"

@@ -57,7 +57,8 @@ module Components
       retry_block do
         flatpickr_container
           .first(".numInput.cur-year")
-          .set value
+          .fill_in(with: value)
+          .send_keys :right # to trigger a keyboard event to get the internal state of flatpickr updated
       end
     end
 

@@ -9,6 +9,7 @@ zh-CN:
     label_bcf: 'BCF'
     label_imported_failed: '导入 BCF 主题失败'
     label_imported_successfully: '已成功导入 BCF 主题'
+    label_bcf_issue_associated: "相关的 BCF 问题"
     issues: "问题"
     recommended: '推荐'
     not_recommended: '不推荐'

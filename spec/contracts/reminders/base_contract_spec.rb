@@ -105,6 +105,20 @@ RSpec.describe Reminders::BaseContract do
     end
   end
 
+  describe "validate remind at is present" do
+    context "when remind at is blank" do
+      before { reminder.remind_at = nil }
+
+      it_behaves_like "contract is invalid", remind_at: :blank
+    end
+
+    context "when remind at is present" do
+      before { reminder.remind_at = 1.day.from_now }
+
+      it_behaves_like "contract is valid"
+    end
+  end
+
   describe "validate remind at is in future" do
     context "when remind at is in the past" do
       before { reminder.remind_at = 1.day.ago }

@@ -91,11 +91,19 @@ Work packages can be structured hierarchically, e.g. in order to break down a la
 
 ## Add a child work package
 
-There are **three ways to add or create a child work package**:
+There are **four ways to add or create a child work package**:
 
-1. Adding or creating a child in the *Relations* tab in a work package's details view
+1. [Adding a child in the *Relations* tab in a work package's details view](#add-a-child-in-the-relations-tab-in-a-work-packages-details-view)
+
 2. Right-clicking on a work package in the work package table and select "Create new child"
+
 3. Right-clicking on a work package in the work package table and select "Indent hierarchy" to add it as the child of the work package above it.
+
+   ![Add a child in a work package table](openproject_user_guide_wp_table_add_child.png)
+
+4.  You can add a child work package directly under the table of related work packages. To do that you first need to [include a table of related work packages to work package forms (Enterprise add-on)](../../../system-admin-guide/manage-work-packages/work-package-types/#add-table-of-related-work-packages-to-a-work-package-form-enterprise-add-on). 
+
+   ![A table of related work packages in OpenProject](open_project_admin_related_wp_table.png)
 
 ### Add a child in the *Relations* tab in a work package's details view
 

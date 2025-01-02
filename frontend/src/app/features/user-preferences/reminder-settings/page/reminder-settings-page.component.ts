@@ -39,6 +39,7 @@ export class ReminderSettingsPageComponent extends UntilDestroyedMixin implement
   public form = this.fb.group({
     immediateReminders: this.fb.group({
       mentioned: this.fb.control(false),
+      personalReminder: this.fb.control(false),
     }),
     dailyReminders: this.fb.group({
       enabled: this.fb.control(false),
@@ -112,6 +113,7 @@ export class ReminderSettingsPageComponent extends UntilDestroyedMixin implement
 
   private buildForm(settings:IUserPreference, globalSetting:INotificationSetting) {
     this.form.get('immediateReminders.mentioned')?.setValue(settings.immediateReminders.mentioned);
+    this.form.get('immediateReminders.personalReminder')?.setValue(settings.immediateReminders.personalReminder);
 
     this.form.get('dailyReminders.enabled')?.setValue(settings.dailyReminders.enabled);
 

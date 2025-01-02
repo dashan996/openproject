@@ -29,6 +29,11 @@ There are several ways to get an overview of all your projects. You can press th
 
 ![project lists button](Project-list-button.png)
 
+> [!TIP]
+>If you have already selected a project, the **x** icon next to that project will navigate you away from that selected project. 
+
+![Close an already selected project](openproject_user_guide_project_project_list.png)
+
 Alternatively, you can use the [**Global modules menu**](../../home/global-modules/#projects) and select *Projects*. You can access that menu either on the left side of the OpenProject application homepage or by using the grid menu icon in the top right corner.
 
 ![Select all projects from the global modules menu in OpenProject](view_all_projects_options.png)
@@ -97,7 +102,8 @@ Click **Apply** to see the changes.
 
 If the list that you were adjusting is a private list, you will then be able to save the changes to that list by clicking the *Save* link. Alternatively you can click the *More* icon and select the *Save as* option from the dropdown menu that will open and save it under a different name. 
 
-**Note:** The *Save as* option in the *More* dropdown menu is always available. The *Save* action will not be visible if you are working with a static list, which can not be modified.
+> [!NOTE]
+> The *Save as* option in the *More* dropdown menu is always available. The *Save* action will not be visible if you are working with a static list, which can not be modified.
 
 ![Save a project list view in OpenProject](save-link-project-list.png)
 
@@ -189,9 +195,6 @@ By selecting *Overall activity* you can open a view in which all the latest glob
 In order to work on project lists uninterrupted, you can use the Zen mode. To activate it, select the menu in the far right corner (three dots) and click **Zen mode**. Once the Zen mode is selected, the header and the sidebar will be hidden. 
 
 ![Select zen mode in OpenProject project lists](openproject_project_list_select_zen_mode.png)
-
-
-
 
 ## Favorite project lists
 

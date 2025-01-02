@@ -14,6 +14,7 @@ es:
         client_secret: Secreto del cliente
         secret: Secreto
         scope: Ámbito
+        grant_types_supported: Supported grant types
         limit_self_registration: Limitar autorregistro
         authorization_endpoint: Terminal de autorización
         userinfo_endpoint: Terminal de información de usuario

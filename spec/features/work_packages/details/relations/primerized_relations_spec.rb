@@ -83,12 +83,14 @@ RSpec.describe "Primerized work package relations tab",
            project:)
   end
 
-  let(:full_wp_view) { Pages::FullWorkPackage.new(work_package) }
   let(:relations_tab) { Components::WorkPackages::Relations.new(work_package) }
   let(:relations_panel_selector) { ".detail-panel--relations" }
   let(:relations_panel) { find(relations_panel_selector) }
   let(:work_packages_page) { Pages::PrimerizedSplitWorkPackage.new(work_package) }
   let(:tabs) { Components::WorkPackages::PrimerizedTabs.new }
+  let(:additional_setup) do
+    # Nothing but contexts might overwrite it
+  end
 
   current_user { user }
 
@@ -97,6 +99,7 @@ RSpec.describe "Primerized work package relations tab",
   end
 
   before do
+    additional_setup
     work_packages_page.visit_tab!("relations")
     expect_angular_frontend_initialized
     work_packages_page.expect_subject
@@ -198,7 +201,7 @@ RSpec.describe "Primerized work package relations tab",
     end
 
     context "with the shown WorkPackage being the 'to' relation part" do
-      let(:another_wp) { create(:work_package, type: type2, subject: "related to main") }
+      let(:another_wp) { create(:work_package, type: type2, subject: "Successor of main") }
 
       let(:relation_to) do
         create(:relation,
@@ -207,8 +210,7 @@ RSpec.describe "Primerized work package relations tab",
                relation_type: Relation::TYPE_FOLLOWS)
       end
 
-      before do
-        another_wp
+      let(:additional_setup) do
         relation_to
       end
 
@@ -217,7 +219,6 @@ RSpec.describe "Primerized work package relations tab",
 
         wait_for_network_idle
 
-        relations_tab.expect_relation(another_wp)
         relations_tab.open_relation_dialog(another_wp)
 
         within "##{WorkPackageRelationsTab::WorkPackageRelationDialogComponent::DIALOG_ID}" do

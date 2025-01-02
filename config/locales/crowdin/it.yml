@@ -340,6 +340,9 @@ it:
         text: "Questa azione non eliminerà alcun progetto contenuto nell'elenco. Vuoi davvero eliminare questo elenco di progetti?"
     settings:
       change_identifier: Cambia identificatore
+      actions:
+        label_enable_all: "Enable all"
+        label_disable_all: "Disable all"
       activities:
         no_results_title_text: Al momento non vi sono attività disponibili.
       forums:
@@ -350,18 +353,26 @@ it:
         no_results_content_text: Crea una nuova categoria di macro-attività
       custom_fields:
         no_results_title_text: Al momento non sono disponibili dei campi personalizzati.
+      life_cycle:
+        header:
+          title: "Project lifecycle"
+          description_html: 'These project stages and gates in the project lifecycle will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> and are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. You can enable or disable individual attributes.'
+        non_defined: "Neither stages nor gates are currently defined."
+        section_header: "Stages and gates"
+        step:
+          use_in_project: "Use %{step} in this project"
+        filter:
+          label: "Search project stage or gate"
       project_custom_fields:
         header:
           title: "Attributi del progetto"
-          description: 'Questi attributi del progetto saranno visualizzati nella tua <a href=%{overview_url} target="_blank">pagina di panoramica del progetto</a> sotto le rispettive sezioni. Puoi attivare o disattivare i singoli attributi. Gli attributi e le sezioni del progetto sono definiti nelle <a href=%{admin_settings_url} target="_blank">impostazioni di amministrazione</a> dall''amministratore dell''istanza. '
+          description_html: 'These project attributes will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> under their respective sections. You can enable or disable individual attributes. Project attributes and sections are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. '
         filter:
           label: "Cerca l'attributo del progetto"
         actions:
           label_enable_single: "Attivo in questo progetto, clicca per disattivarlo"
           label_disable_single: "Non attivo in questo progetto, clicca per attivarlo"
           remove_from_project: "Rimuovi dal progetto"
-          label_enable_all: "Abilita tutti"
-          label_disable_all: "Disabilita tutti"
         is_required_blank_slate:
           heading: Richiesto in tutti i progetti
           description: Questo attributo di progetto è attivato in tutti i progetti, poiché l'opzione "Richiesto in tutti i progetti" è selezionata. Non può essere disattivato per i singoli progetti.
@@ -374,6 +385,10 @@ it:
         no_results_content_text: Crea una nuova versione
       storage:
         no_results_title_text: Nessuno spazio su disco registrato aggiuntivo consumato da questo progetto.
+  project_stage:
+    working_days_count:
+      one: "Duration: %{count} working day"
+      other: "Duration: %{count} working days"
   lists:
     create:
       success: "L'elenco modificato è stato salvato come nuovo elenco"
@@ -569,18 +584,27 @@ it:
       no_results_title_text: Al momento non esistono tipi.
       no_results_content_text: Crea un nuovo tipo
     edit:
-      settings: "Impostazioni"
-      form_configuration: "Configurazione del modulo"
+      form_configuration:
+        tab: "Form configuration"
       more_info_text_html: >
         L'edizione Enterprise ti consente di personalizzare la configurazione dei moduli con queste aggiunte: <br> <ul class="%{list_styling_class}"> <li><b>Aggiungi nuovi gruppi di attributi</b></li> <li><b >Rinomina gruppi di attributi</b></li> <li><b>Aggiungi una tabella di macro-attività correlate</b></li> </ul>
-      projects: "Progetti"
-      enabled_projects: "Progetti abilitati"
-      edit_query: "Modificare la Tabella"
-      query_group_placeholder: "Assegnare un nome alla tabella"
-      reset: "Ripristino predefinite"
-      type_color_text: |
-        Il colore selezionato distingue diverse tipologie
-        neidiagrammi Gantt o nelle tabelle delle macro-attività. Si consiglia quindi di utilizzare colori forti.
+      projects:
+        tab: "Projects"
+        enabled_projects: "Enabled projects"
+      settings:
+        tab: "Settings"
+        type_color_text: The selected color distinguishes different types in Gantt charts or work packages tables. It is therefore recommended to use a strong color.
+      subject_configuration:
+        tab: "Subject configuration"
+        manually_editable_subjects:
+          label: "Manually editable subjects"
+          caption: "Users can manually enter and edit work package subjects without restrictions."
+        automatically_generated_subjects:
+          label: "Automatically generated subjects"
+          caption: "Define a pattern using referenced attributes and text to automatically generate work package subjects. Users will not be able to manually edit subjects."
+        pattern:
+          label: "Subject pattern"
+          caption: "Search for an attribute or add text. To create a space between elements add it as a text."
   versions:
     overview:
       work_packages_in_archived_projects: "La versione è condivisa con progetti archiviati che hanno ancora macro-attività assegnate a questa versione. Queste vengono conteggiate, ma non appariranno nelle viste collegate."
@@ -851,6 +875,9 @@ it:
         lag: "Ritardo"
         from: "Macro-attività"
         to: "Macro-attività correlata"
+      reminder:
+        remind_at_date: "Date"
+        remind_at_time: "Time"
       repository:
         url: "URL"
       role:
@@ -1100,16 +1127,38 @@ it:
           attributes:
             type:
               must_be_a_stage_or_gate: "deve essere Project::StageDefinition o Project::GateDefinition"
+              type_and_class_name_mismatch: "must match the instantiated class name"
+        project/gate_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "must be a Project::GateDefinition"
+        project/stage_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "must be a Project::StageDefinition"
         project/life_cycle_step:
           attributes:
             type:
               must_be_a_stage_or_gate: "deve essere Project::Stage o Project::Gate"
               must_be_a_stage: "deve essere un Project::Stage"
               must_be_a_gate: "deve essere un Project::Gate"
+              type_and_class_name_mismatch: "must match the instantiated class name"
         project/gate:
           attributes:
             base:
-              end_date_not_allowed: "Impossibile assegnare `end_date` a un Project::Gate"
+              end_date_not_allowed: "Cannot assign end date to a Project::Gate"
+            type:
+              type_and_class_name_mismatch: "must be a Project::Gate"
+            date:
+              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+        project/stage:
+          attributes:
+            date_range:
+              start_date_must_be_before_end_date: "start date must be before the end date."
+              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+              incomplete: "is incomplete."
+            type:
+              type_and_class_name_mismatch: "must be a Project::Stage"
         query:
           attributes:
             project:
@@ -1326,6 +1375,8 @@ it:
         other: "Notifiche"
       placeholder_user: "Utente segnaposto"
       project: "Progetto"
+      project/gate_definition: "Gate"
+      project/stage_definition: "Stage"
       project_query:
         one: "Elenco di progetti"
         other: "Elenchi di progetti"
@@ -1429,6 +1480,7 @@ it:
     login: "Nome utente"
     mail: "Email"
     name: "Nome"
+    note: "Note"
     password: "Password"
     priority: "Priorità"
     project: "Progetto"
@@ -1525,6 +1577,7 @@ it:
   button_print: "Stampa"
   button_quote: "Cita"
   button_remove: Rimuovi
+  button_remove_reminder: "Remove reminder"
   button_rename: "Rinomina"
   button_replace: "Sostituisci"
   button_revoke: "Revoca"
@@ -1535,6 +1588,7 @@ it:
   button_save_as: "Salva come"
   button_apply_changes: "Applica modifiche"
   button_save_back: "Salva e ritorna"
+  button_set_reminder: "Set reminder"
   button_show: "Mostra"
   button_sort: "Ordina"
   button_submit: "Invia"
@@ -1740,12 +1794,12 @@ it:
   direction: da sinistra a destra
   ee:
     upsale:
+      title: "Enterprise add-on"
+      link_title: "More information"
       form_configuration:
         description: "Personalizza la configurazione del modulo con le seguenti aggiunte:"
         add_groups: "Aggiunta di gruppi di proprietà"
         rename_groups: "Rinominazione di gruppi di proprietà"
-      project_filters:
-        description_html: "Le opzioni di filtraggio e ordinamento dei campi personalizzati sono disponibili nella versione Enterprise."
   enumeration_activities: "Attività di monitoraggio dei tempi"
   enumeration_work_package_priorities: "Priorità della macro-attività"
   enumeration_reported_project_statuses: "Stato di progetto segnalato"
@@ -1778,6 +1832,7 @@ it:
   error_pdf_export_too_many_columns: "Troppe colonne selezionate per l'esportazione in PDF. Ridurre il numero di colonne."
   error_pdf_failed_to_export: "L'esportazione del PDF non può essere salvata: %{error}"
   error_token_authenticity: "Impossibile verificare il token di richiesta. Forse hai provato a inviare i dati da più browser o schede? Chiudi tutte le schede e riprova."
+  error_reminder_not_found: "The reminder was not found or was already notified about."
   error_work_package_not_found_in_project: "La macro-attività non è stata trovata o non appartiene a questo progetto"
   error_work_package_id_not_found: "Impossibile trovare la macro-attività."
   error_must_be_project_member: "deve essere membro del progetto"
@@ -2071,6 +2126,7 @@ it:
       responsible: "Responsabile"
       shared: "Condiviso"
       watched: "Osservatore"
+      reminder: "Reminder"
     facets:
       unread: "Non letta"
       unread_title: "Mostra non lette"
@@ -2278,7 +2334,6 @@ it:
   label_enterprise_active_users: "%{current}/%{limit} utenti attivi riservati"
   label_enterprise_edition: "Enterprise edition"
   label_enterprise_support: "Supporto per Imprese"
-  label_enterprise_addon: "Componente aggiuntivo Enterprise"
   label_environment: "Ambiente"
   label_estimates_and_progress: "Stime e progressi"
   label_equals: "è"
@@ -2463,6 +2518,7 @@ it:
   label_none_parentheses: "(nessuno)"
   label_not_contains: "non contiene"
   label_not_equals: "non è"
+  label_life_cycle_step_plural: "Project lifecycle"
   label_on: "il"
   label_operator_all: "non è vuoto"
   label_operator_none: "è vuoto"
@@ -2627,6 +2683,7 @@ it:
   label_this_month: "questo mese"
   label_this_week: "questa settimana"
   label_this_year: "questo anno"
+  label_time: "Time"
   label_time_entry_plural: "Tempo speso"
   label_time_entry_activity_plural: "Attività che richiedono tempo"
   label_title: "Titolo"
@@ -2800,8 +2857,13 @@ it:
         prefix: "Ricevuto a causa dell'impostazione della notifica: %{reason}"
         date_alert_start_date: "Avviso data"
         date_alert_due_date: "Avviso data"
+        reminder: "Reminder"
       see_all: "Vedi tutti"
       updated_at: "Aggiornato il %{timestamp} da %{user}"
+    reminder_notifications:
+      subject: "Reminder: %{note}"
+      heading: "You have a new reminder"
+      note: "Note: “%{note}”"
     sharing:
       work_packages:
         allowed_actions: "Puoi %{allowed_actions} questa macro-attività. Questa impostazione può cambiare a seconda del ruolo e delle autorizzazioni del progetto."
@@ -3046,6 +3108,7 @@ it:
   permission_edit_own_time_entries: "Modificare i propri registri di orario effettuato"
   permission_edit_project: "Modificare un progetto"
   permission_edit_project_attributes: "Modifica gli attributi del progetto"
+  permission_edit_project_stages_and_gates: "Edit project stages and gates"
   permission_edit_reportings: "Modificare prospetti"
   permission_edit_time_entries: "Modificare i registri temporali per altri utenti"
   permission_edit_timelines: "Modificare cronologie"
@@ -3075,6 +3138,8 @@ it:
   permission_search_project: "Cerca progetto"
   permission_select_custom_fields: "Seleziona campi personalizzati"
   permission_select_project_custom_fields: "Selezionare gli attributi del progetto"
+  permission_select_project_life_cycle: "Select project stages and gates"
+  permission_select_project_life_cycle_explanation: "Activate/Deactivate the stages and gates in a project. Enables the user to select the lifecycle appropriate for the project as inactive stages and gates will not be visible in the project overview page nor the project list."
   permission_select_project_modules: "Seleziona moduli del progetto"
   permission_share_work_packages: "Condividi macro-attività"
   permission_manage_types: "Seleziona i tipi"
@@ -3099,6 +3164,7 @@ it:
   permission_work_package_assigned_explanation: "È possibile assegnare macro-attività ad utenti e gruppi che hanno questo ruolo nel rispettivo progetto"
   permission_view_project_activity: "Visualizza attività del progetto"
   permission_view_project_attributes: "Mostra gli attributi del progetto"
+  permission_view_project_stages_and_gates: "View project stages and gates"
   permission_save_bcf_queries: "Salva query BCF"
   permission_manage_public_bcf_queries: "Gestisci query BCF pubbliche"
   permission_edit_attribute_help_texts: "Modifica i testi guida dell'attributo"
@@ -3779,6 +3845,12 @@ it:
       edit_description: "Può visu"
       view: "Visualizzare"
       view_description: "Può visualizzare questa macro-attività."
+    reminders:
+      label_remind_at: "Date"
+      note_placeholder: "Why are you setting this reminder?"
+      success_creation_message: "Reminder set successfully. You will receive a notification for this work package at the chosen time."
+      success_update_message: "Reminder updated successfully."
+      success_deletion_message: "Reminder deleted successfully."
   sharing:
     count:
       zero: "0 utenti"

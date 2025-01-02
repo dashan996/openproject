@@ -14,6 +14,7 @@ ca:
         client_secret: Client secret
         secret: Secret
         scope: Abast
+        grant_types_supported: Supported grant types
         limit_self_registration: Limitar el registre per part dels propis usuaris
         authorization_endpoint: Authorization endpoint
         userinfo_endpoint: User information endpoint

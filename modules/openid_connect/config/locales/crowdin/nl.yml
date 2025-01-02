@@ -14,6 +14,7 @@ nl:
         client_secret: Client secret
         secret: Geheim
         scope: Scope
+        grant_types_supported: Ondersteunde subsidietypen
         limit_self_registration: Beperk zelf-registratie
         authorization_endpoint: Autorisatie eindpunt
         userinfo_endpoint: Eindpunt gebruikersinformatie
@@ -46,45 +47,45 @@ nl:
       delete_result_1: Verwijder de provider uit de lijst met beschikbare providers.
       delete_result_user_count:
         zero: Er zijn momenteel geen gebruikers die deze provider gebruiken. Er is geen verdere actie vereist.
-        one: "One user is currently still using this provider. They will need to be re-invited or logging in with another provider."
-        other: "%{count} users are currently still using this provider. They will need to be re-invited or logging in with another provider."
-      delete_result_direct: This provider is marked as a direct login provider. The setting will be removed and users will no longer be redirected to the provider for login.
+        one: "Eén gebruiker gebruikt momenteel nog deze provider. Zij moeten opnieuw worden uitgenodigd of zich aanmelden bij een andere provider."
+        other: "%{count} gebruikers maken momenteel nog gebruik van deze provider. Zij moeten opnieuw worden uitgenodigd of inloggen bij een andere provider."
+      delete_result_direct: Deze provider is gemarkeerd als een directe aanmeldprovider. De instelling wordt verwijderd en gebruikers worden niet langer omgeleid naar deze provider om in te loggen.
   openid_connect:
     menu_title: OpenID aanbieders
-    delete_title: "Delete OpenID Connect provider"
+    delete_title: "OpenID Connect provider verwijderen"
     instructions:
       redirect_url: This is the redirect URL that the OpenID Connect provider should use to redirect back to OpenProject after a successful login.
-      endpoint_url: The endpoint URL given to you by the OpenID Connect provider
-      metadata_none: I don't have this information
-      metadata_url: I have a discovery endpoint URL
-      client_id: This is the client ID given to you by your OpenID Connect provider
-      client_secret: This is the client secret given to you by your OpenID Connect provider
+      endpoint_url: De endpoint URL die u van de OpenID Connect provider heeft gekregen
+      metadata_none: Ik heb deze informatie niet
+      metadata_url: Ik heb een URL voor een zoekeindpunt
+      client_id: Dit is de client-ID die u van uw OpenID Connect provider hebt gekregen
+      client_secret: Dit is de client-ID die u van uw OpenID Connect provider hebt gekregen
       limit_self_registration: If enabled, users can only register using this provider if configuration on the provider's end allows it.
       display_name: The name of the provider. This will be displayed as the login button and in the list of providers.
-      tenant: 'Please replace the default tenant with your own if applicable. See <a href=" https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc#find-your-apps-openid-configuration-document-uri">this</a>.'
+      tenant: 'Vervang de standaard tenant door uw eigen tenant, indien van toepassing. Bekijk <a href=" https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc#find-your-apps-openid-configuration-document-uri">dit</a>.'
       scope: If you want to request custom scopes, you can add one or multiple scope values separated by spaces here. For more information, see the [OpenID Connect documentation](docs_url).
-      post_logout_redirect_uri: The URL the OpenID Connect provider should redirect to after a logout request.
+      post_logout_redirect_uri: De URL waarnaar de OpenID Connect provider moet doorsturen na een uitlogverzoek.
       claims: >
-        You can request additional claims for the userinfo and id token endpoints. Please see [our OpenID connect documentation](docs_url) for more information.
+        U kunt extra claims aanvragen voor de eindpunten userinfo en id token. Zie [onze OpenID connect documentatie](docs_url) voor meer informatie.
       acr_values: >
-        Request non-essential claims in an easier format. See [our documentation on acr_values](docs_url) for more information.
+        Vraag niet-essentiële claims aan in een eenvoudiger formaat. Zie [onze documentatie over acr_values](docs_url) voor meer informatie.
       mapping_login: >
-        Provide a custom mapping in the userinfo response to be used for the login attribute.
+        Zorg voor een aangepaste toewijzing in het userinfo antwoord om te gebruiken voor het aanmeldingskenmerk.
       mapping_email: >
-        Provide a custom mapping in the userinfo response to be used for the email attribute.
+        Zorg voor een aangepaste toewijzing in het userinfo antwoord om te gebruiken voor het aanmeldingskenmerk.
       mapping_first_name: >
-        Provide a custom mapping in the userinfo response to be used for the first name.
+        Zorg voor een aangepaste toewijzing in het userinfo antwoord om te gebruiken voor de voornaam.
       mapping_last_name: >
-        Provide a custom mapping in the userinfo response to be used for the last name.
+        Zorg voor een aangepaste toewijzing in het userinfo antwoord om te gebruiken voor de achternaam.
       mapping_admin: >
-        Provide a custom mapping in the userinfo response to be used for the admin status. It expects a boolean attribute to be returned.
+        Geef een aangepaste toewijzing in het userinfo antwoord om te gebruiken voor de beheerdersstatus. Er wordt een booleaans attribuut verwacht dat wordt geretourneerd.
     settings:
-      metadata_none: I don't have this information
-      metadata_url: I have a discovery endpoint URL
-      endpoint_url: Endpoint URL
+      metadata_none: Ik heb deze informatie niet
+      metadata_url: Ik heb een URL voor een zoekeindpunt
+      endpoint_url: Eindpunt URL
     providers:
-      label_providers: "Providers"
-      seeded_from_env: "This provider was seeded from the environment configuration. It cannot be edited."
+      label_providers: "Aanbieders"
+      seeded_from_env: "Deze provider is geplaatst vanuit de omgevingsconfiguratie. Deze kan niet worden bewerkt."
       google:
         name: Google
       microsoft_entra:

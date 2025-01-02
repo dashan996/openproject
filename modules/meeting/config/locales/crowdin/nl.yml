@@ -53,15 +53,15 @@ nl:
       recurring_meeting:
         frequency: "Frequentie"
         interval: "Interval"
-        start_date: "Starts on"
-        end_after: "End series after"
+        start_date: "Begint op"
+        end_after: "Serie beëindigen na"
         iterations: "Voorvallen"
     errors:
       messages:
         invalid_time_format: "is geen geldige tijd. Vereist formaat: UH:MM"
     models:
       recurring_meeting: "Terugkerende vergadering"
-      structured_meeting: "Vergadering (dynamisch)"
+      structured_meeting: "Eenmalige vergadering"
       meeting_agenda_item: "Agendapunt"
       meeting_agenda: "Agenda"
       meeting_minutes: "Minuten"
@@ -95,7 +95,7 @@ nl:
   label_meeting: "Vergadering"
   label_meeting_plural: "Vergaderingen"
   label_meeting_new: "Nieuwe vergadering"
-  label_meeting_new_dynamic: "Nieuwe dynamische vergadering"
+  label_meeting_new_dynamic: "Nieuwe eenmalige vergadering"
   label_meeting_new_recurring: "Nieuwe terugkerende vergadering"
   label_meeting_create: "Creëer vergadering"
   label_meeting_copy: "Kopie vergadering"
@@ -140,8 +140,10 @@ nl:
   label_past_meetings_short: "Vorige"
   label_involvement: "Betrokkenheid"
   label_invitations: "Uitnodigingen"
+  label_invited_user: "Uitgenodigde gebruiker"
   label_past_invitations: "Vorige uitnodigingen"
   label_attended: "Deelgenomen"
+  label_attended_user: "Aanwezige gebruiker"
   label_created_by_me: "Gemaakt door mij"
   label_notify: "Verzenden voor revisie"
   label_icalendar: "Verstuur iCalendar"
@@ -155,7 +157,7 @@ nl:
     participants:
       template: "Deze deelnemers worden automatisch uitgenodigd voor alle toekomstige vergaderingen wanneer deze worden aangemaakt."
     attachments:
-      template: "These attached files will be included in all future meetings in the series."
+      template: "Deze bijgevoegde bestanden zullen in alle toekomstige vergaderingen in de serie worden opgenomen."
       text: "Bijgevoegde bestanden zijn beschikbaar voor alle deelnemers aan de vergadering. U kunt deze ook naar agendapunt notities slepen."
     copy:
       title: "Kopieer vergadering: %{title}"
@@ -183,9 +185,11 @@ nl:
     types:
       classic: "Klassiek"
       classic_text: "Organiseer uw vergadering met een opmaakbare tekstagenda en protocol."
-      structured: "Dynamisch"
-      recurring: "Recurring"
-      structured_text: "Organiseren van uw vergadering als een lijst met agendapunten, eventueel koppelen aan een werkpakket."
+      structured: "Gestructureerd"
+      one_time: "Eenmalig"
+      recurring: "Terugkerend"
+      recurring_text: "Maak vergaderreeksen met dynamische sjablonen voor elke gebeurtenis."
+      structured_text: "Organiseer uw vergadering als een dynamische lijst met agendapunten, optioneel gekoppeld aan een werkpakket."
       structured_text_copy: "Een vergadering kopiëren zal momenteel niet de bijbehorende agendapunten kopiëren, alleen de details"
     copied: "Gekopieerd van vergadering #%{id}"
   meeting_section:
@@ -195,39 +199,38 @@ nl:
     empty_text: "Sleep items hierheen of maak een nieuwe"
   recurring_meeting:
     occurrence:
-      infoline: "This meeting is part of a recurring meeting series."
-      error_no_next: "There is no next occurrence for this meeting."
-      first_already_exists: "The first occurrence of this meeting series is already instantiated."
+      infoline: "Deze vergadering is onderdeel van een herhalende vergaderreeks."
+      error_no_next: "Er is geen volgende gebeurtenis voor deze vergadering."
+      first_already_exists: "De eerste gebeurtenis van deze vergaderreeks is al geïnitieerd."
       first_created: >
-        The first meeting has been successfuly created from template. All future meetings will be created automatically at the time of the previous occurrence.
+        De eerste vergadering is succesvol aangemaakt vanuit het sjabloon. Alle toekomstige vergaderingen worden automatisch aangemaakt op het moment van de vorige vergadering.
     template:
-      button_finalize: "Finish template"
-      blank_title: "Your meeting series template is empty"
+      button_finalize: "Sjabloon voltooien"
+      blank_title: "Uw vergaderreeks sjabloon is leeg"
       description: >
-        This template will be used whenever new meetings in the series get created. You can add agenda items, participants, and attachments to this template.
+        Dit sjabloon wordt gebruikt wanneer nieuwe vergaderingen in de serie worden aangemaakt. U kunt agendapunten, deelnemers en bijlagen aan het sjabloon toevoegen.
       blankslate_finalize: >
-        When you're done preparing this template, click the '%{button_title}' button above to finish the setup and schedule the first meeting of the series.
-      label_view_template: "View template"
-      label_edit_template: "Edit template"
+        Wanneer u klaar bent met het voorbereiden van het sjabloon, klikt u op de knop '%{button_title}' hierboven om het instellen te voltooien en de eerste vergadering van de serie te plannen.
+      label_view_template: "Sjabloon bekijken"
+      label_edit_template: "Bewerkt sjabloon"
       banner_html: >
-        You are currently editing a template of a meeting series: %{link}. Every new occurrence of a meeting in the series will use this template. Changes will not affect past or already created meetings.
+        U bewerkt momenteel een sjabloon van een vergaderingsreeks: %{link}. Elke nieuwe vergadering in de serie zal dit sjabloon gebruiken. Wijzigingen hebben geen invloed op al gemaakte vergaderingen.
     frequency:
-      every_weekday: "Every %{day_of_the_week}"
-      daily: "Daily"
-      working_days: "Every working day"
-      weekly: "Weekly"
+      every_weekday: "Elke %{day_of_the_week}"
+      daily: "Dagelijks"
+      working_days: "Elke werkdag"
+      weekly: "Wekelijks"
     end_after:
-      specific_date: "a specific date"
-      iterations: "a number of occurrences"
-    starts: "Starts"
+      specific_date: "een specifieke datum"
+      iterations: "een aantal gebeurtenissen"
+    starts: "Begint"
     in_words:
-      daily_interval: "Every %{interval} days"
-      working_days: "Every working day"
-      working_days_interval: "Every %{interval} working day"
-      weekly: "Every week on %{weekday}"
-      weekly_interval: "Every %{interval} weeks on %{weekday}"
-      frequency: "%{base} at %{time}"
-      full: "%{base} at %{time}, ends on %{end_date}"
+      daily_interval: "Elke %{interval} dagen"
+      working_days: "Elke werkdag"
+      weekly: "Elke week op %{weekday}"
+      weekly_interval: "Elke %{interval} weken op %{weekday}"
+      frequency: "%{base} op %{time}"
+      full: "%{base} op %{time}, eindigt op %{end_date}"
   notice_successful_notification: "Notificatie succesvol verzonden"
   notice_timezone_missing: Geen tijdzone is ingesteld en %{zone} is aangenomen. Om uw tijdzone te kiezen, klik dan hier.
   notice_meeting_updated: "Deze pagina is door iemand anders bijgewerkt. Herlaad om wijzigingen te bekijken."
@@ -280,17 +283,17 @@ nl:
   text_deleted_agenda_item: 'Geschrapt agendapunt'
   label_initial_meeting_details: "Vergadering"
   label_meeting_details: "Vergaderdetails"
-  label_meeting_series_details: "Meeting series details"
+  label_meeting_series_details: "Details vergaderreeks"
   label_meeting_details_edit: "Bewerk vergader details"
   label_meeting_state: "Vergaderstatus"
   label_meeting_state_open: "Openen"
   label_meeting_state_open_html: "<i>Open</i>"
   label_meeting_state_closed: "Gesloten"
   label_meeting_state_closed_html: "<i>Gesloten</i>"
-  label_meeting_state_agenda_created: "Agenda created"
-  label_meeting_state_scheduled: "Scheduled"
-  label_meeting_state_cancelled: "Cancelled"
-  label_meeting_state_skipped: "Skipped"
+  label_meeting_state_agenda_created: "Agenda aangemaakt"
+  label_meeting_state_scheduled: "Gepland"
+  label_meeting_state_cancelled: "Geannuleerd"
+  label_meeting_state_skipped: "Overgeslagen"
   label_meeting_reopen_action: "Heropen vergadering"
   label_meeting_close_action: "Vergadering sluiten"
   text_meeting_open_description: "Deze vergadering is open. Je kunt agenda-items toevoegen/verwijderen en bewerken naar eigen goeddunken. Na afloop van de vergadering kun je deze sluiten, om te vergrendelen."

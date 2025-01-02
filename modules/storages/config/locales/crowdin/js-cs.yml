@@ -13,6 +13,7 @@ cs:
       open_storage: "Otevřít %{storageType}"
       select_location: "Vyberte lokalitu"
       choose_location: "Vyberte lokalitu"
+      new_folder: "Nová složka"
       types:
         nextcloud: "Nextcloud"
         one_drive: "OneDrive/SharePoint"
@@ -42,6 +43,7 @@ cs:
           Automaticky spravovaná složka projektu nebyla nalezena. Počkejte, prosím, znovu načtěte stránku pro načtení nejnovějších dat a zkuste to znovu.
         managed_project_folder_no_access: >
           Zatím nemáte přístup ke složce spravovaného projektu. Počkejte prosím trochu a zkuste to znovu.
+        cannot_create_folder: Nepodařilo se vytvořit složku. Nepoužívejte speciální znaky a symboly.
         upload_keep_both: "Zachovat obojí"
         upload_replace: "Nahradit"
       file_links:

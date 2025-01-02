@@ -653,6 +653,8 @@ ko:
         new_notifications:
           message: "새 알림이 있습니다."
           link_text: "로드하려면 여기를 클릭하세요."
+      reminders:
+        note: "Note: “%{note}”"
       settings:
         change_notification_settings: '중요 업데이트를 놓치지 않도록 <a target="_blank" href="%{url}">알림 설정</a>을 수정할 수 있습니다.'
         title: "알림 설정"
@@ -740,6 +742,7 @@ ko:
         immediate:
           title: "내게 이메일 미리 알림 보내기"
           mentioned: "누군가 나를 @멘션할 때 즉시"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "기타 항목에 대한 이메일 알림(작업 패키지 외)"
           explanation: >
@@ -771,10 +774,6 @@ ko:
         upgrade_to_ee_text: "와우! 만약 이 추가 기능이 필요하다면 여러분은 진짜 프로입니다! Enterprise Edition 고객이 되어서 OpenSource 개발자들을 지원할 생각이 있으신가요?"
         more_information: "더보기"
         nevermind: "신경쓰지 마세요"
-      edit:
-        form_configuration: "양식 구성"
-        projects: "프로젝트"
-        settings: "설정"
     time_entry:
       work_package_required: "먼저 작업 패키지를 선택해야 합니다."
       title: "작업시간 기록"
@@ -1043,6 +1042,12 @@ ko:
           not_found: "해당 보기가 없습니다."
           duplicate_query_title: "이 보기의 이름이 이미 존재합니다. 그래도 변경하시겠습니까?"
         text_no_results: "일치하는 보기가 없습니다."
+      reminders:
+        button_label: "Set reminder"
+        title:
+          new: "Set reminder"
+          edit: "Edit reminder"
+        subtitle: "You will receive a notification for this work package at the chosen time."
       scheduling:
         is_parent: "이 작업 패키지의 날짜는 자식으로부터 자동으로 추정됩니다. '수동 스케줄링'을 활성화하여 날짜를 설정할 수 있습니다."
         is_switched_from_manual_to_automatic: "다른 작업 패키지와의 관계로 인해 수동 스케줄링에서 자동 스케줄링으로 전환한 후 이 작업 패키지의 날짜를 다시 계산해야 할 수 있습니다."

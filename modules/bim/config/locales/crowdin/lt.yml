@@ -9,6 +9,7 @@ lt:
     label_bcf: 'BCF'
     label_imported_failed: 'BCF temų importas nepavyko'
     label_imported_successfully: 'BCF temos sėkmingai importuotos'
+    label_bcf_issue_associated: "BCF issue associated"
     issues: "Trūkumai"
     recommended: 'rekomenduojama'
     not_recommended: 'nerekomenduojama'

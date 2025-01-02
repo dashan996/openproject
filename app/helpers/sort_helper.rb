@@ -331,8 +331,8 @@ module SortHelper
   # This is a more specific version of #sort_header_tag.
   # For "filter by" to work properly, you must pass a Hash for `filter_column_mapping`.
   def sort_header_with_action_menu(column, all_columns, filter_column_mapping = {}, allowed_params: nil, **options)
-    with_sort_header_options(column, allowed_params:, **options) do |col, cap, default_order, **opts|
-      action_menu(col, all_columns, cap, default_order, filter_column_mapping, **opts)
+    with_sort_header_options(column.attribute, allowed_params:, **options) do |_col, cap, default_order, **opts|
+      action_menu(column, all_columns, cap, default_order, filter_column_mapping, **opts)
     end
   end
 
@@ -381,6 +381,9 @@ module SortHelper
   def find_filter_for_column(column, filter_mapping)
     col = column.to_s
 
+    # Temporarily disabled filters for stages and gates columns for now. Remove this line for #59183
+    return nil if column.start_with?("lcsd_")
+
     filter_mapping.fetch(col, col)
   end
 
@@ -389,9 +392,10 @@ module SortHelper
   # Some of the method arguments are only needed for specific actions.
   def action_menu(column, table_columns, caption, default_order, filter_column_mapping = {},
                   allowed_params: nil, **html_options)
-    caption ||= column.to_s.humanize
+    attribute = column.attribute
+    caption ||= attribute.to_s.humanize
 
-    filter = find_filter_for_column(column, filter_column_mapping)
+    filter = find_filter_for_column(attribute, filter_column_mapping)
     sortable = html_options.delete(:sortable)
 
     # `param` is not needed in the `content_arguments`, but should remain in the `html_options`.
@@ -399,26 +403,32 @@ module SortHelper
     # the action menu.
     content_args = html_options.merge(rel: :nofollow, param: nil)
 
-    render Primer::Alpha::ActionMenu.new(menu_id: "menu-#{column}") do |menu|
-      action_button(menu, caption, favorite: column == :favored)
+    render Primer::Alpha::ActionMenu.new(menu_id: "menu-#{attribute}") do |menu|
+      action_button(menu, column, caption, favorite: column == :favored)
 
       # Some columns are not sortable or do not offer a suitable filter. Omit those actions for them.
-      sort_actions(menu, column, default_order, content_args:, allowed_params:, **html_options) if sortable
-      filter_action(menu, column, filter, content_args:) if filter
+      sort_actions(menu, attribute, default_order, content_args:, allowed_params:, **html_options) if sortable
+      filter_action(menu, attribute, filter, content_args:) if filter
 
-      move_column_actions(menu, column, table_columns, content_args:, allowed_params:, **html_options)
-      add_and_remove_column_actions(menu, column, table_columns, content_args:, allowed_params:, **html_options)
+      move_column_actions(menu, attribute, table_columns, content_args:, allowed_params:, **html_options)
+      add_and_remove_column_actions(menu, attribute, table_columns, content_args:, allowed_params:, **html_options)
     end
   end
 
-  def action_button(menu, caption, favorite: false)
+  def action_button(menu, column, caption, favorite: false)
+    additional_menu_classes = ["generic-table--action-menu-button",
+                               column.respond_to?(:action_menu_classes) ? column.action_menu_classes : nil]
+                                .compact
+                                .join(" ")
+
     menu.with_show_button(scheme: :link, color: :default, text_transform: :uppercase,
                           underline: false, display: :inline_flex,
-                          classes: "generic-table--action-menu-button") do |button|
+                          classes: additional_menu_classes) do |button|
       if favorite
         # This column only shows an icon, no text.
         render Primer::Beta::Octicon.new(icon: "star-fill", color: :subtle, "aria-label": I18n.t(:label_favorite))
       else
+        button.with_leading_visual_icon(**column.visual_icon) if column.respond_to?(:visual_icon)
         button.with_trailing_action_icon(icon: :"triangle-down")
 
         h(caption).to_s

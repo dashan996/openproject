@@ -1,9 +1,6 @@
 module RecurringMeetings
   class ScheduleController < ApplicationController
-    before_action do
-      do_authorize :create_meetings, global: true
-    end
-    authorization_checked! :humanize_schedule
+    authorize_with_permission :create_meetings, global: true
 
     around_action :with_user_time_zone
     before_action :build_meeting

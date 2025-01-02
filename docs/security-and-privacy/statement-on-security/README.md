@@ -14,6 +14,13 @@ Automated tests and manual code reviews ensure that these contributions are safe
 
 For more information on security and data privacy for OpenProject, please visit: [www.openproject.org/security-and-privacy](https://www.openproject.org/security-and-privacy/).
 
+**security.txt**
+
+OpenProject uses the `security.txt` standard for defining security policies.
+You can find our `security.txt` here: https://www.openproject.org/security.txt
+
+Please see https://securitytxt.org/ for more information.
+
 ## Security announcements mailing list
 
 If you want to receive immediate security notifications via email as we publish them, please sign up to our security mailing list: https://www.openproject.org/security-and-privacy/#mailing-list.

@@ -140,7 +140,7 @@ class UserPreference < ApplicationRecord
   end
 
   def immediate_reminders
-    super.presence || { mentioned: true }.with_indifferent_access
+    super.presence || { mentioned: true, personal_reminder: true }.with_indifferent_access
   end
 
   def pause_reminders

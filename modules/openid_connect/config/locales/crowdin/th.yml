@@ -14,6 +14,7 @@ th:
         client_secret: Client secret
         secret: Secret
         scope: Scope
+        grant_types_supported: Supported grant types
         limit_self_registration: Limit self registration
         authorization_endpoint: Authorization endpoint
         userinfo_endpoint: User information endpoint

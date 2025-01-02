@@ -11,9 +11,10 @@ export default class FlashController extends ApplicationController {
 
   static targets = [
     'item',
+    'flash', // only to detect removal
   ];
 
-  declare readonly itemTargets:HTMLElement;
+  declare readonly itemTargets:HTMLElement[];
 
   reloadPage() {
     window.location.reload();
@@ -24,5 +25,13 @@ export default class FlashController extends ApplicationController {
     if (this.autohideValue && autohide) {
       setTimeout(() => element.remove(), SUCCESS_AUTOHIDE_TIMEOUT);
     }
+  }
+
+  flashTargetDisconnected() {
+    this.itemTargets.forEach((target:HTMLElement) => {
+      if (target.innerHTML === '') {
+        target.remove();
+      }
+    });
   }
 }

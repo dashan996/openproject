@@ -30,13 +30,15 @@ module OpenIDConnect
   module Providers
     class UpdateService < BaseServices::Update
       class AttributesContract < Dry::Validation::Contract
-        params do
-          OpenIDConnect::Provider::DISCOVERABLE_ATTRIBUTES_MANDATORY.each do |attribute|
+        json do
+          OpenIDConnect::Provider::DISCOVERABLE_STRING_ATTRIBUTES_MANDATORY.each do |attribute|
             required(attribute).filled(:string)
           end
-          OpenIDConnect::Provider::DISCOVERABLE_ATTRIBUTES_OPTIONAL.each do |attribute|
+          OpenIDConnect::Provider::DISCOVERABLE_STRING_ATTRIBUTES_OPTIONAL.each do |attribute|
             optional(attribute).filled(:string)
           end
+
+          optional(:grant_types_supported).array(:string)
         end
       end
 

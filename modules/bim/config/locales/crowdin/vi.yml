@@ -9,6 +9,7 @@ vi:
     label_bcf: 'BCF'
     label_imported_failed: 'Nhập các chủ đề BCF thất bại'
     label_imported_successfully: 'Đã nhập các chủ đề BCF thành công'
+    label_bcf_issue_associated: "BCF issue associated"
     issues: "Các vấn đề"
     recommended: 'khuyến nghị'
     not_recommended: 'không khuyến nghị'

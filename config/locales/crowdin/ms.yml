@@ -342,6 +342,9 @@ ms:
         text: "Tindakan ini tidak akan memadamkan sebarang projek yang terkandung di dalam senarai. Adakah anda pasti untuk memadamkan senarai projek ini?"
     settings:
       change_identifier: Tukar pengenal
+      actions:
+        label_enable_all: "Enable all"
+        label_disable_all: "Disable all"
       activities:
         no_results_title_text: Tiada aktiviti yang tersedia buat masa ini.
       forums:
@@ -352,18 +355,26 @@ ms:
         no_results_content_text: Cipta kategori pakej kerja baharu
       custom_fields:
         no_results_title_text: Tiada ruangan tersuai tersedia buat masa ini.
+      life_cycle:
+        header:
+          title: "Project lifecycle"
+          description_html: 'These project stages and gates in the project lifecycle will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> and are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. You can enable or disable individual attributes.'
+        non_defined: "Neither stages nor gates are currently defined."
+        section_header: "Stages and gates"
+        step:
+          use_in_project: "Use %{step} in this project"
+        filter:
+          label: "Search project stage or gate"
       project_custom_fields:
         header:
           title: "Atribut projek"
-          description: 'Atribut projek berikut akan dipaparkan di <a href=%{overview_url} target="_blank"> laman gambaran keseluruhan projek</a> anda di bawah bahagian masing-masing. Anda boleh mengaktifkan atau menyahaktifkan atribut individu. Atribut dan bahagian projek ditakrifkan dalam <a href=%{admin_settings_url} target="_blank">tetapan pentadbiran</a> oleh pentadbir yang bertanggungjawab.'
+          description_html: 'These project attributes will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> under their respective sections. You can enable or disable individual attributes. Project attributes and sections are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. '
         filter:
           label: "Cari atribut projek"
         actions:
           label_enable_single: "Aktif dalam projek ini, klik untuk nyahaktifkan"
           label_disable_single: "Tidak aktif dalam projek ini, klik untuk aktifkan"
           remove_from_project: "Remove from project"
-          label_enable_all: "Aktifkan semua"
-          label_disable_all: "Nyahaktifkan semua"
         is_required_blank_slate:
           heading: Diperlukan dalam semua projek
           description: Atribut projek ini telah diaktifkan dalam semua projek sejak pilihan "Diperlukan dalam semua projek" telah ditandakan. Ia tidak boleh dinyahaktifkan untuk projek individu.
@@ -376,6 +387,9 @@ ms:
         no_results_content_text: Cipta versi baharu
       storage:
         no_results_title_text: Tiada ruang cakera terekod tambahan yang digunakan untuk projek ini.
+  project_stage:
+    working_days_count:
+      other: "Duration: %{count} working days"
   lists:
     create:
       success: "Senarai yang diubah suai telah disimpan sebagai senarai baharu."
@@ -564,18 +578,27 @@ ms:
       no_results_title_text: Tiada jenis buat masa ini.
       no_results_content_text: Cipta jenis baharu
     edit:
-      settings: "Tetapan"
-      form_configuration: "Konfigurasi borang"
+      form_configuration:
+        tab: "Form configuration"
       more_info_text_html: >
         Edisi Enterprise membenarkan anda untuk menyuaikan borang konfigurasi dengan segala jenis penambahan: <br> <ul class="%{list_styling_class}"> <li><b>Tambah kumpulan atribut baharu</b></li> <li><b>Namakan semula atribut kumpulan</b></li> <li><b>Tambah jadual pakej kerja yang berkaitan</b></li> </ul>
-      projects: "Projek"
-      enabled_projects: "Projek yang diaktifkan"
-      edit_query: "Edit jadual"
-      query_group_placeholder: "Berikan nama kepada jadual berikut"
-      reset: "Set semula ke default"
-      type_color_text: |
-        Warna yang dipilih membezakan jenis-jenis yang berbeza
-        dalam carta Gantt atau jadual pakej kerja. Oleh itu, ianya disarankan untuk menggunakan warna yang kuat.
+      projects:
+        tab: "Projects"
+        enabled_projects: "Enabled projects"
+      settings:
+        tab: "Settings"
+        type_color_text: The selected color distinguishes different types in Gantt charts or work packages tables. It is therefore recommended to use a strong color.
+      subject_configuration:
+        tab: "Subject configuration"
+        manually_editable_subjects:
+          label: "Manually editable subjects"
+          caption: "Users can manually enter and edit work package subjects without restrictions."
+        automatically_generated_subjects:
+          label: "Automatically generated subjects"
+          caption: "Define a pattern using referenced attributes and text to automatically generate work package subjects. Users will not be able to manually edit subjects."
+        pattern:
+          label: "Subject pattern"
+          caption: "Search for an attribute or add text. To create a space between elements add it as a text."
   versions:
     overview:
       work_packages_in_archived_projects: "Versi ini dikongsi dengan projek yang diarkibkan yang masih mempunyai pakej kerja ditugaskan ke versi ini. Ini dikira, tetapi tidak akan muncul dalam paparan yang dipautkan."
@@ -845,6 +868,9 @@ ms:
         lag: "Lag"
         from: "Pakej kerja"
         to: "Pakej kerja yang berkaitan"
+      reminder:
+        remind_at_date: "Date"
+        remind_at_time: "Time"
       repository:
         url: "URL"
       role:
@@ -1094,16 +1120,38 @@ ms:
           attributes:
             type:
               must_be_a_stage_or_gate: "must be either Project::StageDefinition or Project::GateDefinition"
+              type_and_class_name_mismatch: "must match the instantiated class name"
+        project/gate_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "must be a Project::GateDefinition"
+        project/stage_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "must be a Project::StageDefinition"
         project/life_cycle_step:
           attributes:
             type:
               must_be_a_stage_or_gate: "must be either Project::Stage or Project::Gate"
               must_be_a_stage: "must be a Project::Stage"
               must_be_a_gate: "must be a Project::Gate"
+              type_and_class_name_mismatch: "must match the instantiated class name"
         project/gate:
           attributes:
             base:
-              end_date_not_allowed: "Cannot assign `end_date` to a Project::Gate"
+              end_date_not_allowed: "Cannot assign end date to a Project::Gate"
+            type:
+              type_and_class_name_mismatch: "must be a Project::Gate"
+            date:
+              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+        project/stage:
+          attributes:
+            date_range:
+              start_date_must_be_before_end_date: "start date must be before the end date."
+              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+              incomplete: "is incomplete."
+            type:
+              type_and_class_name_mismatch: "must be a Project::Stage"
         query:
           attributes:
             project:
@@ -1317,6 +1365,8 @@ ms:
         other: "Pemberitahuan"
       placeholder_user: "Pengguna placeholder"
       project: "Projek"
+      project/gate_definition: "Gate"
+      project/stage_definition: "Stage"
       project_query:
         other: "Senarai projek"
       query: "Pertanyaan tersuai"
@@ -1413,6 +1463,7 @@ ms:
     login: "Nama pengguna"
     mail: "E-mel"
     name: "Nama"
+    note: "Note"
     password: "Kata Laluan"
     priority: "Keutamaan"
     project: "Projek"
@@ -1509,6 +1560,7 @@ ms:
   button_print: "Cetak"
   button_quote: "Petikan"
   button_remove: Keluarkan
+  button_remove_reminder: "Remove reminder"
   button_rename: "Namakan semula"
   button_replace: "Ganti"
   button_revoke: "Batalkan"
@@ -1519,6 +1571,7 @@ ms:
   button_save_as: "Simpan sebagai"
   button_apply_changes: "Guna pakai perubahan"
   button_save_back: "Simpan dan kembali"
+  button_set_reminder: "Set reminder"
   button_show: "Paparkan"
   button_sort: "Susun"
   button_submit: "Hantar"
@@ -1706,12 +1759,12 @@ ms:
   direction: ltr
   ee:
     upsale:
+      title: "Enterprise add-on"
+      link_title: "More information"
       form_configuration:
         description: "Menyuaikan borang konfigurasi dengan segala jenis tambahan ini:"
         add_groups: "Tambah kumpulan atribut baharu"
         rename_groups: "Nama semula kumpulan atribut"
-      project_filters:
-        description_html: "Menyaring dan menyusun ruang tersuai adalah tambahan edisi Enterprise."
   enumeration_activities: "Aktiviti penjejakan masa"
   enumeration_work_package_priorities: "Keutamaan pakej kerja"
   enumeration_reported_project_statuses: "Status projek yang dilaporkan"
@@ -1744,6 +1797,7 @@ ms:
   error_pdf_export_too_many_columns: "Terlalu banyak kolum dipilih untuk eksport PDF. Sila kurangkan bilangan kolum."
   error_pdf_failed_to_export: "Eksport PDF tidak dapat disimpan: %{error}"
   error_token_authenticity: "Tidak dapat mengesahkan token Cross-Site Request Forgery. Adakah anda sedang mencuba untuk menghantar data di pelbagai pelayar atau tab? Sila tutup semua tab dan cuba lagi."
+  error_reminder_not_found: "The reminder was not found or was already notified about."
   error_work_package_not_found_in_project: "Pakej kerja tidak ditemui atau tidak tergolong dalam projek ini"
   error_work_package_id_not_found: "The work package was not found."
   error_must_be_project_member: "perlu menjadi ahli projek"
@@ -2037,6 +2091,7 @@ ms:
       responsible: "Bertanggungjawab"
       shared: "Telah dikongsi"
       watched: "Pemerhati"
+      reminder: "Reminder"
     facets:
       unread: "Belum dibaca"
       unread_title: "Paparkan yang belum dibaca"
@@ -2244,7 +2299,6 @@ ms:
   label_enterprise_active_users: "%{current}/%{limit} pengguna aktif yang ditempah"
   label_enterprise_edition: "Edisi Enterprise"
   label_enterprise_support: "sokongan Enterprise"
-  label_enterprise_addon: "Tambahan Enterprise"
   label_environment: "Persekitaran"
   label_estimates_and_progress: "Anggaran dan perkembangan"
   label_equals: "ialah"
@@ -2429,6 +2483,7 @@ ms:
   label_none_parentheses: "(tiada)"
   label_not_contains: "tidak mengandungi"
   label_not_equals: "adalah tidak"
+  label_life_cycle_step_plural: "Project lifecycle"
   label_on: "pada"
   label_operator_all: "bukan kosong"
   label_operator_none: "adalah kosong"
@@ -2593,6 +2648,7 @@ ms:
   label_this_month: "bulan ini"
   label_this_week: "minggu ini"
   label_this_year: "tahun ini"
+  label_time: "Time"
   label_time_entry_plural: "Masa yang dihabiskan"
   label_time_entry_activity_plural: "Aktiviti masa yang diluangkan"
   label_title: "Tajuk"
@@ -2765,8 +2821,13 @@ ms:
         prefix: "Diterima kerana tetapan pemberitahuan: %{reason}"
         date_alert_start_date: "Peringatan tarikh"
         date_alert_due_date: "Peringatan tarikh"
+        reminder: "Reminder"
       see_all: "Lihat semua"
       updated_at: "Dikemas kini pada %{timestamp} oleh %{user}"
+    reminder_notifications:
+      subject: "Reminder: %{note}"
+      heading: "You have a new reminder"
+      note: "Note: “%{note}”"
     sharing:
       work_packages:
         allowed_actions: "Anda boleh %{allowed_actions} pakej kerja ini. Ini akan berubah bergantung kepada peranan projek dan kebenaran anda."
@@ -3009,6 +3070,7 @@ ms:
   permission_edit_own_time_entries: "Edit log masa sendiri"
   permission_edit_project: "Edit projek"
   permission_edit_project_attributes: "Edit project attributes"
+  permission_edit_project_stages_and_gates: "Edit project stages and gates"
   permission_edit_reportings: "Edit laporan"
   permission_edit_time_entries: "Edit log masa untuk pengguna lain"
   permission_edit_timelines: "Edit garis masa"
@@ -3038,6 +3100,8 @@ ms:
   permission_search_project: "Cari projek"
   permission_select_custom_fields: "Pilih ruang tersuai"
   permission_select_project_custom_fields: "Pilih atribut projek"
+  permission_select_project_life_cycle: "Select project stages and gates"
+  permission_select_project_life_cycle_explanation: "Activate/Deactivate the stages and gates in a project. Enables the user to select the lifecycle appropriate for the project as inactive stages and gates will not be visible in the project overview page nor the project list."
   permission_select_project_modules: "Pilih modul projek"
   permission_share_work_packages: "Kongsi pakej kerja"
   permission_manage_types: "Pilih jenis"
@@ -3062,6 +3126,7 @@ ms:
   permission_work_package_assigned_explanation: "Pakej kerja boleh ditugaskan kepada pengguna dan kumpulan yang memegang peranan ini dalam projek yang berkaitan"
   permission_view_project_activity: "Lihat aktiviti projek"
   permission_view_project_attributes: "View project attributes"
+  permission_view_project_stages_and_gates: "View project stages and gates"
   permission_save_bcf_queries: "Simpan pertanyaan BCF"
   permission_manage_public_bcf_queries: "Urus pertanyaan BCF awam"
   permission_edit_attribute_help_texts: "Edit atribut teks bantuan"
@@ -3741,6 +3806,12 @@ ms:
       edit_description: "Boleh lihat, komen dan edit pakej kerja ini."
       view: "Lihat"
       view_description: "Boleh papar pakej kerja ini."
+    reminders:
+      label_remind_at: "Date"
+      note_placeholder: "Why are you setting this reminder?"
+      success_creation_message: "Reminder set successfully. You will receive a notification for this work package at the chosen time."
+      success_update_message: "Reminder updated successfully."
+      success_deletion_message: "Reminder deleted successfully."
   sharing:
     count:
       zero: "0 pengguna"

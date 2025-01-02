@@ -32,4 +32,8 @@ class Project::StageDefinition < Project::LifeCycleStepDefinition
            foreign_key: :definition_id,
            inverse_of: :definition,
            dependent: :destroy
+
+  def step_class
+    Project::Stage
+  end
 end

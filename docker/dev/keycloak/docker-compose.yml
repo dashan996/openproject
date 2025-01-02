@@ -3,7 +3,7 @@ version: "3.9"
 services:
   db-keycloak:
     image: postgres:13
-    restart: always
+    restart: unless-stopped
     networks:
       - external
     environment:
@@ -14,7 +14,7 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:21.1
     command: ["start-dev", "--proxy edge", "--spi-connections-http-client-default-disable-trust-manager=true"]
-    restart: no
+    restart: unless-stopped
     networks:
       - external
     extra_hosts:
@@ -28,7 +28,7 @@ services:
       - KEYCLOAK_ADMIN_PASSWORD=admin
       - KC_DB_SCHEMA=public
       - KC_HOSTNAME=keycloak.local
-      - KC_FEATURES=token-exchange
+      - KC_FEATURES=token-exchange,admin-fine-grained-authz
       - KC_TRANSACTION_XA_ENABLED=false
     volumes:
       - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro

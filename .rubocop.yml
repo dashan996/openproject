@@ -453,7 +453,8 @@ Style/WordArray:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
-  Enabled: false
+  Enabled: true
+  EnforcedStyle: always_true
 
 Style/NumericLiterals:
   Enabled: false

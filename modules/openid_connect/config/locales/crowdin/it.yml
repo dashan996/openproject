@@ -14,6 +14,7 @@ it:
         client_secret: Chiave segreta del client
         secret: Parola chiave
         scope: Ambito
+        grant_types_supported: Supported grant types
         limit_self_registration: Limita registrazione autonoma
         authorization_endpoint: Endpoint di autorizzazione
         userinfo_endpoint: Informazioni sull'endpoint dell'utente

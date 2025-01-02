@@ -656,6 +656,8 @@ pl:
         new_notifications:
           message: "Masz nowe powiadomienia."
           link_text: "Kliknij tutaj, aby je załadować."
+      reminders:
+        note: "Note: “%{note}”"
       settings:
         change_notification_settings: 'Możesz zmodyfikować <a target="_blank" href="%{url}">ustawienia powiadomień</a>, aby upewnić się, że nigdy nie przegapisz ważnej aktualizacji.'
         title: "Ustawienia powiadomień"
@@ -743,6 +745,7 @@ pl:
         immediate:
           title: "Wyślij mi przypomnienie e-mail"
           mentioned: "Natychmiast, gdy pojawi się @wzmianka o mnie"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Powiadomienia e-mail dla innych elementów (które nie są pakietami roboczymi)"
           explanation: >
@@ -774,10 +777,6 @@ pl:
         upgrade_to_ee_text: "Znakomicie! Jeśli potrzebujesz tego dodatku, jesteś superprofesjonalistą! Może wesprzesz nas jako deweloperów OpenSource, zostając nabywcą wersji Enterprise?"
         more_information: "Więcej informacji"
         nevermind: "Nieważne"
-      edit:
-        form_configuration: "Konfiguracja formularza"
-        projects: "Projekty"
-        settings: "Ustawienia"
     time_entry:
       work_package_required: "Wymaga wybrania najpierw pakietu roboczego."
       title: "Rejestruj czas pracy"
@@ -1046,6 +1045,12 @@ pl:
           not_found: "Nie ma takiego widoku"
           duplicate_query_title: "Nazwa tego widoku już istnieje. Zmienić mimo to?"
         text_no_results: "Nie znaleziono żadnych pasujących widoków."
+      reminders:
+        button_label: "Set reminder"
+        title:
+          new: "Set reminder"
+          edit: "Edit reminder"
+        subtitle: "You will receive a notification for this work package at the chosen time."
       scheduling:
         is_parent: "Daty tego pakietu roboczego są automatycznie odejmowane od jego elementów podrzędnych. Włącz funkcję Planowanie ręczne, aby ustawić daty."
         is_switched_from_manual_to_automatic: "Po przełączeniu planowania z ręcznego na automatyczne konieczne może być ponowne obliczenie dat tego pakietu roboczego ze względu na jego powiązania z innymi pakietami roboczymi."

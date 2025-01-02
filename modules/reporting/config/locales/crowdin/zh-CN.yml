@@ -87,10 +87,10 @@ zh-CN:
   validation_failure_integer: "不是有效的整数"
   export:
     timesheet:
-      title: "Your PDF timesheet export"
-      button: "Export PDF timesheet"
-      timesheet: "Timesheet"
-      time: "Time"
+      title: "您的 PDF 时间表导出"
+      button: "导出 PDF 时间表"
+      timesheet: "时间表"
+      time: "时间"
     cost_reports:
       title: "您的成本报告 XLS 导出"
   reporting:

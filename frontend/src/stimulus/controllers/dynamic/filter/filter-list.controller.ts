@@ -59,12 +59,23 @@ export default class FilterListController extends Controller {
     });
   }
 
+  /**
+   * Filters the list of items based on the input value in the filter target.
+   *
+   * This method converts the input value to lowercase and compares it with the text content
+   * of each search item. To avoid unwanted text from being part of the search string. E.g. the
+   * labels of buttons, the method first tries to find an element with the class `filter-target-visible-text`.
+   * If such an element exists, only the content of that element is used for the search.
+   * If the text content includes the input value, the item is shown;
+   * otherwise, it is hidden. Additionally, it controls the visibility of the no results text
+   * based on whether any items match the input value.
+   */
   filterLists() {
     const query = this.filterTarget.value.toLowerCase();
     let showNoResultsText = true;
 
     this.searchItemTargets.forEach((item) => {
-      const text = item.textContent?.toLowerCase();
+      const text = item.querySelector('.filter-target-visible-text')?.textContent?.toLowerCase() || item.textContent?.toLowerCase();
 
       if (text?.includes(query)) {
         this.setVisibility(item, true);

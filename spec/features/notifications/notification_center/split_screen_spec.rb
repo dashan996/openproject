@@ -98,7 +98,7 @@ RSpec.describe "Split screen in the notification center", :js, :with_cuprite do
       center.click_item notification
       sleep 0.25 # Wait after the item has been clicked to not be interpreted as a double click
       center.mark_notification_as_read notification
-      global_html_title.expect_first_segment second_title
+      global_html_title.expect_first_segment "#{second_title} | Notifications"
 
       # After making all notifications as read, html title should show the base route
       center.mark_notification_as_read second_notification

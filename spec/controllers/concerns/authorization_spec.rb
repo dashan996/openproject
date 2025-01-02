@@ -54,18 +54,18 @@ RSpec.describe ApplicationController, "enforcement of authorization" do # ruboco
 
   current_user { user }
 
-  shared_examples "succeeds" do
+  shared_examples "succeeds" do |action_name = :index|
     it "succeeds" do
-      get :index
+      get action_name
 
       expect(response)
         .to have_http_status :ok
     end
   end
 
-  shared_examples "is prevented" do
+  shared_examples "is prevented" do |action_name = :index|
     it "fails with a RuntimeError" do
-      expect { get :index }
+      expect { get action_name }
         .to raise_error RuntimeError
     end
   end
@@ -106,6 +106,123 @@ RSpec.describe ApplicationController, "enforcement of authorization" do # ruboco
     end
 
     it_behaves_like "succeeds"
+  end
+
+  context "with authorization checked with authorize_with_permission" do
+    controller do
+      include Accounts::Authorization
+      include controller_setup
+
+      authorize_with_permission :view_project
+
+      def do_authorize(*)
+        true
+      end
+    end
+
+    it_behaves_like "succeeds"
+
+    it "calls the authorization method" do
+      allow(controller).to receive(:do_authorize)
+
+      get :index
+
+      expect(controller).to have_received(:do_authorize).with(:view_project, global: false)
+    end
+  end
+
+  context "with authorization checked with authorize_with_permission on a single action" do
+    controller do
+      include Accounts::Authorization
+      include controller_setup
+
+      authorize_with_permission :view_project, only: %i[test]
+
+      def test
+        render plain: "OK"
+      end
+
+      def do_authorize(*)
+        true
+      end
+    end
+
+    before do
+      @routes.draw do # rubocop:disable RSpec/InstanceVariable
+        get "/anonymous/index"
+        get "/anonymous/test"
+      end
+    end
+
+    it "allows calling test" do
+      allow(controller).to receive(:do_authorize)
+
+      get :test
+
+      expect(controller).to have_received(:do_authorize).with(:view_project, global: false)
+    end
+
+    it_behaves_like "is prevented", :index
+  end
+
+  context "with authorization checked with load_and_authorize_with_permission_in_optional_project" do
+    controller do
+      include Accounts::Authorization
+      include controller_setup
+
+      load_and_authorize_with_permission_in_optional_project :view_project
+
+      def do_authorize(*)
+        true
+      end
+    end
+
+    it "loads the project if present" do
+      allow(controller).to receive(:do_authorize)
+      allow(Project).to receive(:find)
+
+      get :index, params: { project_id: "1" }
+
+      expect(Project).to have_received(:find).with("1")
+      expect(controller).to have_received(:do_authorize).with(:view_project, global: false)
+    end
+
+    it "uses the global call if not present" do
+      allow(controller).to receive(:do_authorize)
+      allow(Project).to receive(:find)
+
+      get :index
+
+      expect(Project).not_to have_received(:find)
+      expect(controller).to have_received(:do_authorize).with(:view_project, global: true)
+    end
+  end
+
+  context "with authorization checked on single action with load_and_authorize_with_permission_in_optional_project" do
+    controller do
+      include Accounts::Authorization
+      include controller_setup
+
+      load_and_authorize_with_permission_in_optional_project :view_project, only: %i[test]
+
+      def test
+        render plain: "OK"
+      end
+
+      def do_authorize(*)
+        true
+      end
+    end
+
+    before do
+      @routes.draw do # rubocop:disable RSpec/InstanceVariable
+        get "/anonymous/index"
+        get "/anonymous/test"
+      end
+    end
+
+    it_behaves_like "succeeds", :test
+    it_behaves_like "is prevented", :index
   end
 
   context "with authorization checked with load_and_authorize_in_optional_project" do

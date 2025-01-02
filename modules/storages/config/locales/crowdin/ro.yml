@@ -77,14 +77,14 @@ ro:
     attributes:
       nextcloud_sync_service:
         add_user_to_group: 'Add User to Group:'
-        create_folder: 'Managed Project Folder Creation:'
+        create_folder: 'Creare dosar proiect gestionat:'
         ensure_root_folder_permissions: 'Set Base Folder Permissions:'
         hide_inactive_folders: 'Hide Inactive Folders Step:'
         remote_folders: 'Read contents of the group folder:'
         remove_user_from_group: 'Remove User from Group:'
         rename_project_folder: 'Rename managed project Folder:'
       one_drive_sync_service:
-        create_folder: 'Managed Project Folder Creation:'
+        create_folder: 'Creare dosar proiect gestionat:'
         ensure_root_folder_permissions: 'Set Base Folder Permissions:'
         hide_inactive_folders: 'Hide Inactive Folders Step:'
         remote_folders: 'Read contents of the group folder:'

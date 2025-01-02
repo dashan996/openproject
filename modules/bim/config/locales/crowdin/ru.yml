@@ -9,6 +9,7 @@ ru:
     label_bcf: 'BCF'
     label_imported_failed: 'Неудачный импорт тем BCF'
     label_imported_successfully: 'Успешно импортированные темы BCF'
+    label_bcf_issue_associated: "Связанная проблема BCF"
     issues: "Замечания"
     recommended: 'рекомендуется'
     not_recommended: 'не рекомендуется'

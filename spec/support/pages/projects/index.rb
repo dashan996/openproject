@@ -398,13 +398,14 @@ module Pages
         wait_for_network_idle
       end
 
-      def expect_no_config_columns(*columns)
+      def expect_no_config_columns(*columns, element_selector: ".op-draggable-autocomplete--input",
+                                   results_selector: ".ng-dropdown-panel-items")
         open_configure_view
 
         columns.each do |column|
-          expect_no_ng_option find(".op-draggable-autocomplete--input"),
+          expect_no_ng_option find(element_selector),
                               column,
-                              results_selector: ".ng-dropdown-panel-items"
+                              results_selector:
         end
 
         within "dialog" do

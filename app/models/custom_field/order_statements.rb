@@ -75,7 +75,7 @@ module CustomField::OrderStatements
   # Returns the expression to use in SELECT clause if it differs from one used
   # to group by
   def group_by_select_statement
-    return unless field_format == "list"
+    return unless field_format == "list" || field_format == "hierarchy"
 
     # MIN needed to not add this column to group by, ANY_VALUE can be used when
     # minimum required PostgreSQL becomes 16
@@ -171,7 +171,69 @@ module CustomField::OrderStatements
   end
 
   def join_for_order_by_hierarchy_sql
-    table_name = CustomField::Hierarchy::Item.quoted_table_name
-    join_for_order_sql(value: "item.label", join: "INNER JOIN #{table_name} item ON item.id = cv.value::bigint")
+    ancestor_item = CustomField.find(id).hierarchy_root
+    self_and_descendants = ancestor_item.self_and_descendants
+    total_descendants = self_and_descendants.count
+    max_depth = self_and_descendants.max_by(&:depth).depth
+    items = hierarchy_position_sql(ancestor_id: ancestor_item.id, total_descendants:, max_depth:)
+
+    join_for_order_sql(
+      value: multi_value? ? "ARRAY_AGG(item.position ORDER BY item.position)" : "item.position",
+      add_select: "#{multi_value? ? "ARRAY_TO_STRING(ARRAY_AGG(cv.value ORDER BY item.position), '.')" : 'cv.value'} ids",
+      join: "INNER JOIN (#{items}) item ON item.id = cv.value::bigint",
+      multi_value:
+    )
+  end
+
+  # Template method for providing correct ordering of hierarchy items as a flat list for grouping
+  #
+  # In order to have groups correctly build with the structures above, a flat list of items is required like for
+  # CustomOptions. CustomOptions naturally have a position field that encodes the ordering:
+  #
+  # | id | name | position | custom_field_id
+  # ----------------------------------------
+  # | 12 | foo  | 1        | 9
+  # | 14 | foo  | 2        | 9
+  # | 16 | foo  | 3        | 9
+  #
+  # For Hierarchy::Items this is different. They are organised in generations as they resemble a tree structure.
+  # The `sort_order` field is used to encode the position in each generation:
+  #
+  # | id | name | parent_id | sort_order | custom_field_id
+  # ------------------------------------------------------
+  # | 12 | foo  | 1         | 0          | 9
+  # | 14 | bar  | 12        | 0          | 9
+  # | 16 | baz  | 2         | 1          | 9
+  #
+  # The `sort_order` field is not neatly consecutive numbers as for the CustomOption. That make it impossible to collect
+  # the correct work packages for each group (see code).
+  #
+  # To overcome this problem the algorithms of closure_tree can be used. This method implements the same concept of
+  # `self_and_descendants_preordered` from closure_tree. It uses the mathematical power operation to compute distinct
+  # position values from `sort_order`, the total number of descendants and the maximum depth of the tree
+  # (see implementation).
+  def hierarchy_position_sql(ancestor_id:, total_descendants:, max_depth:)
+    <<-SQL.squish
+      SELECT hi.id,
+            hi.parent_id,
+            SUM((1 + anc.sort_order) * power(#{total_descendants}, #{max_depth + 1} - depths.generations)) AS position,
+            hi.label,
+            hi.short,
+            hi.is_deleted,
+            hi.created_at,
+            hi.updated_at,
+            hi.custom_field_id
+      FROM hierarchical_items hi
+            INNER JOIN hierarchical_item_hierarchies hih
+                 ON hi.id = hih.descendant_id
+            JOIN hierarchical_item_hierarchies anc_h
+                 ON anc_h.descendant_id = hih.descendant_id
+            JOIN hierarchical_items anc
+                 ON anc.id = anc_h.ancestor_id
+            JOIN hierarchical_item_hierarchies depths
+                 ON depths.ancestor_id = #{ancestor_id} AND depths.descendant_id = anc.id
+     WHERE hih.ancestor_id = #{ancestor_id}
+     GROUP BY hi.id
+    SQL
   end
 end

@@ -14,6 +14,7 @@ de:
         client_secret: Clientschlüssel
         secret: Secret
         scope: Geltungsbereich
+        grant_types_supported: Supported grant types
         limit_self_registration: Selbstregistrierung begrenzen
         authorization_endpoint: Autorisierungsendpunkt
         userinfo_endpoint: Endpunkt für Benutzerinformationen

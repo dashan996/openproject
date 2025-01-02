@@ -475,6 +475,17 @@ RSpec.describe Principals::DeleteJob, type: :model do
       it_behaves_like "cost_query handling"
       it_behaves_like "project query handling"
       it_behaves_like "mention rewriting"
+
+      describe "favorites" do
+        before do
+          project.add_favoring_user(principal)
+          job
+        end
+
+        it "removes the assigned_to association to the principal" do
+          expect(project.favoring_users.reload).to be_empty
+        end
+      end
     end
 
     context "with a group" do

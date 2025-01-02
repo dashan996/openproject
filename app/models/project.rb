@@ -87,6 +87,14 @@ class Project < ApplicationRecord
   has_many :project_storages, dependent: :destroy, class_name: "Storages::ProjectStorage"
   has_many :storages, through: :project_storages
   has_many :life_cycle_steps, class_name: "Project::LifeCycleStep", dependent: :destroy
+  has_many :available_life_cycle_steps,
+           -> { visible.eager_load(:definition).order(position: :asc) },
+           class_name: "Project::LifeCycleStep",
+           inverse_of: :project,
+           dependent: :destroy
+
+  accepts_nested_attributes_for :available_life_cycle_steps
+  validates_associated :available_life_cycle_steps, on: :saving_life_cycle_steps
 
   store_attribute :settings, :deactivate_work_package_attachments, :boolean
 

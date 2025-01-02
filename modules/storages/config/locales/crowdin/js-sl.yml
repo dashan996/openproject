@@ -13,6 +13,7 @@ sl:
       open_storage: "Open %{storageType}"
       select_location: "Select location"
       choose_location: "Choose location"
+      new_folder: "New folder"
       types:
         nextcloud: "Nextcloud"
         one_drive: "OneDrive/SharePoint"
@@ -42,6 +43,7 @@ sl:
           The automatically managed project folder was not yet found. Please wait a bit, reload the page to fetch the newest data, and try again.
         managed_project_folder_no_access: >
           You have no access yet to the managed project folder. Please wait a bit and try again.
+        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols.
         upload_keep_both: "Keep both"
         upload_replace: "Zamenjaj"
       file_links:

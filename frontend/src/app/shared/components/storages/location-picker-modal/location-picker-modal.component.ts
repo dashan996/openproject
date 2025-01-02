@@ -63,6 +63,7 @@ export class LocationPickerModalComponent extends FilePickerBaseModalComponent {
     alertNoAccess: this.i18n.t('js.storages.files.project_folder_no_access'),
     alertNoManagedProjectFolder: this.i18n.t('js.storages.files.managed_project_folder_not_available'),
     alertNoAccessToManagedProjectFolder: this.i18n.t('js.storages.files.managed_project_folder_no_access'),
+    alertCannotCreateFolder: this.i18n.t('js.storages.files.cannot_create_folder'),
     content: {
       empty: this.i18n.t('js.storages.files.empty_folder'),
       emptyHint: this.i18n.t('js.storages.files.empty_folder_location_hint'),
@@ -74,6 +75,7 @@ export class LocationPickerModalComponent extends FilePickerBaseModalComponent {
       submitEmptySelection: this.i18n.t('js.storages.file_links.selection_none'),
       cancel: this.i18n.t('js.button_cancel'),
       selectAll: this.i18n.t('js.storages.file_links.select_all'),
+      newFolder: this.i18n.t('js.storages.new_folder'),
     },
     tooltip: {
       directory_not_writeable: this.i18n.t('js.storages.files.directory_not_writeable'),
@@ -101,6 +103,14 @@ export class LocationPickerModalComponent extends FilePickerBaseModalComponent {
     return this.currentDirectory.permissions.some((value) => value === 'writeable');
   }
 
+  public get canCreateFolder():boolean {
+    if (!this.currentDirectory) {
+      return false;
+    }
+
+    return this.currentDirectory.permissions.some((value) => value === 'writeable');
+  }
+
   public get alertText():Observable<string> {
     return this.showAlert
       .pipe(
@@ -112,6 +122,8 @@ export class LocationPickerModalComponent extends FilePickerBaseModalComponent {
               return this.text.alertNoAccessToManagedProjectFolder;
             case 'managedFolderNotFound':
               return this.text.alertNoManagedProjectFolder;
+            case 'cannotCreateFolder':
+              return this.text.alertCannotCreateFolder;
             case 'none':
               return '';
             default:
@@ -169,5 +181,22 @@ export class LocationPickerModalComponent extends FilePickerBaseModalComponent {
     }
 
     return this.text.tooltip.file_not_selectable;
+  }
+
+  public createAndNavigateToFolder() {
+    // eslint-disable-next-line
+    const value = window.prompt(this.text.buttons.newFolder);
+    if (!value) { return; }
+
+    this.storageFilesResourceService.createFolder(
+      this.locals.createFolderHref as string,
+      {
+        name: value,
+        parent_id: this.currentDirectory.id,
+      },
+    ).subscribe({
+      next: (newlyCreatedDirectory) => this.changeLevel(newlyCreatedDirectory),
+      error: (_) => this.showAlert.next('cannotCreateFolder'),
+    });
   }
 }

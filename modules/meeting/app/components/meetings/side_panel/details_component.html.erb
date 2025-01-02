@@ -32,18 +32,10 @@
           details.with_row do
             render_meeting_attribute_row(:"git-commit") do
               render(Primer::Beta::Text.new) do
-                @meeting.recurring_meeting.human_frequency
+                @meeting.recurring_meeting.base_schedule
               end
             end
           end
-
-          details.with_row(mt: 2) do
-            render_meeting_attribute_row(:calendar) do
-              render(Primer::Beta::Text.new) do
-                @meeting.recurring_meeting.human_day_of_week
-              end
-            end
-          end if @meeting.recurring_meeting.frequency_weekly?
         else
           if @series.present?
             details.with_row(mb: 2) do

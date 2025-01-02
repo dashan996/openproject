@@ -22,6 +22,7 @@ export class ImmediateReminderSettingsComponent implements OnInit {
     title: this.I18n.t('js.reminders.settings.immediate.title'),
     explanation: this.I18n.t('js.reminders.settings.immediate.explanation'),
     mentioned: this.I18n.t('js.reminders.settings.immediate.mentioned'),
+    personalReminder: this.I18n.t('js.reminders.settings.immediate.personal_reminder'),
   };
 
   constructor(

@@ -9,6 +9,7 @@ nl:
     label_bcf: 'BCF'
     label_imported_failed: 'Mislukte import van BCF onderwerpen'
     label_imported_successfully: 'Succesvol BCF onderwerpen geïmporteerd'
+    label_bcf_issue_associated: "BCF issue associated"
     issues: "Problemen"
     recommended: 'aanbevolen'
     not_recommended: 'niet aanbevolen'

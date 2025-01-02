@@ -73,7 +73,9 @@ OpenProject, for example, uses the projects to structure the different modules/p
 
 ![project hierarchy select project](image-20220728200830893.png)
 
-**Note**: You have to be a [member](../members/#add-members) of a project in order to see the project and to work in a project.
+>[!NOTE]
+>You have to be a [member](../members/#add-members) of a project in order to see the project and to work in a project.
+
 
 ## Project Settings
 
@@ -85,7 +87,8 @@ You can specify further advanced settings for your project. Navigate to your pro
 
 - You see the default project **Identifier**. The identifier will be shown in the URL.
 
-**Note**: Changing the project identifier while the project is already being worked on can have major effects and is therefore not recommended. For example, repositories may not be loaded correctly and deep links may no longer work (since the project URL changes when the project identifier is changed).
+> [!NOTE]
+> Changing the project identifier while the project is already being worked on can have major effects and is therefore not recommended. For example, repositories may not be loaded correctly and deep links may no longer work (since the project URL changes when the project identifier is changed).
 
 - You can set a project to **Public**. This means it can be accessed without signing in to OpenProject.
 - Click the green **Save** button to save your changes.
@@ -123,7 +126,8 @@ You can copy existing [boards](../agile-boards) (apart from the Subproject board
 
 ![project settings information copy project copy options](project-settigns-copy-project.png)
 
-> **!!Attention!!** - **Budgets** cannot be copied, so they must be removed from the work package table beforehand. Alternatively, you can delete them in the Budget module and thus delete them from the work packages as well.
+> [!IMPORTANT]
+> **Budgets** cannot be copied, so they must be removed from the work package table beforehand. Alternatively, you can delete them in the Budget module and thus delete them from the work packages as well.
 
 For further configuration open the **Advanced settings**. Here you can specify (among other things) the project's URL (identifier), its visibility and status. Furthermore you can set values for custom fields.
 
@@ -133,7 +137,8 @@ Under the **Copy options** section you can select what additional project data a
 
 ![Copy options when copying a project in OpenProject](project-settings-copy-project-copy-options.png)
 
-**Note**: the File storages options only apply if the template project had  [OneDrive/SharePoint](../../system-admin-guide/integrations/one-drive) with automatically managed folders activated.
+> [!NOTE]
+> The File storages options only apply if the template project had  [OneDrive/SharePoint](../../system-admin-guide/integrations/one-drive) with automatically managed folders activated.
 
 If you select the **File Storages: Project folders** option, both the storage and the storage folders are copied into the new project if automatically managed project folders were selected for the original file storage. For storages with manually managed project folders setup the copied storage will be referencing the same folder as the original project.
 
@@ -147,7 +152,8 @@ Once you are done, click the green **Save** button.
 
 In order to archive a project, navigate to the [project settings](project-settings), and click the **Archive project** button.
 
-> **Note**: This option is always available to instance and project administrators. It can also be activated for specific roles by enabling the _Archive project_ permission for that role via the [Roles and permissions](../../system-admin-guide/users-permissions/roles-permissions/) page in the administrator settings.
+> [!NOTE]
+> This option is always available to instance and project administrators. It can also be activated for specific roles by enabling the _Archive project_ permission for that role via the [Roles and permissions](../../system-admin-guide/users-permissions/roles-permissions/) page in the administrator settings.
 
 ![project settings archive project](project-settings-archive-project.png)
 
@@ -165,4 +171,5 @@ If you want to delete a project, navigate to the [Project settings](project-sett
 
 You can also delete a project via the [projects overview list](./project-lists/).
 
-**Note**: Deleting projects is only available for System administrators.
+> [!NOTE]
+> Deleting projects is only available for System administrators.

@@ -13,6 +13,7 @@ es:
       open_storage: "Abrir %{storageType}"
       select_location: "Seleccionar ubicación"
       choose_location: "Seleccionar ubicación"
+      new_folder: "New folder"
       types:
         nextcloud: "Nextcloud"
         one_drive: "OneDrive/Sharepoint"
@@ -42,6 +43,7 @@ es:
           Todavía no se ha encontrado la carpeta de proyecto administrada automáticamente. Espere un poco, vuelva a cargar la página para obtener los datos más recientes e inténtelo de nuevo.
         managed_project_folder_no_access: >
           Aún no tiene acceso a la carpeta del proyecto administrada. Espere un poco e inténtalo de nuevo.
+        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols.
         upload_keep_both: "Mantener ambos"
         upload_replace: "Sustituir"
       file_links:

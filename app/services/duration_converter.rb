@@ -96,7 +96,7 @@ class DurationConverter
       false
     end
 
-    def output(duration_in_hours)
+    def output(duration_in_hours, format: default_format)
       return duration_in_hours if duration_in_hours.nil?
 
       seconds = (duration_in_hours * 3600).to_i
@@ -142,7 +142,7 @@ class DurationConverter
                             **duration_length_options) / 3600.to_f
     end
 
-    def format
+    def default_format
       Setting.duration_format == "days_and_hours" ? :days_and_hours : :hours_only
     end
 

@@ -219,7 +219,7 @@ module CustomFieldsHelper
     label = format.label.is_a?(Proc) ? format.label.call : I18n.t(format.label)
 
     show_enterprise_text = format_string == "hierarchy" && !EnterpriseToken.allows_to?(:custom_field_hierarchies)
-    suffix = show_enterprise_text ? " (#{I18n.t(:label_enterprise_addon)})" : ""
+    suffix = show_enterprise_text ? " (#{I18n.t(:"ee.upsale.title")})" : ""
 
     "#{label}#{suffix}"
   end

@@ -33,12 +33,19 @@ See COPYRIGHT and LICENSE files for more details.
 
 <%= render ::Types::EditPageHeaderComponent.new(type: @type, tabs: tabs) %>
 
-<%= form_for @type,
+<%=
+  selected_tab = selected_tab(tabs)
+
+  if selected_tab.key?(:view_component)
+    render selected_tab[:view_component].new(@type)
+  else
+    form_for @type,
              url: update_type_tab_path(id: @type.id, tab: @tab),
              builder: TabularFormBuilder,
-             lang: current_language do |f| %>
-
-  <%= render_tabs tabs, f, with_tab_nav: false %>
-<% end %>
+             lang: current_language do |f|
+      render partial: "common/tabs", locals: { f:, tabs:, selected_tab:, with_tab_nav: false }
+    end
+  end
+%>
 
 <%= error_messages_for 'type' %>

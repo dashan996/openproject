@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -39,7 +41,16 @@ class WorkPackages::UpdateService < BaseServices::Update
 
   private
 
+  def set_templated_attributes
+    return unless model.type.replacement_patterns_defined?
+
+    model.type.patterns.all_enabled.each do |key, pattern|
+      model.public_send(:"#{key}=", pattern.resolve(model))
+    end
+  end
+
   def after_perform(service_call)
+    set_templated_attributes
     update_related_work_packages(service_call)
     cleanup(service_call.result)
 

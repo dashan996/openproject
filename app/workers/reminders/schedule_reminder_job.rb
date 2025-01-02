@@ -40,7 +40,9 @@ module Reminders
       create_notification_service = create_notification_from_reminder(reminder)
 
       create_notification_service.on_success do |service_result|
-        ReminderNotification.create!(reminder:, notification: service_result.result)
+        notification = service_result.result
+        ReminderNotification.create!(reminder:, notification:)
+        dispatch_immediate_email_notification(notification)
       end
 
       create_notification_service.on_failure do |service_result|
@@ -60,6 +62,13 @@ module Reminders
           resource: reminder.remindable,
           reason: :reminder
         )
+    end
+
+    def dispatch_immediate_email_notification(notification)
+      recipient = notification.recipient
+      return unless recipient.pref.immediate_reminders[:personal_reminder]
+
+      Mails::Reminders::NotificationDeliveryJob.perform_later(notification)
     end
   end
 end

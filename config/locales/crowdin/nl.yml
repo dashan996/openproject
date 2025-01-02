@@ -325,9 +325,9 @@ nl:
       no_results_content_text: Maak een nieuw project
       search:
         label: Project name filter
-        placeholder: Search by project name
+        placeholder: Zoeken op projectnaam
     lists:
-      active: "Active projects"
+      active: "Actieve projecten"
       my: "Mijn projecten"
       favored: "Favoriete projecten"
       archived: "Gearchiveerde projecten"
@@ -336,10 +336,13 @@ nl:
       new:
         placeholder: "Nieuwe projectlijst"
       delete_modal:
-        title: "Delete project list"
-        text: "This action will not delete any project the list contains. Are you sure you want to delete this project list?"
+        title: "Projectlijst verwijderen"
+        text: "Deze actie verwijdert geen enkel project dat de lijst bevat. Weet u zeker dat u deze projectlijst wilt verwijderen?"
     settings:
       change_identifier: Change identifier
+      actions:
+        label_enable_all: "Alles inschakelen"
+        label_disable_all: "Alles uitschakelen"
       activities:
         no_results_title_text: Er zijn momenteel geen activiteiten beschikbaar.
       forums:
@@ -350,18 +353,26 @@ nl:
         no_results_content_text: Maak een nieuwe werkpakket categorie
       custom_fields:
         no_results_title_text: Momenteel zijn er geen aangepaste velden beschikbaar.
+      life_cycle:
+        header:
+          title: "Project levenscyclus"
+          description_html: 'These project stages and gates in the project lifecycle will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> and are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. You can enable or disable individual attributes.'
+        non_defined: "Neither stages nor gates are currently defined."
+        section_header: "Stages and gates"
+        step:
+          use_in_project: "Use %{step} in this project"
+        filter:
+          label: "Search project stage or gate"
       project_custom_fields:
         header:
           title: "Project attributes"
-          description: 'These project attributes will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> under their respective sections. You can enable or disable individual attributes. Project attributes and sections are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. '
+          description_html: 'These project attributes will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> under their respective sections. You can enable or disable individual attributes. Project attributes and sections are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. '
         filter:
           label: "Search project attribute"
         actions:
           label_enable_single: "Actief in dit project, klik om uit te schakelen"
           label_disable_single: "Inactief in dit project, klik om in te schakelen"
           remove_from_project: "Remove from project"
-          label_enable_all: "Alles inschakelen"
-          label_disable_all: "Disable all"
         is_required_blank_slate:
           heading: Vereist in alle projecten
           description: This project attribute is activated in all projects since the "Required in all projects" option is checked. It cannot be deactivated for individual projects.
@@ -374,6 +385,10 @@ nl:
         no_results_content_text: Maak een nieuwe versie
       storage:
         no_results_title_text: Er is geen extra opgenomen schijfruimte verbruikt door dit project.
+  project_stage:
+    working_days_count:
+      one: "Duration: %{count} working day"
+      other: "Duration: %{count} working days"
   lists:
     create:
       success: "De gewijzigde lijst is opgeslagen als een nieuwe lijst"
@@ -570,18 +585,27 @@ nl:
       no_results_title_text: Er zijn momenteel geen types.
       no_results_content_text: Maak een nieuw type
     edit:
-      settings: "Instellingen"
-      form_configuration: "Formulierconfiguratie"
+      form_configuration:
+        tab: "Form configuration"
       more_info_text_html: >
         Enterprise edition allows you to customize form configuration with these additional add-ons: <br> <ul class="%{list_styling_class}"> <li><b>Add new attribute groups</b></li> <li><b>Rename attribute groups</b></li> <li><b>Add a table of related work packages</b></li> </ul>
-      projects: "Projecten"
-      enabled_projects: "Ingeschakelde projecten"
-      edit_query: "Tabel bewerken"
-      query_group_placeholder: "Geef de tabel een naam"
-      reset: "Standaardinstellingen herstellen"
-      type_color_text: |
-        De geselecteerde kleur onderscheidt verschillende types
-        in Gantt grafieken of werkpakketten tabellen. Het wordt daarom aangeraden om een sterke kleur te gebruiken.
+      projects:
+        tab: "Projects"
+        enabled_projects: "Enabled projects"
+      settings:
+        tab: "Settings"
+        type_color_text: The selected color distinguishes different types in Gantt charts or work packages tables. It is therefore recommended to use a strong color.
+      subject_configuration:
+        tab: "Subject configuration"
+        manually_editable_subjects:
+          label: "Manually editable subjects"
+          caption: "Users can manually enter and edit work package subjects without restrictions."
+        automatically_generated_subjects:
+          label: "Automatically generated subjects"
+          caption: "Define a pattern using referenced attributes and text to automatically generate work package subjects. Users will not be able to manually edit subjects."
+        pattern:
+          label: "Subject pattern"
+          caption: "Search for an attribute or add text. To create a space between elements add it as a text."
   versions:
     overview:
       work_packages_in_archived_projects: "The version is shared with archived projects which still have work packages assigned to this version. These are counted, but will not appear in the linked views."
@@ -852,6 +876,9 @@ nl:
         lag: "Vertraging"
         from: "Werkpakket"
         to: "Verwante werkpakket"
+      reminder:
+        remind_at_date: "Date"
+        remind_at_time: "Time"
       repository:
         url: "URL"
       role:
@@ -1101,16 +1128,38 @@ nl:
           attributes:
             type:
               must_be_a_stage_or_gate: "must be either Project::StageDefinition or Project::GateDefinition"
+              type_and_class_name_mismatch: "must match the instantiated class name"
+        project/gate_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "must be a Project::GateDefinition"
+        project/stage_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "must be a Project::StageDefinition"
         project/life_cycle_step:
           attributes:
             type:
               must_be_a_stage_or_gate: "must be either Project::Stage or Project::Gate"
               must_be_a_stage: "must be a Project::Stage"
               must_be_a_gate: "must be a Project::Gate"
+              type_and_class_name_mismatch: "must match the instantiated class name"
         project/gate:
           attributes:
             base:
-              end_date_not_allowed: "Cannot assign `end_date` to a Project::Gate"
+              end_date_not_allowed: "Cannot assign end date to a Project::Gate"
+            type:
+              type_and_class_name_mismatch: "must be a Project::Gate"
+            date:
+              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+        project/stage:
+          attributes:
+            date_range:
+              start_date_must_be_before_end_date: "start date must be before the end date."
+              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+              incomplete: "is incomplete."
+            type:
+              type_and_class_name_mismatch: "must be a Project::Stage"
         query:
           attributes:
             project:
@@ -1327,6 +1376,8 @@ nl:
         other: "Meldingen"
       placeholder_user: "Tijdelijke gebruiker"
       project: "Project"
+      project/gate_definition: "Gate"
+      project/stage_definition: "Stage"
       project_query:
         one: "Projectlijst"
         other: "Projectlijsten"
@@ -1430,6 +1481,7 @@ nl:
     login: "Gebruikersnaam"
     mail: "E-mail"
     name: "Naam"
+    note: "Note"
     password: "Wachtwoord"
     priority: "Prioriteit"
     project: "Project"
@@ -1526,6 +1578,7 @@ nl:
   button_print: "Afdrukken"
   button_quote: "Citeer"
   button_remove: Verwijder
+  button_remove_reminder: "Remove reminder"
   button_rename: "Naam wijzigen"
   button_replace: "Vervang"
   button_revoke: "Intrekken"
@@ -1536,6 +1589,7 @@ nl:
   button_save_as: "Opslaan als"
   button_apply_changes: "Veranderingen doorvoeren"
   button_save_back: "Opslaan en terug"
+  button_set_reminder: "Set reminder"
   button_show: "Toon"
   button_sort: "Sorteren"
   button_submit: "Verzenden"
@@ -1741,12 +1795,12 @@ nl:
   direction: LTR
   ee:
     upsale:
+      title: "Enterprise add-on"
+      link_title: "More information"
       form_configuration:
         description: "Customize the form configuration with these additional add-ons:"
         add_groups: "Toevoegen van nieuwe attribuutgroepen"
         rename_groups: "Attribuutgroepen hernoemen"
-      project_filters:
-        description_html: "Filtering and sorting on custom fields is an Enterprise edition add-on."
   enumeration_activities: "Activiteiten voor het bijhouden van tijd"
   enumeration_work_package_priorities: "Werkpakket prioriteiten"
   enumeration_reported_project_statuses: "Gerapporteerde projectstatus"
@@ -1779,6 +1833,7 @@ nl:
   error_pdf_export_too_many_columns: "Te veel kolommen geselecteerd voor het exporteren naar PDF. Beperk het aantal kolommen."
   error_pdf_failed_to_export: "De pdf export kan niet worden opgeslagen:%{error}"
   error_token_authenticity: "Niet in staat om de Cross-Site Request Forgery token te valideren. Heeft u geprobeert gegevens op meerdere browsers of tabbladen wilt indienen? Sluit alle tabbladen en probeer het opnieuw."
+  error_reminder_not_found: "The reminder was not found or was already notified about."
   error_work_package_not_found_in_project: "Het werkpakket werd niet gevonden of maakt geen deel uit van dit project"
   error_work_package_id_not_found: "Het werkpakket is niet gevonden."
   error_must_be_project_member: "moet een project lid zijn"
@@ -2072,6 +2127,7 @@ nl:
       responsible: "Verantwoording afleggen"
       shared: "Gedeeld"
       watched: "Kijker"
+      reminder: "Reminder"
     facets:
       unread: "Ongelezen"
       unread_title: "Toon ongelezen"
@@ -2279,7 +2335,6 @@ nl:
   label_enterprise_active_users: "%{current}/%{limit} gereserveerd actieve gebruikers"
   label_enterprise_edition: "Enterprise edition"
   label_enterprise_support: "Ondernemingsondersteuning"
-  label_enterprise_addon: "Enterprise add-on"
   label_environment: "Omgeving"
   label_estimates_and_progress: "Estimates and progress"
   label_equals: "is"
@@ -2464,6 +2519,7 @@ nl:
   label_none_parentheses: "(geen)"
   label_not_contains: "bevat geen"
   label_not_equals: "is niet"
+  label_life_cycle_step_plural: "Project lifecycle"
   label_on: "op"
   label_operator_all: "is niet leeg"
   label_operator_none: "is leeg"
@@ -2628,6 +2684,7 @@ nl:
   label_this_month: "Deze maand"
   label_this_week: "deze week"
   label_this_year: "Dit jaar"
+  label_time: "Time"
   label_time_entry_plural: "Bestede tijd"
   label_time_entry_activity_plural: "Spent time activities"
   label_title: "Titel"
@@ -2801,8 +2858,13 @@ nl:
         prefix: "Ontvangen vanwege de meldingsinstelling: %{reason}"
         date_alert_start_date: "Date alert"
         date_alert_due_date: "Date alert"
+        reminder: "Reminder"
       see_all: "Alles bekijken"
       updated_at: "Bijgewerkt op %{timestamp} door %{user}"
+    reminder_notifications:
+      subject: "Reminder: %{note}"
+      heading: "You have a new reminder"
+      note: "Note: “%{note}”"
     sharing:
       work_packages:
         allowed_actions: "You may %{allowed_actions} this work package. This can change depending on your project role and permissions."
@@ -3046,6 +3108,7 @@ nl:
   permission_edit_own_time_entries: "Bewerk de logboeken van de eigen tijd"
   permission_edit_project: "Project bewerken"
   permission_edit_project_attributes: "Edit project attributes"
+  permission_edit_project_stages_and_gates: "Edit project stages and gates"
   permission_edit_reportings: "Rapporteringen bewerken"
   permission_edit_time_entries: "Bewerk tijdregistraties voor andere gebruikers"
   permission_edit_timelines: "Bewerken van tijdlijnen"
@@ -3075,6 +3138,8 @@ nl:
   permission_search_project: "Search project"
   permission_select_custom_fields: "Aangepaste velden selecteren"
   permission_select_project_custom_fields: "Select project attributes"
+  permission_select_project_life_cycle: "Select project stages and gates"
+  permission_select_project_life_cycle_explanation: "Activate/Deactivate the stages and gates in a project. Enables the user to select the lifecycle appropriate for the project as inactive stages and gates will not be visible in the project overview page nor the project list."
   permission_select_project_modules: "Selecteer project modules"
   permission_share_work_packages: "Share work packages"
   permission_manage_types: "Selecteer typen"
@@ -3099,6 +3164,7 @@ nl:
   permission_work_package_assigned_explanation: "Werkpakketten kunnen worden toegewezen aan gebruikers en groepen met deze rol in het respectieve project"
   permission_view_project_activity: "Projectactiviteit bekijken"
   permission_view_project_attributes: "View project attributes"
+  permission_view_project_stages_and_gates: "View project stages and gates"
   permission_save_bcf_queries: "Save BCF queries"
   permission_manage_public_bcf_queries: "Manage public BCF queries"
   permission_edit_attribute_help_texts: "De helpteksten van attributen bewerken"
@@ -3778,6 +3844,12 @@ nl:
       edit_description: "Kan dit werkpakket bekijken, becommentariëren en bewerken."
       view: "Weergeven"
       view_description: "Can view this work package."
+    reminders:
+      label_remind_at: "Date"
+      note_placeholder: "Why are you setting this reminder?"
+      success_creation_message: "Reminder set successfully. You will receive a notification for this work package at the chosen time."
+      success_update_message: "Reminder updated successfully."
+      success_deletion_message: "Reminder deleted successfully."
   sharing:
     count:
       zero: "0 users"

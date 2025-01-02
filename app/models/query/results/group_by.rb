@@ -101,9 +101,9 @@ module ::Query::Results::GroupBy
 
     groups.transform_keys do |key|
       if custom_field.multi_value?
-        Array(key&.split(".")).map { |subkey| items[subkey] }
+        Array(key&.split(".")).map { |subkey| items[subkey].first }
       else
-        items[key] || nil
+        items[key] || []
       end
     end
   end
@@ -116,8 +116,8 @@ module ::Query::Results::GroupBy
       .new
       .get_descendants(item: custom_field.hierarchy_root, include_self: false)
       .fmap do |list|
-        list.filter_map { |item| CustomField::Hierarchy::HierarchyItemAdapter.new(item:) if keys.include?(item.label) }
-            .index_by(&:label)
+        list.filter_map { |item| CustomField::Hierarchy::HierarchyItemAdapter.new(item:) if keys.include?(item.id.to_s) }
+          .group_by { |item| item.id.to_s }
       end
       .either(
         ->(list) { list },

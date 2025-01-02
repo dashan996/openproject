@@ -340,6 +340,9 @@ lt:
         text: "Atlikus šį veiksmą nebus ištrintas nė vienas sąraše esantis projektas. Ar tikrai norite ištrinti šį projektų sąrašą?"
     settings:
       change_identifier: Pokyčio identifikatorius
+      actions:
+        label_enable_all: "Enable all"
+        label_disable_all: "Disable all"
       activities:
         no_results_title_text: Kolkas neprieinama jokia veikla.
       forums:
@@ -350,18 +353,26 @@ lt:
         no_results_content_text: Sukurti naują darbų paketo kategoriją
       custom_fields:
         no_results_title_text: Šiuo metu nėra prieinamų pasirinktinų laukų.
+      life_cycle:
+        header:
+          title: "Project lifecycle"
+          description_html: 'These project stages and gates in the project lifecycle will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> and are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. You can enable or disable individual attributes.'
+        non_defined: "Neither stages nor gates are currently defined."
+        section_header: "Stages and gates"
+        step:
+          use_in_project: "Use %{step} in this project"
+        filter:
+          label: "Search project stage or gate"
       project_custom_fields:
         header:
           title: "Projekto atributai"
-          description: 'Šie projekto atributai bus rodomi jūsų <a href=%{overview_url} target="_blank">projekto apžvalgos puslapyje</a> savo atitinkamose skiltyse. Galite įjungti ar išjungti konkrečius atributus. Projekto atributus ir skiltys egzemplioriaus administratorius apibrėžia <a href=%{admin_settings_url} target="_blank">administravimo nustatymuose</a>. '
+          description_html: 'These project attributes will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> under their respective sections. You can enable or disable individual attributes. Project attributes and sections are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. '
         filter:
           label: "Ieškoti projekto atributo"
         actions:
           label_enable_single: "Aktyvus šiame projekte, spauskite, jei norite išjungti"
           label_disable_single: "Neakvyus šiame projekte, spauskite, jei norite įjungti"
           remove_from_project: "Pašalinti iš projekto"
-          label_enable_all: "Įjungti visus"
-          label_disable_all: "Išjungti visus"
         is_required_blank_slate:
           heading: Required in all projects
           description: This project attribute is activated in all projects since the "Required in all projects" option is checked. It cannot be deactivated for individual projects.
@@ -374,6 +385,12 @@ lt:
         no_results_content_text: Sukurti naują versiją
       storage:
         no_results_title_text: Šis projektas papildomos vietos diske nenaudoja.
+  project_stage:
+    working_days_count:
+      one: "Duration: %{count} working day"
+      few: "Duration: %{count} working days"
+      many: "Duration: %{count} working days"
+      other: "Duration: %{count} working days"
   lists:
     create:
       success: "Pakeistas sąrašas įrašytas kaip naujas sąrašas"
@@ -584,18 +601,27 @@ lt:
       no_results_title_text: Nėra jokių rūšių.
       no_results_content_text: Sukurti naują rūšį
     edit:
-      settings: "Nustatymai"
-      form_configuration: "Formos konfigūracija"
+      form_configuration:
+        tab: "Form configuration"
       more_info_text_html: >
         Enterprise versija leidžia jums keisti formos konfigūraciją naudojant papildomus priedus: <br> <ul class="%{list_styling_class}"> <li><b>Pridėti naujas atributų grupes</b></li> <li><b>Pervadinti atributų grupes</b></li> <li><b>Pridėti susijusių darbo paketų lentelę</b></li> </ul>
-      projects: "Projektai"
-      enabled_projects: "Įgalinti projektai"
-      edit_query: "Keisti lentelę"
-      query_group_placeholder: "Pavadinti lentelę"
-      reset: "Atkurti į numatytuosius"
-      type_color_text: |
-        Parinkta spalva išskiria skirtingus tipus
-        Gantt diagramoje ar darbo paketų lentelėse. Todėl rekomenduojama naudoti ryškią spalvą.
+      projects:
+        tab: "Projects"
+        enabled_projects: "Enabled projects"
+      settings:
+        tab: "Settings"
+        type_color_text: The selected color distinguishes different types in Gantt charts or work packages tables. It is therefore recommended to use a strong color.
+      subject_configuration:
+        tab: "Subject configuration"
+        manually_editable_subjects:
+          label: "Manually editable subjects"
+          caption: "Users can manually enter and edit work package subjects without restrictions."
+        automatically_generated_subjects:
+          label: "Automatically generated subjects"
+          caption: "Define a pattern using referenced attributes and text to automatically generate work package subjects. Users will not be able to manually edit subjects."
+        pattern:
+          label: "Subject pattern"
+          caption: "Search for an attribute or add text. To create a space between elements add it as a text."
   versions:
     overview:
       work_packages_in_archived_projects: "Versija bendrinama su archyvuotais projektais, kurie vis dar turi darbo paketų, priskirtų šiai versijai. Jie įskaičiuoti, bet nebus rodomi susietuose vaizduose."
@@ -868,6 +894,9 @@ lt:
         lag: "Vėlavimas"
         from: "Darbų paketas"
         to: "Susijusių darbų paketas"
+      reminder:
+        remind_at_date: "Date"
+        remind_at_time: "Time"
       repository:
         url: "URL"
       role:
@@ -1117,16 +1146,38 @@ lt:
           attributes:
             type:
               must_be_a_stage_or_gate: "must be either Project::StageDefinition or Project::GateDefinition"
+              type_and_class_name_mismatch: "must match the instantiated class name"
+        project/gate_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "must be a Project::GateDefinition"
+        project/stage_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "must be a Project::StageDefinition"
         project/life_cycle_step:
           attributes:
             type:
               must_be_a_stage_or_gate: "must be either Project::Stage or Project::Gate"
               must_be_a_stage: "must be a Project::Stage"
               must_be_a_gate: "must be a Project::Gate"
+              type_and_class_name_mismatch: "must match the instantiated class name"
         project/gate:
           attributes:
             base:
-              end_date_not_allowed: "Cannot assign `end_date` to a Project::Gate"
+              end_date_not_allowed: "Cannot assign end date to a Project::Gate"
+            type:
+              type_and_class_name_mismatch: "must be a Project::Gate"
+            date:
+              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+        project/stage:
+          attributes:
+            date_range:
+              start_date_must_be_before_end_date: "start date must be before the end date."
+              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+              incomplete: "is incomplete."
+            type:
+              type_and_class_name_mismatch: "must be a Project::Stage"
         query:
           attributes:
             project:
@@ -1349,6 +1400,8 @@ lt:
         other: "Pranešimų"
       placeholder_user: "Statytinis naudotojas"
       project: "Projektas"
+      project/gate_definition: "Gate"
+      project/stage_definition: "Stage"
       project_query:
         one: "Project list"
         few: "Projektų sąrašai"
@@ -1466,6 +1519,7 @@ lt:
     login: "Naudotojas"
     mail: "El. paštas"
     name: "Vardas"
+    note: "Note"
     password: "Slaptažodis"
     priority: "Pirmenybė"
     project: "Projektas"
@@ -1562,6 +1616,7 @@ lt:
   button_print: "Spausdinti"
   button_quote: "Cituoti"
   button_remove: Pašalinti
+  button_remove_reminder: "Remove reminder"
   button_rename: "Pervardinti"
   button_replace: "Pakeisti"
   button_revoke: "Atšaukti"
@@ -1572,6 +1627,7 @@ lt:
   button_save_as: "Įrašyti kaip"
   button_apply_changes: "Pritaikyti pakeitimus"
   button_save_back: "Įrašyti ir grįžti atgal"
+  button_set_reminder: "Set reminder"
   button_show: "Rodyti"
   button_sort: "Rūšiuoti"
   button_submit: "Siųsti"
@@ -1813,12 +1869,12 @@ lt:
   direction: ltr
   ee:
     upsale:
+      title: "Enterprise add-on"
+      link_title: "More information"
       form_configuration:
         description: "Pritaikyti sau formos konfigūraciją su šiais naujais priedais:"
         add_groups: "Pridėti naujas atributų grupes"
         rename_groups: "Pervadinti atributų grupes"
-      project_filters:
-        description_html: "Filtravimas ir rikiavimas pagal pritaikytus laukus yra tik Enterprise versijos priedas."
   enumeration_activities: "Laiko sekimo veiklos"
   enumeration_work_package_priorities: "Darbų paketo prioritetai"
   enumeration_reported_project_statuses: "Pranešta projekto būsena"
@@ -1851,6 +1907,7 @@ lt:
   error_pdf_export_too_many_columns: "PDF eksportavimui pasirinkta per daug stulpelių. Prašome sumažinti stulpelių skaičių."
   error_pdf_failed_to_export: "PDF eksportas negali būti išsaugotas: %{error}"
   error_token_authenticity: "Neįmanoma patikrinti Cross-Site Request Forgery žetono. Gal bandėte nusiųsti duomenis iš kelių naršyklių ar kortelių? Prašome uždaryti visas korteles ir pabandyti dar kartą."
+  error_reminder_not_found: "The reminder was not found or was already notified about."
   error_work_package_not_found_in_project: "Darbų paketas nerastas arba nepriklauso šiam projektui"
   error_work_package_id_not_found: "The work package was not found."
   error_must_be_project_member: "turi būti projekto narys"
@@ -2144,6 +2201,7 @@ lt:
       responsible: "Atsakingas"
       shared: "Bendrinta"
       watched: "Stebėtojas"
+      reminder: "Reminder"
     facets:
       unread: "Neskaitytas"
       unread_title: "Rodyti neperskaitytus"
@@ -2351,7 +2409,6 @@ lt:
   label_enterprise_active_users: "%{current}/%{limit} aktyviai naudojami naudotojai"
   label_enterprise_edition: "Enterprise versija"
   label_enterprise_support: "„Enterprise“ palaikymas"
-  label_enterprise_addon: "Enterprise priedas"
   label_environment: "Aplinka"
   label_estimates_and_progress: "Įvertinimai ir eiga"
   label_equals: "yra"
@@ -2536,6 +2593,7 @@ lt:
   label_none_parentheses: "(nėra)"
   label_not_contains: "neturi"
   label_not_equals: "nėra"
+  label_life_cycle_step_plural: "Project lifecycle"
   label_on: "įjungta"
   label_operator_all: "nėra tuščias"
   label_operator_none: "yra tuščias"
@@ -2700,6 +2758,7 @@ lt:
   label_this_month: "šis mėnuo"
   label_this_week: "ši savaitė"
   label_this_year: "šiemet"
+  label_time: "Time"
   label_time_entry_plural: "Praleista laiko"
   label_time_entry_activity_plural: "Praleisto laiko veiklos"
   label_title: "Pavadinimas"
@@ -2875,8 +2934,13 @@ lt:
         prefix: "Gauta dėl pranešimų nustatymo: %{reason}"
         date_alert_start_date: "Datos įspėjimas"
         date_alert_due_date: "Datos įspėjimas"
+        reminder: "Reminder"
       see_all: "Žiūrėti visus"
       updated_at: "Pakeitė %{user} %{timestamp}"
+    reminder_notifications:
+      subject: "Reminder: %{note}"
+      heading: "You have a new reminder"
+      note: "Note: “%{note}”"
     sharing:
       work_packages:
         allowed_actions: "Šiame darbo pakete jums leidžiama %{allowed_actions}. Tai gali keistis priklausomai nuo jūsų vaidmens projekte ir teisių."
@@ -3122,6 +3186,7 @@ lt:
   permission_edit_own_time_entries: "Redaguoti savo laiko įrašus"
   permission_edit_project: "Redaguoti projektą"
   permission_edit_project_attributes: "Edit project attributes"
+  permission_edit_project_stages_and_gates: "Edit project stages and gates"
   permission_edit_reportings: "Redaguoti ataskaitas"
   permission_edit_time_entries: "Keitimo laiko žurnalai kitiems naudotojams"
   permission_edit_timelines: "Redaguoti tvarkaraščius"
@@ -3151,6 +3216,8 @@ lt:
   permission_search_project: "Ieškoti projekte"
   permission_select_custom_fields: "Parinkite savo laukus"
   permission_select_project_custom_fields: "Parinkite projekto atributus"
+  permission_select_project_life_cycle: "Select project stages and gates"
+  permission_select_project_life_cycle_explanation: "Activate/Deactivate the stages and gates in a project. Enables the user to select the lifecycle appropriate for the project as inactive stages and gates will not be visible in the project overview page nor the project list."
   permission_select_project_modules: "Parinkti projekto modulius"
   permission_share_work_packages: "Bendrinti darbo paketus"
   permission_manage_types: "Pasirinkti tipus"
@@ -3175,6 +3242,7 @@ lt:
   permission_work_package_assigned_explanation: "Darbų paketai gali būti priskirti naudotojams ir grupėms pagal vaidmenį atitinkamame projekte"
   permission_view_project_activity: "Žiūrėti veiksmus projekte"
   permission_view_project_attributes: "View project attributes"
+  permission_view_project_stages_and_gates: "View project stages and gates"
   permission_save_bcf_queries: "Įrašyti BCF užklausas"
   permission_manage_public_bcf_queries: "Valdyti viešas BCF užklausas"
   permission_edit_attribute_help_texts: "Keisti atributų pagalbos tekstus"
@@ -3854,6 +3922,12 @@ lt:
       edit_description: "Gali žiūrėti, komentuoti ir keisti šį darbo paketą."
       view: "Peržiūrėti"
       view_description: "Gali žiūrėti šį darbo paketą."
+    reminders:
+      label_remind_at: "Date"
+      note_placeholder: "Why are you setting this reminder?"
+      success_creation_message: "Reminder set successfully. You will receive a notification for this work package at the chosen time."
+      success_update_message: "Reminder updated successfully."
+      success_deletion_message: "Reminder deleted successfully."
   sharing:
     count:
       zero: "0 naudotojų"

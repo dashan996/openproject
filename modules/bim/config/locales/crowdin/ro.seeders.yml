@@ -490,16 +490,16 @@ ro:
                 item_1:
                   subject: Creating the BIM execution plan
                   description: |-
-                    # Goal
+                    # Obiectivul
 
-                    *   A BIM execution plan will be defined according to the exchange requirements specifications (ERS)
-                    *   All team members and partners have a plan on how to reach each of the project goals
+                    * Un plan de execuție BIM va fi definit în conformitate cu specificațiile privind cerințele de schimb (ERS)
+                    * Toți membrii echipei și partenerii au un plan privind modul de atingere a fiecăruia dintre obiectivele proiectului
 
-                    # Description
+                    # Descriere
 
-                    *   Depending on the identifies use cases, the individual Information Delivery Manuals will be defined
-                    *   To handle the technological interfaces, a software topology will be defined and analyzed and verified
-                    *   ...
+                    * În funcție de cazurile de utilizare a identificării, Manualele individuale de livrare a informațiilor vor fi definite
+                    * Pentru a gestiona interfețele tehnologice, un software topologie va fi definit și analizat și verificat
+                    * ...
                 item_2:
                   subject: Completion of the BIM execution plan
                   description: This type is hierarchically a parent of the types &quot;Clash&quot; and &quot;Request&quot;, thus represents a general note.

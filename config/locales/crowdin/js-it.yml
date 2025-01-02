@@ -654,6 +654,8 @@ it:
         new_notifications:
           message: "Ci sono nuove notifiche."
           link_text: "Clicca qui per caricarli."
+      reminders:
+        note: "Note: “%{note}”"
       settings:
         change_notification_settings: 'Puoi modificare le tue <a target="_blank" href="%{url}">impostazioni di notifica</a> per assicurarti di non perderti mai un aggiornamento importante.'
         title: "Impostazioni notifiche"
@@ -741,6 +743,7 @@ it:
         immediate:
           title: "Inviami un promemoria email"
           mentioned: "Subito quando qualcuno mi @menziona"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Avvisi email per altri elementi (che non sono macro-attività)"
           explanation: >
@@ -772,10 +775,6 @@ it:
         upgrade_to_ee_text: "Wow! Se hai bisogno di questa aggiunta sei un vero professionista! Ti andrebbe di aiutare noi sviluppatori OpenSource diventando un cliente dell'edizione Enterprise?"
         more_information: "Altre informazioni"
         nevermind: "Lascia stare"
-      edit:
-        form_configuration: "Configurazione del modulo"
-        projects: "Progetti"
-        settings: "Impostazioni"
     time_entry:
       work_package_required: "Richiede prima di selezionare una macro-attività."
       title: "Registra l'orario effettuato"
@@ -1044,6 +1043,12 @@ it:
           not_found: "La vista non esiste"
           duplicate_query_title: "Il nome di questa vista è già esistente. Cambiarlo comunque?"
         text_no_results: "Nessuna vista corrispondente trovata."
+      reminders:
+        button_label: "Set reminder"
+        title:
+          new: "Set reminder"
+          edit: "Edit reminder"
+        subtitle: "You will receive a notification for this work package at the chosen time."
       scheduling:
         is_parent: "Le date di questa macro-attività vengono automaticamente dedotte dai suoi figli. Attiva 'Programmazione manuale' per impostare le date."
         is_switched_from_manual_to_automatic: "Potrebbe essere necessario ricalcolare le date di questa macro-attività dopo il passaggio dalla programmazione manuale alla programmazione automatica a causa delle relazioni con altre macro-attività."

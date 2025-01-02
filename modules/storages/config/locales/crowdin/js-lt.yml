@@ -13,6 +13,7 @@ lt:
       open_storage: "Atverti %{storageType}"
       select_location: "Pažymėti vietą"
       choose_location: "Parinkite vietą"
+      new_folder: "New folder"
       types:
         nextcloud: "Nextcloud"
         one_drive: "OneDrive/SharePoint"
@@ -42,6 +43,7 @@ lt:
           Automatiškai tvarkomas projekto aplankas dar nerastas. Prašome truputį palaukti, iš naujo įkelti puslapį, kad atsisiųstumėte naujausius duomenis, ir pabandyti dar kartą.
         managed_project_folder_no_access: >
           Jūs dar neturite prieigos prie tvarkomo projekto aplanko. Prašome truputį palaukti ir bandyti dar kartą.
+        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols.
         upload_keep_both: "Pasilikti abu"
         upload_replace: "Pakeisti"
       file_links:

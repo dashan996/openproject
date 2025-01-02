@@ -79,6 +79,10 @@ export class StorageFilesResourceService {
     return this.httpClient.request<IUploadLink>(link.method, link.href, { body: link.payload });
   }
 
+  createFolder(href:string, body:{ name:string, parent_id:ID }):Observable<IStorageFile> {
+    return this.httpClient.post<IStorageFile>(href, body);
+  }
+
   reset():void {
     this.store.reset();
   }

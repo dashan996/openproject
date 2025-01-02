@@ -13,6 +13,7 @@ nl:
       open_storage: "%{storageType} openen"
       select_location: "Selecteer locatie"
       choose_location: "Kies locatie"
+      new_folder: "New folder"
       types:
         nextcloud: "Nextcloud"
         one_drive: "OneDrive/SharePoint"
@@ -42,6 +43,7 @@ nl:
           The automatically managed project folder was not yet found. Please wait a bit, reload the page to fetch the newest data, and try again.
         managed_project_folder_no_access: >
           U hebt nog geen toegang tot de beheerde projectmap. Wacht even en probeer het opnieuw.
+        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols.
         upload_keep_both: "Beide behouden"
         upload_replace: "Vervang"
       file_links:

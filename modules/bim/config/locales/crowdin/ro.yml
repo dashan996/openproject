@@ -9,6 +9,7 @@ ro:
     label_bcf: 'BCF'
     label_imported_failed: 'Importuri eșuate de subiecte BCF'
     label_imported_successfully: 'Ați importat cu succes subiectele BCF'
+    label_bcf_issue_associated: "BCF issue associated"
     issues: "Sunt câteva probleme cu produsele din coșul tău. Te rog mergi înapoi la pagina coșului și remediază aceste probleme înainte de finalizarea comenzii."
     recommended: 'recomandat'
     not_recommended: 'Recomandat'

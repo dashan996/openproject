@@ -13,6 +13,7 @@ pl:
       open_storage: "Otwórz %{storageType}"
       select_location: "Zaznacz lokalizację"
       choose_location: "Wybierz lokalizację"
+      new_folder: "New folder"
       types:
         nextcloud: "Nextcloud"
         one_drive: "OneDrive/SharePoint"
@@ -42,6 +43,7 @@ pl:
           Jeszcze nie znaleziono automatycznie zarządzanego folderu projektu. Zaczekaj chwilę, odśwież stronę, aby pobrać najnowsze dane i spróbuj ponownie.
         managed_project_folder_no_access: >
           Nie masz jeszcze dostępu do zarządzanego folderu projektu. Poczekaj chwilę i spróbuj ponownie.
+        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols.
         upload_keep_both: "Zachowaj oba"
         upload_replace: "Zastąp"
       file_links:

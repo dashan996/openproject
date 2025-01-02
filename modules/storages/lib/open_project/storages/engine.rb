@@ -240,8 +240,6 @@ module OpenProject::Storages
       end
     end
 
-    patch_with_namespace :Principals, :ReplaceReferencesService
-
     # This hook is executed when the module is loaded.
     config.to_prepare do
       # Allow the browser to connect to external servers for direct file uploads.
@@ -364,5 +362,9 @@ module OpenProject::Storages
         }
       }
     end
+
+    replace_principal_reference("::Storages::Storage", :creator_id)
+    replace_principal_reference("::Storages::ProjectStorage", :creator_id)
+    replace_principal_reference("::Storages::FileLink", :creator_id)
   end
 end

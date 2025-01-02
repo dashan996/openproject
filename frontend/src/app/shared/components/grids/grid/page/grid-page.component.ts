@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Directive, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { I18nService } from 'core-app/core/i18n/i18n.service';
-import { Title } from '@angular/platform-browser';
 import { GridInitializationService } from 'core-app/shared/components/grids/grid/initialization.service';
 import { PathHelperService } from 'core-app/core/path-helper/path-helper.service';
 import { GridResource } from 'core-app/features/hal/resources/grid-resource';
@@ -8,6 +7,7 @@ import { GridAddWidgetService } from 'core-app/shared/components/grids/grid/add-
 import { GridAreaService } from 'core-app/shared/components/grids/grid/area.service';
 import { CurrentProjectService } from 'core-app/core/current-project/current-project.service';
 import { ConfigurationService } from 'core-app/core/config/configuration.service';
+import { OpTitleService } from 'core-app/core/html/op-title.service';
 
 @Directive()
 export abstract class GridPageComponent implements OnInit, OnDestroy {
@@ -25,7 +25,7 @@ export abstract class GridPageComponent implements OnInit, OnDestroy {
     readonly currentProject:CurrentProjectService,
     readonly i18n:I18nService,
     readonly cdRef:ChangeDetectorRef,
-    readonly title:Title,
+    readonly title:OpTitleService,
     readonly addWidget:GridAddWidgetService,
     readonly renderer:Renderer2,
     readonly areas:GridAreaService,
@@ -57,7 +57,7 @@ export abstract class GridPageComponent implements OnInit, OnDestroy {
   }
 
   private setHtmlTitle() {
-    this.title.setTitle(this.text.html_title);
+    this.title.setFirstPart(this.text.html_title);
   }
 
   protected abstract i18nNamespace():string;

@@ -653,6 +653,8 @@ pt-BR:
         new_notifications:
           message: "Há novas notificações."
           link_text: "Clique aqui para carregá-las."
+      reminders:
+        note: "Note: “%{note}”"
       settings:
         change_notification_settings: 'Você pode modificar suas <a target="_blank" href="%{url}">configurações de notificação</a> para se certificar de nunca perder nenhuma atualização importante.'
         title: "Configurações de notificação"
@@ -740,6 +742,7 @@ pt-BR:
         immediate:
           title: "Envie-me um lembrete por e-mail"
           mentioned: "Imediatamente quando alguém me @mencionar"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Alertas por e-mail para outros itens (qua não sejam pacotes de trabalho)"
           explanation: >
@@ -771,10 +774,6 @@ pt-BR:
         upgrade_to_ee_text: "Uau! Se você precisa deste complemento, é porque é um super profissional! Gostaria de mostrar seu suporte aos desenvolvedores de código aberto tornando-se um cliente da edição Enterprise?"
         more_information: "Mais informações"
         nevermind: "Deixa pra lá"
-      edit:
-        form_configuration: "Configuração do formulário"
-        projects: "Projetos"
-        settings: "Configurações"
     time_entry:
       work_package_required: "É necessário selecionar primeiro um pacote de trabalho."
       title: "Registro de tempo"
@@ -1043,6 +1042,12 @@ pt-BR:
           not_found: "Esta visão não existe"
           duplicate_query_title: "O nome desta visão já existe. Modificar assim mesmo?"
         text_no_results: "Nenhuma visão correspondente foi encontrada."
+      reminders:
+        button_label: "Set reminder"
+        title:
+          new: "Set reminder"
+          edit: "Edit reminder"
+        subtitle: "You will receive a notification for this work package at the chosen time."
       scheduling:
         is_parent: "As datas deste pacote de trabalho são deduzidas automaticamente de seus filhos. Ative o 'Planejamento manual' para definir as datas."
         is_switched_from_manual_to_automatic: "As datas deste pacote de trabalho podem precisar ser recalculadas após a alteração de planejamento manual para automático devido a relações com outros pacotes de trabalho."

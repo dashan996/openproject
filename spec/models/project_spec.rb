@@ -383,6 +383,47 @@ RSpec.describe Project do
 
   describe "life_cycles" do
     it { is_expected.to have_many(:life_cycle_steps).class_name("Project::LifeCycleStep").dependent(:destroy) }
+
+    it "has many available_life_cycle_steps" do
+      expect(subject).to have_many(:available_life_cycle_steps)
+                    .class_name("Project::LifeCycleStep")
+                    .inverse_of(:project)
+                    .dependent(:destroy)
+                    .order(position: :asc)
+    end
+
+    it "checks for active flag" do
+      expect(subject.available_life_cycle_steps.to_sql)
+        .to include("\"project_life_cycle_steps\".\"active\" = TRUE")
+    end
+
+    it "checks for :view_project_stages_and_gates permission" do
+      project_condition = described_class.allowed_to(User.current, :view_project_stages_and_gates).select(:id)
+
+      expect(subject.available_life_cycle_steps.to_sql).to include(project_condition.to_sql)
+    end
+
+    it "eager loads :definition" do
+      expect(subject.available_life_cycle_steps.to_sql)
+        .to include("LEFT OUTER JOIN \"project_life_cycle_step_definitions\" ON")
+    end
+
+    describe ".validates_associated" do
+      let(:user) do
+        create(:user, member_with_permissions: { project => %i(view_project view_project_stages_and_gates) })
+      end
+      let!(:project_stage) { create :project_stage, :skip_validate, project:, start_date: nil }
+
+      before { allow(User).to receive(:current).and_return user }
+
+      it "is valid without a validation context" do
+        expect(project).to be_valid
+      end
+
+      it "is invalid with the :saving_life_cycle_steps validation context" do
+        expect(project).not_to be_valid(:saving_life_cycle_steps)
+      end
+    end
   end
 
   describe "#enabled_module_names=", with_settings: { default_projects_modules: %w(work_package_tracking repository) } do

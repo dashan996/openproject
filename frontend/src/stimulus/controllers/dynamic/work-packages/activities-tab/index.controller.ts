@@ -380,11 +380,42 @@ export default class IndexController extends Controller {
     this.tryScroll(activityId, 0, maxAttempts);
   }
 
-  private scrollToBottom() {
+  private tryScrollToBottom(attempts:number = 0, maxAttempts:number = 20) {
     const scrollableContainer = this.getScrollableContainer();
-    if (scrollableContainer) {
-      scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
+
+    if (!scrollableContainer) {
+      if (attempts < maxAttempts) {
+        setTimeout(() => this.tryScrollToBottom(attempts + 1, maxAttempts), 1000);
+      }
+      return;
     }
+
+    scrollableContainer.scrollTop = 0;
+
+    let timeoutId:ReturnType<typeof setTimeout>;
+
+    const observer = new MutationObserver(() => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      clearTimeout(timeoutId);
+
+      timeoutId = setTimeout(() => {
+        observer.disconnect();
+        scrollableContainer.scrollTo({
+          top: scrollableContainer.scrollHeight,
+          behavior: 'smooth',
+        });
+      }, 100);
+    });
+
+    observer.observe(scrollableContainer, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+    });
+  }
+
+  private scrollToBottom() {
+    this.tryScrollToBottom();
   }
 
   setFilterToOnlyComments() { this.filterValue = 'only_comments'; }

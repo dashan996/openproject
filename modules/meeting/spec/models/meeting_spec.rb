@@ -207,4 +207,27 @@ RSpec.describe Meeting do
       expect(StructuredMeeting.acts_as_watchable_permission).to eq(:view_meetings)
     end
   end
+
+  describe "duration" do
+    it "accepts a float" do
+      meeting.duration = 1.5
+      expect(meeting).to be_valid
+      expect(meeting.duration).to eq(1.5)
+      expect(meeting.formatted_duration).to eq("1.5h")
+    end
+
+    it "accepts a string to be parsed by chronic" do
+      meeting.duration = "30m"
+      expect(meeting).to be_valid
+      expect(meeting.duration).to eq(0.5)
+      expect(meeting.formatted_duration).to eq("0.5h")
+    end
+
+    it "doesn't raise on nil" do
+      meeting.duration = nil
+      expect(meeting).not_to be_valid
+      expect(meeting.errors[:duration]).to include("is not a number.")
+      expect(meeting.formatted_duration).to be_nil
+    end
+  end
 end

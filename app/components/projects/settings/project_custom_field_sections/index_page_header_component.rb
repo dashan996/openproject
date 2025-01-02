@@ -33,14 +33,11 @@ module Projects::Settings::ProjectCustomFieldSections
   class IndexPageHeaderComponent < ApplicationComponent
     include ApplicationHelper
 
-    def initialize(project: nil)
-      super
-      @project = project
-    end
+    options :project
 
     def breadcrumb_items
-      [{ href: project_overview_path(@project.id), text: @project.name },
-       { href: project_settings_general_path(@project.id), text: I18n.t("label_project_settings") },
+      [{ href: project_overview_path(project), text: project.name },
+       { href: project_settings_general_path(project), text: I18n.t("label_project_settings") },
        t("settings.project_attributes.heading")]
     end
   end

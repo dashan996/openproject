@@ -14,6 +14,7 @@ fr:
         client_secret: Clé secrète du client
         secret: Secret
         scope: Portée
+        grant_types_supported: Supported grant types
         limit_self_registration: Limiter l'inscription automatique
         authorization_endpoint: Point de terminaison d'autorisation
         userinfo_endpoint: Point de terminaison des informations de l'utilisateur

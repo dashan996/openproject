@@ -28,6 +28,7 @@
 
 class Meeting < ApplicationRecord
   include VirtualStartTime
+  include ChronicDuration
   include OpenProject::Journal::AttachmentHelper
 
   self.table_name = "meetings"
@@ -101,7 +102,9 @@ class Meeting < ApplicationRecord
 
   accepts_nested_attributes_for :participants, allow_destroy: true
 
-  validates_presence_of :title, :project_id, :duration
+  validates_presence_of :title, :project_id
+
+  validates_numericality_of :duration, greater_than: 0
 
   before_save :add_new_participants_as_watcher
 

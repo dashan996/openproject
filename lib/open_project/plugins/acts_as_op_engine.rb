@@ -313,6 +313,23 @@ module OpenProject::Plugins
           OpenProject::Inflector.inflection(overrides)
         end
       end
+
+      # Adds a replacement rule for a principal reference. When the module allows adding a
+      # principal (e.g. a user) reference to a model, a replacement rule should be added so
+      # that the user can be deleted, by making sure references to that user are replaced
+      # on that model as well.
+      def replace_principal_reference(class_name, attribute)
+        config.to_prepare do
+          Principals::ReplaceReferencesService.add_replacement(class_name, attribute)
+        end
+      end
+
+      # Like #replace_principal_reference, but allows to add multiple classes and attributes at once.
+      def replace_principal_references(attributes_by_class_name)
+        config.to_prepare do
+          Principals::ReplaceReferencesService.add_replacements(attributes_by_class_name)
+        end
+      end
     end
   end
 end

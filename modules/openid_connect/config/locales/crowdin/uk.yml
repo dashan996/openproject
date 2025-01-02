@@ -14,6 +14,7 @@ uk:
         client_secret: Client secret
         secret: Таємний код
         scope: Область використання
+        grant_types_supported: Supported grant types
         limit_self_registration: Обмежити самостійну реєстрацію
         authorization_endpoint: Кінцева точка авторизації
         userinfo_endpoint: Кінцева точка доступу до даних користувача

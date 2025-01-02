@@ -33,6 +33,18 @@ class Reminder < ApplicationRecord
   has_many :reminder_notifications, dependent: :destroy
   has_many :notifications, through: :reminder_notifications
 
+  # Currently, reminders are personal, meaning
+  # they are only visible to the user who created them.
+  def self.visible(user)
+    where(creator: user)
+  end
+
+  def self.upcoming_and_visible_to(user)
+    visible(user)
+      .where(completed_at: nil)
+      .where.missing(:reminder_notifications)
+  end
+
   def unread_notifications?
     unread_notifications.exists?
   end

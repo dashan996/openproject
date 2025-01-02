@@ -107,7 +107,7 @@ ro:
   label_back_to_project: "Înapoi la pagina precedentă"
   label_backlog: "Lista de așteptare"
   label_backlogs: "Restanțe"
-  label_backlogs_unconfigured: "Nu ați configurat încă Backlogs. Vă rugăm să mergeți la %{administration} > %{plugins}, apoi faceți clic pe link-ul %{configure} pentru acest plugin. După ce ați configurat câmpurile, reveniți la această pagină pentru a începe să utilizați instrumentul."
+  label_backlogs_unconfigured: "Nu ai configurat încă Backlogs. Te rog să mergi la %{administration} > %{plugins}, apoi dă clic pe link-ul %{configure} pentru acest plugin. După ce ai configurat câmpurile, revino la această pagină pentru a începe să utilizezi instrumentul."
   label_blocks_ids: "ID-urile pachetelor de lucru blocate"
   label_burndown: "Burndown"
   label_column_in_backlog: "Coloană în backlog"

@@ -9,6 +9,7 @@ hu:
     label_bcf: 'BCF'
     label_imported_failed: 'Hiba a BCF topocs importálásakor'
     label_imported_successfully: 'Sikeres BCF import'
+    label_bcf_issue_associated: "BCF issue associated"
     issues: "Feladat"
     recommended: 'Ajánlott'
     not_recommended: 'nem ajánlott'

@@ -38,6 +38,8 @@ module OpPrimer
       system_arguments[:test_selector] ||= "op-primer-flash-message"
       system_arguments[:dismiss_scheme] ||= :remove
       system_arguments[:dismiss_label] ||= I18n.t(:button_close)
+      system_arguments[:data] ||= {}
+      system_arguments[:data]["flash-target"] = "flash"
 
       @autohide = system_arguments[:scheme] == :success && system_arguments[:dismiss_scheme] != :none
 

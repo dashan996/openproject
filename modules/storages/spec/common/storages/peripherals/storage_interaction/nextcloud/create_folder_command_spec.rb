@@ -32,46 +32,74 @@ require "spec_helper"
 require_module_spec_helper
 
 RSpec.describe Storages::Peripherals::StorageInteraction::Nextcloud::CreateFolderCommand, :webmock do
-  let(:user) { create(:user) }
-  let(:storage) do
-    create(:nextcloud_storage_with_local_connection, :as_not_automatically_managed, oauth_client_token_user: user)
+  describe "admin user" do
+    let(:user) { create(:user) }
+    let(:storage) do
+      create(:nextcloud_storage_with_local_connection, :as_not_automatically_managed, oauth_client_token_user: user)
+    end
+    let(:auth_strategy) do
+      Storages::Peripherals::StorageInteraction::AuthenticationStrategies::OAuthUserToken.strategy.with_user(user)
+    end
+
+    it_behaves_like "create_folder_command: basic command setup"
+
+    context "when creating a folder in the root", vcr: "nextcloud/create_folder_root" do
+      let(:folder_name) { "Földer CreatedBy Çommand" }
+      let(:parent_location) { Storages::Peripherals::ParentFolder.new("/") }
+      let(:path) { "/#{folder_name}" }
+
+      it_behaves_like "create_folder_command: successful folder creation"
+    end
+
+    context "when creating a folder in a parent folder", vcr: "nextcloud/create_folder_parent" do
+      let(:folder_name) { "Földer CreatedBy Çommand" }
+      let(:parent_location) { Storages::Peripherals::ParentFolder.new("/Folder") }
+      let(:path) { "/Folder/#{folder_name}" }
+
+      it_behaves_like "create_folder_command: successful folder creation"
+    end
+
+    context "when creating a folder in a non-existing parent folder", vcr: "nextcloud/create_folder_parent_not_found" do
+      let(:folder_name) { "New Folder" }
+      let(:parent_location) { Storages::Peripherals::ParentFolder.new("/DeathStar3") }
+      let(:error_source) { described_class }
+
+      it_behaves_like "create_folder_command: parent not found"
+    end
+
+    context "when folder already exists", vcr: "nextcloud/create_folder_already_exists" do
+      let(:folder_name) { "Folder" }
+      let(:parent_location) { Storages::Peripherals::ParentFolder.new("/") }
+      let(:error_source) { described_class }
+
+      it_behaves_like "create_folder_command: folder already exists"
+    end
   end
-  let(:auth_strategy) do
-    Storages::Peripherals::StorageInteraction::AuthenticationStrategies::OAuthUserToken.strategy.with_user(user)
-  end
 
-  it_behaves_like "create_folder_command: basic command setup"
+  # For the VCR tests in this block it's necessary to
+  # create a user in NextCloud with the account name `member@example1`
+  # and use it's oauth access & refresh tokens on .env.test.local
+  describe "user with custom origin name" do
+    let(:user) { create(:user) }
+    let(:storage) do
+      create(
+        :nextcloud_storage_with_local_connection,
+        :as_not_automatically_managed,
+        origin_user_id: "member@example1",
+        oauth_client_token_user: user
+      )
+    end
+    let(:auth_strategy) do
+      Storages::Peripherals::StorageInteraction::AuthenticationStrategies::OAuthUserToken.strategy.with_user(user)
+    end
 
-  context "when creating a folder in the root", vcr: "nextcloud/create_folder_root" do
-    let(:folder_name) { "Földer CreatedBy Çommand" }
-    let(:parent_location) { Storages::Peripherals::ParentFolder.new("/") }
-    let(:path) { "/#{folder_name}" }
+    context "when creating a folder as a non admin user", vcr: "nextcloud/create_folder_member" do
+      let(:folder_name) { "Földer CreatedBy Çommand" }
+      let(:parent_location) { Storages::Peripherals::ParentFolder.new("/") }
+      let(:path) { "/#{folder_name}" }
 
-    it_behaves_like "create_folder_command: successful folder creation"
-  end
-
-  context "when creating a folder in a parent folder", vcr: "nextcloud/create_folder_parent" do
-    let(:folder_name) { "Földer CreatedBy Çommand" }
-    let(:parent_location) { Storages::Peripherals::ParentFolder.new("/Folder") }
-    let(:path) { "/Folder/#{folder_name}" }
-
-    it_behaves_like "create_folder_command: successful folder creation"
-  end
-
-  context "when creating a folder in a non-existing parent folder", vcr: "nextcloud/create_folder_parent_not_found" do
-    let(:folder_name) { "New Folder" }
-    let(:parent_location) { Storages::Peripherals::ParentFolder.new("/DeathStar3") }
-    let(:error_source) { described_class }
-
-    it_behaves_like "create_folder_command: parent not found"
-  end
-
-  context "when folder already exists", vcr: "nextcloud/create_folder_already_exists" do
-    let(:folder_name) { "Folder" }
-    let(:parent_location) { Storages::Peripherals::ParentFolder.new("/") }
-    let(:error_source) { described_class }
-
-    it_behaves_like "create_folder_command: folder already exists"
+      it_behaves_like "create_folder_command: successful folder creation"
+    end
   end
 
   private

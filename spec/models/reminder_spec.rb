@@ -36,6 +36,37 @@ RSpec.describe Reminder do
     it { is_expected.to have_many(:notifications).through(:reminder_notifications) }
   end
 
+  describe "Scopes" do
+    describe ".visible" do
+      it "returns reminders where the creator is the given user" do
+        user = create(:user)
+        other_user = create(:user)
+        reminder = create(:reminder, creator: user)
+        _other_reminder = create(:reminder, creator: other_user)
+
+        expect(described_class.visible(user)).to contain_exactly(reminder)
+      end
+    end
+
+    describe ".upcoming_and_visible_to" do
+      it "returns reminders where the creator is the given user" \
+         "and there are no reminder_notifications for it yet" do
+        user = create(:user)
+        other_user = create(:user)
+        reminder = create(:reminder, creator: user)
+        _another_reminder_with_notification = create(:reminder, creator: user) do |r|
+          create(:reminder_notification, reminder: r)
+        end
+        _other_users_reminder_with_notification = create(:reminder, creator: other_user) do |r|
+          create(:reminder_notification, reminder: r)
+        end
+        _other_users_reminder = create(:reminder, creator: other_user)
+
+        expect(described_class.upcoming_and_visible_to(user)).to contain_exactly(reminder)
+      end
+    end
+  end
+
   describe "#unread_notifications?" do
     context "with an unread notification" do
       subject { create(:reminder, :with_unread_notifications) }

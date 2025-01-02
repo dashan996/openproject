@@ -65,7 +65,7 @@ import {
   v3ErrorIdentifierOutboundRequestForbidden,
 } from 'core-app/features/hal/resources/error-resource';
 
-type Alert = 'none'|'noAccess'|'managedFolderNoAccess'|'managedFolderNotFound';
+type Alert = 'none'|'noAccess'|'managedFolderNoAccess'|'managedFolderNotFound'|'cannotCreateFolder';
 
 @Directive()
 export abstract class FilePickerBaseModalComponent extends OpModalComponent implements OnInit, OnDestroy {

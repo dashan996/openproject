@@ -13,6 +13,7 @@ ko:
       open_storage: "%{storageType} 열기"
       select_location: "위치 선택"
       choose_location: "위치 선택"
+      new_folder: "New folder"
       types:
         nextcloud: "Nextcloud"
         one_drive: "OneDrive/SharePoint"
@@ -42,6 +43,7 @@ ko:
           자동으로 관리되는 프로젝트 폴더를 아직 찾지 못했습니다. 잠시 기다렸다가 페이지를 다시 로드하고 최신 데이터를 가져온 후에 다시 시도하세요.
         managed_project_folder_no_access: >
           관리되는 프로젝트 폴더에 대한 액세스 권한이 아직 없습니다. 잠시 후 다시 시도하세요.
+        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols.
         upload_keep_both: "모두 유지"
         upload_replace: "바꾸기"
       file_links:

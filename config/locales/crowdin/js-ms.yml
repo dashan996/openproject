@@ -653,6 +653,8 @@ ms:
         new_notifications:
           message: "Terdapat pemberitahuan baharu."
           link_text: "Klik sini untuk memuatkan mereka."
+      reminders:
+        note: "Note: “%{note}”"
       settings:
         change_notification_settings: 'Anda boleh mengubah suai <a target="_blank" href="%{url}">tetapan pemberitahuan</a> anda untuk memastikan anda tidak terlepas tarikh yang penting.'
         title: "Tetapan pemberitahuan"
@@ -740,6 +742,7 @@ ms:
         immediate:
           title: "Hantar saya peringatan e-mel"
           mentioned: "Serta merta apabila sesiapa @menyebut saya"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Peringatan e-mel untuk item lain (yang bukan pakej kerja)"
           explanation: >
@@ -771,10 +774,6 @@ ms:
         upgrade_to_ee_text: "Wah! Jika anda perlukan tambahan ini anda sungguh pro! Bolehkah anda menyokong kami, pembangun OpenProject, dengan menjadi pelanggan edisi Enterprise?"
         more_information: "Maklumat lanjut"
         nevermind: "Tidak mengapa"
-      edit:
-        form_configuration: "Konfigurasi Borang"
-        projects: "Projek"
-        settings: "Tetapan"
     time_entry:
       work_package_required: "Memerlukan pemilihan pakej kerja dahulu."
       title: "Masa log"
@@ -1043,6 +1042,12 @@ ms:
           not_found: "Tiada paparan seperti itu"
           duplicate_query_title: "Nama paparan ini sudah wujud. Tukar juga?"
         text_no_results: "Tiada paparan yang sepadan ditemui."
+      reminders:
+        button_label: "Set reminder"
+        title:
+          new: "Set reminder"
+          edit: "Edit reminder"
+        subtitle: "You will receive a notification for this work package at the chosen time."
       scheduling:
         is_parent: "Tarikh pakej kerja ini disimpulkan secara automatik dari anaknya. Aktifkan 'Penjadualan Manual' untuk tetapkan tarikh."
         is_switched_from_manual_to_automatic: "Tarikh pakej kerja ini mungkin perlu dikira semula selepas menukar dari penjadualan manual ke automatik kerana hubungan dengan pakej kerja lain."

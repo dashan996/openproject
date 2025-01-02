@@ -36,15 +36,15 @@ cs:
           name: Černá
       life_cycle_colors:
         item_0:
-          name: PM2 Orange
+          name: PM2 oranžová
         item_1:
-          name: PM2 Purple
+          name: PM2 fialová
         item_2:
-          name: PM2 Red
+          name: PM2 Červená
         item_3:
           name: PM2 Magenta
         item_4:
-          name: PM2 Green Yellow
+          name: PM2 Zelená Žlutá
       document_categories:
         item_0:
           name: Dokumentace
@@ -79,23 +79,23 @@ cs:
         item_0:
           name: Manažer zaměstnanců a projektů
         item_1:
-          name: Standard global role
+          name: Standardní globální role
     standard:
       life_cycles:
         item_0:
-          name: Initiating
+          name: Zahájení
         item_1:
-          name: Ready for Planning
+          name: Připraveno k plánování
         item_2:
-          name: Planning
+          name: Plánování
         item_3:
-          name: Ready for Executing
+          name: Připraveno k provedení
         item_4:
-          name: Executing
+          name: Provádění
         item_5:
-          name: Ready for Closing
+          name: Připraveno k uzavření
         item_6:
-          name: Closing
+          name: Uzavření
       priorities:
         item_0:
           name: Nízká

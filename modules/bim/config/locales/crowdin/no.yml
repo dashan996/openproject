@@ -9,6 +9,7 @@
     label_bcf: 'BCF'
     label_imported_failed: 'Kunne ikke importere BCF-emner'
     label_imported_successfully: 'Vellykket importert av BCF-emner'
+    label_bcf_issue_associated: "BCF issue associated"
     issues: "Problemer"
     recommended: 'anbefalt'
     not_recommended: 'ikke anbefalt'

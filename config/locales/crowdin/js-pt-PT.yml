@@ -654,6 +654,8 @@ pt-PT:
         new_notifications:
           message: "Há novas notificações."
           link_text: "Clique aqui para carregá-las."
+      reminders:
+        note: "Note: “%{note}”"
       settings:
         change_notification_settings: 'Pode modificar as suas <a target="_blank" href="%{url}">definições de notificações</a> para garantir que nunca perde uma atualização importante.'
         title: "Definições das notificações"
@@ -741,6 +743,7 @@ pt-PT:
         immediate:
           title: "Enviar-me um lembrete por e-mail"
           mentioned: "Imediatamente quando alguém me @mencionar"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Alertas de e-mail para outros itens (que não são pacotes de trabalho)"
           explanation: >
@@ -772,10 +775,6 @@ pt-PT:
         upgrade_to_ee_text: "Uau! Se precisa deste complemento é porque faz parte dos utilizadores especializados! Gostaria de apoiar os desenvolvedores de OpenSource tornando-se cliente da edição Enterprise?"
         more_information: "Mais informação"
         nevermind: "Não, obrigado"
-      edit:
-        form_configuration: "Configuração do formulário"
-        projects: "Projetos"
-        settings: "Definições"
     time_entry:
       work_package_required: "Requer que selecione um pacote de trabalho primeiro."
       title: "Tempo de registro"
@@ -1044,6 +1043,12 @@ pt-PT:
           not_found: "Não existe tal visualização"
           duplicate_query_title: "O nome desta visualização já existe. Mudar de qualquer forma?"
         text_no_results: "Não foram encontradas visualizações correspondentes."
+      reminders:
+        button_label: "Set reminder"
+        title:
+          new: "Set reminder"
+          edit: "Edit reminder"
+        subtitle: "You will receive a notification for this work package at the chosen time."
       scheduling:
         is_parent: "As datas deste pacote de trabalho são deduzidas automaticamente dos seus filhos. Ative o 'Agendamento manual' para definir as datas."
         is_switched_from_manual_to_automatic: "As datas deste pacote de trabalho podem precisar de ser recalculadas após mudar de agendamento manual para automático, devido a relações com outros pacotes de trabalho."

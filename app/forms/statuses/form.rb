@@ -106,7 +106,8 @@ module Statuses
       statuses_form.color_select_list(
         label: attribute_name(:color_id),
         name: :color_id,
-        caption: I18n.t("statuses.edit.status_color_text")
+        caption: I18n.t("statuses.edit.status_color_text"),
+        input_width: :medium
       )
 
       statuses_form.submit(

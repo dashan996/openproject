@@ -5,7 +5,7 @@
     }) do |custom_field_container|
       custom_field_container.with_column(flex_layout: true) do |title_container|
         title_container.with_column(pt: 1, mr: 2) do
-          render(Primer::Beta::Text.new) do
+          render(Primer::Beta::Text.new(classes: 'filter-target-visible-text')) do
             @project_custom_field.name
           end
         end

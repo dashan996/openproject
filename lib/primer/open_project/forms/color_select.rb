@@ -7,6 +7,7 @@ module Primer
       class ColorSelect < Primer::Forms::BaseComponent
         include AngularHelper
         include ColorsHelper
+        prepend WrappedInput
 
         delegate :builder, :form, to: :@input
 

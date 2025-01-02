@@ -8,14 +8,15 @@ cs:
     attributes:
       openid_connect/provider:
         name: Jméno
-        slug: Unique identifier
+        slug: Jedinečný identifikátor
         display_name: Zobrazovaný název
         client_id: ID klienta
         client_secret: Client secret
         secret: Tajný klíč
         scope: Rozsah
+        grant_types_supported: Supported grant types
         limit_self_registration: Omezit vlastní registraci
-        authorization_endpoint: Authorization endpoint
+        authorization_endpoint: Koncový bod autorizace
         userinfo_endpoint: User information endpoint
         token_endpoint: Token endpoint
         end_session_endpoint: End session endpoint
@@ -27,7 +28,7 @@ cs:
         icon: Vlastní ikona
         claims: Nároky
         acr_values: ACR hodnoty
-        redirect_url: Redirect URL
+        redirect_url: Přesměrování URL
   activerecord:
     errors:
       models:
@@ -35,7 +36,7 @@ cs:
           attributes:
             metadata_url:
               format: "Discovery endpoint URL %{message}"
-              response_is_not_successful: " responds with %{status}."
+              response_is_not_successful: " odpovídá s %{status}."
               response_is_not_json: " nevrací JSON obsah."
               response_misses_required_attributes: " does not return required attributes. Missing attributes are: %{missing_attributes}."
   provider:
@@ -69,21 +70,21 @@ cs:
       acr_values: >
         Request non-essential claims in an easier format. See [our documentation on acr_values](docs_url) for more information.
       mapping_login: >
-        Provide a custom mapping in the userinfo response to be used for the login attribute.
+        Zadejte vlastní mapování v odpovědi o uživatelských informacích, která bude použita pro přihlašovací atribut.
       mapping_email: >
-        Provide a custom mapping in the userinfo response to be used for the email attribute.
+        Zadejte vlastní mapování v odpovědi userinfo, které se použije pro atribut e-mail.
       mapping_first_name: >
-        Provide a custom mapping in the userinfo response to be used for the first name.
+        Zadejte vlastní mapování v odpovědi userinfo, které se použije pro křestní jméno.
       mapping_last_name: >
-        Provide a custom mapping in the userinfo response to be used for the last name.
+        Zadejte vlastní mapování v odpovědi userinfo, které se použije pro příjmení.
       mapping_admin: >
         Provide a custom mapping in the userinfo response to be used for the admin status. It expects a boolean attribute to be returned.
     settings:
-      metadata_none: I don't have this information
+      metadata_none: Nemám tyto informace
       metadata_url: I have a discovery endpoint URL
       endpoint_url: URL koncového bodu
     providers:
-      label_providers: "Providers"
+      label_providers: "Poskytovatelé"
       seeded_from_env: "This provider was seeded from the environment configuration. It cannot be edited."
       google:
         name: Google
@@ -92,11 +93,11 @@ cs:
       custom:
         name: Vlastní
       upsale:
-        description: Connect OpenProject to an OpenID connect identity provider
+        description: Připojit OpenProject k poskytovateli OpenID připojení identity
       label_add_new: Přidat nového poskytovatele OpenID
       label_edit: Upravit poskytovatele OpenID %{name}
-      label_empty_title: No OpenID providers configured yet.
-      label_empty_description: Add a provider to see them here.
+      label_empty_title: Zatím nejsou nakonfigurováni žádní poskytovatelé OpenID.
+      label_empty_description: Přidejte poskytovatele, abyste je viděli zde.
       label_metadata: OpenID Connect Discovery Endpoint
       label_automatic_configuration: Automatická konfigurace
       label_optional_configuration: Volitelná konfigurace
@@ -115,7 +116,7 @@ cs:
         metadata_form_description: If your identity provider has a discovery endpoint URL. Use it below to pre-fill configuration.
         configuration_metadata: The information has been pre-filled using the supplied discovery endpoint. In most cases, they do not require editing.
         configuration: Configuration details of the OpenID Connect provider
-        display_name: The display name visible to users.
+        display_name: Zobrazované jméno viditelné pro uživatele.
         attribute_mapping: Configure the mapping of attributes between OpenProject and the OpenID Connect provider.
         claims: Request additional claims for the ID token or userinfo response.
     setting_instructions:

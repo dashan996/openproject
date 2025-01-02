@@ -37,6 +37,7 @@ RSpec.describe "News creation and commenting", :js, :with_cuprite do
              build(:notification_setting, news_added: true, news_commented: true)
            ])
   end
+  let(:global_html_title) { Components::HtmlTitle.new(project) }
 
   current_user do
     create(:user,
@@ -47,6 +48,7 @@ RSpec.describe "News creation and commenting", :js, :with_cuprite do
 
   it "allows creating new and commenting it all of which will result in notifications and mails" do
     visit project_news_index_path(project)
+    global_html_title.expect_first_segment "News"
 
     page.find_test_selector("add-news-button").click
 

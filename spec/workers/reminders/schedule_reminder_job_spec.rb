@@ -73,5 +73,26 @@ RSpec.describe Reminders::ScheduleReminderJob do
         expect { subject }.not_to change(Notification, :count)
       end
     end
+
+    context "when the recipient has immediate reminders enabled" do
+      it "enqueues a NotificationDeliveryJob" do
+        expect { subject }
+          .to have_enqueued_job(Mails::Reminders::NotificationDeliveryJob)
+                .with(a_kind_of(Notification))
+      end
+    end
+
+    context "when the recipient has immediate reminders disabled" do
+      before do
+        recipient = reminder.creator
+        recipient.pref.immediate_reminders = { personal_reminder: false }
+        recipient.pref.save
+      end
+
+      it "does not enqueue a NotificationDeliveryJob" do
+        expect { subject }
+          .not_to have_enqueued_job(Mails::Reminders::NotificationDeliveryJob)
+      end
+    end
   end
 end

@@ -38,6 +38,21 @@ RSpec.describe API::V3::UserPreferences::UserPreferenceRepresenter,
   let(:user) { build_stubbed(:user) }
   let(:representer) { described_class.new(preference, current_user: user) }
 
+  describe "immediate_reminders" do
+    let(:request_body) do
+      {
+        "immediateReminders" => {
+          "mentioned" => true,
+          "personalReminder" => false
+        }
+      }
+    end
+
+    it "parses the enabled flag" do
+      expect(parsed.immediate_reminders).to eql({ "mentioned" => true, "personal_reminder" => false })
+    end
+  end
+
   describe "notification_settings" do
     let(:request_body) do
       {

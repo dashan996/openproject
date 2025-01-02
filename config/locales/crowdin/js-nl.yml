@@ -654,6 +654,8 @@ nl:
         new_notifications:
           message: "Er zijn nieuwe meldingen."
           link_text: "Klik hier om ze te laden."
+      reminders:
+        note: "Note: “%{note}”"
       settings:
         change_notification_settings: 'You can modify your <a target="_blank" href="%{url}">notification settings</a> to ensure you never miss an important update.'
         title: "Instellingen voor meldingen"
@@ -741,6 +743,7 @@ nl:
         immediate:
           title: "Stuur me een e-mail herinnering"
           mentioned: "Onmiddellijk wanneer iemand @vermeldt"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "E-mail meldingen voor andere items (die geen werkpakketten zijn)"
           explanation: >
@@ -772,10 +775,6 @@ nl:
         upgrade_to_ee_text: "Wow! If you need this add-on you are a super pro! Would you mind supporting us OpenSource developers by becoming an Enterprise edition client?"
         more_information: "Meer informatie"
         nevermind: "Geen aandacht"
-      edit:
-        form_configuration: "Formulier configuratie"
-        projects: "Projecten"
-        settings: "Instellingen"
     time_entry:
       work_package_required: "Vereist eerst een werkpakket te selecteren."
       title: "Gelogde tijd"
@@ -1044,6 +1043,12 @@ nl:
           not_found: "Deze weergave bestaat niet"
           duplicate_query_title: "Naam van deze weergave bestaat al. Toch wijzigen?"
         text_no_results: "Geen overeenkomende weergaven werden gevonden."
+      reminders:
+        button_label: "Set reminder"
+        title:
+          new: "Set reminder"
+          edit: "Edit reminder"
+        subtitle: "You will receive a notification for this work package at the chosen time."
       scheduling:
         is_parent: "The dates of this work package are automatically deduced from its children. Activate 'Manual scheduling' to set the dates."
         is_switched_from_manual_to_automatic: "The dates of this work package may need to be recalculated after switching from manual to automatic scheduling due to relationships with other work packages."

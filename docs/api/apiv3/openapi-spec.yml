@@ -480,6 +480,8 @@ paths:
     "$ref": "./paths/work_package_revisions.yml"
   "/api/v3/work_packages/{id}/relations":
     "$ref": "./paths/work_package_relations.yml"
+  "/api/v3/work_packages/{id}/reminders":
+    "$ref": "./paths/work_package_reminders.yml"
   "/api/v3/work_packages/{id}/watchers":
     "$ref": "./paths/work_package_watchers.yml"
   "/api/v3/work_packages/{id}/watchers/{user_id}":
@@ -799,6 +801,8 @@ components:
       "$ref": "./components/schemas/relation_read_model.yml"
     RelationWriteModel:
       "$ref": "./components/schemas/relation_write_model.yml"
+    ReminderModel:
+      "$ref": "./components/schemas/reminder_model.yml"
     RevisionModel:
       "$ref": "./components/schemas/revision_model.yml"
     RevisionsModel:

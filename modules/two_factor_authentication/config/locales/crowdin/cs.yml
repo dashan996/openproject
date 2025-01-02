@@ -121,7 +121,7 @@ cs:
         description: Register a FIDO2 device (like YubiKey) or the secure encalve of your mobile device.
         further_steps: Po zvolení jména můžete kliknout na tlačítko Pokračovat. Váš prohlížeč vás vyzve, abyste prezentovali vaše WebAuthn zařízení. Až tak učiníte, jste zařízení zaregistrovali.
       totp:
-        title: "App-based authenticator"
+        title: "Autentifikátor založený na aplikaci"
         provisioning_uri: "Poskytování URI"
         secret_key: "Tajný klíč"
         time_based: "Na základě času"

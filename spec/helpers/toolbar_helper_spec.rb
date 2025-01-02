@@ -119,7 +119,7 @@ RSpec.describe ToolbarHelper do
         <div class="toolbar-container">
           <div class="toolbar">
             <div class="title-container">
-              <h2>&lt;/h2&gt;&lt;script&gt;alert(&quot;foobar!&quot;);&lt;/script&gt; &raquo; <a href="/users/1234">foobar</a></h2>
+              <h2>&lt;/h2&gt;&lt;script&gt;alert(&quot;foobar!&quot;);&lt;/script&gt; &raquo <a href="/users/1234">foobar</a></h2>
             </div>
             <ul class="toolbar-items"></ul>
           </div>
