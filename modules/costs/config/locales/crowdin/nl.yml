@@ -33,6 +33,7 @@ nl:
       cost_type:
         unit: "Naam eenheid"
         unit_plural: "Vermeerderde eenheid naam"
+        default: "Kostensoort als standaard"
       work_package:
         costs_by_type: "Eenheden uitgegeven"
         labor_costs: "Arbeidskosten"
@@ -44,6 +45,16 @@ nl:
         rate: "Tarief"
       user:
         default_rates: "Standaard tarieven"
+      time_entry:
+        project: Project
+        user: Gebruiker
+        work_package: Werkpakket
+        hours: Uren
+        comments: Commentaar
+        activity: Activiteit
+        spent_on: Datum
+        start_time: Starttijd
+        end_time: Eindtijd
     models:
       cost_type:
         one: "Soort kosten"
@@ -51,6 +62,8 @@ nl:
       rate: "Tarief"
     errors:
       models:
+        time_entry:
+          invalid_time: "moet tussen 00:00 en 23:59 liggen."
         work_package:
           is_not_a_valid_target_for_cost_entries: "Werkpakket #%{id} is geen geldig doel voor het opnieuw toewijzen van de kostenposten."
           nullify_is_not_valid_for_cost_entries: "Kostenposten kunnen niet worden toegewezen aan een project."
@@ -65,6 +78,7 @@ nl:
     fixed_date: "Vaste datum"
   button_add_rate: "Tarief toevoegen"
   button_log_costs: "Registreer kost per eenheid"
+  button_log_time: "Registreer"
   caption_booked_on_project: "Gereserveerd op project"
   caption_default: "Standaard"
   caption_default_rate_history_for: "Standaard tarief geschiedenis voor %{user}"
@@ -76,6 +90,7 @@ nl:
   caption_save_rate: "Tarief opslaan"
   caption_set_rate: "Stel huidige tarief in"
   caption_show_locked: "Toon vergrendelde types"
+  caption_log_time_dialog: "Registreer tijd"
   description_date_for_new_rate: "Datum voor nieuw tarief"
   group_by_others: "niet in een groep"
   label_between: "tussen"
@@ -115,10 +130,12 @@ nl:
   label_until: "tot"
   label_valid_from: "Geldig vanaf"
   label_yes: "Ja"
+  placeholder_activity_select_work_package_first: Eerst moet u een werkpakket selecteren
   notice_something_wrong: "Er is iets fout gegaan. Probeer het opnieuw."
   notice_successful_restore: "Herstel geslaagd."
   notice_successful_lock: "Vergrendeld met succes."
   notice_cost_logged_successfully: "Kosten eenheid succesvol geregistreerd."
+  notice_different_time_zones: "Deze gebruiker heeft een andere tijdzone (%{tz}). De tijd wordt geregistreerd met hun tijdzone."
   permission_edit_cost_entries: "Geboekte kosten per eenheid bewerken"
   permission_edit_own_cost_entries: "Eigen geboekte kosten per eenheid bewerken"
   permission_edit_hourly_rates: "Bewerk uurtarieven"
@@ -146,3 +163,7 @@ nl:
   week: "week"
   js:
     text_are_you_sure: "Weet u het zeker?"
+  api_v3:
+    errors:
+      validation:
+        start_time_different_date: "Het datumgedeelte van start tijd (%{start_time}) moet hetzelfde zijn als de uitgegeven op (%{spent_on}) datum."

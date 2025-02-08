@@ -3,6 +3,8 @@ pl:
     attributes:
       storages/file_link:
         origin_id: Identyfikator pochodzenia
+      storages/project_storage:
+        storage: Magazyn danych
       storages/storage:
         creator: Twórca
         drive: Identyfikator dysku
@@ -72,6 +74,7 @@ pl:
         confirmation_text: Potwierdź, że rozumiesz i chcesz usunąć ten magazyn plików z tego projektu.
         heading_text: Usuń projekt z %{storage}
         text: To działanie jest nieodwracalne i spowoduje usunięcie wszystkich linków do plików i folderów tego magazynu z pakietów roboczych tego projektu.
+        title: Remove project from storage
       label: Usuń projekt
   services:
     attributes:
@@ -124,7 +127,7 @@ pl:
               not_found: "Nie znaleziono lokalizacji %{current_path}."
             set_folders_permissions:
               permission_not_set: nie można ustawić uprawnień do lokalizacji %{path}.
-          error: An unexpected error occurred. Please ensure that your Nextcloud instance is reachable and check OpenProject worker logs for more information
+          error: Wystąpił nieoczekiwany błąd. Upewnij się, że Twoje wystąpienie Nextcloud jest osiągalne i sprawdź dzienniki pracowników OpenProject, aby uzyskać więcej informacji
           group_does_not_exist: "%{group} nie istnieje. Sprawdź konfigurację wystąpienia Nextcloud."
           insufficient_privileges: OpenProject nie ma wystarczających uprawnień, aby dodać użytkownika %{user} do grupy %{group}. Sprawdź ustawienia grupy w Nextcloud.
           not_allowed: Nextcloud blokuje żądanie.
@@ -145,7 +148,7 @@ pl:
               not_found: "Nie znaleziono lokalizacji %{current_path}."
             set_folders_permissions:
               permission_not_set: nie można ustawić uprawnień do lokalizacji %{path}.
-          error: An unexpected error occurred. Please ensure that OneDrive/SharePoint is reachable and check OpenProject worker logs for more information
+          error: Wystąpił nieoczekiwany błąd. Upewnij się, że usługa OneDrive/SharePoint jest osiągalna i sprawdź dzienniki pracowników OpenProject, aby uzyskać więcej informacji
           not_allowed: OpenProject nie mógł uzyskać dostępu do Twojego dysku w usłudze OneDrive. Sprawdź uprawnienia ustawione w aplikacji Azure.
           unauthorized: OpenProject nie może zsynchronizować się z OneDrive. Sprawdź konfigurację magazynu i aplikacji Azure.
           user_does_not_exist: "Użytkownik %{user} nie istnieje w Nextcloud."
@@ -343,8 +346,8 @@ pl:
         subtitle: Następuje przekierowanie
         title: Ukończono konfigurację integracji
       timeout:
-        link_text: health status of the file storage setup
-        subtitle: OpenProject could not provide you access to the project folder within the expected period of time. Please, try once again.<br><br> If that problem persists please contact your OpenProject administrator to check the %{storages_health_link}.
+        link_text: stan konfiguracji magazynu plików
+        subtitle: OpenProject nie mógł Ci zapewnić dostępu do folderu projektu w oczekiwanym czasie. Spróbuj ponownie.<br><br> Jeśli problem nie ustąpi, skontaktuj się z administratorem OpenProject w celu sprawdzenia %{storages_health_link}.
       waiting:
         subtitle: Chwileczkę, to może zająć trochę czasu...
         title: Konfigurujemy Twoje uprawnienia do folderu projektu.

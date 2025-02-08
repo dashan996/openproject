@@ -7,9 +7,9 @@ tr:
     standard:
       projects:
         demo-project:
-          meetings:
+          meeting_series:
             item_0:
-              title: Haftalık
+              title: Weekly
           meeting_agenda_items:
             item_0:
               title: Güzel haberlerimiz var!

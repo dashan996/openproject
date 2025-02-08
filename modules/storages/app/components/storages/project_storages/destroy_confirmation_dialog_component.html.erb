@@ -28,54 +28,25 @@ See COPYRIGHT and LICENSE files for more details.
 ++#%>
 
 <%=
-  component_wrapper do
-    primer_form_with(
-      model: @project_storage,
-      url: admin_settings_storage_project_storage_path(id: @project_storage, page: current_page),
-      data: {
-        turbo: true,
-        controller: 'disable-when-checked',
-        'disable-when-checked-reversed-value': true
-      },
-      method: :delete
-    ) do |form|
-      render(Primer::OpenProject::FeedbackDialog.new(
-        id: id,
-        title: nil,
-        test_selector: id,
-        size: :large
-      )) do |dialog|
-        dialog.with_feedback_message(icon_arguments: { icon: :alert, color: :danger }) do |message|
-          message.with_heading(tag: :h2) { heading }
-          message.with_description { text }
-        end
-
-        dialog.with_additional_content do
-          render(Primer::Alpha::CheckBox.new(
-            name: "confirm_delete",
-            label: confirmation_text,
-            data: { 'disable-when-checked-target': 'cause' }
-          ))
-        end
-
-        dialog.with_footer do
-          component_collection do |footer|
-            footer.with_component(Primer::ButtonComponent.new(data: { "close-dialog-id": id })) do
-              I18n.t("button_close")
-            end
-
-            footer.with_component(
-              Primer::ButtonComponent.new(scheme: :danger, type: :submit,
-                                          test_selector: "remove-project-storage-button",
-                                          disabled: true,
-                                          data: {
-                                            "disable-when-checked-target": "effect",
-                                            "close-dialog-id": id
-                                          })
-            ) { I18n.t("button_remove") }
-          end
-        end
-      end
+  render(Primer::OpenProject::DangerDialog.new(
+           id:,
+           title:,
+           test_selector: id,
+           size: :large,
+           form_arguments: {
+             model: @project_storage,
+             action: admin_settings_storage_project_storage_path(id: @project_storage, page: current_page),
+             data: {
+               turbo: true
+             },
+             method: :delete
+           },
+           confirm_button_text: I18n.t("button_remove")
+         )) do |dialog|
+    dialog.with_confirmation_message do |message|
+      message.with_heading(tag: :h2) { heading }
+      message.with_description_content(text)
     end
+    dialog.with_confirmation_check_box_content(confirmation_text)
   end
 %>

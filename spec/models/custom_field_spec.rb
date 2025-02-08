@@ -260,6 +260,16 @@ RSpec.describe CustomField do
             .to contain_exactly([user2.name, user2.id.to_s])
         end
       end
+
+      context "with user format setting excluding lastname", with_settings: { user_format: :username } do
+        it "always includes lastname for Group#name{:lastname} aliasing" do
+          expect(field.possible_values_options)
+            .to contain_exactly([user2.name, user2.id.to_s])
+
+          expect(in_visible_scope).to have_received(:select)
+           .with("login", "lastname", "id", "type")
+        end
+      end
     end
 
     context "for a list custom field" do

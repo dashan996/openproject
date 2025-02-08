@@ -14,13 +14,13 @@ cs:
         client_secret: Client secret
         secret: Tajný klíč
         scope: Rozsah
-        grant_types_supported: Supported grant types
+        grant_types_supported: Podporované typy grantů
         limit_self_registration: Omezit vlastní registraci
         authorization_endpoint: Koncový bod autorizace
-        userinfo_endpoint: User information endpoint
-        token_endpoint: Token endpoint
-        end_session_endpoint: End session endpoint
-        post_logout_redirect_uri: Post logout redirect URI
+        userinfo_endpoint: Koncový bod s informacemi o uživateli
+        token_endpoint: Koncový bod tokenu
+        end_session_endpoint: Ukončení koncového bodu relace
+        post_logout_redirect_uri: URI přesměrování po odhlášení
         jwks_uri: JWKS URI
         issuer: Emitent
         tenant: Tenant
@@ -41,12 +41,12 @@ cs:
               response_misses_required_attributes: " does not return required attributes. Missing attributes are: %{missing_attributes}."
   provider:
     delete_warning:
-      input_delete_confirmation: Enter the provider name %{name} to confirm deletion.
-      irreversible_notice: Deleting an SSO provider is an irreversible action.
+      input_delete_confirmation: Zadejte název poskytovatele %{name} pro potvrzení odstranění.
+      irreversible_notice: Odstranění poskytovatele SSO je nevratná akce.
       provider: 'Are you sure you want to delete the SSO provider %{name}? To confirm this action please enter the name of the provider in the field below, this will:'
-      delete_result_1: Remove the provider from the list of available providers.
+      delete_result_1: Odstranit poskytovatele ze seznamu dostupných poskytovatelů.
       delete_result_user_count:
-        zero: No users are currently using this provider. No further action is required.
+        zero: Tohoto poskytovatele v současné době nepoužívají žádní uživatelé. Není třeba podnikat žádné další kroky.
         one: "One user is currently still using this provider. They will need to be re-invited or logging in with another provider."
         other: "%{count} users are currently still using this provider. They will need to be re-invited or logging in with another provider."
       delete_result_direct: This provider is marked as a direct login provider. The setting will be removed and users will no longer be redirected to the provider for login.
@@ -61,7 +61,7 @@ cs:
       client_id: This is the client ID given to you by your OpenID Connect provider
       client_secret: This is the client secret given to you by your OpenID Connect provider
       limit_self_registration: If enabled, users can only register using this provider if configuration on the provider's end allows it.
-      display_name: The name of the provider. This will be displayed as the login button and in the list of providers.
+      display_name: Jméno poskytovatele. Bude zobrazeno jako tlačítko pro přihlášení a v seznamu poskytovatelů.
       tenant: 'Please replace the default tenant with your own if applicable. See <a href=" https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc#find-your-apps-openid-configuration-document-uri">this</a>.'
       scope: If you want to request custom scopes, you can add one or multiple scope values separated by spaces here. For more information, see the [OpenID Connect documentation](docs_url).
       post_logout_redirect_uri: The URL the OpenID Connect provider should redirect to after a logout request.
@@ -105,7 +105,7 @@ cs:
       label_configuration_details: Metadata
       label_client_details: Detaily klienta
       label_attribute_mapping: Mapování atributů
-      client_details_description: Configuration details of OpenProject as an OIDC client
+      client_details_description: Podrobnosti o konfiguraci OpenProject jako klienta OIDC
       no_results_table: Zatím nebyli definováni žádní poskytovatelé.
       plural: Poskytovatelé OpenID
       singular: Poskytovatel OpenID
@@ -115,7 +115,7 @@ cs:
         metadata_form_title: OpenID Connect Discovery endpoint
         metadata_form_description: If your identity provider has a discovery endpoint URL. Use it below to pre-fill configuration.
         configuration_metadata: The information has been pre-filled using the supplied discovery endpoint. In most cases, they do not require editing.
-        configuration: Configuration details of the OpenID Connect provider
+        configuration: Podrobnosti konfigurace poskytovatele OpenID Connect
         display_name: Zobrazované jméno viditelné pro uživatele.
         attribute_mapping: Configure the mapping of attributes between OpenProject and the OpenID Connect provider.
         claims: Request additional claims for the ID token or userinfo response.

@@ -33,17 +33,34 @@ module OpenProject::OpenIDConnect
       # Once the user has signed in and has an oidc session
       # we want to map that to the internal session
       def user_logged_in(context)
-        session = context[:session]
-        oidc_sid = session["omniauth.oidc_sid"]
-        return if oidc_sid.nil?
+        session = context.fetch(:session)
+        ::OpenProject::OpenIDConnect::SessionMapper.handle_login(session)
 
-        ::OpenProject::OpenIDConnect::SessionMapper.handle_login(oidc_sid, session)
+        user = context.fetch(:user)
+
+        # We clear previous tokens while adding this one to avoid keeping
+        # stale tokens around (and to avoid piling up duplicate IDP tokens)
+        # -> Fresh login causes fresh set of tokens
+        OpenIDConnect::UserTokens::CreateService.new(user).call(
+          access_token: session["omniauth.oidc_access_token"],
+          refresh_token: session["omniauth.oidc_refresh_token"],
+          known_audiences: [OpenIDConnect::UserToken::IDP_AUDIENCE],
+          clear_previous: true
+        )
+
       end
 
       ##
       # Called once omniauth has returned with an auth hash
-      # NOTE: It's a passthrough as we no longer persist the access token into the cookie
-      def omniauth_user_authorized(_context); end
+      def omniauth_user_authorized(context)
+        controller = context.fetch(:controller)
+        session = controller.session
+
+        session["omniauth.oidc_access_token"] = context.dig(:auth_hash, :credentials, :token)
+        session["omniauth.oidc_refresh_token"] = context.dig(:auth_hash, :credentials, :refresh_token)
+
+        nil
+      end
     end
   end
 end

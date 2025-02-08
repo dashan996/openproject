@@ -59,16 +59,18 @@ RSpec.describe "Open the GitHub tab", :js do
     # comparing the pasted content against the provided text
     def expect_clipboard_content(text)
       work_package_page.switch_to_tab(tab: "activity")
+      work_package_page.wait_for_activity_tab
 
-      work_package_page.trigger_edit_comment
-      work_package_page.update_comment(" ") # ensure the comment editor is fully loaded
+      activity_tab.type_comment(" ") # This will both open the editor and type a space
+      activity_tab.clear_comment # Clear the comment to ensure clean state
       github_tab.paste_clipboard_content
-      expect(work_package_page.add_comment_container).to have_content(text)
+      activity_tab.expect_unsaved_content(text)
 
       work_package_page.switch_to_tab(tab: "github")
     end
 
     it "shows the github tab when the user is allowed to see it" do
+      pending "In headless mode, the clipboard content is not copied to the clipboard, how to fix?"
       work_package_page.visit!
       work_package_page.switch_to_tab(tab: "github")
 
@@ -123,18 +125,21 @@ RSpec.describe "Open the GitHub tab", :js do
 
   describe "work package full view" do
     let(:work_package_page) { Pages::FullWorkPackage.new(work_package) }
+    let(:activity_tab) { Components::WorkPackages::Activities.new(work_package) }
 
     it_behaves_like "a github tab"
   end
 
   describe "work package split view" do
     let(:work_package_page) { Pages::SplitWorkPackage.new(work_package) }
+    let(:activity_tab) { Components::WorkPackages::Activities.new(work_package) }
 
     it_behaves_like "a github tab"
   end
 
   describe "primerized work package split view" do
     let(:work_package_page) { Pages::PrimerizedSplitWorkPackage.new(work_package) }
+    let(:activity_tab) { Components::WorkPackages::Activities.new(work_package) }
     let(:tabs) { Components::WorkPackages::PrimerizedTabs.new }
     let(:github_tab_element) { "github" }
 

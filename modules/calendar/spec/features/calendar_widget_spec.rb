@@ -30,7 +30,7 @@ require "spec_helper"
 require_relative "../../../overviews/spec/support/pages/overview"
 require_relative "../support/pages/calendar"
 
-RSpec.describe "Calendar Widget", :js, :with_cuprite, with_settings: { start_of_week: 1 } do
+RSpec.describe "Calendar Widget", :js, with_settings: { start_of_week: 1 } do
   shared_let(:project) do
     create(:project, enabled_module_names: %w[work_package_tracking calendar_view meetings])
   end
@@ -61,7 +61,7 @@ RSpec.describe "Calendar Widget", :js, :with_cuprite, with_settings: { start_of_
     login_as(current_user)
     overview_page.visit!
 
-    wait_for_network_idle if RSpec.current_example.metadata[:with_cuprite]
+    wait_for_network_idle if using_cuprite?
 
     # within top-left area, add an additional widget
     overview_page.add_widget(1, 1, :row, "Calendar")
@@ -107,7 +107,7 @@ RSpec.describe "Calendar Widget", :js, :with_cuprite, with_settings: { start_of_
     expect(page).to have_text("Overview")
   end
 
-  it "can resize the same work package twice (Regression #48333)", with_cuprite: false do
+  it "can resize the same work package twice (Regression #48333)", :selenium do
     expect(page).to have_css(".fc-event-title", text: work_package.subject)
 
     calendar.resize_date(work_package, work_package.due_date - 1.day)

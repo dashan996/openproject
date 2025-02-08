@@ -294,8 +294,7 @@ RSpec.shared_examples_for "nextcloud storage contract", :storage_server_helpers,
 
     context "when not automatically managed, no username or password" do
       before do
-        storage.provider_fields = {}
-        storage.assign_attributes(automatic_management_enabled: false)
+        storage.assign_attributes(automatic_management_enabled: false, username: nil, password: nil)
       end
 
       it_behaves_like "contract is valid"

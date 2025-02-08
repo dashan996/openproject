@@ -124,7 +124,7 @@ module Ldap
           filter: ldap.login_filter(login),
           attributes: ldap.search_attributes
         )
-        .map { |entry| ldap.get_user_attributes_from_ldap_entry(entry).except(:dn) }
+        &.map { |entry| ldap.get_user_attributes_from_ldap_entry(entry).except(:dn) } || []
     end
 
     def new_ldap_connection

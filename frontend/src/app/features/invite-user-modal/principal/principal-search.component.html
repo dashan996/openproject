@@ -21,7 +21,10 @@
       class="ng-option-label"
     >
       <!--Selectable option-->
-      <span [ngOptionHighlight]="search">{{ item.principal.name }}</span>
+      <span
+        data-hover-card-trigger-target="trigger"
+        [attr.data-hover-card-url]="getHoverCardUrl(item.principal)"
+        [ngOptionHighlight]="search">{{ item.principal.name }}</span>
       <span
         class="op-autocompleter__option-principal-email"
         *ngIf="item.principal.email"

@@ -47,8 +47,7 @@ RSpec.describe "Meetings close" do
   end
 
   context "with permission to close meetings",
-          :js,
-          :with_cuprite do
+          :js do
     let(:permissions) { %i[view_meetings close_meeting_agendas] }
 
     it "can delete own and other`s meetings" do

@@ -1,6 +1,4 @@
-import {
-  Directive, ElementRef, Injector, Input,
-} from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Injector, Input, OnDestroy } from '@angular/core';
 import { StateService } from '@uirouter/core';
 import { isClickedWithModifier } from 'core-app/shared/helpers/link-handling/link-handling';
 import { AuthorisationService } from 'core-app/core/model-auth/model-auth.service';
@@ -14,33 +12,42 @@ import { PERMITTED_CONTEXT_MENU_ACTIONS } from 'core-app/shared/components/op-co
 import { OpModalService } from 'core-app/shared/components/modal/modal.service';
 import { CopyToClipboardService } from 'core-app/shared/components/copy-to-clipboard/copy-to-clipboard.service';
 import { WorkPackageAction } from 'core-app/features/work-packages/components/wp-table/context-menu-helper/wp-context-menu-helper.service';
-import { InjectField } from 'core-app/shared/helpers/angular/inject-field.decorator';
-import { TimeEntryCreateService } from 'core-app/shared/components/time_entries/create/create.service';
 import { WpDestroyModalComponent } from 'core-app/shared/components/modals/wp-destroy-modal/wp-destroy.modal';
 import { WorkPackageAuthorization } from 'core-app/features/work-packages/services/work-package-authorization.service';
-import * as moment from 'moment-timezone';
 import { TurboRequestsService } from 'core-app/core/turbo/turbo-requests.service';
+import { ApiV3Service } from 'core-app/core/apiv3/api-v3.service';
 
 @Directive({
   selector: '[wpSingleContextMenu]',
 })
-export class WorkPackageSingleContextMenuDirective extends OpContextMenuTrigger {
+export class WorkPackageSingleContextMenuDirective extends OpContextMenuTrigger implements AfterViewInit, OnDestroy {
   @Input('wpSingleContextMenu-workPackage') public workPackage:WorkPackageResource;
 
-  @InjectField() public timeEntryCreateService:TimeEntryCreateService;
-
-  constructor(readonly HookService:HookService,
+  constructor(
+    readonly HookService:HookService,
     readonly $state:StateService,
     readonly injector:Injector,
     readonly PathHelper:PathHelperService,
     readonly elementRef:ElementRef,
     readonly opModalService:OpModalService,
     readonly turboRequests:TurboRequestsService,
+    readonly apiV3Service:ApiV3Service,
     readonly opContextMenuService:OPContextMenuService,
     readonly authorisationService:AuthorisationService,
     protected copyToClipboardService:CopyToClipboardService,
   ) {
     super(elementRef, opContextMenuService);
+  }
+
+  private closeDialogHandler:EventListener = this.handleTimeEntryDialogClose.bind(this);
+
+  ngAfterViewInit():void {
+    super.ngAfterViewInit();
+    document.addEventListener('dialog:close', this.closeDialogHandler);
+  }
+
+  ngOnDestroy():void {
+    document.removeEventListener('dialog:close', this.closeDialogHandler);
   }
 
   protected open(evt:JQuery.TriggeredEvent) {
@@ -70,11 +77,7 @@ export class WorkPackageSingleContextMenuDirective extends OpContextMenuTrigger 
         this.opModalService.show(WpDestroyModalComponent, this.injector, { workPackages: [this.workPackage] });
         break;
       case 'log_time':
-        this.timeEntryCreateService
-          .create(moment(new Date()), this.workPackage, { showWorkPackageField: false })
-          .catch(() => {
-          // do nothing, the user closed without changes
-          });
+        void this.turboRequests.request(this.PathHelper.timeEntryWorkPackageDialog(this.workPackage.id as string), { method: 'GET' });
         break;
       case 'generate_pdf':
         void this.turboRequests.requestStream(link as string);
@@ -157,5 +160,16 @@ export class WorkPackageSingleContextMenuDirective extends OpContextMenuTrigger 
     }
 
     return this.items;
+  }
+
+  private handleTimeEntryDialogClose(event:CustomEvent):void {
+    const { detail: { dialog, submitted } } = event as { detail:{ dialog:HTMLDialogElement, submitted:boolean } };
+
+    if (dialog.id === 'time-entry-dialog' && submitted) {
+      void this.apiV3Service
+        .work_packages
+        .id(this.workPackage.id!)
+        .refresh();
+    }
   }
 }

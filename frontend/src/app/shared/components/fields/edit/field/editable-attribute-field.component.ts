@@ -184,6 +184,10 @@ export class EditableAttributeFieldComponent extends UntilDestroyedMixin impleme
   }
 
   public activateOnForm(noWarnings = false):Promise<void|EditFieldHandler> {
+    if (!this.isEditable) {
+      return Promise.reject();
+    }
+
     // Activate the field
     this.setActive(true);
 

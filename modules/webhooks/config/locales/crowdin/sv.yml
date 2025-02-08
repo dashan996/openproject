@@ -8,6 +8,7 @@ sv:
         url: 'Payload-URL'
         secret: 'Signeringshemlighet'
         events: 'Händelser'
+        enabled: 'Enabled'
         projects: 'Aktiverade projekt'
       webhooks/log:
         event_name: 'Händelsenamn'

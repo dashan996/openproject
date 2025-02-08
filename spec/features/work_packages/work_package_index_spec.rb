@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Work Packages", "index view", :js, :with_cuprite do
+RSpec.describe "Work Packages", "index view", :js do
   shared_let(:user) { create(:admin) }
   shared_let(:project) { create(:project, enabled_module_names: %w[work_package_tracking]) }
 

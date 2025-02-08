@@ -124,13 +124,19 @@ module SearchHelper
 
   def attachment_fulltexts(event)
     only_if_tsv_supported(event) do
-      Attachment.where(id: event.attachment_ids).pluck(:fulltext).join(" ")
+      # The compact is important here as the fulltext can be nil.
+      # A nil value in combination with another journal would lead to
+      # [nil, "The fulltext of the attachment"].join to be in US-ASCII encoding
+      # instead of the expected UTF-8.
+      # When this is then passed into Commonmarker, that will raise an error.
+      # https://community.openproject.org/wp/61110
+      Attachment.where(id: event.attachment_ids).pluck(:fulltext).compact.join
     end
   end
 
   def attachment_filenames(event)
     only_if_tsv_supported(event) do
-      event.attachments&.map(&:filename)&.join(" ")
+      event.attachments.map(&:filename).join
     end
   end
 

@@ -40,6 +40,7 @@ class CustomFields::Inputs::Base::Autocomplete::MultiValueInput < CustomFields::
     {
       multiple: true,
       decorated: decorated?,
+      focusDirectly: false,
       append_to:
     }
   end

@@ -60,11 +60,6 @@ RSpec.describe AddWorkPackageNoteService, type: :model do
     let(:send_notifications) { false }
 
     before do
-      expect(Journal::NotificationConfiguration)
-        .to receive(:with)
-        .with(send_notifications)
-        .and_yield
-
       allow(instance).to receive(:contract_class).and_return(mock_contract)
       allow(work_package).to receive(:save_journals).and_return true
     end
@@ -79,6 +74,30 @@ RSpec.describe AddWorkPackageNoteService, type: :model do
       expect(work_package).to receive(:save_journals).and_return true
 
       subject
+    end
+
+    it "creates an advisory lock" do
+      allow(OpenProject::Mutex)
+        .to receive(:with_advisory_lock_transaction)
+        .with(work_package)
+        .and_call_original
+
+      subject
+
+      expect(OpenProject::Mutex)
+        .to have_received(:with_advisory_lock_transaction)
+    end
+
+    it "sends notifications" do
+      allow(Journal::NotificationConfiguration)
+        .to receive(:with)
+        .with(send_notifications)
+        .and_yield
+
+      subject
+
+      expect(Journal::NotificationConfiguration)
+        .to have_received(:with)
     end
 
     it "has no errors" do

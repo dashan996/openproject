@@ -6,10 +6,12 @@ uk:
     attributes:
       ldap_groups/synchronized_group:
         dn: 'DN'
+        auth_source: 'Джерело автентифікації'
         ldap_auth_source: 'LDAP-підключення'
         sync_users: 'Синхронізація користувачів'
       ldap_groups/synchronized_filter:
         filter_string: 'Фільтр LDAP'
+        auth_source: 'Джерело автентифікації'
         ldap_auth_source: 'LDAP-підключення'
         group_name_attribute: "Атрибут назви групи"
         sync_users: 'Синхронізація користувачів'

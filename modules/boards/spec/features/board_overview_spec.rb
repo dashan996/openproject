@@ -30,7 +30,7 @@ require "spec_helper"
 require_relative "support/board_overview_page"
 
 RSpec.describe "Work Package Boards Overview",
-               :with_cuprite,
+               :js,
                with_ee: %i[board_view] do
   # The identifier is important to test https://community.openproject.com/wp/29754
   shared_let(:project) do

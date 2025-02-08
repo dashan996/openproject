@@ -33,6 +33,7 @@ require_module_spec_helper
 
 RSpec.describe "OAuth Access Grant Nudge upon adding a storage to a project",
                :js,
+               :selenium,
                :webmock do
   shared_let(:user) { create(:user, preferences: { time_zone: "Etc/UTC" }) }
 

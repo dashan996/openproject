@@ -45,6 +45,7 @@ declare module '@hotwired/turbo' {
 
   export interface StreamElement {
     templateElement:HTMLTemplateElement;
+    templateContent:DocumentFragment;
   }
 
   export function start():void;

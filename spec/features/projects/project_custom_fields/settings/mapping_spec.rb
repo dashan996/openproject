@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Projects custom fields mapping via project settings", :js, :with_cuprite do
+RSpec.describe "Projects custom fields mapping via project settings", :js do
   let(:project) { create(:project, name: "Foo project", identifier: "foo-project") }
   let(:other_project) { create(:project, name: "Bar project", identifier: "bar-project") }
 

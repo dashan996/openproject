@@ -1,7 +1,7 @@
 require "spec_helper"
 require "features/page_objects/notification"
 
-RSpec.describe "edit work package", :js, :with_cuprite do
+RSpec.describe "edit work package", :js do
   include Components::Autocompleter::NgSelectAutocompleteHelpers
 
   let!(:standard_global_role) { create(:empty_global_role) }
@@ -60,6 +60,7 @@ RSpec.describe "edit work package", :js, :with_cuprite do
 
   let(:new_subject) { "Some other subject" }
   let(:wp_page) { Pages::FullWorkPackage.new(work_package) }
+  let(:activity_tab) { Components::WorkPackages::Activities.new(work_package) }
   let(:priority2) { create(:priority) }
   let(:status2) { create(:status) }
   let(:workflow) do
@@ -108,7 +109,9 @@ RSpec.describe "edit work package", :js, :with_cuprite do
       wp_page.update_attributes status: status2.name
       wp_page.expect_attributes status: status2.name
 
-      wp_page.expect_activity_message("Status changed from #{status.name} to #{status2.name}")
+      activity_tab.expect_journal_changed_attribute(
+        text: "Status changed from #{status.name} to #{status2.name}"
+      )
     end
   end
 
@@ -140,13 +143,17 @@ RSpec.describe "edit work package", :js, :with_cuprite do
                               version: version.name,
                               category: category.name
 
-    wp_page.expect_activity_message("Status changed from #{status.name} to #{status2.name}")
+    activity_tab.expect_journal_changed_attribute(
+      text: "Status changed from #{status.name} to #{status2.name}"
+    )
   end
 
   it "correctly assigns and un-assigns users" do
     wp_page.update_attributes assignee: manager.name
     wp_page.expect_attributes assignee: manager.name
-    wp_page.expect_activity_message("Assignee set to #{manager.name}")
+    activity_tab.expect_journal_changed_attribute(
+      text: "Assignee set to #{manager.name}"
+    )
 
     field = wp_page.edit_field :assignee
     field.unset_value
@@ -154,12 +161,13 @@ RSpec.describe "edit work package", :js, :with_cuprite do
     wp_page.expect_attributes assignee: "-"
 
     wp_page.visit!
+    wp_page.switch_to_tab tab: :activity
+    wp_page.wait_for_activity_tab
 
     # Another (empty) journal should exist now
-    expect(page).to have_css(".op-user-activity--user-name",
-                             text: work_package.journals.last.user.name,
-                             wait: 10,
-                             count: 2)
+    activity_tab.within_journals_container do
+      expect(page).to have_content(work_package.journals.last.user.name, count: 2)
+    end
 
     wp_page.expect_attributes assignee: "-"
 
@@ -174,8 +182,12 @@ RSpec.describe "edit work package", :js, :with_cuprite do
     wp_page.expect_attributes assignee: placeholder_user.name,
                               responsible: placeholder_user.name
 
-    wp_page.expect_activity_message("Assignee set to #{placeholder_user.name}")
-    wp_page.expect_activity_message("Accountable set to #{placeholder_user.name}")
+    activity_tab.expect_journal_changed_attribute(
+      text: "Assignee set to #{placeholder_user.name}"
+    )
+    activity_tab.expect_journal_changed_attribute(
+      text: "Accountable set to #{placeholder_user.name}"
+    )
   end
 
   context "switching to custom field with required CF" do
@@ -203,18 +215,6 @@ RSpec.describe "edit work package", :js, :with_cuprite do
       cf_field.expect_active!
       cf_field.expect_value("")
     end
-  end
-
-  it "allows the user to add a comment to a work package" do
-    wp_page.ensure_page_loaded
-
-    wp_page.trigger_edit_comment
-    wp_page.update_comment "hallo welt"
-
-    wp_page.save_comment
-
-    wp_page.expect_toast(message: "The comment was successfully added.")
-    wp_page.expect_comment text: "hallo welt"
   end
 
   it "updates the presented custom fields based on the selected type" do

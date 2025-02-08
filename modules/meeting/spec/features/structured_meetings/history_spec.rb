@@ -33,8 +33,7 @@ require_relative "../../support/pages/structured_meeting/show"
 require_relative "../../support/pages/structured_meeting/history"
 
 RSpec.describe "history",
-               :js,
-               :with_cuprite do
+               :js do
   include Components::Autocompleter::NgSelectAutocompleteHelpers
   include Redmine::I18n
 

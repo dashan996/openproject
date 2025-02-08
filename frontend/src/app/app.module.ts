@@ -53,7 +53,6 @@ import { OpenprojectDashboardsModule } from 'core-app/features/dashboards/openpr
 import {
   OpenprojectWorkPackageGraphsModule,
 } from 'core-app/shared/components/work-package-graphs/openproject-work-package-graphs.module';
-import { HoverCardTriggerService } from 'core-app/core/setup/globals/global-listeners/hover-card-trigger.service';
 import { OpenprojectOverviewModule } from 'core-app/features/overview/openproject-overview.module';
 import { OpenprojectMyPageModule } from 'core-app/features/my-page/openproject-my-page.module';
 import { OpenprojectProjectsModule } from 'core-app/features/projects/openproject-projects.module';
@@ -76,7 +75,6 @@ import { DynamicContentModalComponent } from 'core-app/shared/components/modals/
 import {
   PasswordConfirmationModalComponent,
 } from 'core-app/shared/components/modals/request-for-confirmation/password-confirmation.modal';
-import { HoverCardComponent } from 'core-app/shared/components/modals/preview-modal/hover-card-modal/hover-card.modal';
 import {
   OpHeaderProjectSelectComponent,
 } from 'core-app/shared/components/header-project-select/header-project-select.component';
@@ -123,9 +121,6 @@ import {
 import {
   ProjectAutocompleterComponent,
 } from 'core-app/shared/components/autocompleter/project-autocompleter/project-autocompleter.component';
-import {
-  AutocompleteSelectDecorationComponent,
-} from 'core-app/shared/components/autocompleter/autocomplete-select-decoration/autocomplete-select-decoration.component';
 import {
   MembersAutocompleterComponent,
 } from 'core-app/shared/components/autocompleter/members-autocompleter/members-autocompleter.component';
@@ -237,10 +232,12 @@ import { appBaseSelector, ApplicationBaseComponent } from 'core-app/core/routing
 import { SpotSwitchComponent } from 'core-app/spot/components/switch/switch.component';
 import { OPContextMenuService } from 'core-app/shared/components/op-context-menu/op-context-menu.service';
 import { CurrentProjectService } from 'core-app/core/current-project/current-project.service';
+import {
+  TimeEntriesWorkPackageAutocompleterComponent,
+} from 'core-app/shared/components/autocompleter/time-entries-work-package-autocompleter/time-entries-work-package-autocompleter.component';
 
 export function initializeServices(injector:Injector) {
   return () => {
-    const PreviewTrigger = injector.get(HoverCardTriggerService);
     const topMenuService = injector.get(TopMenuService);
     const keyboardShortcuts = injector.get(KeyboardShortcutService);
     const contextMenu = injector.get(OPContextMenuService);
@@ -250,13 +247,11 @@ export function initializeServices(injector:Injector) {
     injector.get(RevitAddInSettingsButtonService);
 
     topMenuService.register();
-    PreviewTrigger.setupListener();
     contextMenu.register();
 
     // Re-register on turbo:load
     document.addEventListener('turbo:load', () => {
       topMenuService.register();
-      PreviewTrigger.setupListener();
       contextMenu.register();
       currentProject.detect();
     });
@@ -381,7 +376,6 @@ export function initializeServices(injector:Injector) {
     ConfirmDialogModalComponent,
     DynamicContentModalComponent,
     PasswordConfirmationModalComponent,
-    HoverCardComponent,
 
     // Main menu
     MainMenuResizerComponent,
@@ -426,9 +420,9 @@ export class OpenProjectModule implements DoBootstrap {
     registerCustomElement('opce-global-search', GlobalSearchInputComponent, { injector });
     registerCustomElement('opce-autocompleter', OpAutocompleterComponent, { injector });
     registerCustomElement('opce-project-autocompleter', ProjectAutocompleterComponent, { injector });
-    registerCustomElement('opce-select-decoration', AutocompleteSelectDecorationComponent, { injector });
     registerCustomElement('opce-members-autocompleter', MembersAutocompleterComponent, { injector });
     registerCustomElement('opce-user-autocompleter', UserAutocompleterComponent, { injector });
+    registerCustomElement('opce-time-entries-work-package-autocompleter', TimeEntriesWorkPackageAutocompleterComponent, { injector });
     registerCustomElement('opce-macro-attribute-value', AttributeValueMacroComponent, { injector });
     registerCustomElement('opce-macro-attribute-label', AttributeLabelMacroComponent, { injector });
     registerCustomElement('opce-macro-wp-quickinfo', WorkPackageQuickinfoMacroComponent, { injector });

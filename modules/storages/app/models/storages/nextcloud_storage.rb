@@ -35,11 +35,15 @@ module Storages
       username: "OpenProject"
     }.freeze
 
+    AUTHENTICATION_METHODS = %w[two_way_oauth2 oauth2_sso].freeze
+
     store_attribute :provider_fields, :automatically_managed, :boolean
     store_attribute :provider_fields, :username, :string
     store_attribute :provider_fields, :password, :string
     store_attribute :provider_fields, :group, :string
     store_attribute :provider_fields, :group_folder, :string
+    store_attribute :provider_fields, :authentication_method, :string, default: "two_way_oauth2"
+    store_attribute :provider_fields, :nextcloud_audience, :string
 
     def oauth_configuration
       Peripherals::OAuthConfigurations::NextcloudConfiguration.new(self)
@@ -60,6 +64,10 @@ module Storages
       else
         ["inactive", "manual"]
       end
+    end
+
+    def authenticate_via_idp?
+      authentication_method == "oauth2_sso"
     end
 
     def configuration_checks

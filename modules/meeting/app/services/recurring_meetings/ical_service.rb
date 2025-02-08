@@ -43,22 +43,44 @@ module RecurringMeetings
     def initialize(series:, user:)
       @user = user
       @series = series
+      @schedule = series.schedule
       @url_helpers = OpenProject::StaticRouting::StaticUrlHelpers.new
     end
 
-    def call # rubocop:disable Metrics/AbcSize
-      User.execute_as(user) do
-        @timezone = Time.zone || Time.zone_default
-        @calendar = build_icalendar(series.start_time)
-        @schedule = series.schedule
-        ServiceResult.success(result: generate_ical)
+    def generate_series
+      ical_result(series) do
+        series_event
+        occurrences_events
       end
     rescue StandardError => e
-      Rails.logger.error("Failed to generate ICS for meeting series #{@series.id}: #{e.message}")
+      Rails.logger.error("Failed to generate ICS for meeting series #{series.id}: #{e.message}")
+      ServiceResult.failure(message: e.message)
+    end
+
+    def generate_occurrence(meeting)
+      # Get the time the meeting was scheduled to take place
+      scheduled_meeting = meeting.scheduled_meeting
+      ical_result(scheduled_meeting) do
+        occurrence_event(scheduled_meeting.start_time, meeting)
+      end
+    rescue StandardError => e
+      Rails.logger.error("Failed to generate ICS for meeting #{meeting.id}: #{e.message}")
       ServiceResult.failure(message: e.message)
     end
 
     private
+
+    def ical_result(meeting)
+      User.execute_as(user) do
+        @timezone = Time.zone || Time.zone_default
+        @calendar = build_icalendar(meeting.start_time)
+
+        yield
+
+        calendar.publish
+        ServiceResult.success(result: calendar.to_ical)
+      end
+    end
 
     def tzinfo
       timezone.tzinfo
@@ -68,18 +90,11 @@ module RecurringMeetings
       tzinfo.canonical_identifier
     end
 
-    def generate_ical
-      series_event
-      occurrences_events
-
-      calendar.publish
-      calendar.to_ical
-    end
-
     def series_event # rubocop:disable Metrics/AbcSize
       calendar.event do |e|
         base_series_attributes(e)
 
+        e.rrule = schedule.rrules.first.to_ical # We currently only have one recurrence rule
         e.dtstart = ical_datetime template.start_time, tzid
         e.dtend = ical_datetime template.end_time, tzid
         e.url = url_helpers.project_recurring_meeting_url(series.project, series)
@@ -105,6 +120,7 @@ module RecurringMeetings
         e.dtend = ical_datetime meeting.end_time, tzid
         e.url = url_helpers.project_meeting_url(meeting.project, meeting)
         e.location = meeting.location.presence
+        e.sequence = meeting.lock_version
 
         add_attendees(e, meeting)
       end
@@ -120,7 +136,6 @@ module RecurringMeetings
 
     def base_series_attributes(event) # rubocop:disable Metrics/AbcSize
       event.uid = ical_uid("meeting-series-#{series.id}")
-      event.rrule = schedule.rrules.first.to_ical # We currently only have one recurrence rule
       event.summary = "[#{series.project.name}] #{series.title}"
       event.description = "[#{series.project.name}] #{I18n.t(:label_meeting_series)}: #{series.title}"
       event.organizer = ical_organizer(series)

@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Enterprise token", :js, :with_cuprite do
+RSpec.describe "Enterprise token", :js do
   include Redmine::I18n
 
   shared_let(:admin) { create(:admin) }

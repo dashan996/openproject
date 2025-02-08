@@ -31,12 +31,12 @@ class Principal < ApplicationRecord
 
   # Account statuses
   # Disables enum scopes to include not_builtin (cf. Principals::Scopes::Status)
-  enum status: {
+  enum :status, {
     active: 1,
     registered: 2,
     locked: 3,
     invited: 4
-  }.freeze, _scopes: false
+  }.freeze, scopes: false
 
   self.table_name = "#{table_name_prefix}users#{table_name_suffix}"
 
@@ -174,6 +174,11 @@ class Principal < ApplicationRecord
   # Must be overridden by User
   def activatable?
     false
+  end
+
+  # Returns true if usr or current user is allowed to view the user
+  def visible?(usr = User.current)
+    User.visible(usr).exists?(id: id)
   end
 
   def <=>(other)

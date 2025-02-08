@@ -23,7 +23,7 @@ vi:
   plugin_openproject_reporting:
     name: "OpenProject Reporting"
     description: "Mô-đun này cho phép tạo các báo cáo chi phí tùy chỉnh với việc lọc và nhóm dữ liệu do mô-đun Thời gian và chi phí của OpenProject tạo ra."
-  button_save_report_as: "Save report as..."
+  button_save_report_as: "Lưu báo cáo như..."
   comments: "Nhận xét"
   cost_reports_title: "Thời gian và chi phí"
   label_cost_report: "Báo cáo chi phí"
@@ -45,6 +45,8 @@ vi:
   label_greater: ">"
   label_is_not_project_with_subprojects: "không phải (bao gồm các dự án con)"
   label_is_project_with_subprojects: "là (bao gồm các dự án con)"
+  label_is_work_package_with_descendants: "là (bao gồm tập con)"
+  label_is_not_work_package_with_descendants: "không phải (kể cả tập con)"
   label_work_package_attributes: "Các thuộc tính gói công việc"
   label_less: "<"
   label_logged_by_reporting: "Đã ghi bởi"
@@ -87,12 +89,15 @@ vi:
   validation_failure_integer: "không phải là một số nguyên hợp lệ"
   export:
     timesheet:
-      title: "Your PDF timesheet export"
-      button: "Export PDF timesheet"
-      timesheet: "Timesheet"
-      time: "Time"
+      title: "Xuất bảng thời gian của bạn bằng PDF"
+      button: "Xuất bảng thời gian bằng PDF"
+      timesheet: "Bảng thời gian"
+      time: "Thời gian"
+      sum_hours: Sum
     cost_reports:
       title: "Xuất báo cáo chi phí của bạn sang XLS"
+      start_time: "Thời gian bắt đầu"
+      end_time: "Thời gian kết thúc"
   reporting:
     group_by:
       selected_columns: "Các cột đã chọn"

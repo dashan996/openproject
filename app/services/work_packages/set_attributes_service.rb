@@ -49,10 +49,8 @@ class WorkPackages::SetAttributesService < BaseServices::SetAttributes
   end
 
   def mark_templated_subject
-    return true unless work_package.type&.replacement_patterns_defined?
-
-    if work_package.type.patterns.all_enabled[:subject]
-      work_package.subject = "Templated by #{work_package.type.name}"
+    if work_package.type&.replacement_pattern_defined_for?(:subject)
+      work_package.subject = I18n.t("work_packages.templated_subject_hint", type: work_package.type.name)
     end
   end
 

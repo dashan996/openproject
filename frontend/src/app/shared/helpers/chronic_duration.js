@@ -143,8 +143,14 @@ function calculateFromWords(string, opts) {
 }
 
 // Parse 3:41:59 and return 3 hours 41 minutes 59 seconds
-function filterByType(string) {
-  const chronoUnitsList = DURATION_UNITS_LIST.filter((v) => v !== 'weeks');
+function filterByType(string, opts) {
+  const chronoUnitsList = DURATION_UNITS_LIST.filter(function (value) {
+    if (value === "weeks") { return false }
+    if (opts.ignoreSecondsWhenColonSeperated && value === "seconds") { return false }
+
+    return true
+  });
+
   if (
     string
       .replace(/ +/g, '')
@@ -196,7 +202,7 @@ function filterThroughWhiteList(string, opts) {
 
 function cleanup(string, opts) {
   let res = string.toLowerCase();
-  res = filterByType(res);
+  res = filterByType(res, opts);
   res = res
     .replace(FLOAT_MATCHER, (n) => ` ${n} `)
     .replace(/ +/g, ' ')

@@ -6,10 +6,12 @@ vi:
     attributes:
       ldap_groups/synchronized_group:
         dn: 'DN'
+        auth_source: 'Nguồn xác thực'
         ldap_auth_source: 'Kết nối LDAP'
         sync_users: 'Đồng bộ hóa người dùng'
       ldap_groups/synchronized_filter:
         filter_string: 'Bộ lọc LDAP'
+        auth_source: 'Nguồn xác thực'
         ldap_auth_source: 'Kết nối LDAP'
         group_name_attribute: "Thuộc tính tên nhóm"
         sync_users: 'Đồng bộ hóa người dùng'

@@ -34,9 +34,7 @@ require_relative "../../support/pages/recurring_meeting/show"
 require_relative "../../support/pages/meetings/index"
 
 RSpec.describe "Recurring meetings creation",
-               :js,
-               :with_cuprite,
-               with_flag: { recurring_meetings: true } do
+               :js do
   include Components::Autocompleter::NgSelectAutocompleteHelpers
 
   shared_let(:project) { create(:project, enabled_module_names: %w[meetings]) }
@@ -62,7 +60,12 @@ RSpec.describe "Recurring meetings creation",
   let(:current_user) { user }
   let(:meeting) { RecurringMeeting.last }
   let(:show_page) { Pages::RecurringMeeting::Show.new(meeting) }
+  let(:template_page) { Pages::StructuredMeeting::Show.new(meeting.template) }
   let(:meetings_page) { Pages::Meetings::Index.new(project:) }
+
+  before do
+    travel_to(Date.new(2024, 12, 1))
+  end
 
   context "with a user with permissions" do
     it "can create a recurring meeting" do
@@ -82,8 +85,10 @@ RSpec.describe "Recurring meetings creation",
       meetings_page.set_starts_on "2024-12-31"
       meetings_page.set_start_time "13:30"
       meetings_page.set_duration "1.5"
+      meetings_page.set_end_after "a specific date"
       meetings_page.set_end_date "2025-01-15"
 
+      sleep 0.5 # quick fix as wait_for_network_idle isn't working all the time
       expect(page).to have_text "Every week on Tuesday at 01:30 PM"
 
       click_on "Create meeting"
@@ -93,20 +98,43 @@ RSpec.describe "Recurring meetings creation",
       # Use is redirected to the template
       expect(page).to have_current_path(project_meeting_path(project, meeting.template))
       expect(page).to have_content(I18n.t("recurring_meeting.template.description"))
+
+      # Add participants
+      template_page.open_participant_form
+      template_page.in_participant_form do
+        template_page.expect_participant_invited(user, invited: true)
+        template_page.expect_participant_invited(other_user, invited: false)
+        template_page.expect_available_participants(count: 2)
+        expect(page).to have_button("Save")
+
+        template_page.invite_participant(other_user)
+
+        template_page.expect_participant_invited(user, invited: true)
+        template_page.expect_participant_invited(other_user, invited: true)
+
+        click_on("Save")
+      end
+      wait_for_network_idle
+
+      expect(page).to have_css("#meetings-side-panel-participants-component", text: 2)
+
       expect(page).to have_link("Finish template")
 
       click_link_or_button "Finish template"
+      wait_for_network_idle
 
-      # Does not send invitation mails by default
-      perform_enqueued_jobs
-      expect(ActionMailer::Base.deliveries.size).to eq 0
-
+      # Sends out an invitation to the series
       show_page.visit!
       expect(page).to have_css(".start_time", count: 3)
 
       show_page.expect_open_meeting date: "12/31/2024 01:30 PM"
-      show_page.expect_scheduled_meeting date: "01/07/2025 01:30 PM"
-      show_page.expect_scheduled_meeting date: "01/14/2025 01:30 PM"
+      show_page.expect_planned_meeting date: "01/07/2025 01:30 PM"
+      show_page.expect_planned_meeting date: "01/14/2025 01:30 PM"
+
+      perform_enqueued_jobs
+      expect(ActionMailer::Base.deliveries.size).to eq 2
+      title = ActionMailer::Base.deliveries.map(&:subject).uniq.first
+      expect(title).to eq "[#{project.name}] Meeting series Some title"
     end
   end
 

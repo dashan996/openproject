@@ -1,5 +1,5 @@
 # rubocop:disable Metrics/PerceivedComplexity
-def register_chrome(language, name: :"chrome_#{language}", headless: "old", override_time_zone: nil)
+def register_chrome(language, name: :"chrome_#{language}", headless: "new", override_time_zone: nil)
   Capybara.register_driver name do |app|
     options = Selenium::WebDriver::Chrome::Options.new
 

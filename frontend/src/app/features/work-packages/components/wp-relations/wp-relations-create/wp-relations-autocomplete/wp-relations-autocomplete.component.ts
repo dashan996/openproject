@@ -41,6 +41,7 @@ import {
   WorkPackageNotificationService,
 } from 'core-app/features/work-packages/services/notifications/work-package-notification.service';
 import { InjectField } from 'core-app/shared/helpers/angular/inject-field.decorator';
+import { TOpAutocompleterResource } from 'core-app/shared/components/autocompleter/op-autocompleter/typings';
 
 export interface IWorkPackageAutocompleteItem extends WorkPackageResource {
   id:string,

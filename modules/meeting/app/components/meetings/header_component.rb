@@ -52,6 +52,14 @@ module Meetings
       10_000
     end
 
+    def ics_download_path
+      if @series
+        download_ics_recurring_meeting_path(@series, occurrence_id: @meeting.id)
+      else
+        download_ics_meeting_path(@meeting)
+      end
+    end
+
     private
 
     def delete_enabled?

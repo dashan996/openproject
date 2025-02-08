@@ -75,7 +75,7 @@ RSpec.describe "Updating entries within the cost report", :js do
     table.expect_action_icon "edit", 1
     table.expect_action_icon "delete", 1
 
-    table.edit_time_entry 2, 1
+    table.edit_time_entry 1, hours: 2
 
     table.delete_entry 1
     table.rows_count 0

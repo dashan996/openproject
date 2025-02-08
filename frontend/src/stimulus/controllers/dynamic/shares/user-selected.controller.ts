@@ -43,12 +43,14 @@ export default class UserSelectedController extends Controller {
 
   private selectedValues:IUserAutocompleteItem[] = [];
 
+  private boundListener = this.handleValueSelected.bind(this);
+
   connect() {
-    this.autocompleterElement.addEventListener('change', this.handleValueSelected.bind(this));
+    this.autocompleterElement.addEventListener('change', this.boundListener);
   }
 
   disconnect() {
-    this.autocompleterElement.removeEventListener('change', this.handleValueSelected.bind(this));
+    this.autocompleterElement.removeEventListener('change', this.boundListener);
   }
 
   ensureUsersSelected(evt:CustomEvent):void {

@@ -9,7 +9,6 @@ import {
 import { TimezoneService } from 'core-app/core/datetime/timezone.service';
 import { I18nService } from 'core-app/core/i18n/i18n.service';
 import { IInAppNotificationDetailsAttribute, INotification } from 'core-app/core/state/in-app-notifications/in-app-notification.model';
-import { WorkPackageResource } from 'core-app/features/hal/resources/work-package-resource';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 
@@ -22,8 +21,6 @@ import { Moment } from 'moment';
 })
 export class InAppNotificationDateAlertComponent implements OnInit {
   @Input() aggregatedNotifications:INotification[];
-
-  @Input() workPackage:WorkPackageResource;
 
   @HostBinding('class.op-ian-date-alert') className = true;
 
@@ -107,7 +104,8 @@ export class InAppNotificationDateAlertComponent implements OnInit {
   private deriveMostRelevantAlert(aggregatedNotifications:INotification[]) {
     // Second case: We have one date alert + some others
     const dateAlerts = aggregatedNotifications.filter((notification) => notification.reason === 'dateAlert');
-    const first = aggregatedNotifications[0];
+    const first = dateAlerts[0];
+
     if (dateAlerts.length > 1) {
       const found = dateAlerts.find((notification) => notification._embedded.details[0].property === 'dueDate');
       return found || first;

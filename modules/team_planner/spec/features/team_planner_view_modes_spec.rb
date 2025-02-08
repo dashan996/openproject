@@ -29,7 +29,10 @@
 require "spec_helper"
 require_relative "shared_context"
 
-RSpec.describe "Team planner", :js, with_ee: %i[team_planner_view] do
+RSpec.describe "Team planner",
+               :js,
+               :selenium,
+               with_ee: %i[team_planner_view] do
   include_context "with team planner full access"
 
   it "allows switching of view modes", with_settings: { working_days: [1, 2, 3, 4, 5] } do

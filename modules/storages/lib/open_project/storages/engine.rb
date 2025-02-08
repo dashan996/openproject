@@ -188,21 +188,21 @@ module OpenProject::Storages
       menu :admin_menu,
            :files,
            { controller: "/storages/admin/storages", action: :index },
-           if: Proc.new { User.current.admin? },
+           if: ->(_) { User.current.admin? },
            caption: :project_module_storages,
            icon: "file-directory"
 
       menu :admin_menu,
            :external_file_storages,
            { controller: "/storages/admin/storages", action: :index },
-           if: Proc.new { User.current.admin? },
+           if: ->(_) { User.current.admin? },
            caption: :external_file_storages,
            parent: :files
 
       menu :admin_menu,
            :attachments,
            { controller: "/admin/settings/attachments_settings", action: :show },
-           if: Proc.new { User.current.admin? },
+           if: ->(_) { User.current.admin? },
            caption: :"attributes.attachments",
            parent: :files
 

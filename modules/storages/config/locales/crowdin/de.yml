@@ -3,6 +3,8 @@ de:
     attributes:
       storages/file_link:
         origin_id: Ursprungs-ID
+      storages/project_storage:
+        storage: Speicherung
       storages/storage:
         creator: Ersteller
         drive: Laufwerk ID
@@ -72,6 +74,7 @@ de:
         confirmation_text: Bitte bestätigen Sie die Entfernung des Dateispeichers aus diesem Projekt
         heading_text: Projekt von %{storage} entfernen
         text: Diese Aktion ist unumkehrbar und entfernt alle Verknüpfungen von Arbeitspaketen dieses Projekts zu Dateien und Ordnern dieses Speichers.
+        title: Remove project from storage
       label: Projekt entfernen
   services:
     attributes:
@@ -204,7 +207,7 @@ de:
       one_drive_oauth: Azure OAuth
       openproject_oauth: OpenProject OAuth
       project_folders: Projektordner
-      redirect_uri: URI umleiten
+      redirect_uri: Umleitungs-URI
       storage_provider: Speicheranbieter
     health:
       checked: Zuletzt geprüft %{datetime}
@@ -309,7 +312,7 @@ de:
     label_openproject_oauth_application_secret: OpenProject OAuth geheimer Anwendungsschlüssel
     label_project_folder: Projektordner
     label_provider: Anbieter
-    label_redirect_uri: URI umleiten
+    label_redirect_uri: Umleitungs-URI
     label_show_storage_redirect_uri: Umleitungs-URI anzeigen
     label_status: Status
     label_storage: Speicher
@@ -343,8 +346,8 @@ de:
         subtitle: Sie werden weitergeleitet
         title: Einrichtung der Integration abgeschlossen
       timeout:
-        link_text: health status of the file storage setup
-        subtitle: OpenProject could not provide you access to the project folder within the expected period of time. Please, try once again.<br><br> If that problem persists please contact your OpenProject administrator to check the %{storages_health_link}.
+        link_text: Status des Dateispeicher-Setups
+        subtitle: OpenProject konnte Ihnen den Zugriff auf den Projektordner nicht innerhalb der erwarteten Zeitspanne ermöglichen. Versuchen Sie es bitte noch einmal.<br><br> Wenn dieses Problem weiterhin besteht, wenden Sie sich bitte an Ihren OpenProject-Administrator, um %{storages_health_link} zu überprüfen.
       waiting:
         subtitle: Einen Moment bitte, dies könnte etwas dauern...
         title: Wir richten Ihre Berechtigungen für den Projektordner ein.

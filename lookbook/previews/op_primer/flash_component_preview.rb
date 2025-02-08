@@ -7,6 +7,12 @@ module OpPrimer
       end
     end
 
+    def success
+      render(OpPrimer::FlashComponent.new(scheme: :success)) do
+        I18n.t("notice_meeting_updated")
+      end
+    end
+
     def danger
       render(OpPrimer::FlashComponent.new(scheme: :danger, icon: :stop)) do |_component|
         "Stop right there."

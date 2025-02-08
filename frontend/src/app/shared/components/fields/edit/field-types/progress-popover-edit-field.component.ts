@@ -79,6 +79,8 @@ export class ProgressPopoverEditFieldComponent extends ProgressEditFieldComponen
 
   opened = false;
 
+  private boundListener = this.contextBasedListener.bind(this);
+
   constructor(
     readonly I18n:I18nService,
     readonly elementRef:ElementRef,
@@ -111,7 +113,7 @@ export class ProgressPopoverEditFieldComponent extends ProgressEditFieldComponen
     this
       .frameElement
       .nativeElement
-      .addEventListener('turbo:submit-end', this.contextBasedListener.bind(this));
+      .addEventListener('turbo:submit-end', this.boundListener);
   }
 
   ngOnDestroy() {
@@ -120,7 +122,7 @@ export class ProgressPopoverEditFieldComponent extends ProgressEditFieldComponen
     this
       .frameElement
       .nativeElement
-      .removeEventListener('turbo:submit-end', this.contextBasedListener.bind(this));
+      .removeEventListener('turbo:submit-end', this.boundListener);
   }
 
   public get asHoursOrPercent():string {

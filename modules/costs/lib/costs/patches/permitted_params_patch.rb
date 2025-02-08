@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -61,6 +63,28 @@ module Costs::Patches::PermittedParamsPatch
     def user_rates
       params.require(:user).permit(new_rate_attributes: %i[valid_from rate],
                                    existing_rate_attributes: %i[valid_from rate])
+    end
+
+    def time_entries
+      additional_fields = []
+
+      additional_fields << :start_time if TimeEntry.can_track_start_and_end_time?
+
+      params
+        .require(:time_entry)
+        .permit(
+          *additional_fields,
+          :hours,
+          :comments,
+          :spent_on,
+          :work_package_id,
+          :activity_id,
+          :project_id,
+          :issue_id,
+          :user_id,
+          :ongoing
+        )
+        .merge(custom_field_values(:time_entry))
     end
   end
 end

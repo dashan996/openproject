@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "CRUD LDAP connections", :js, :with_cuprite do
+RSpec.describe "CRUD LDAP connections", :js do
   shared_let(:admin) { create(:admin) }
   let(:ldap_page) { Pages::Admin::LdapAuthSources::Index.new }
 

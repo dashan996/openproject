@@ -3,6 +3,8 @@ vi:
     attributes:
       storages/file_link:
         origin_id: ID Nguồn
+      storages/project_storage:
+        storage: Storage
       storages/storage:
         creator: Người tạo
         drive: ID Ổ đĩa
@@ -72,6 +74,7 @@ vi:
         confirmation_text: Vui lòng xác nhận bạn hiểu và muốn xóa bộ lưu trữ tệp này khỏi dự án này
         heading_text: Xóa dự án khỏi %{storage}
         text: Hành động này là không thể đảo ngược và sẽ xóa tất cả các liên kết từ các gói công việc của dự án này tới các tệp và thư mục của bộ lưu trữ đó.
+        title: Remove project from storage
       label: Xóa dự án
   services:
     attributes:
@@ -344,7 +347,7 @@ vi:
         title: Cấu hình tích hợp đã hoàn tất
       timeout:
         link_text: health status of the file storage setup
-        subtitle: OpenProject could not provide you access to the project folder within the expected period of time. Please, try once again.<br><br> If that problem persists please contact your OpenProject administrator to check the %{storages_health_link}.
+        subtitle: OpenProject could not provide you access to the project folder within the expected period of time. Please, try once again.<br><br> If that problem persists please contact your OpenProject administrator to check %{storages_health_link}.
       waiting:
         subtitle: Một chút thời gian, điều này có thể mất một chút thời gian...
         title: Chúng tôi đang thiết lập quyền của bạn trên thư mục dự án.

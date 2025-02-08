@@ -357,10 +357,10 @@ uk:
           learn_about: "Дізнатися більше про нові функції"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_1":
+          "15_2":
             standard:
               new_features_html: >
-                Цей випуск включає багато нових функцій і покращень. <br> <ul class="%{list_styling_class}"> <li>Користувацькі поля ієрархії типів (доповнення версії Enterprise).</li> <li>Оновлений дизайн вкладки «Зв'язки» в пакетах робіт.</li> <li>Оновлений дизайн сторінки індексу нарад.</li> <li>Ручне розривання сторінок у PDF-файлах експорту пакетів робіт.</li> <li>Дзен-режим для списків проєктів.</li> </ul>
+                Цей випуск включає багато нових функцій і покращень. <br> <ul class="%{list_styling_class}"> <li>Установлюйте нагадування для пакетів робіт, щоб отримувати завчасні сповіщення.</li> <li>Створюйте нові папки безпосередньо під час вибору місця зберігання файлу в сховищі.</li> <li>Указуйте обов’язковий проміжок часу між нащадками й попередниками пакетів робіт.</li> <li>Дозвольте впорядковувати й групувати пакети робіт за значеннями ієрархії користувацьких полів.</li> <li>Експортуйте записи часу у вигляді таблиць обліку часу в PDF.</li> <li>Налаштуйте появу спливних вікон з інформацією про користувача в разі наведення вказівника миші.</li> </ul>
     ical_sharing_modal:
       title: "Підписатися на календар"
       inital_setup_error_message: "Під час отримання даних сталася помилка."
@@ -621,15 +621,15 @@ uk:
         prioritized: "Надано пріоритет"
         dateAlert: "Оповіщення про дату"
         shared: "Поширено"
-        reminder: "Reminder"
+        reminder: "Нагадування"
       date_alerts:
         milestone_date: "Дата віхи"
         overdue: "Прострочено"
-        overdue_since: "на %{difference_in_days}"
-        property_today: "сьогодні"
-        property_is: "через %{difference_in_days}"
-        property_was: "%{difference_in_days} тому"
-        property_is_deleted: "видалено"
+        overdue_since: "since %{difference_in_days}."
+        property_today: "is today."
+        property_is: "is in %{difference_in_days}."
+        property_was: "was %{difference_in_days} ago."
+        property_is_deleted: "is deleted."
         upsale:
           title: "Оповіщення про дати"
           description: "Завдяки оповіщенням про дати ви завжди знатимете про заплановані дати початку або завершення, тож ніколи не пропускатимете важливі терміни та не забуватимете про них."
@@ -657,7 +657,7 @@ uk:
           message: "Немає нових сповіщень."
           link_text: "Натисніть тут, щоб завантажити."
       reminders:
-        note: "Note: “%{note}”"
+        note: "Примітка: \"%{note}\""
       settings:
         change_notification_settings: 'Ви можете змінити <a target="_blank" href="%{url}">налаштування сповіщень</a>, щоб ніколи не пропускати важливі оновлення.'
         title: "Налаштування сповіщень"
@@ -745,7 +745,7 @@ uk:
         immediate:
           title: "Надсилати мені нагадування електронною поштою"
           mentioned: "Негайно, коли хтось згадує @мене"
-          personal_reminder: "Immediately when I receive a personal reminder"
+          personal_reminder: "Одразу після отримання особистого нагадування"
         alerts:
           title: "Сповіщення електронною поштою для інших елементів (які не є пакетами робіт)"
           explanation: >
@@ -1046,11 +1046,11 @@ uk:
           duplicate_query_title: "Ім'я цього перегляду вже існує. Змінити все одно?"
         text_no_results: "Не знайдено відповідних переглядів."
       reminders:
-        button_label: "Set reminder"
+        button_label: "Установити нагадування"
         title:
-          new: "Set reminder"
-          edit: "Edit reminder"
-        subtitle: "You will receive a notification for this work package at the chosen time."
+          new: "Установити нагадування"
+          edit: "Редагувати нагадування"
+        subtitle: "Ви отримаєте сповіщення про цей пакет робіт у вибраний час."
       scheduling:
         is_parent: "Дати цього пакета робіт автоматично виводяться з його дочірніх елементів. Активуйте «Ручне планування», щоб установити ці дати."
         is_switched_from_manual_to_automatic: "Можливо, дати цього пакета робіт знадобиться перерахувати після переходу з ручного на автоматичне планування через зв’язок з іншими пакетами робіт."

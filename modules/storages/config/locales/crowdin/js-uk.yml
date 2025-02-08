@@ -13,7 +13,7 @@ uk:
       open_storage: "Відкрити сховище %{storageType}"
       select_location: "Укажіть папку"
       choose_location: "Виберіть папку"
-      new_folder: "New folder"
+      new_folder: "Нова папка"
       types:
         nextcloud: "Nextcloud"
         one_drive: "OneDrive / SharePoint"
@@ -43,7 +43,7 @@ uk:
           Папку проєкту з автоматичним керуванням поки не знайдено. Трохи зачекайте, перезапустіть сторінку, отримайте найновіші дані й повторіть спробу.
         managed_project_folder_no_access: >
           У вас немає доступу до керованої папки проєкту. Трохи зачекайте й повторіть спробу.
-        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols.
+        cannot_create_folder: Не вдалося створити папку. Не використовуйте спеціальні знаки й символи та переконайтеся, що назва папки унікальна.
         upload_keep_both: "Зберегти обидва"
         upload_replace: "Замінити"
       file_links:

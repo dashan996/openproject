@@ -54,10 +54,6 @@ module SharingStrategies
       @entity.visible?
     end
 
-    def allow_hover_cards?
-      true
-    end
-
     def create_contract_class
       Shares::ProjectQueries::CreateContract
     end

@@ -10,7 +10,10 @@ export class TurboRequestsService {
 
   }
 
-  public request(url:string, init:RequestInit = {}, suppressErrorToast = false):Promise<{ html:string, headers:Headers }> {
+  public request(url:string, init:RequestInit = {}, suppressErrorToast = false):Promise<{
+    html:string,
+    headers:Headers
+  }> {
     return fetch(url, init)
       .then((response) => {
         return response.text().then((html) => ({
@@ -40,6 +43,26 @@ export class TurboRequestsService {
         }
         throw error;
       });
+  }
+
+  public submitForm(
+    form:HTMLFormElement,
+    params:URLSearchParams|null = null,
+    url = form.action,
+  ):Promise<{ html:string, headers:Headers }> {
+    const formData = new FormData(form);
+    const requestParams = params ? `?${params.toString()}` : '';
+    return this.request(
+      `${url}${requestParams}`,
+      {
+        method: form.method,
+        body: formData,
+        headers: {
+          'X-CSRF-Token': (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
+        },
+      },
+      true,
+    );
   }
 
   public requestStream(url:string):Promise<{ html:string, headers:Headers }> {

@@ -1,6 +1,6 @@
 ---
 sidebar_navigation:
-  title: GitLab integration
+  title: GitLab integration - Documentation
   priority: 800
 description: Integrate the GitLab merge request and issues into OpenProject.
 keywords: GitLab, GitLab integration, merge request
@@ -96,7 +96,7 @@ Now the integration is set up on both sides and you can use it.
 
 ### Updating from the user-generated GitLab Plugin
 
-With [OpenProject 13.4](../../../release-notes/13-4-0/), the user-generated plugin was replaced by this GitLab integration. If you were already using the user-generated GitLab plugin, we recommend removing the plugin module folder and bundler references before upgrading to OpenProject. Your historical dataset will remain unaffected within OpenProject as there were no changes to the data model.
+With [OpenProject 13.4](../../../release-notes/13/13-4-0/), the user-generated plugin was replaced by this GitLab integration. If you were already using the user-generated GitLab plugin, we recommend removing the plugin module folder and bundler references before upgrading to OpenProject. Your historical dataset will remain unaffected within OpenProject as there were no changes to the data model.
 
 Before upgrading, please do the following:
 

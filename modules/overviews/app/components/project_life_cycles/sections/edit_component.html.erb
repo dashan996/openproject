@@ -7,11 +7,10 @@
       method: :put,
       data: {
         "controller": "overview--project-life-cycles-form",
-        "overview--project-life-cycles-form-target": "form",
+        "overview--project-life-cycles-form-url-value": project_life_cycles_form_path(project_id: model.id),
         "application-target": "dynamic",
         turbo: true,
         turbo_stream: true,
-        preview_url: project_life_cycles_form_path(project_id: model.id),
         "test-selector": "async-dialog-content"
       },
       url: update_project_life_cycles_path(project_id: model.id),

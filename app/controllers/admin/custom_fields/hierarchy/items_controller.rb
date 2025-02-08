@@ -104,7 +104,7 @@ module Admin
             .delete_branch(item: @active_item)
             .either(
               ->(_) { update_via_turbo_stream(component: ItemsComponent.new(item: @active_item.parent)) },
-              ->(errors) { update_flash_message_via_turbo_stream(message: errors.full_messages, scheme: :danger) }
+              ->(errors) { render_error_flash_message_via_turbo_stream(message: errors.full_messages) }
             )
 
           respond_with_turbo_streams(&:html)

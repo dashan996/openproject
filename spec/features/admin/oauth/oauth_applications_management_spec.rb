@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "OAuth applications management", :js, :with_cuprite do
+RSpec.describe "OAuth applications management", :js do
   shared_let(:admin) { create(:admin) }
 
   before do

@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "user self registration", :js, :with_cuprite do
+RSpec.describe "user self registration", :js do
   let(:admin_password) { "Test123Test123" }
   let(:admin) { create(:admin, password: admin_password, password_confirmation: admin_password) }
   let(:home_page) { Pages::Home.new }

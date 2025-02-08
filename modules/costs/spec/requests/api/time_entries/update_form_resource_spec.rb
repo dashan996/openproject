@@ -196,10 +196,10 @@ RSpec.describe API::V3::TimeEntries::UpdateFormAPI, content_type: :json do
         let(:user) do
           user = time_entry.user
 
-          create(:member,
-                 project: time_entry.project,
-                 roles: [create(:project_role, permissions:)],
-                 principal: user)
+          user
+            .members
+            .find_by(project: project)
+            .update(roles: [create(:project_role, permissions: permissions)])
 
           user
         end

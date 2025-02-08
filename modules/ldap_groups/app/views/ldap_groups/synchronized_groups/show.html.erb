@@ -3,11 +3,14 @@
 <%=
   render Primer::OpenProject::PageHeader.new do |header|
     header.with_title { h(@group.dn) }
-    header.with_breadcrumbs([{ href: admin_index_path, text: t(:label_administration) },
-                             { href: admin_settings_authentication_path, text: t(:label_authentication) },
-                             { href: ldap_groups_synchronized_groups_path, text: I18n.t("ldap_groups.label_menu_item") },
-                             I18n.t("menus.breadcrumb.nested_element", section_header: t("ldap_groups.synchronized_groups.singular"), title: h(@group.dn)).html_safe],
-                            selected_item_font_weight: :normal)
+    header.with_breadcrumbs(
+      [{ href: admin_index_path, text: t(:label_administration) },
+       { href: admin_settings_authentication_path, text: t(:label_authentication) },
+       { href: ldap_groups_synchronized_groups_path, text: I18n.t("ldap_groups.label_menu_item") },
+       nested_breadcrumb_element(t("ldap_groups.synchronized_groups.singular"), @group.dn)
+      ],
+      selected_item_font_weight: :normal
+    )
   end
 %>
 

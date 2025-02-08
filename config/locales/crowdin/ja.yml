@@ -33,7 +33,7 @@ ja:
         label_activity_show_only_changes: "Show changes only"
         label_sort_asc: "Newest at the bottom"
         label_sort_desc: "Newest on top"
-        label_type_to_comment: "Add a comment. Type @ to notify people."
+        label_type_to_comment: "コメントを追加。メンバーをメンションするには@を入力してください。"
         label_submit_comment: "Submit comment"
         changed_on: "changed on"
         created_on: "created this on"
@@ -60,7 +60,7 @@ ja:
         main-menu-bg-hover-background: "ホバー時のメインメニュー"
       custom_colors: "カスタム色"
       customize: "Customize your OpenProject installation with your own logo and colors."
-      enterprise_notice: "As a special 'Thank you!' for their financial contribution to develop OpenProject, this tiny add-on is only available for Enterprise edition support subscribers."
+      enterprise_notice: "OpenProject開発への貢献に感謝します。 この機能はエンタープライズ版サポート購入者のみ利用できます。"
       enterprise_more_info: "Note: the used logo will be publicly accessible."
       manage_colors: "色の選択オプションを編集"
       instructions:
@@ -73,15 +73,15 @@ ja:
         main-menu-bg-color: "左サイドメニューの背景色。"
       theme_warning: テーマを変更した場合、カスタムスタイルが上書きされ、失われます。本当に続けますか？
     enterprise:
-      upgrade_to_ee: "Upgrade to the Enterprise edition"
-      add_token: "Upload an Enterprise edition support token"
+      upgrade_to_ee: "エンタープライズ版にアップグレードする。"
+      add_token: "エンタープライズ版サポートのトークンをアップロードする。"
       delete_token_modal:
-        text: "Are you sure you want to remove the current Enterprise edition token used?"
+        text: "現在のEnterpriseエディションのトークンを削除してもよろしいですか？"
         title: "トークンを削除"
       replace_token: "現在のサポート トークンを置き換え"
-      order: "Order Enterprise on-premises edition"
-      paste: "Paste your Enterprise edition support token"
-      required_for_feature: "This add-on is only available with an active Enterprise edition support token."
+      order: "オンプレミス版 Enterprise Edition を購入"
+      paste: "エンタープライズ版サポートのトークンをアップロード。"
+      required_for_feature: "この機能はアクティブなエンタープライズ版のサポート トークンでのみ利用可能です。"
       enterprise_link: "詳細については、ここをクリックしてください。"
       start_trial: "無料トライアルを開始"
       book_now: "今すぐ予約"
@@ -169,16 +169,16 @@ ja:
       plain: "なし"
       simple_tls: "LDAP"
       start_tls: "STARTTLS"
-      plain_description: "Opens an unencrypted connection to the LDAP server. Not recommended for production."
-      simple_tls_description: "Use LDAPS. Requires a separate port on the LDAP server. This mode is often deprecated, we recommend using STARTTLS whenever possible."
-      start_tls_description: "Sends a STARTTLS command after connecting to the standard LDAP port. Recommended for encrypted connections."
+      plain_description: "暗号化されていないLDAPサーバーへ接続します。本番環境では推奨しません。"
+      simple_tls_description: "LDAPを使用するにはLDAPサーバーに別のポートが必要です。このモードはしばしば廃止されますが、可能な限りSTARTTLSを使用することをお勧めします。"
+      start_tls_description: "標準の LDAP ポートに接続した後に STARTTLS コマンドを送信します。暗号化された接続に推奨します。"
       section_more_info_link_html: >
         このセクションは、このLDAP認証元の接続セキュリティを考慮します。詳細については、<a href="%{link}">Net::LDAPドキュメント</a>を参照してください。
     tls_options:
       verify_peer: "SSL 証明書の確認"
       verify_peer_description_html: >
-        Enables strict SSL verification of the certificate trusted chain. <br/> <strong>Warning:</strong> Unchecking this option disables SSL verification of the LDAP server certificate. This exposes your connection to Man in the Middle attacks.
-      tls_certificate_description: "If the LDAP server certificate is not in the trust sources of this system, you can add it manually here. Enter a PEM X509 certifiate string."
+        信頼できる証明書チェーンの厳格な SSL 検証を有効にします。 <br/> <strong>警告:</strong> このオプションのチェックを外すと、LDAP サーバー証明書の SSL 検証が無効になります。 中間者攻撃の標的になる危険性が高くなります。
+      tls_certificate_description: "LDAP サーバ証明書がこのシステムの信頼ソースにない場合は、ここで手動で追加できます。PEM X509証明書文字列を入力します。"
   forums:
     show:
       no_results_title_text: 現在、フォーラムへの投稿はありません。
@@ -227,6 +227,10 @@ ja:
           item:
             title: This item doesn't have any hierarchy level below
             description: Add items to this list to create sub-items inside another one
+        delete_dialog:
+          title: "Delete custom field item"
+          heading: "Delete custom field item?"
+          description: "This action will irreversibly remove the item and all its sub-items. Any assigned values will be permanently deleted. If this field is required, removing items may cause existing work packages to become invalid."
         placeholder:
           label: "Item label"
           short: "Short name"
@@ -247,17 +251,18 @@ ja:
     confirm_destroy_option: "オプションを削除すると、そのすべての派生 (例えばワークパッケージ) が削除されます。削除してもよろしいですか?"
     reorder_alphabetical: "Reorder values alphabetically"
     reorder_confirmation: "Warning: The current order of available values will be lost. Continue?"
+    placeholder_version_select: "Work package or project selection is required first"
     instructions:
-      is_required: "Mark the custom field as required. This will make it mandatory to fill in the field when creating new or updating existing resources."
+      is_required: "必要に応じてカスタムフィールドをマークします。新規または既存のリソースを作成する際にフィールドを入力することが必須になります。"
       is_required_for_project: "Check to enable this attribute and make it required in all projects. It cannot be deactived for individual projects."
-      is_for_all: "Mark the custom field as available in all existing and new projects."
+      is_for_all: "既存および新規のすべてのプロジェクトで利用可能なカスタムフィールドとしてマークします。"
       multi_select: "Allows the user to assign multiple values to this custom field."
-      searchable: "Include the field values when using the global search functionality."
+      searchable: "グローバル検索機能を使用する場合は、フィールド値を含めます。"
       searchable_for_project: "Check to make this attribute available as a filter in project lists."
-      editable: "Allow the field to be editable by users themselves."
+      editable: "ユーザー自身がフィールドを編集できるようにする。"
       admin_only: "Check to make this attribute only visible to administrators. Users without admin rights will not be able to view or edit it."
       is_filter: >
-        Allow the custom field to be used in a filter in work package views. Note that only with 'For all projects' selected, the custom field will show up in global views.
+        作業項目ビューのフィルタでカスタム項目を使用できるようにします。 「すべてのプロジェクトについて」が選択されている場合のみ、カスタムフィールドはグローバルビューに表示されます。
     tab:
       no_results_title_text: 現在、カスタム フィールドはありません。
       no_results_content_text: 新しいカスタム フィールドを作成
@@ -285,6 +290,7 @@ ja:
       label: "Label"
       short: "Short name"
       parent: "Parent"
+      blueprint: "Pattern blueprint"
   global_search:
     placeholder: "Search in %{app_title}"
     overwritten_tabs:
@@ -319,7 +325,7 @@ ja:
       failed_text: "プロジェクト%{name} の削除要求が失敗しました。 プロジェクトはアーカイブされたままです。"
       completed: "プロジェクト%{name} の削除が完了しました"
       completed_text: "プロジェクト '%{name}'を削除要求は完了しました。"
-      completed_text_children: "Additionally, the following subprojects have been deleted:"
+      completed_text_children: "さらに、次のサブプロジェクトが削除されました:"
     index:
       open_as_gantt: "ガントビューとして開く"
       no_results_title_text: 現在、プロジェクトはありません
@@ -333,7 +339,7 @@ ja:
       favored: "Favorite projects"
       archived: "Archived projects"
       shared: "Shared project lists"
-      my_lists: "My project lists"
+      my_lists: "自分のプロジェクトリスト"
       new:
         placeholder: "New project list"
       delete_modal:
@@ -373,7 +379,7 @@ ja:
         actions:
           label_enable_single: "Active in this project, click to disable"
           label_disable_single: "Inactive in this project, click to enable"
-          remove_from_project: "Remove from project"
+          remove_from_project: "プロジェクトから削除"
         is_required_blank_slate:
           heading: Required in all projects
           description: This project attribute is activated in all projects since the "Required in all projects" option is checked. It cannot be deactivated for individual projects.
@@ -460,8 +466,9 @@ ja:
   my:
     access_token:
       create_dialog:
-        header: The %{type} token has been generated
-        warning: Note that this is the only time you will see this token, make sure to copy it now.
+        title: Token generated
+        header: '%{type} トークンが生成されました'
+        warning: このトークンが表示されるのは今回だけなので、必ずコピーしてください。
       errors:
         token_name_blank: "Please provide an API token name"
         token_name_in_use: "This API token name is already in use, please select a different one"
@@ -478,7 +485,7 @@ ja:
       notice_reset_token: "新しい %{type} トークンが生成されました。アクセストークンは:"
       token_value_warning: "注: これはこのトークンが表示される唯一の機会です。今すぐコピーして確認してください。"
       no_results_title_text: 現在、有効なアクセス トークンはありません。
-      notice_api_token_revoked: "The API token has been deleted. To create a new token please use the button in the API section."
+      notice_api_token_revoked: "APIトークンが削除されました。新しいトークンを作成するには、APIセクションの作成ボタンを使用してください。"
       notice_rss_token_revoked: "The RSS token has been deleted. To create a new token please use the link in the RSS section."
       notice_ical_token_revoked: 'iCalendar token "%{token_name}" for calendar "%{calendar_name}" of project "%{project_name}" has been revoked. The iCalendar URL with this token is now invalid.'
   news:
@@ -524,7 +531,7 @@ ja:
     upsale:
       title: プレースホルダー ユーザー
       description: >
-        Placeholder users are a way to assign work packages to users who are not part of your project. They can be useful in a range of scenarios; for example, if you need to track tasks for a resource that is not yet named or available, or if you don’t want to give that person access to OpenProject but still want to track tasks assigned to them.
+        プレースホルダー・ユーザーは、プロジェクトに参加していないユーザーにワーク・パッケージを割り当てる方法です。例えば、まだ名前も決まっていない、利用可能でもないリソースのタスクを追跡する必要がある場合や、その人にOpenProjectへのアクセス権を与えたくないが、その人に割り当てられたタスクを追跡したい場合などです。
   prioritiies:
     edit:
       priority_color_text: |
@@ -579,7 +586,7 @@ ja:
       form_configuration:
         tab: "Form configuration"
       more_info_text_html: >
-        Enterprise edition allows you to customize form configuration with these additional add-ons: <br> <ul class="%{list_styling_class}"> <li><b>Add new attribute groups</b></li> <li><b>Rename attribute groups</b></li> <li><b>Add a table of related work packages</b></li> </ul>
+        エンタープライズ版では、以下の追加アドオンでフォームの設定をカスタマイズできます:<br> <ul class="%{list_styling_class}"> <li><b>新しい属性グループの追加</b></li> <li><b>属性グループの名前の変更</b></li> <li><b>関連するワークパッケージのテーブルを追加する</b></li> </ul>
       projects:
         tab: "Projects"
         enabled_projects: "Enabled projects"
@@ -630,9 +637,10 @@ ja:
         The current types of the work packages aren't enabled in the target project. Please enable the types in the target project if you'd like them to remain unchanged. Otherwise, select an available type in the target project from the list.
     sharing:
       missing_workflow_warning:
-        title: "Workflow missing for work package sharing"
-        message: "No workflow is configured for the 'Work package editor' role. Without a workflow, the shared with user cannot alter the status of the work package. Workflows can be copied. Select a source type (e.g. 'Task') and source role (e.g. 'Member'). Then select the target types. To start with, you could select all the types as targets. Finally, select the 'Work package editor' role as the target and press 'Copy'. After having thus created the defaults, fine tune the workflows as you do for every other role."
-        link_message: "Configure the workflows in the administration."
+        title: "作業項目の共有のためのワークフローがありません"
+        message: "「作業項目エディタ」ロールに対してワークフローが設定されていません。ワークフローがなければ、ユーザーと共有された作業項目のステータスは変更できません。 ワークフローをコピーすることができます。ソースタイプ(例:「タスク」)とソースロール(例:「メンバー」)を選択します。 次に、ターゲットタイプを選択します。最初に、すべてのタイプをターゲットとして選択できます。 最後に、「作業項目の編集」ロールをターゲットとして選択し、「コピー」を押します。 このようにしてデフォルトを作成した後、他のすべてのロールに対して行うようにワークフローを微調整します。"
+        link_message: "管理画面でワークフローを構成します。"
+    templated_subject_hint: Automatically generated through type %{type}
     summary:
       reports:
         category:
@@ -655,14 +663,15 @@ ja:
       no_results_title_text: There are currently no relations available.
       blankslate_heading: "No relations"
       blankslate_description: "This work package does not have any relations yet."
+    label_add_child_button: "Child"
     label_add_x: "Add %{x}"
     label_edit_x: "Edit %{x}"
     label_add_description: "Add description"
     lag:
       subject: "Lag"
-      title: "Lag (in days)"
-      caption: "The gap in number of working days in between the two work packages"
+      caption: "2つの作業パッケージの間に空ける最低作業日数。"
     relations:
+      label_new_child_created: "New work package created and added as a child"
       label_relates_singular: "related to"
       label_relates_plural: "related to"
       label_relates_to_singular: "related to"
@@ -677,7 +686,10 @@ ja:
       follows_description: "The related work package necessarily needs to finish before this one can start"
       label_child_singular: "child"
       label_child_plural: "children"
-      child_description: "Makes the related work package a sub-item of the current (parent) work package"
+      new_child: "New child"
+      new_child_text: "Creates a related work package as a sub-item of the current (parent) work package"
+      existing_child: "Existing child"
+      child_description: "関連するワークパッケージを現在の(親)ワークパッケージのサブ項目にします。"
       label_blocks_singular: "blocks"
       label_blocks_plural: "blocks"
       blocks_description: "The related work package cannot be closed until this one is closed first"
@@ -713,6 +725,8 @@ ja:
       required_description: "Marks this work package as being a requirement to the related one"
       label_parent_singular: "parent"
       label_parent_plural: "parent"
+      ghost_relation_title: "Related work package"
+      ghost_relation_description: "This is not visible to you due to permissions."
   label_invitation: 案内
   account:
     delete: "アカウントを削除"
@@ -777,6 +791,7 @@ ja:
         is_required: "必須"
         max_length: "最大値の長さ"
         min_length: "最短長"
+        content_right_to_left: "Right-to-Left content"
         multi_value: "複数選択を許可"
         possible_values: "選択肢"
         regexp: "正規表現"
@@ -812,6 +827,8 @@ ja:
         attr_lastname: "苗字"
         attr_login: "ユーザー名属性"
         attr_mail: "メール"
+        filter_string: "Filter string"
+        admin: "Administrator"
         base_dn: "ベースDN"
         host: "ホスト"
         onthefly: "ユーザーの自動作成"
@@ -855,6 +872,9 @@ ja:
       project_custom_field:
         is_required: "Required for all projects"
         custom_field_section: Section
+      project/life_cycle_step_definition:
+        name: "Name"
+        color: "Color"
       query:
         column_names: "列"
         relations_to_type_column: "%{type} との関連"
@@ -893,7 +913,7 @@ ja:
         color: "色"
       user:
         admin: "管理者"
-        auth_source: "Authentication source"
+        auth_source: "認証ソース"
         ldap_auth_source: "LDAP 接続"
         identity_url: "Identity URL"
         current_password: "現在のパスワード"
@@ -923,9 +943,9 @@ ja:
         begin_insertion: "挿入の始まり"
         begin_deletion: "削除の始まり"
         children: "サブ要素"
-        derived_done_ratio: "Total % complete"
-        derived_remaining_hours: "Total remaining work"
-        derived_remaining_time: "Total remaining work"
+        derived_done_ratio: "完了率"
+        derived_remaining_hours: "残りの作業"
+        derived_remaining_time: "残りの作業"
         done_ratio: "% Complete"
         duration: "期間"
         end_insertion: "挿入の終わり"
@@ -970,7 +990,7 @@ ja:
         confirmation: "は%{attribute} と一致しません。"
         could_not_be_copied: "%{dependency} を（完全に）コピーできませんでした。"
         does_not_exist: "は存在しません。"
-        error_enterprise_only: "%{action} is only available in the OpenProject Enterprise edition"
+        error_enterprise_only: "%{action} はOpenProject Enterpriseエディションでのみ利用可能です。"
         error_unauthorized: "アクセスできません。"
         error_readonly: "書けませんでした。"
         error_conflict: "別のユーザーが同時にデータを更新しています。"
@@ -1019,7 +1039,7 @@ ja:
         unknown_property_nested: "has the unknown path '%{path}'."
         unremovable: "削除できません。"
         url_not_secure_context: >
-          is not providing a "Secure Context". Either use HTTPS or a loopback address, such as localhost.
+          は「セキュアコンテキスト」を提供していません。HTTPSを使用するか、localhostのようなループバックアドレスを使用してください。
         wrong_length: "は%{count}文字を入力してください。"
       models:
         ldap_auth_source:
@@ -1060,7 +1080,7 @@ ja:
               fragment_present: "フラグメントを含めることはできません。"
               invalid_uri: "有効なURIでなければなりません。"
               relative_uri: "絶対URIでなければなりません。"
-              secured_uri: 'is not providing a "Secure Context". Either use HTTPS or a loopback address, such as localhost.'
+              secured_uri: 'は「セキュアコンテキスト」を提供していません。HTTPSを使用するか、localhostのようなループバックアドレスを使用してください。'
               forbidden_uri: "サーバーによって禁止されています。"
             scopes:
               not_match_configured: "利用可能な範囲と一致しません。"
@@ -1194,6 +1214,10 @@ ja:
             from:
               error_not_found: "「開始」の位置にワークパッケージが存在しないか表示されません"
               error_readonly: "既存の関係の「開始」のリンクは変更できません"
+            lag:
+              greater_than_or_equal_to:
+                zero: "cannot be negative."
+              less_than_or_equal_to: "is too high."
         repository:
           not_available: "SCMベンダーは使用できません。"
           not_whitelisted: "は設定で許可されていません。"
@@ -1280,11 +1304,11 @@ ja:
               only_same_project_categories_allowed: "ワークパッケージのカテゴリは、同じプロジェクト内にそのワークパッケージでなければなりません。"
               does_not_exist: "指定されたカテゴリは存在しません。"
             estimated_hours:
-              not_a_number: "is not a valid duration."
+              not_a_number: "は有効な日時ではありません。"
               cant_be_inferior_to_remaining_work: "cannot be lower than Remaining work."
               must_be_set_when_remaining_work_and_percent_complete_are_set: "required when Remaining work and % Complete are set."
             remaining_hours:
-              not_a_number: "is not a valid duration."
+              not_a_number: "は有効な日付ではありません。"
               cant_exceed_work: "cannot be higher than Work."
               must_be_set_when_work_is_set: "required when Work is set."
               must_be_set_when_work_and_percent_complete_are_set: "required when Work and % Complete are set."
@@ -1366,13 +1390,13 @@ ja:
       project/gate_definition: "Gate"
       project/stage_definition: "Stage"
       project_query:
-        other: "Project lists"
+        other: "プロジェクト一覧"
       query: "ユーザのクエリ"
       role:
         other: "ロール"
       status: "ステータス名"
       token/api:
-        other: Access tokens
+        other: アクセストークン
       type: "タイプ"
       user: "ユーザ"
       version: "バージョン"
@@ -1538,8 +1562,9 @@ ja:
   button_copy_and_follow: "コピー後表示"
   button_create: "作成"
   button_create_and_continue: "連続作成"
-  button_delete: "削除"
   button_decline: "同意しない"
+  button_delete: "削除"
+  button_delete_permanently: "Delete permanently"
   button_delete_watcher: "ウォッチャー「%{name}」を削除"
   button_download: "ダウンロード"
   button_duplicate: "複製"
@@ -1724,6 +1749,8 @@ ja:
     units:
       hour:
         other: "時"
+      day:
+        other: "days"
   description_active: "有効？"
   description_attachment_toggle: "添付ファイルの表示/非表示"
   description_autocomplete: >
@@ -1759,6 +1786,10 @@ ja:
     upsale:
       title: "Enterprise add-on"
       link_title: "More information"
+      automatic_subject_generation:
+        description: "Create automatically generated subjects using referenced attributes and text."
+      customize_life_cycle:
+        description: "Create and organize different project stages and gates than the ones provided by PM2 project cycle planning."
       form_configuration:
         description: "これらの追加機能でフォームの設定をカスタマイズします:"
         add_groups: "新しい属性グループを追加"
@@ -1786,7 +1817,7 @@ ja:
   error_cookie_missing: "OpenProject のcookieが見つかりません。cookieが有効であることを確認してください。そうしないとこのアプリケーションは正しく動作しません。"
   error_custom_option_not_found: "オプションが存在しません。"
   error_enterprise_activation_user_limit: "あなたのアカウントを有効にすることができませんでした（ユーザー制限に達しました）。アクセスするには管理者に連絡してください。"
-  error_enterprise_token_invalid_domain: "The Enterprise edition is not active. Your Enterprise token's domain (%{actual}) does not match the system's host name (%{expected})."
+  error_enterprise_token_invalid_domain: "Enterprise Edition がアクティブではありません。Enterprise トークンのドメイン (%{actual}) がシステムのホスト名(%{expected}) と一致しません。"
   error_failed_to_delete_entry: "このエントリを削除できませんでした。"
   error_in_dependent: "依存オブジェクトを変更しようとしてエラーが発生しました: %{dependent_class} #%{related_id} - %{related_subject}: %{error}"
   error_in_new_dependent: "Error attempting to create dependent object: %{dependent_class} - %{related_subject}: %{error}"
@@ -1969,10 +2000,10 @@ ja:
     blocks:
       community: "OpenProject コミュニティ"
       upsale:
-        title: "Upgrade to Enterprise edition"
+        title: "エンタープライズ版にアップグレード"
         more_info: "詳細情報"
     links:
-      upgrade_enterprise_edition: "Upgrade to Enterprise edition"
+      upgrade_enterprise_edition: "エンタープライズ版にアップグレード"
       postgres_migration: "PostgreSQL にインストールを移行しています"
       user_guides: "ユーザーガイド"
       faq: "FAQ"
@@ -2041,8 +2072,6 @@ ja:
       api_and_webhooks: "API and webhooks"
     quick_add:
       label: "クイック追加メニューを開く"
-    breadcrumb:
-      nested_element: "%{section_header}: <b>%{title}</b>"
   my_account:
     access_tokens:
       no_results:
@@ -2123,6 +2152,7 @@ ja:
   label_add_subtask: "子タスクを追加"
   label_added: "追加"
   label_added_by: "Added by %{author}"
+  label_added_by_on: "Added by %{author} on %{date}"
   label_added_time_by: "%{author}が%{age}前に追加"
   label_additional_workflow_transitions_for_assignee: "ユーザーが担当者である場合、追加遷移を許可する"
   label_additional_workflow_transitions_for_author: "ユーザーが作成者である場合、追加遷移を許可する"
@@ -2543,6 +2573,7 @@ ja:
   label_project_new: "新規プロジェクト"
   label_project_plural: "プロジェクト"
   label_project_list_plural: "Project lists"
+  label_project_lifecycle: "Project lifecycle"
   label_project_attributes_plural: "Project attributes"
   label_project_custom_field_plural: "Project attributes"
   label_project_settings: "プロジェクトの設定"
@@ -2569,6 +2600,7 @@ ja:
   label_relation: "Relation"
   label_relation_actions: "Relation actions"
   label_relation_delete: "関係の削除"
+  label_relation_edit: "Edit relation"
   label_relation_new: "新しい関係"
   label_release_notes: "リリースノート"
   label_remaining_work: "残りの作業"
@@ -2880,8 +2912,8 @@ ja:
   mail_body_lost_password: "パスワードを変更するには、以下のリンクをクリックしてください:"
   mail_password_change_not_possible:
     title: "パスワードの変更はできません"
-    body: "Your account at %{app_title} is connected to an external authentication provider (%{name})."
-    subtext: "Passwords for external account cannot be changed in the application. Please use the lost password functionality of your authentication provider."
+    body: "%{app_title} のアカウントは、外部認証プロバイダ (%{name}) に接続されています。"
+    subtext: "外部アカウントのパスワードは、アプリケーションから変更することはできません。認証プロバイダのパスワード紛失機能をご利用ください。"
   mail_body_register: "Welcome to %{app_title}. Please activate your account by clicking on this link:"
   mail_body_register_header_title: "プロジェクトへの招待メール"
   mail_body_register_user: "%{name}さん"
@@ -2973,9 +3005,9 @@ ja:
   notice_locking_conflict: "別のユーザーが同時にデータを更新しています。"
   notice_locking_conflict_additional_information: "ユーザ%{users}により更新されました。"
   notice_locking_conflict_reload_page: "ページをリロードして、変更を確認してから再適用してください。"
-  notice_locking_conflict_warning: "This page has been updated by someone else. To not lose your edits, copy them locally and reload to view the updated version."
-  notice_locking_conflict_danger: "Could not save your changes because of conflicting modifications. To not lose your edits, copy them locally and reload to view the updated version."
-  notice_locking_conflict_action_button: "Discard changes and reload"
+  notice_locking_conflict_warning: "このページは他の人によって更新されました。編集内容を失わないようにするには、ローカルにコピーし、更新されたバージョンを表示するために再読み込みしてください。"
+  notice_locking_conflict_danger: "変更が競合しているため、変更を保存できませんでした。編集内容を失わないようにするには、編集内容をローカルにコピーし、リロードして更新されたバージョンを表示してください。"
+  notice_locking_conflict_action_button: "変更を破棄して再読み込みする"
   notice_member_added: '%{name} をプロジェクトに追加しました。'
   notice_members_added: '%{number} ユーザーをプロジェクトに追加しました。'
   notice_member_removed: "%{user} をプロジェクトから削除しました。"
@@ -2984,6 +3016,7 @@ ja:
   notice_bad_request: "不正な要求です。"
   notice_not_authorized: "このページにアクセスする権限がありません。"
   notice_not_authorized_archived_project: "アクセスしようとしたプロジェクトはアーカイブされています。"
+  notice_requires_enterprise_token: "Enterprise token missing or doesn't allow access to this page."
   notice_password_confirmation_failed: "パスワードが正しくありません。続行できません。"
   notice_principals_found_multiple: "%{number} の検索結果があります。 \n タブで最初の結果へフォーカスします。"
   notice_principals_found_single: "1 つの結果があります。 \n タブでフォーカスします。"
@@ -3031,7 +3064,7 @@ ja:
     text_getting_started_description: "Get a quick overview of project management and team collaboration with OpenProject. You can restart this video from the help menu."
     welcome: "Welcome to %{app_title}"
     select_language: "言語を選択してください"
-  permission_add_work_package_notes: "注記の追加"
+  permission_add_work_package_notes: "Add comments"
   permission_add_work_packages: "ワークパッケージの追加"
   permission_add_messages: "メッセージの投稿"
   permission_add_project: "プロジェクトの作成"
@@ -3061,17 +3094,18 @@ ja:
   permission_delete_timelines: "タイムラインの削除"
   permission_delete_wiki_pages: "Wikiページの削除"
   permission_delete_wiki_pages_attachments: "添付ファイルの削除"
-  permission_edit_work_package_notes: "注記の編集"
+  permission_edit_work_package_notes: "Moderate comments"
+  permission_edit_work_package_notes_explanation: "Caution: Users with this permission are able to edit anyone's comment."
   permission_edit_work_packages: "ワークパッケージの編集"
   permission_edit_messages: "メッセージの編集"
-  permission_edit_own_work_package_notes: "自分が記入した注記の編集"
+  permission_edit_own_work_package_notes: "Edit own comments"
   permission_edit_own_messages: "自分の投稿したメッセージの編集"
   permission_edit_own_time_entries: "自分が記入した作業時間の編集"
   permission_edit_project: "プロジェクトの編集"
   permission_edit_project_attributes: "Edit project attributes"
   permission_edit_project_stages_and_gates: "Edit project stages and gates"
   permission_edit_reportings: "レポートの編集"
-  permission_edit_time_entries: "Edit time logs for other users"
+  permission_edit_time_entries: "他のユーザーの作業時間を編集"
   permission_edit_timelines: "タイムラインの編集"
   permission_edit_wiki_pages: "Wikiページの編集"
   permission_export_work_packages: "ワークパッケージのエクスポート"
@@ -3157,16 +3191,16 @@ ja:
       are_you_sure: "プロジェクト '%{name}' をアーカイブしてもよろしいですか？"
       archived: "アーカイブ済み"
     count:
-      zero: "0 Projects"
-      one: "1 Project"
-      other: "%{count} Projects"
+      zero: "0 projects"
+      one: "1 project"
+      other: "%{count} projects"
   project_module_activity: "活動"
   project_module_forums: "フォーラム"
   project_module_work_package_tracking: "ワークパッケージ"
   project_module_news: "ニュース"
   project_module_repository: "リポジトリ"
   project_module_wiki: "Wiki"
-  permission_header_for_project_module_work_package_tracking: "Work packages and Gantt charts"
+  permission_header_for_project_module_work_package_tracking: "ワークパッケージとガントチャート"
   query:
     attribute_and_direction: "%{attribute} (%{direction})"
   #possible query parameters (e.g. issue queries),
@@ -3178,7 +3212,7 @@ ja:
     member_of_group: "担当者のグループ"
     name_or_identifier: "名前または ID"
     only_subproject_id: "サブプロジェクトのみ"
-    shared_with_user: "Shared with users"
+    shared_with_user: "ユーザーと共有"
     shared_with_me: "Shared with me"
     subproject_id: "Including subproject"
   repositories:
@@ -3270,7 +3304,7 @@ ja:
       oauth_application_details_link_text: "Go to settings page"
       setup_documentation_details: "If you need help configuring a new file storage please check the documentation: "
       setup_documentation_details_link_text: "File Storages setup"
-      show_warning_details: "To use this file storage remember to activate the module and the specific storage in the project settings of each desired project."
+      show_warning_details: "このファイルストレージを使用するには、各プロジェクトのプロジェクト設定でモジュールと特定のストレージを有効にする必要があります。"
     subversion:
       existing_title: "既存の Subversion リポジトリ"
       existing_introduction: "既存のローカル Subversion リポジトリがある場合は、アプリケーション内からアクセスするために、OpenProject とリンクできます。"
@@ -3293,6 +3327,7 @@ ja:
     activated: "有効化"
     deactivated: "無効化"
   search_input_placeholder: "検索…"
+  setting_apiv3_cors_title: "Cross-Origin Resource Sharing (CORS)"
   setting_apiv3_cors_enabled: "CORSを有効にする"
   setting_apiv3_cors_origins: "API V3のオリジン間リソース共有 (CORS) が許可されています"
   setting_apiv3_cors_origins_text_html: >
@@ -3383,7 +3418,7 @@ ja:
     In <b>work-based</b> mode, % Complete can be freely set to any value. If you optionally enter a value for Work, Remaining work will automatically be derived. In <b>status-based</b> mode, each status has a % Complete value associated with it. Changing status will change % Complete.
   setting_work_package_properties: "項目名"
   setting_work_package_startdate_is_adddate: "今日の日付を新しいワークパッケージの開始日とする"
-  setting_work_packages_projects_export_limit: "Work packages / Projects export limit"
+  setting_work_packages_projects_export_limit: "ワークパッケージ/プロジェクトのエクスポート制限"
   setting_journal_aggregation_time_minutes: "User actions aggregated within"
   setting_log_requesting_user: "全てのリクエストに対し、ユーザのログイン名、名前、メールアドレスをログに記録する"
   setting_login_required: "認証が必要"
@@ -3497,7 +3532,7 @@ ja:
         type: "タイプごとの行全体"
         priority: "優先度別に行全体"
     icalendar:
-      enable_subscriptions_text_html: Allows users with the necessary permissions to subscribe to OpenProject calendars and access work package information via an external calendar client. <strong>Note:</strong> Please read about <a href="%{link}" target="_blank">iCalendar subscriptions</a> to understand potential security risks before enabling this.
+      enable_subscriptions_text_html: 必要な権限を持つユーザーが、OpenProject のカレンダーを購読し、外部のカレンダークライアントを介してワークパッケージ情報にアクセスできるようにします。<strong>注意:</strong>この機能を有効にする前に、<a href="%{link}" target="_blank">iCalendar サブスクリプションについてを</a>読み、潜在的なセキュリティリスクを理解してください。
     language_name_being_default: "%{language_name} (default)"
     notifications:
       events_explanation: "Governs for which event an email is sent out. Work packages are excluded from this list as the notifications for them can be configured specifically for every user."
@@ -3518,6 +3553,27 @@ ja:
       new:
         heading: "New attribute"
         description: "Changes to this project attribute will be reflected in all projects where it is enabled. Required attributes cannot be disabled on a per-project basis."
+    project_life_cycle_step_definitions:
+      heading: "Project lifecycle"
+      heading_description: "The project lifecycle consists of stages and gates that structure your projects. They will appear in the overview page of a project and be available in the projects list. Individual stages and gates can be selected to customize a project but reordering is not possible on a project level."
+      label_add: "Add"
+      label_add_description: "Add lifecycle definition"
+      label_add_stage: "Stage"
+      label_add_gate: "Gate"
+      filter:
+        label: "Search project stage or gate"
+      section_header: "Stages and gates"
+      non_defined: "Neither stages nor gates are currently defined."
+      new:
+        description: "Changes to this project step will be reflected in all projects where it is enabled."
+      new_stage:
+        heading: "New stage"
+      new_gate:
+        heading: "New gate"
+      edit_stage:
+        heading: "Edit stage"
+      edit_gate:
+        heading: "Edit gate"
     projects:
       missing_dependencies: "Project module %{module} was checked which depends on %{dependencies}. You need to check these dependencies as well."
       section_new_projects: "新規プロジェクトの設定"
@@ -3551,6 +3607,7 @@ ja:
   text_are_you_sure_continue: "Are you sure you want to continue?"
   text_are_you_sure_with_children: "仕事項目と子項目を削除してもよろしいですか？"
   text_are_you_sure_with_project_custom_fields: "Deleting this attribute will also delete its values in all projects. Are you sure you want to do this?"
+  text_are_you_sure_with_project_life_cycle_step: "Deleting this step will also delete its usages in all projects. Are you sure you want to do this?"
   text_assign_to_project: "プロジェクト自体に割り当てする"
   text_form_configuration: >
     ワークパッケージのフォームに表示されるフィールドをカスタマイズできます。自由にフィールドをグループ化して、あなたのドメインのニーズを反映できます。
@@ -3565,9 +3622,9 @@ ja:
   text_custom_field_hint_activate_per_project_and_type: >
     カスタムフィールドは、ワークパッケージタイプごと、およびプロジェクトごとにアクティブにする必要があります。
   text_wp_status_read_only_html: >
-    The Enterprise edition will add these additional add-ons for work packages' statuses fields: <br> <ul> <li><b>Allow to mark work packages to read-only for specific statuses</b></li> </ul>
+    Enterprise エディションでは、ワークパッケージのステータスフィールドに以下のアドオンが追加されます:<br> <ul> <li><b>特定のステータスのワークパッケージを読み取り専用にすることができます。</b></li> </ul>
   text_project_custom_field_html: >
-    The Enterprise edition will add these additional add-ons for projects' custom fields: <br> <ul> <li><b>Add custom fields for projects to your Project list to create a project portfolio view</b></li> </ul>
+    Enterpriseエディションでは、プロジェクトのカスタムフィールド用に以下のアドオンが追加されます:<br> <ul> <li><b>プロジェクトのカスタムフィールドをプロジェクトリストに追加して、プロジェクトポートフォリオビューを作成します。</b></li> </ul>
   text_custom_logo_instructions: >
     透明な背景の白いロゴをお勧めします。 従来、および Retina ディスプレイの両方で最高の結果となるように、画像の寸法は、460px x 60px を確認してください。
   text_custom_export_logo_instructions: >
@@ -3630,6 +3687,7 @@ ja:
   text_notice_security_badge_displayed_html: >
     602/5000 注：有効にすると、<a href="%{information_panel_path}">%{information_panel_label}</a>管理パネルとホームページに、インストールステータスのバッジが表示されます。 管理者のみに表示されます。 <br/>バッジは、最新のOpenProjectバージョンを公式のOpenProjectリリースデータベースと照合して、アップデートや既知の脆弱性について警告します。 チェックの内容、利用可能なアップデートを提供するために必要なデータ、およびこのチェックを無効にする方法の詳細については、<a href="%{more_info_url}">設定ドキュメント</a>をご覧ください。
   text_own_membership_delete_confirmation: "一部またはすべての権限を自分自身から剥奪しようとしているため、このプロジェクトを編集できなくなる可能性があります。\n本当に続けますか？"
+  text_permanent_delete_confirmation_checkbox_label: "I understand that this deletion cannot be reversed"
   text_plugin_assets_writable: "プラグインの「assets」ディレクトリが書き込み可能"
   text_powered_by: "Powered by %{link}"
   text_project_identifier_info: "アルファベット小文字(a-z)・数字・ハイフン・アンダースコアが使えます。アルファベット小文字で始まる必要があります。"
@@ -3749,14 +3807,14 @@ ja:
   warning_user_limit_reached_admin: >
     Adding additional users will exceed the current limit. Please <a href="%{upgrade_url}">upgrade your plan</a> to be able to ensure external users are able to access this instance.
   warning_user_limit_reached_instructions: >
-    You reached your user limit (%{current}/%{max} active users). Please contact sales@openproject.com to upgrade your Enterprise edition plan and add additional users.
+    ユーザー制限(%{current}/%{max} アクティブユーザー)に達しました。 sales@openproject.com に連絡してEnterprise Editionプランをアップグレードし、ユーザーを追加してください。
   warning_protocol_mismatch_html: >
 
   warning_bar:
     https_mismatch:
       title: "HTTPS モードのセットアップが一致しません"
       text_html: >
-        Your application is running with HTTPS mode set to <code>%{set_protocol}</code>, but the request is an <code>%{actual_protocol}</code> request. This will result in errors! You will need to set the following configuration value: <code>%{setting_value}</code>. Please see <a href="%{more_info_path}">the installation documentation</a> on how to set this configuration.
+        アプリケーションはHTTPSモードで実行されています。 <code>%{set_protocol}</code>に設定されていますが、リクエストは <code>%{actual_protocol}</code>リクエストです。これはエラーになります！以下のコンフィギュレーション値を設定する必要があります： <code>%{setting_value}</code>.この設定方法については、<a href="%{more_info_path}">インストールドキュメントを</a>参照してください。
     hostname_mismatch:
       title: "ホスト名の設定が一致しません"
       text_html: >
@@ -3854,12 +3912,12 @@ ja:
       additional_privileges_group: "Might have additional privileges (as group member)"
       additional_privileges_project_or_group: "Might have additional privileges (as project or group member)"
     project_queries:
-      publishing_denied: "You do not have permission to make project lists public."
+      publishing_denied: "プロジェクトリストを公開する権限がありません。"
       access_warning: "Users will only see the projects they have access to. Sharing project lists does not impact individual project permissions."
       user_details:
-        owner: "List owner"
-        can_view_because_public: "Can already view because list is shared with everyone"
-        can_manage_public_lists: "Can edit due to global permissions"
+        owner: "リストの所有者"
+        can_view_because_public: "リストがすべての人と共有されているため、すでに表示できます"
+        can_manage_public_lists: "グローバル権限により編集可能"
       public_flag:
         label: "Share with everyone at %{instance_name}"
         caption: "Everyone can view this project list. Those with global edit permissions can modify it."
@@ -3876,7 +3934,7 @@ ja:
         edit: "編集"
         edit_description: "Can view, share and edit this project list."
       upsale:
-        message: "Sharing project lists with individual users is an enterprise add-on."
+        message: "個人ユーザーとのプロジェクトリストの共有は、エンタープライズアドオンです。"
   working_days:
     info: >
       Days that are not selected are skipped when scheduling work packages (and not included in the day count). These can be overridden at a work-package level.
@@ -3908,7 +3966,7 @@ ja:
       code_429: "リクエストが多すぎます。 後でもう一度やり直してください。"
       code_500: "内部エラーが発生しました。"
       code_500_outbound_request_failure: "An outbound request to another resource has failed with status code %{status_code}."
-      code_500_missing_enterprise_token: "The request can not be handled due to invalid or missing Enterprise token."
+      code_500_missing_enterprise_token: "Enterprise トークンが無効または見つからないため、リクエストを処理できません。"
       not_found:
         work_package: "The work package you are looking for cannot be found or has been deleted."
       expected:
@@ -3996,6 +4054,8 @@ ja:
       builtin: Built-in instance application
       confidential: Confidential
       singular: "OAuthアプリケーション"
+      scopes: "Scopes"
+      client_credentials: "Client credentials"
       plural: "OAuthアプリケーション"
       named: "OAuthアプリケーション '%{name}'"
       new: "新しいOAuthアプリケーション"
@@ -4096,8 +4156,8 @@ ja:
   you: あなた
   link: link
   plugin_openproject_auth_plugins:
-    name: "OpenProject Auth Plugins"
+    name: "OpenProject Auth プラグイン"
     description: "Integration of OmniAuth strategy providers for authentication in OpenProject."
   plugin_openproject_auth_saml:
-    name: "OmniAuth SAML / Single-Sign On"
-    description: "Adds the OmniAuth SAML provider to OpenProject"
+    name: "OmniAuth SAML / シングルサインオン"
+    description: "OmniAuthSAMLプロバイダをOpenProjectに追加します"

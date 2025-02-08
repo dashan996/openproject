@@ -137,7 +137,7 @@ module Users
     end
 
     def provider_name(user)
-      user.authentication_provider&.downcase
+      user.authentication_provider&.slug&.downcase
     end
 
     def register_by_email_activation

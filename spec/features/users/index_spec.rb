@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -28,7 +30,7 @@
 
 require "spec_helper"
 
-RSpec.describe "index users", :js, :with_cuprite do
+RSpec.describe "index users", :js do
   shared_let(:current_user) { create(:admin, firstname: "admin", lastname: "admin", created_at: 1.hour.ago) }
   let(:index_page) { Pages::Admin::Users::Index.new }
 

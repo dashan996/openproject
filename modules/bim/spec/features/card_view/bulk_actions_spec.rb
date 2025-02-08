@@ -1,7 +1,7 @@
 require "spec_helper"
 require_relative "../../support/pages/ifc_models/show_default"
 
-RSpec.describe "Copy work packages through Rails view", :js, :with_cuprite, with_config: { edition: "bim" } do
+RSpec.describe "Copy work packages through Rails view", :js, with_config: { edition: "bim" } do
   shared_let(:project) { create(:project, name: "Source", enabled_module_names: %i[bim work_package_tracking]) }
 
   shared_let(:dev) do

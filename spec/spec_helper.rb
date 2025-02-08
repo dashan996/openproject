@@ -54,4 +54,5 @@ RSpec.configure do |config|
   # Have the FactoryBot methods like #create and #build_stubbed without
   # having to call it on FactoryBot.
   config.include FactoryBot::Syntax::Methods
+  config.include Dry::Monads[:result]
 end

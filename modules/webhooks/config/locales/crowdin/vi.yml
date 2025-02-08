@@ -8,6 +8,7 @@ vi:
         url: 'URL Payload'
         secret: 'Chữ ký bí mật'
         events: 'Sự kiện'
+        enabled: 'Đã kích hoạt'
         projects: 'Dự án được kích hoạt'
       webhooks/log:
         event_name: 'Tên sự kiện'

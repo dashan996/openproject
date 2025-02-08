@@ -36,7 +36,7 @@ module Shares
     include OpTurbo::Streamable
     include OpPrimer::ComponentHelpers
 
-    def initialize(share:, strategy:, container: nil, allow_hover_cards: false)
+    def initialize(share:, strategy:, container: nil)
       super
 
       @share = share
@@ -45,7 +45,6 @@ module Shares
       @principal = share.principal
       @available_roles = strategy.available_roles
       @container = container
-      @allow_hover_cards = allow_hover_cards
     end
 
     def wrapper_uniq_by
@@ -54,7 +53,7 @@ module Shares
 
     private
 
-    attr_reader :share, :entity, :principal, :container, :available_roles, :strategy, :allow_hover_cards
+    attr_reader :share, :entity, :principal, :container, :available_roles, :strategy
 
     def share_editable?
       @share_editable ||= User.current != share.principal && sharing_manageable?

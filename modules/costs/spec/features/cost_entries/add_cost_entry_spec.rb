@@ -70,12 +70,8 @@ RSpec.describe "Work Package cost fields", :js do
 
   it "does not show read-only fields" do
     full_view.visit!
-    # Go to add cost entry page
-    SeleniumHubWaiter.wait
-    find("#action-show-more-dropdown-menu .button").click
-    find(".menu-item", text: "Log unit costs").click
+    full_view.select_log_unit_costs_action
 
-    SeleniumHubWaiter.wait
     # Set single value, should update suffix
     select "A", from: "cost_entry_cost_type_id"
     fill_in "cost_entry_units", with: "1"
@@ -116,15 +112,12 @@ RSpec.describe "Work Package cost fields", :js do
       I18n.locale = :de
 
       full_view.visit!
+      full_view.select_log_unit_costs_action
 
-      # Go to add cost entry page
-      SeleniumHubWaiter.wait
-      find("#action-show-more-dropdown-menu .button").click
-      find(".menu-item", text: I18n.t(:button_log_costs)).click
+      fill_in CostEntry.human_attribute_name(:units), with: "1,42"
+      expect(page).to have_css("#cost_entry_costs", text: "1,42 EUR")
 
-      SeleniumHubWaiter.wait
-      fill_in "cost_entry_units", with: "1,42"
-      select "B", from: "cost_entry_cost_type_id"
+      select "B", from: CostEntry.human_attribute_name(:cost_type)
       expect(page).to have_css("#cost_entry_unit_name", text: "B plural")
       expect(page).to have_css("#cost_entry_costs", text: "2,84 EUR")
 
@@ -174,11 +167,7 @@ RSpec.describe "Work Package cost fields", :js do
       expect(placeholder_user).to be_present
       expect(Principal.possible_assignee(project).to_a).to include placeholder_user
       full_view.visit!
-
-      # Go to add cost entry page
-      SeleniumHubWaiter.wait
-      find("#action-show-more-dropdown-menu .button").click
-      find(".menu-item", text: I18n.t(:button_log_costs)).click
+      full_view.select_log_unit_costs_action
 
       SeleniumHubWaiter.wait
       expect(page).to have_no_css("#cost_entry_user_id option", text: placeholder_user.name, visible: :all)

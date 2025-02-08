@@ -229,6 +229,10 @@ sk:
           item:
             title: This item doesn't have any hierarchy level below
             description: Add items to this list to create sub-items inside another one
+        delete_dialog:
+          title: "Delete custom field item"
+          heading: "Delete custom field item?"
+          description: "This action will irreversibly remove the item and all its sub-items. Any assigned values will be permanently deleted. If this field is required, removing items may cause existing work packages to become invalid."
         placeholder:
           label: "Item label"
           short: "Short name"
@@ -249,6 +253,7 @@ sk:
     confirm_destroy_option: "Odstránením hodnoty sa odstránia všetky predtým nastavené hodnoty (napríklad pre pracovné balíčky). Naozaj chcete odstrániť hodnotu?"
     reorder_alphabetical: "Reorder values alphabetically"
     reorder_confirmation: "Warning: The current order of available values will be lost. Continue?"
+    placeholder_version_select: "Work package or project selection is required first"
     instructions:
       is_required: "Mark the custom field as required. This will make it mandatory to fill in the field when creating new or updating existing resources."
       is_required_for_project: "Check to enable this attribute and make it required in all projects. It cannot be deactived for individual projects."
@@ -287,6 +292,7 @@ sk:
       label: "Label"
       short: "Short name"
       parent: "Parent"
+      blueprint: "Pattern blueprint"
   global_search:
     placeholder: "Search in %{app_title}"
     overwritten_tabs:
@@ -483,6 +489,7 @@ sk:
   my:
     access_token:
       create_dialog:
+        title: Token generated
         header: The %{type} token has been generated
         warning: Note that this is the only time you will see this token, make sure to copy it now.
       errors:
@@ -664,6 +671,7 @@ sk:
         title: "Workflow missing for work package sharing"
         message: "No workflow is configured for the 'Work package editor' role. Without a workflow, the shared with user cannot alter the status of the work package. Workflows can be copied. Select a source type (e.g. 'Task') and source role (e.g. 'Member'). Then select the target types. To start with, you could select all the types as targets. Finally, select the 'Work package editor' role as the target and press 'Copy'. After having thus created the defaults, fine tune the workflows as you do for every other role."
         link_message: "Configure the workflows in the administration."
+    templated_subject_hint: Automatically generated through type %{type}
     summary:
       reports:
         category:
@@ -686,14 +694,15 @@ sk:
       no_results_title_text: There are currently no relations available.
       blankslate_heading: "No relations"
       blankslate_description: "This work package does not have any relations yet."
+    label_add_child_button: "Child"
     label_add_x: "Add %{x}"
     label_edit_x: "Edit %{x}"
     label_add_description: "Add description"
     lag:
       subject: "Lag"
-      title: "Lag (in days)"
-      caption: "The gap in number of working days in between the two work packages"
+      caption: "The minimum number of working days to keep in between the two work packages."
     relations:
+      label_new_child_created: "New work package created and added as a child"
       label_relates_singular: "related to"
       label_relates_plural: "related to"
       label_relates_to_singular: "related to"
@@ -708,6 +717,9 @@ sk:
       follows_description: "The related work package necessarily needs to finish before this one can start"
       label_child_singular: "child"
       label_child_plural: "children"
+      new_child: "New child"
+      new_child_text: "Creates a related work package as a sub-item of the current (parent) work package"
+      existing_child: "Existing child"
       child_description: "Makes the related work package a sub-item of the current (parent) work package"
       label_blocks_singular: "blocks"
       label_blocks_plural: "blocks"
@@ -744,6 +756,8 @@ sk:
       required_description: "Marks this work package as being a requirement to the related one"
       label_parent_singular: "parent"
       label_parent_plural: "parent"
+      ghost_relation_title: "Related work package"
+      ghost_relation_description: "This is not visible to you due to permissions."
   label_invitation: Pozvánka
   account:
     delete: "Vymazať účet"
@@ -808,6 +822,7 @@ sk:
         is_required: "Požadované"
         max_length: "Maximálna dĺžka"
         min_length: "Minimálna dĺžka"
+        content_right_to_left: "Right-to-Left content"
         multi_value: "Povoliť multi-select"
         possible_values: "Možné hodnoty"
         regexp: "Regulárny výraz"
@@ -843,6 +858,8 @@ sk:
         attr_lastname: "Priezvisko"
         attr_login: "Username attribute"
         attr_mail: "E-mail adresa"
+        filter_string: "Filter string"
+        admin: "Administrator"
         base_dn: "Base DN"
         host: "Host"
         onthefly: "Automatic user creation"
@@ -886,6 +903,9 @@ sk:
       project_custom_field:
         is_required: "Required for all projects"
         custom_field_section: Section
+      project/life_cycle_step_definition:
+        name: "Name"
+        color: "Color"
       query:
         column_names: "Stĺpce"
         relations_to_type_column: "Vzťahy k %{type}"
@@ -1225,6 +1245,10 @@ sk:
             from:
               error_not_found: "pracovný balíček v pozícii `z` nebol nájdený alebo nie je viditeľný"
               error_readonly: "prepojenie existujúceho vzťahu `z` sa nedá zmeniť"
+            lag:
+              greater_than_or_equal_to:
+                zero: "cannot be negative."
+              less_than_or_equal_to: "is too high."
         repository:
           not_available: "SCM dodávateľ nie je k dispozícii"
           not_whitelisted: "nie je povolené aktuálnou konfiguráciou."
@@ -1599,8 +1623,9 @@ sk:
   button_copy_and_follow: "Kopírovať a nasledovať"
   button_create: "Vytvoriť"
   button_create_and_continue: "Vytvoriť a pokračovať"
-  button_delete: "Odstrániť"
   button_decline: "Odmietnuť"
+  button_delete: "Odstrániť"
+  button_delete_permanently: "Delete permanently"
   button_delete_watcher: "Odobrať pozorovateľa %{name}"
   button_download: "Prevziať"
   button_duplicate: "Duplikovať"
@@ -1839,6 +1864,11 @@ sk:
         few: "hodín"
         many: "hodín"
         other: "hodín"
+      day:
+        one: "day"
+        few: "days"
+        many: "days"
+        other: "days"
   description_active: "Aktívny?"
   description_attachment_toggle: "Zobraziť / skryť prílohy"
   description_autocomplete: >
@@ -1874,6 +1904,10 @@ sk:
     upsale:
       title: "Enterprise add-on"
       link_title: "More information"
+      automatic_subject_generation:
+        description: "Create automatically generated subjects using referenced attributes and text."
+      customize_life_cycle:
+        description: "Create and organize different project stages and gates than the ones provided by PM2 project cycle planning."
       form_configuration:
         description: "Customize the form configuration with these additional add-ons:"
         add_groups: "Pridajte nové skupiny atribútov"
@@ -2156,8 +2190,6 @@ sk:
       api_and_webhooks: "API and webhooks"
     quick_add:
       label: "Open quick add menu"
-    breadcrumb:
-      nested_element: "%{section_header}: <b>%{title}</b>"
   my_account:
     access_tokens:
       no_results:
@@ -2238,6 +2270,7 @@ sk:
   label_add_subtask: "Pridať podúlohu"
   label_added: "pridané"
   label_added_by: "Added by %{author}"
+  label_added_by_on: "Added by %{author} on %{date}"
   label_added_time_by: "Pridal %{author} %{age} vzad"
   label_additional_workflow_transitions_for_assignee: "Povolené dodatočné prechody, pokiaľ je užívateľ priradený"
   label_additional_workflow_transitions_for_author: "Povolené dodatočné prechody, pokiaľ je užívateľ autorom"
@@ -2658,6 +2691,7 @@ sk:
   label_project_new: "Nový projekt"
   label_project_plural: "Projekty"
   label_project_list_plural: "Project lists"
+  label_project_lifecycle: "Project lifecycle"
   label_project_attributes_plural: "Project attributes"
   label_project_custom_field_plural: "Project attributes"
   label_project_settings: "Nastavenia projektu"
@@ -2684,6 +2718,7 @@ sk:
   label_relation: "Relation"
   label_relation_actions: "Relation actions"
   label_relation_delete: "Odstrániť vzťah"
+  label_relation_edit: "Edit relation"
   label_relation_new: "Nový vzťah"
   label_release_notes: "Zoznam zmien"
   label_remaining_work: "Remaining work"
@@ -3101,6 +3136,7 @@ sk:
   notice_bad_request: "Nesprávna požiadavka."
   notice_not_authorized: "Nemáte dostatočné oprávnenia na zobrazenie tejto stránky."
   notice_not_authorized_archived_project: "Projekt, ku ktorému sa snažíte pristupovať, bol archivovaný."
+  notice_requires_enterprise_token: "Enterprise token missing or doesn't allow access to this page."
   notice_password_confirmation_failed: "Heslo nie je správne. Nie je možné pokračovať."
   notice_principals_found_multiple: "Nájdených %{number} výsledkov. \nStlačte TAB pre prechod na prvý výsledok."
   notice_principals_found_single: "Bol nájdený jeden výsledok.\nStlačením tlačidla TAB zobraziť."
@@ -3151,7 +3187,7 @@ sk:
     text_getting_started_description: "Get a quick overview of project management and team collaboration with OpenProject. You can restart this video from the help menu."
     welcome: "Welcome to %{app_title}"
     select_language: "Prosím vyberte Váš jazyk"
-  permission_add_work_package_notes: "Pridať poznámky"
+  permission_add_work_package_notes: "Add comments"
   permission_add_work_packages: "Pridať pracovné balíky"
   permission_add_messages: "Publikovať správy"
   permission_add_project: "Create projects"
@@ -3181,10 +3217,11 @@ sk:
   permission_delete_timelines: "Odstrániť časové osy"
   permission_delete_wiki_pages: "Odstrániť wiki stránky"
   permission_delete_wiki_pages_attachments: "Odstrániť prílohy"
-  permission_edit_work_package_notes: "Upraviť poznámky"
+  permission_edit_work_package_notes: "Moderate comments"
+  permission_edit_work_package_notes_explanation: "Caution: Users with this permission are able to edit anyone's comment."
   permission_edit_work_packages: "Upraviť pracovné balíčky"
   permission_edit_messages: "Upraviť správy"
-  permission_edit_own_work_package_notes: "Upraviť vlastné poznámky"
+  permission_edit_own_work_package_notes: "Edit own comments"
   permission_edit_own_messages: "Úprava vlastných správ"
   permission_edit_own_time_entries: "Upraviť vlastné časové záznamy"
   permission_edit_project: "Upraviť projekt"
@@ -3277,9 +3314,9 @@ sk:
       are_you_sure: "Naozaj chcete archivovať projekt \"%{name}\"?"
       archived: "Archivované"
     count:
-      zero: "0 Projects"
-      one: "1 Project"
-      other: "%{count} Projects"
+      zero: "0 projects"
+      one: "1 project"
+      other: "%{count} projects"
   project_module_activity: "Činnosť"
   project_module_forums: "Diskusie"
   project_module_work_package_tracking: "Pracovné balíčky"
@@ -3413,6 +3450,7 @@ sk:
     activated: "activated"
     deactivated: "deactivated"
   search_input_placeholder: "Hľadať..."
+  setting_apiv3_cors_title: "Cross-Origin Resource Sharing (CORS)"
   setting_apiv3_cors_enabled: "Enable CORS"
   setting_apiv3_cors_origins: "API V3 Cross-Origin Resource Sharing (CORS) allowed origins"
   setting_apiv3_cors_origins_text_html: >
@@ -3638,6 +3676,27 @@ sk:
       new:
         heading: "New attribute"
         description: "Changes to this project attribute will be reflected in all projects where it is enabled. Required attributes cannot be disabled on a per-project basis."
+    project_life_cycle_step_definitions:
+      heading: "Project lifecycle"
+      heading_description: "The project lifecycle consists of stages and gates that structure your projects. They will appear in the overview page of a project and be available in the projects list. Individual stages and gates can be selected to customize a project but reordering is not possible on a project level."
+      label_add: "Add"
+      label_add_description: "Add lifecycle definition"
+      label_add_stage: "Stage"
+      label_add_gate: "Gate"
+      filter:
+        label: "Search project stage or gate"
+      section_header: "Stages and gates"
+      non_defined: "Neither stages nor gates are currently defined."
+      new:
+        description: "Changes to this project step will be reflected in all projects where it is enabled."
+      new_stage:
+        heading: "New stage"
+      new_gate:
+        heading: "New gate"
+      edit_stage:
+        heading: "Edit stage"
+      edit_gate:
+        heading: "Edit gate"
     projects:
       missing_dependencies: "Project module %{module} was checked which depends on %{dependencies}. You need to check these dependencies as well."
       section_new_projects: "Settings for new projects"
@@ -3671,6 +3730,7 @@ sk:
   text_are_you_sure_continue: "Are you sure you want to continue?"
   text_are_you_sure_with_children: "Zmazať pracovný balíček a všetky podradené pracovné balíčky?"
   text_are_you_sure_with_project_custom_fields: "Deleting this attribute will also delete its values in all projects. Are you sure you want to do this?"
+  text_are_you_sure_with_project_life_cycle_step: "Deleting this step will also delete its usages in all projects. Are you sure you want to do this?"
   text_assign_to_project: "Priradiť k projektu"
   text_form_configuration: >
     Môžete prispôsobiť, ktoré polia sa zobrazia vo formulári v pracovnom balíku. Môžete si voľne zoskupovať polia tak aby napĺňali potreby vašej domény.
@@ -3750,6 +3810,7 @@ sk:
   text_notice_security_badge_displayed_html: >
     Poznámka: Ak je táto možnosť povolená, zobrazí sa v štýle <a href="%{information_panel_path}">%{information_panel_label}</a> na panely správcu, a na domovskej stránke. Zobrazuje sa iba administrátorom. <br/> Znak skontroluje vašu aktuálnu verziu OpenProject s oficiálnou verziu databázy OpenProject, ktorá vás upozorní na akékoľvek aktualizácie alebo známe chyby. Ďalšie informácie o tom, čo daná kontrola poskytuje, aké údaje sú potrebné na poskytovanie dostupných aktualizácií a ako zakázať túto kontrolu, prosím navštívte <a href="%{more_info_url}">dokumentáciu konfigurácie</a>.
   text_own_membership_delete_confirmation: "Chystáte sa odstrániť jedno respektíve viac vašich povolení, pričom po aplikovaní zmien môžte stratiť možnosť naďalej upravovať nastavenia projektu. Naozaj chcete pokračovať?"
+  text_permanent_delete_confirmation_checkbox_label: "I understand that this deletion cannot be reversed"
   text_plugin_assets_writable: "Povolený zápis do priečinka pre pluginy"
   text_powered_by: "Powered by %{link}"
   text_project_identifier_info: "Sú povolené len malé písmená (a-z), čísla, pomlčky a podčiarkovníky, hodnota musí začínať malým písmenom."
@@ -4120,6 +4181,8 @@ sk:
       builtin: Built-in instance application
       confidential: Confidential
       singular: "OAuth aplikácia"
+      scopes: "Scopes"
+      client_credentials: "Client credentials"
       plural: "OAuth aplikácie"
       named: "OAuth aplikácia '%{name}'"
       new: "Nová aplikácia OAuth"

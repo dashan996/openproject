@@ -61,9 +61,6 @@ import {
 import {
   PlainFormattableEditFieldComponent,
 } from 'core-app/shared/components/fields/edit/field-types/plain-formattable-edit-field.component';
-import {
-  TimeEntryWorkPackageEditFieldComponent,
-} from 'core-app/shared/components/fields/edit/field-types/te-work-package-edit-field.component';
 import { AttributeValueMacroComponent } from 'core-app/shared/components/fields/macros/attribute-value-macro.component';
 import { AttributeLabelMacroComponent } from 'core-app/shared/components/fields/macros/attribute-label-macro.component';
 import {
@@ -98,7 +95,9 @@ import { ProjectEditFieldComponent } from './edit/field-types/project-edit-field
 import {
   HoursDurationEditFieldComponent,
 } from 'core-app/shared/components/fields/edit/field-types/hours-duration-edit-field.component';
-import { ProgressPopoverEditFieldComponent } from 'core-app/shared/components/fields/edit/field-types/progress-popover-edit-field.component';
+import {
+  ProgressPopoverEditFieldComponent,
+} from 'core-app/shared/components/fields/edit/field-types/progress-popover-edit-field.component';
 import { OpExclusionInfoComponent } from 'core-app/shared/components/fields/display/info/op-exclusion-info.component';
 import { UserEditFieldComponent } from './edit/field-types/user-edit-field.component';
 import {
@@ -162,7 +161,6 @@ import { FormsModule } from '@angular/forms';
     ProjectEditFieldComponent,
     UserEditFieldComponent,
     WorkPackageEditFieldComponent,
-    TimeEntryWorkPackageEditFieldComponent,
     EditFormComponent,
     DisplayFieldComponent,
     EditableAttributeFieldComponent,

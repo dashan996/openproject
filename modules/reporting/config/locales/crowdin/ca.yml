@@ -45,6 +45,8 @@ ca:
   label_greater: ">"
   label_is_not_project_with_subprojects: "no és (inclou subprojectes)"
   label_is_project_with_subprojects: "és (inclou subprojectes)"
+  label_is_work_package_with_descendants: "is (includes descendants)"
+  label_is_not_work_package_with_descendants: "is not (includes descendants)"
   label_work_package_attributes: "Atributs del paquet de treball"
   label_less: "<"
   label_logged_by_reporting: "Registrat per"
@@ -91,8 +93,11 @@ ca:
       button: "Export PDF timesheet"
       timesheet: "Timesheet"
       time: "Time"
+      sum_hours: Sum
     cost_reports:
       title: "La teva exportació de l'informe de costos XLS"
+      start_time: "Start time"
+      end_time: "End time"
   reporting:
     group_by:
       selected_columns: "Columnes seleccionades"

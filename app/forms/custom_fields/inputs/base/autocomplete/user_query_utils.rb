@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -51,10 +53,17 @@ module CustomFields::Inputs::Base::Autocomplete::UserQueryUtils
   end
 
   def filters
-    [
+    filters = [
       { name: "type", operator: "=", values: ["User", "Group", "PlaceholderUser"] },
-      { name: "member", operator: "=", values: [@object.id.to_s] },
       { name: "status", operator: "!", values: [Principal.statuses["locked"].to_s] }
     ]
+
+    if @object.is_a?(Project)
+      filters << { name: "member", operator: "=", values: [@object.id.to_s] }
+    elsif @object.respond_to?(:project_id)
+      filters << { name: "member", operator: "=", values: [@object.project_id.to_s] }
+    end
+
+    filters
   end
 end

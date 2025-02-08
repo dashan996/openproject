@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -99,9 +101,6 @@ class CostlogController < ApplicationController
     if params[:id]
       @cost_entry = CostEntry.find(params[:id])
       @project = @cost_entry.project
-    elsif params[:work_package_id]
-      @work_package = WorkPackage.find(params[:work_package_id])
-      @project = @work_package.project
     elsif params[:work_package_id]
       @work_package = WorkPackage.find(params[:work_package_id])
       @project = @work_package.project

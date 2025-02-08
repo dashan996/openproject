@@ -89,9 +89,6 @@ import {
   WorkPackageReplacementLabelComponent,
 } from 'core-app/features/work-packages/components/wp-edit/wp-edit-field/wp-replacement-label.component';
 import {
-  NewestActivityOnOverviewComponent,
-} from 'core-app/features/work-packages/components/wp-single-view-tabs/activity-panel/activity-on-overview.component';
-import {
   WorkPackageActivityTabComponent,
 } from 'core-app/features/work-packages/components/wp-single-view-tabs/activity-panel/activity-tab.component';
 import { OpenprojectAttachmentsModule } from 'core-app/shared/components/attachments/openproject-attachments.module';
@@ -294,22 +291,13 @@ import {
 } from 'core-app/features/work-packages/components/wp-breadcrumb/wp-breadcrumb.component';
 import { UserLinkComponent } from 'core-app/shared/components/user-link/user-link.component';
 import {
-  WorkPackageCommentComponent,
-} from 'core-app/features/work-packages/components/work-package-comment/work-package-comment.component';
-import {
   WorkPackageWatcherButtonComponent,
 } from 'core-app/features/work-packages/components/wp-watcher-button/wp-watcher-button.component';
-import {
-  WorkPackageCommentFieldComponent,
-} from 'core-app/features/work-packages/components/work-package-comment/wp-comment-field.component';
 import { WpResizerDirective } from 'core-app/shared/components/resizer/resizer/wp-resizer.component';
 import {
   GroupDescriptor,
   WorkPackageSingleViewComponent,
 } from 'core-app/features/work-packages/components/wp-single-view/wp-single-view.component';
-import {
-  RevisionActivityComponent,
-} from 'core-app/features/work-packages/components/wp-activity/revision/revision-activity.component';
 import {
   WorkPackageCopySplitViewComponent,
 } from 'core-app/features/work-packages/components/wp-copy/wp-copy-split-view.component';
@@ -317,13 +305,6 @@ import {
   WorkPackageFormAttributeGroupComponent,
 } from 'core-app/features/work-packages/components/wp-form-group/wp-attribute-group.component';
 import { WorkPackagesGridComponent } from 'core-app/features/work-packages/components/wp-grid/wp-grid.component';
-import {
-  ActivityEntryComponent,
-} from 'core-app/features/work-packages/components/wp-activity/activity-entry.component';
-import { ActivityLinkComponent } from 'core-app/features/work-packages/components/wp-activity/activity-link.component';
-import {
-  UserActivityComponent,
-} from 'core-app/features/work-packages/components/wp-activity/user/user-activity.component';
 import {
   WorkPackageSplitViewToolbarComponent,
 } from 'core-app/features/work-packages/components/wp-details/wp-details-toolbar.component';
@@ -585,13 +566,6 @@ import {
     WorkPackageTimerButtonComponent,
 
     // Activity Tab
-    NewestActivityOnOverviewComponent,
-    WorkPackageCommentComponent,
-    WorkPackageCommentFieldComponent,
-    ActivityEntryComponent,
-    UserActivityComponent,
-    RevisionActivityComponent,
-    ActivityLinkComponent,
     WorkPackageActivityTabComponent,
 
     // Watchers wp-tab-wrapper

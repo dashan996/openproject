@@ -41,6 +41,16 @@ The system requirements can be found [here](../installation-and-operations/syste
 
 Apart from using OpenProject in the cloud (OpenProject Enterprise cloud) OpenProject can be installed in two different ways: The packaged installation of OpenProject is the recommended way to install and maintain OpenProject using DEB or RPM packages. There's also a Docker based installation option.
 
+### Does OpenProject provide software releases with Long Term Support (LTS)?
+
+The OpenProject team does **not** provide Long Term Support. The main reasons are:
+
+- Backporting to older releases creates high  development, quality assurance, and support costs. This time is better  invested in building software releases that solve problems.
+- Supporting parallel versions discourages incremental  upgrades, which over time accumulate complexity and create upgrade  challenges for all users. The goal of the OpenProject team is to make  incremental upgrades (and installations) as simple as possible.
+- Even though OpenProject invests heavily in test  automation, those automated tests cannot avoid all regressions when  backporting bug fixes. This results in significant additional effort for the development and QA teams.
+
+OpenProject provides free hosting as part of its  Cloud edition. With the Cloud edition, admins do not need to worry about software upgrades.
+
 ### How can I learn more about OpenProject?
 
 Here are resources to get to know OpenProject:

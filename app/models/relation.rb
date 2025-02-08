@@ -51,20 +51,13 @@ class Relation < ApplicationRecord
     TYPE_RELATES => {
       name: :label_relates_to, sym_name: :label_relates_to, order: 1, sym: TYPE_RELATES
     },
-    TYPE_PRECEDES => {
-      name: :label_precedes, sym_name: :label_follows, order: 6,
-      sym: TYPE_FOLLOWS, reverse: TYPE_FOLLOWS
-    },
     TYPE_FOLLOWS => {
       name: :label_follows, sym_name: :label_precedes, order: 7,
       sym: TYPE_PRECEDES
     },
-    TYPE_BLOCKS => {
-      name: :label_blocks, sym_name: :label_blocked_by, order: 4, sym: TYPE_BLOCKED
-    },
-    TYPE_BLOCKED => {
-      name: :label_blocked_by, sym_name: :label_blocks, order: 5,
-      sym: TYPE_BLOCKS, reverse: TYPE_BLOCKS
+    TYPE_PRECEDES => {
+      name: :label_precedes, sym_name: :label_follows, order: 6,
+      sym: TYPE_FOLLOWS, reverse: TYPE_FOLLOWS
     },
     TYPE_DUPLICATES => {
       name: :label_duplicates, sym_name: :label_duplicated_by, order: 6, sym: TYPE_DUPLICATED
@@ -72,6 +65,13 @@ class Relation < ApplicationRecord
     TYPE_DUPLICATED => {
       name: :label_duplicated_by, sym_name: :label_duplicates, order: 7,
       sym: TYPE_DUPLICATES, reverse: TYPE_DUPLICATES
+    },
+    TYPE_BLOCKS => {
+      name: :label_blocks, sym_name: :label_blocked_by, order: 4, sym: TYPE_BLOCKED
+    },
+    TYPE_BLOCKED => {
+      name: :label_blocked_by, sym_name: :label_blocks, order: 5,
+      sym: TYPE_BLOCKS, reverse: TYPE_BLOCKS
     },
     TYPE_INCLUDES => {
       name: :label_includes, sym_name: :label_part_of, order: 8,
@@ -103,7 +103,11 @@ class Relation < ApplicationRecord
   scope :follows_with_lag,
         -> { follows.where("lag > 0") }
 
-  validates :lag, numericality: { allow_nil: true }
+  validates :lag, numericality: {
+    allow_nil: true,
+    less_than_or_equal_to: 2_147_483_647,
+    greater_than_or_equal_to: 0
+  }
 
   validates :to, uniqueness: { scope: :from }
 

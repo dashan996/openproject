@@ -9,7 +9,7 @@ cs:
     label_bcf: 'BCF'
     label_imported_failed: 'Selhalo importování témat BCF'
     label_imported_successfully: 'Importovaná témata BCF úspěšně'
-    label_bcf_issue_associated: "BCF issue associated"
+    label_bcf_issue_associated: "BCF úkol je přidružen"
     issues: "Problémy"
     recommended: 'doporučeno'
     not_recommended: 'nedoporučeno'

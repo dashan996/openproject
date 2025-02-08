@@ -64,6 +64,10 @@ class TimeEntryActivity < Enumeration
     Project.activated_time_activity(self)
   end
 
+  def self.can_have_default_value?
+    false
+  end
+
   private
 
   def detect_project_time_entry_activity_active_state(project)

@@ -21,7 +21,11 @@
           form: FORM_ID,
           data: { turbo: true },
           type: :submit)) do
-          t(:button_save)
+          if @relation.id.present?
+            t(:button_save)
+          else
+            t(:button_add)
+          end
         end
       end
     end

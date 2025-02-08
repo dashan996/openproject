@@ -38,7 +38,10 @@ require_module_spec_helper
 # We decrease the notification polling interval because some portions of the JS code rely on something triggering
 # the Angular change detection. This is usually done by the notification polling, but we don't want to wait
 RSpec.describe("Activation of storages in projects",
-               :js, :oauth_connection_helpers, :storage_server_helpers, :webmock, :with_cuprite,
+               :js,
+               :oauth_connection_helpers,
+               :storage_server_helpers,
+               :webmock,
                with_settings: { notifications_polling_interval: 1_000 }) do
   let(:user) { create(:user) }
   # The first page is the Project -> Settings -> General page, so we need

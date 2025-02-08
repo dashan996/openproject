@@ -29,6 +29,9 @@
 # Ensure the page is completely loaded before the spec is run.
 # The status filter is loaded very late in the page setup.
 RSpec.shared_context "ensure wp details pane update done" do
+  let(:activity_tab) { Components::WorkPackages::Activities.new(work_package) }
+  let(:abstract_work_package_page) { Pages::AbstractWorkPackage.new(work_package) }
+
   after do
     unless update_user
       raise "Expect to have a let called 'update_user' defining which user \
@@ -37,7 +40,7 @@ RSpec.shared_context "ensure wp details pane update done" do
 
     # safeguard to ensure all backend queries
     # have been answered before starting a new spec
-    expect(page).to have_css(".op-user-activity--user-name",
-                             text: update_user.name)
+    abstract_work_package_page.switch_to_tab tab: :activity
+    activity_tab.expect_journal_details_header(text: update_user.name)
   end
 end

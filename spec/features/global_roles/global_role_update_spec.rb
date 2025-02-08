@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Role updating", :js, :with_cuprite do
+RSpec.describe "Role updating", :js do
   let!(:admin) { create(:admin) }
 
   before do

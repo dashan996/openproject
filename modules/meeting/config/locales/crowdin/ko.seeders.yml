@@ -7,9 +7,9 @@ ko:
     standard:
       projects:
         demo-project:
-          meetings:
+          meeting_series:
             item_0:
-              title: 매주
+              title: Weekly
           meeting_agenda_items:
             item_0:
               title: 반가운 소식

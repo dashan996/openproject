@@ -33,9 +33,9 @@ import { I18nService } from 'core-app/core/i18n/i18n.service';
 import { imagePath } from 'core-app/shared/helpers/images/path-helper';
 
 // The key used in the I18n files to distinguish between versions.
-const OpVersionI18n = '15_1';
+const OpVersionI18n = '15_2';
 
-const OpReleaseURL = 'https://www.openproject.org/docs/release-notes/15-1-0/';
+const OpReleaseURL = 'https://www.openproject.org/docs/release-notes';
 
 /** Update the teaser image to the next version */
 const featureTeaserImage = `${OpVersionI18n}_features.svg`;

@@ -23,7 +23,7 @@ import { splitViewRoute } from 'core-app/features/work-packages/routing/split-vi
 import { WpDestroyModalComponent } from 'core-app/shared/components/modals/wp-destroy-modal/wp-destroy.modal';
 import isNewResource from 'core-app/features/hal/helpers/is-new-resource';
 import { PathHelperService } from 'core-app/core/path-helper/path-helper.service';
-import * as moment from 'moment-timezone';
+import { TurboRequestsService } from 'core-app/core/turbo/turbo-requests.service';
 
 export class WorkPackageViewContextMenu extends OpContextMenuHandler {
   @InjectField() protected states!:States;
@@ -41,6 +41,8 @@ export class WorkPackageViewContextMenu extends OpContextMenuHandler {
   @InjectField() protected timeEntryCreateService:TimeEntryCreateService;
 
   @InjectField() protected pathHelper:PathHelperService;
+
+  @InjectField() protected turboRequests:TurboRequestsService;
 
   protected workPackage = this.states.workPackages.get(this.workPackageId).value!;
 
@@ -160,11 +162,7 @@ export class WorkPackageViewContextMenu extends OpContextMenuHandler {
   }
 
   private logTimeForSelectedWorkPackage() {
-    this.timeEntryCreateService
-      .create(moment(new Date()), this.workPackage)
-      .catch(() => {
-        // do nothing, the user closed without changes
-      });
+    void this.turboRequests.request(this.pathHelper.timeEntryWorkPackageDialog(this.workPackage.id as string), { method: 'GET' });
   }
 
   private getSelectedWorkPackages() {
@@ -183,7 +181,7 @@ export class WorkPackageViewContextMenu extends OpContextMenuHandler {
 
   protected buildItems():OpContextMenuItem[] {
     const items = this.permittedActions.map((action:WorkPackageAction) => ({
-      class: undefined as string|undefined,
+      class: undefined as string | undefined,
       disabled: false,
       linkText: action.text,
       href: action.href,

@@ -43,6 +43,7 @@ RSpec.describe "users/edit" do
       build(:user, id: 1, # id is required to create route to edit
                    identity_url: "test_provider:veryuniqueid")
     end
+    let!(:provider) { create(:oidc_provider, slug: "test_provider", display_name: "The Test Provider") }
 
     before do
       assign(:user, user)
@@ -56,7 +57,7 @@ RSpec.describe "users/edit" do
     it "shows the authentication provider" do
       render
 
-      expect(rendered).to include("Test Provider")
+      expect(rendered).to include("The Test Provider")
     end
 
     it "does not show a no-login warning when password login is disabled" do

@@ -6,10 +6,12 @@ zh-TW:
     attributes:
       ldap_groups/synchronized_group:
         dn: '識別名稱（DN）'
+        auth_source: '驗證來源'
         ldap_auth_source: 'LDAP 連線'
         sync_users: '同步使用者'
       ldap_groups/synchronized_filter:
         filter_string: '簡約登入目錄制約(LDAP)篩選'
+        auth_source: '驗證來源'
         ldap_auth_source: 'LDAP 連線'
         group_name_attribute: "群組名字屬性"
         sync_users: '同步使用者'

@@ -38,5 +38,5 @@ See COPYRIGHT and LICENSE files for more details.
 
 <% Enumeration.subclasses.each do |klass| %>
   <h3 class="-no-border"><%= t(klass::OptionName) %></h3>
-  <%= render(::Enumerations::TableComponent.new(rows: klass.shared)) %>
+  <%= render(::Enumerations::TableComponent.new(rows: klass.shared, enumeration: klass)) %>
 <% end %>

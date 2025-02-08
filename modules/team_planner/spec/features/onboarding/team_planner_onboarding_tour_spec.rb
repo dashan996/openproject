@@ -31,7 +31,7 @@ require_relative "../../support/onboarding/onboarding_steps"
 
 RSpec.describe "team planner onboarding tour",
                :js,
-               with_cuprite: false,
+               :selenium,
                with_ee: %i[team_planner_view],
                # We decrease the notification polling interval because some portions
                # of the JS code rely on something triggering the Angular change detection.

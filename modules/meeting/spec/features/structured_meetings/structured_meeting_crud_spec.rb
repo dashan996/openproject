@@ -33,9 +33,7 @@ require_relative "../../support/pages/structured_meeting/show"
 require_relative "../../support/pages/meetings/index"
 
 RSpec.describe "Structured meetings CRUD",
-               :js,
-               :with_cuprite,
-               with_flag: { recurring_meetings: true } do
+               :js do
   include Components::Autocompleter::NgSelectAutocompleteHelpers
 
   shared_let(:project) { create(:project, enabled_module_names: %w[meetings work_package_tracking]) }
@@ -211,13 +209,16 @@ RSpec.describe "Structured meetings CRUD",
   end
 
   it "can delete a meeting and get back to the index page" do
-    click_on("op-meetings-header-action-trigger")
+    show_page.trigger_dropdown_menu_item "Delete meeting"
+    show_page.expect_modal "Delete meeting"
 
-    accept_confirm(I18n.t("text_are_you_sure")) do
-      click_on "Delete meeting"
+    show_page.within_modal "Delete meeting" do
+      click_on "Delete"
     end
 
     expect(page).to have_current_path project_meetings_path(project)
+
+    expect_flash(type: :success, message: "Successful deletion.")
   end
 
   context "when exporting as ICS" do
@@ -317,7 +318,7 @@ RSpec.describe "Structured meetings CRUD",
 
     # check for copied participants with attended status reset
     page.find_test_selector("manage-participants-button").click
-    expect(page).to have_css("#edit-participants-dialog")
+    expect(page).to have_modal("Participants")
     expect(page).to have_field(id: "checkbox_invited_#{other_user.id}", checked: true)
     expect(page).to have_field(id: "checkbox_attended_#{other_user.id}", checked: false)
 

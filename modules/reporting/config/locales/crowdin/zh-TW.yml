@@ -45,6 +45,8 @@ zh-TW:
   label_greater: ">"
   label_is_not_project_with_subprojects: "不是 (包括子專案)"
   label_is_project_with_subprojects: "是 (包括子專案)"
+  label_is_work_package_with_descendants: "是（包括繼任）"
+  label_is_not_work_package_with_descendants: "不是（包括繼任）"
   label_work_package_attributes: "工作項目屬性"
   label_less: "<"
   label_logged_by_reporting: "記錄者"
@@ -91,8 +93,11 @@ zh-TW:
       button: "匯出 PDF 時間表"
       timesheet: "時間表"
       time: "時間"
+      sum_hours: 總和
     cost_reports:
       title: "您的成本報表(以XLS匯出)"
+      start_time: "開始時間"
+      end_time: "結束時間"
   reporting:
     group_by:
       selected_columns: "選擇列"

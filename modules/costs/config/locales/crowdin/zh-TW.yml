@@ -33,6 +33,7 @@ zh-TW:
       cost_type:
         unit: "單位名稱"
         unit_plural: "單位名稱(複數)"
+        default: "預設成本類型"
       work_package:
         costs_by_type: "支出單位"
         labor_costs: "工資"
@@ -44,12 +45,24 @@ zh-TW:
         rate: "費率"
       user:
         default_rates: "預設費率"
+      time_entry:
+        project: 專案
+        user: 使用者
+        work_package: 工作項目
+        hours: 小時
+        comments: 留言
+        activity: 活動
+        spent_on: 日期
+        start_time: 開始時間
+        end_time: 完成時間
     models:
       cost_type:
         other: "費用類別"
       rate: "費率"
     errors:
       models:
+        time_entry:
+          invalid_time: "必須在 00:00 到 23:59 之間。"
         work_package:
           is_not_a_valid_target_for_cost_entries: "工作項目 #%{id} 不是重新分配支出的有效目標"
           nullify_is_not_valid_for_cost_entries: "支出項目無法分配至專案"
@@ -64,6 +77,7 @@ zh-TW:
     fixed_date: "固定日期"
   button_add_rate: "新增費率"
   button_log_costs: "紀錄單位成本"
+  button_log_time: "日誌"
   caption_booked_on_project: "已記錄在專案上"
   caption_default: "預設"
   caption_default_rate_history_for: "%{user} 的費率歷史記錄"
@@ -75,6 +89,7 @@ zh-TW:
   caption_save_rate: "保存費率"
   caption_set_rate: "設定當前費率"
   caption_show_locked: "顯示鎖定類型"
+  caption_log_time_dialog: "日誌時間"
   description_date_for_new_rate: "新費率的日期"
   group_by_others: "不在任何群組中"
   label_between: "介於"
@@ -114,10 +129,12 @@ zh-TW:
   label_until: "到"
   label_valid_from: "有效期從"
   label_yes: "是"
+  placeholder_activity_select_work_package_first: 需要先選擇工作項目
   notice_something_wrong: "發生錯誤，請重試。"
   notice_successful_restore: "復原成功。"
   notice_successful_lock: "停用成功。"
   notice_cost_logged_successfully: "單位成本紀錄成功。"
+  notice_different_time_zones: "此使用者使用不同的時區 (%{tz})。將使用他們的時區記錄時間。"
   permission_edit_cost_entries: "編輯自己紀錄的單位成本"
   permission_edit_own_cost_entries: "編輯自己紀錄的單位成本"
   permission_edit_hourly_rates: "編輯小時費率"
@@ -145,3 +162,7 @@ zh-TW:
   week: "週"
   js:
     text_are_you_sure: "是否確定？"
+  api_v3:
+    errors:
+      validation:
+        start_time_different_date: "startTime (%{start_time}) 的日期部分必須與 spentOn (%{spent_on}) 的日期相同。"

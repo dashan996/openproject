@@ -1,4 +1,4 @@
-ARG RUBY_VERSION="3.3.4"
+ARG RUBY_VERSION="3.4.1"
 FROM ruby:${RUBY_VERSION}-bookworm AS base
 LABEL maintainer="operations@openproject.com"
 
@@ -58,15 +58,8 @@ COPY vendor ./vendor
 # Add lib in case a plugin tries to load VERSION file under lib
 COPY lib ./lib
 
-RUN \
-  bundle config set --local path 'vendor/bundle' && \
-  bundle config set --local without 'test development' && \
-  bundle install --quiet --no-cache --jobs=8 --retry=3 && \
-  bundle config set deployment 'true' && \
-  cp Gemfile.lock Gemfile.lock.bak && \
-  rm -rf vendor/bundle/ruby/*/cache && \
-  rm -rf vendor/bundle/ruby/*/gems/*/spec && \
-  rm -rf vendor/bundle/ruby/*/gems/*/test
+COPY ./docker/prod/setup/bundle-install.sh ./vendor/bundle* ./vendor/
+RUN bash vendor/bundle-install.sh && rm vendor/bundle-install.sh
 
 COPY . .
 

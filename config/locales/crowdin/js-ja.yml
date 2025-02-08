@@ -358,10 +358,10 @@ ja:
           learn_about: "新機能の詳細はこちら"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_1":
+          "15_2":
             standard:
               new_features_html: >
-                The release brings various features and improvements for you, e.g. <br> <ul class="%{list_styling_class}"> <li>Custom fields of type hierarchy (Enterprise add-on).</li> <li>Redesign of the Relations tab in work packages.</li> <li>Redesign of the Meetings index page.</li> <li>Manual page breaks in PDF work package exports.</li> <li>Zen mode for project lists.</li> </ul>
+                このリリースでは、様々な機能や改善が提供されます。例：<br> <ul class="%{list_styling_class}"> <li>作業パッケージのリマインダーを設定し、日付アラート通知を生成。</li> <li>ファイル保存のために、ロケーションピッカーから直接新しいフォルダを作成。</li> <li>ワークパッケージの後継者と前任者間の必要なタイムラグを指定。</li> <li>カスタムフィールドタイプの階層の値でワークパッケージの順序付けとグループ化を有効にする。</li> <li>時間エントリをPDFタイムシートとしてエクスポート。</li> <li>ホバー時にユーザー情報を表示するポップオーバーを追加。</li> </ul>
     ical_sharing_modal:
       title: "Subscribe to calendar"
       inital_setup_error_message: "An error occured while fetching data."
@@ -626,11 +626,11 @@ ja:
       date_alerts:
         milestone_date: "Milestone date"
         overdue: "Overdue"
-        overdue_since: "since %{difference_in_days}"
-        property_today: "is today"
-        property_is: "is in %{difference_in_days}"
-        property_was: "was %{difference_in_days} ago"
-        property_is_deleted: "is deleted"
+        overdue_since: "%{difference_in_days}以降。"
+        property_today: "は今日です。"
+        property_is: "は%{difference_in_days}後。"
+        property_was: "は、 %{difference_in_days} 前です。"
+        property_is_deleted: "は削除されました。"
         upsale:
           title: "Date alerts"
           description: "With date alerts, you will be notified of upcoming start or finish dates so that you never miss or forget an important deadline."
@@ -1054,7 +1054,7 @@ ja:
         is_switched_from_manual_to_automatic: "他のワークパッケージとの関連により、手動スケジューリングから自動スケジューリングに切り替えた後に、このワークパッケージの日付を再計算する必要がある場合があります。"
       sharing:
         title: "Share work package"
-        show_all_users: "Show all users with whom the work package has been shared with"
+        show_all_users: "ワークパッケージが共有されたすべてのユーザーを表示"
         upsale:
           description: "Share work packages with users who are not members of the project."
       table:
@@ -1345,7 +1345,7 @@ ja:
         close: "Close modal"
     open_project_storage_modal:
       waiting_title:
-        timeout: "Timeout"
+        timeout: "タイムアウト"
       waiting_subtitle:
         network_off: "There is a network problem."
         network_on: "Network is back. We are trying."

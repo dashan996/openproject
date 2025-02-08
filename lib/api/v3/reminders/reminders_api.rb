@@ -32,7 +32,7 @@ module API
       class RemindersAPI < ::API::OpenProjectAPI
         resource :reminders do
           after_validation do
-            authorize_in_project(:manage_own_reminders, project: @work_package.project)
+            authorize_in_project(:view_work_packages, project: @work_package.project)
           end
 
           get do

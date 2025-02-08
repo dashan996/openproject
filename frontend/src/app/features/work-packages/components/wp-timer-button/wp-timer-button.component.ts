@@ -28,11 +28,13 @@
 
 import { WorkPackageResource } from 'core-app/features/hal/resources/work-package-resource';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   Injector,
   Input,
+  OnDestroy,
 } from '@angular/core';
 import { I18nService } from 'core-app/core/i18n/i18n.service';
 import { UntilDestroyedMixin } from 'core-app/shared/helpers/angular/until-destroyed.mixin';
@@ -58,16 +60,20 @@ import { TimeEntryTimerService } from 'core-app/shared/components/time_entries/s
 import { formatElapsedTime } from 'core-app/features/work-packages/components/wp-timer-button/time-formatter.helper';
 import { OpModalService } from 'core-app/shared/components/modal/modal.service';
 import { StopExistingTimerModalComponent } from 'core-app/shared/components/time_entries/timer/stop-existing-timer-modal.component';
-import { TimeEntryEditService } from 'core-app/shared/components/time_entries/edit/edit.service';
 import { ToastService } from 'core-app/shared/components/toaster/toast.service';
+import { InjectField } from 'core-app/shared/helpers/angular/inject-field.decorator';
+import { PathHelperService } from 'core-app/core/path-helper/path-helper.service';
+import { TurboRequestsService } from 'core-app/core/turbo/turbo-requests.service';
 
 @Component({
   selector: 'op-wp-timer-button',
   templateUrl: './wp-timer-button.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WorkPackageTimerButtonComponent extends UntilDestroyedMixin {
+export class WorkPackageTimerButtonComponent extends UntilDestroyedMixin implements AfterViewInit, OnDestroy {
   @Input() public workPackage:WorkPackageResource;
+  @InjectField() PathHelper:PathHelperService;
+  @InjectField() TurboRequests:TurboRequestsService;
 
   timer$ = this.timeEntryService.activeTimer$;
 
@@ -85,12 +91,14 @@ export class WorkPackageTimerButtonComponent extends UntilDestroyedMixin {
     timer_already_stopped: this.I18n.t('js.timer.timer_already_stopped'),
   };
 
+  private closeDialogHandler:EventListener = this.handleTimeEntryDialogClose.bind(this);
+  private shouldStartNewTimer = false;
+
   constructor(
     readonly injector:Injector,
     readonly I18n:I18nService,
     readonly apiV3Service:ApiV3Service,
     readonly timeEntryService:TimeEntryTimerService,
-    readonly timeEntryEditService:TimeEntryEditService,
     readonly timeEntryCreateService:TimeEntryCreateService,
     readonly halEditing:HalResourceEditingService,
     readonly modalService:OpModalService,
@@ -102,7 +110,15 @@ export class WorkPackageTimerButtonComponent extends UntilDestroyedMixin {
     super();
   }
 
-  activeForWorkPackage(entry:TimeEntryResource|null):boolean {
+  ngAfterViewInit():void {
+    document.addEventListener('dialog:close', this.closeDialogHandler);
+  }
+
+  ngOnDestroy():void {
+    document.removeEventListener('dialog:close', this.closeDialogHandler);
+  }
+
+  activeForWorkPackage(entry:TimeEntryResource | null):boolean {
     return !!entry && entry.workPackage.href === this.workPackage.href;
   }
 
@@ -110,13 +126,17 @@ export class WorkPackageTimerButtonComponent extends UntilDestroyedMixin {
     this.timeEntryService.timer$.next(null);
   }
 
-  async stop():Promise<unknown> {
+  async stop() {
     const active = await firstValueFrom(this.timeEntryService.refresh());
+
     if (!active) {
       return this.toastService.addWarning(this.text.timer_already_stopped);
     }
 
-    return this.timeEntryEditService.stopTimerAndEdit(active);
+    return this.TurboRequests.request(
+      `${this.PathHelper.timeEntryEditDialog(active.id as string)}`,
+      { method: 'GET' },
+    );
   }
 
   start():void {
@@ -126,7 +146,10 @@ export class WorkPackageTimerButtonComponent extends UntilDestroyedMixin {
       .subscribe((active) => {
         if (active) {
           this.showStopModal(active)
-            .then(() => this.stop().then(() => this.startTimer()))
+            .then(() => {
+              this.shouldStartNewTimer = true;
+              void this.stop();
+            })
             .catch(() => undefined);
         } else {
           this.startTimer();
@@ -159,5 +182,18 @@ export class WorkPackageTimerButtonComponent extends UntilDestroyedMixin {
           }
         }));
     });
+  }
+
+  private handleTimeEntryDialogClose(event:CustomEvent):void {
+    const { detail: { dialog, submitted } } = event as { detail:{ dialog:HTMLDialogElement, submitted:boolean } };
+    const isOngoing = dialog.dataset.ongoing === 'true';
+
+    if (dialog.id === 'time-entry-dialog' && submitted && isOngoing) {
+      this.timeEntryService.timer$.next(null);
+      if (this.shouldStartNewTimer) {
+        this.shouldStartNewTimer = false;
+        this.startTimer();
+      }
+    }
   }
 }

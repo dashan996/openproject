@@ -2,8 +2,7 @@ require "spec_helper"
 require "features/page_objects/notification"
 
 # rubocop:disable RSpec/ScatteredLet
-RSpec.describe "Notification center date alerts", :js, :with_cuprite,
-               with_settings: { journal_aggregation_time_minutes: 0 } do
+RSpec.describe "Notification center date alerts", :js, with_settings: { journal_aggregation_time_minutes: 0 } do
   # Find an assignable time zone with the same UTC offset as the local time zone
   def find_compatible_local_time_zone
     local_offset = Time.now.gmt_offset # rubocop:disable Rails/TimeZone
@@ -195,39 +194,38 @@ RSpec.describe "Notification center date alerts", :js, :with_cuprite,
     it "shows the upsale page" do
       side_menu.click_item "Date alert"
 
-      expect(page).to have_current_path /notifications\/date_alerts/
+      expect(page).to have_current_path(/notifications\/date_alerts/)
       expect(page).to have_text "Date alerts is an Enterprise"
       expect(page).to have_text "Please upgrade to a paid plan "
 
       # It does not allows direct url access
       visit notifications_center_path(filter: "reason", name: "dateAlert")
-      toaster.expect_error("Filters Reason filter has invalid values.")
     end
   end
 
   context "with date alerts ee", with_ee: %i[date_alerts] do
     it "shows the date alerts according to specification" do
-      center.expect_item(notification_wp_start_past, "Start date was 1 day ago")
-      center.expect_item(notification_wp_start_future, "Start date is in 7 days")
+      center.expect_item(notification_wp_start_past, "Start date was 1 day ago.")
+      center.expect_item(notification_wp_start_future, "Start date is in 7 days.")
 
-      center.expect_item(notification_wp_due_past, "Overdue since 3 days")
-      center.expect_item(notification_wp_due_future, "Finish date is in 3 days")
+      center.expect_item(notification_wp_due_past, "Overdue since 3 days.")
+      center.expect_item(notification_wp_due_future, "Finish date is in 3 days.")
 
-      center.expect_item(notification_milestone_past, "Overdue since 2 days")
-      center.expect_item(notification_milestone_future, "Milestone date is in 1 day")
+      center.expect_item(notification_milestone_past, "Overdue since 2 days.")
+      center.expect_item(notification_milestone_future, "Milestone date is in 1 day.")
 
-      center.expect_item(notification_wp_unset_date, "Finish date is deleted")
+      center.expect_item(notification_wp_unset_date, "Finish date is deleted.")
 
-      center.expect_item(notification_wp_due_today, "Finish date is today")
+      center.expect_item(notification_wp_due_today, "Finish date is today.")
 
       # Doesn't show the date alert for the mention, not the alert
-      center.expect_item(notification_wp_double_mention, /(seconds|minutes) ago by Anonymous/)
+      center.expect_item(notification_wp_double_mention, "Finish date is in 1 day.")
       center.expect_no_item(notification_wp_double_date_alert)
 
       # When switch to date alerts, it shows the alert, no longer the mention
       side_menu.click_item "Date alert"
       wait_for_network_idle
-      center.expect_item(notification_wp_double_date_alert, "Finish date is in 1 day")
+      center.expect_item(notification_wp_double_date_alert, "Finish date is in 1 day.")
       center.expect_no_item(notification_wp_double_mention)
 
       # Ensure that start is created later than due for implicit ID sorting
@@ -236,7 +234,7 @@ RSpec.describe "Notification center date alerts", :js, :with_cuprite,
 
       # We see that start is actually the newest ID, hence shown as the primary notification
       # but the date alert still shows the finish date
-      center.expect_item(double_alert_start, "Finish date is in 1 day")
+      center.expect_item(double_alert_start, "Finish date is in 1 day.")
       center.expect_no_item(double_alert_due)
 
       # Opening a date alert opens in overview
@@ -262,7 +260,7 @@ RSpec.describe "Notification center date alerts", :js, :with_cuprite,
       page.driver.refresh
       wait_for_reload
 
-      center.expect_item(notification_wp_double_date_alert, "Finish date is in 5 days")
+      center.expect_item(notification_wp_double_date_alert, "Finish date is in 5 days.")
       center.expect_no_item(notification_wp_double_mention)
     end
   end

@@ -16,6 +16,7 @@
   [ngModel]="stringValue"
   (ngModelChange)="changeValueFromInputDebounced($event)"
   (focus)="showDatePicker()"
+  (click)="sentCalendarToTopLayer()"
 />
 <ng-container *ngIf="mobile">
   <input

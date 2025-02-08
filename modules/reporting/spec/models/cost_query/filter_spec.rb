@@ -101,7 +101,7 @@ RSpec.describe CostQuery, :reporting_query_helper do
                  activity:)
         end
 
-        it "onlies return entries from the given #{filter}" do
+        it "only return entries from the given #{filter}" do
           query.filter field, value: object.id
           query.result.each do |result|
             expect(result[field].to_s).to eq(object.id.to_s)
@@ -156,7 +156,7 @@ RSpec.describe CostQuery, :reporting_query_helper do
                activity:)
       end
 
-      it "onlies return entries from the given CostQuery::Filter::AuthorId" do
+      it "only return entries from the given CostQuery::Filter::AuthorId" do
         query.filter "author_id", value: author.id
         query.result.each do |result|
           work_package_id = result["work_package_id"]
@@ -312,7 +312,7 @@ RSpec.describe CostQuery, :reporting_query_helper do
       CostQuery::Filter::PriorityId,
       CostQuery::Filter::TypeId
     ].each do |filter|
-      it "onlies allow default operators for #{filter}" do
+      it "only allow default operators for #{filter}" do
         expect(filter.new.available_operators.uniq.sort).to eq(CostQuery::Operator.default_operators.uniq.sort)
       end
     end
@@ -323,7 +323,7 @@ RSpec.describe CostQuery, :reporting_query_helper do
       CostQuery::Filter::CategoryId,
       CostQuery::Filter::VersionId
     ].each do |filter|
-      it "onlies allow default+null operators for #{filter}" do
+      it "only allow default+null operators for #{filter}" do
         expect(filter.new.available_operators.uniq.sort).to eq((CostQuery::Operator.default_operators + CostQuery::Operator.null_operators).sort)
       end
     end
@@ -332,8 +332,13 @@ RSpec.describe CostQuery, :reporting_query_helper do
     [
       CostQuery::Filter::WorkPackageId
     ].each do |filter|
-      it "onlies allow default operators for #{filter}" do
-        expect(filter.new.available_operators.uniq).to contain_exactly(CostQuery::Operator.default_operator)
+      it "allows custom filters#{filter}" do
+        expect(filter.new.available_operators.uniq).to contain_exactly(
+          Report::Operator.new("!"),
+          CostQuery::Operator.new("!_child_work_packages"),
+          Report::Operator.new("="),
+          CostQuery::Operator.new("=_child_work_packages")
+        )
       end
     end
 
@@ -345,7 +350,7 @@ RSpec.describe CostQuery, :reporting_query_helper do
       CostQuery::Filter::StartDate,
       CostQuery::Filter::DueDate
     ].each do |filter|
-      it "onlies allow time operators for #{filter}" do
+      it "only allow time operators for #{filter}" do
         expect(filter.new.available_operators.uniq.sort).to eq(CostQuery::Operator.time_operators.sort)
       end
     end

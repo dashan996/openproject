@@ -8,6 +8,7 @@ zh-TW:
         url: 'Payload URL'
         secret: '簽章金鑰'
         events: '事件'
+        enabled: '啟用'
         projects: '已啟用的專案'
       webhooks/log:
         event_name: '事件名稱'

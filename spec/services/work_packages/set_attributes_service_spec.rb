@@ -1969,16 +1969,16 @@ RSpec.describe WorkPackages::SetAttributesService,
     let(:type) { build_stubbed(:type, patterns: { subject: { blueprint: "{{type}} {{project_name}}", enabled: true } }) }
     let(:work_package) { WorkPackage.new(type:) }
 
-    it "assigns a to be updated value to the field" do
+    it "assigns a placeholder value to the field" do
       instance.call({})
 
-      expect(work_package.subject).to eq("Templated by #{type.name}")
+      expect(work_package.subject).to eq(I18n.t("work_packages.templated_subject_hint", type: type.name))
     end
 
     it "overrides even a passed subject" do
       instance.call(subject: "I will be overwritten")
 
-      expect(work_package.subject).to eq("Templated by #{type.name}")
+      expect(work_package.subject).to eq(I18n.t("work_packages.templated_subject_hint", type: type.name))
     end
 
     context "when the pattern is disabled" do

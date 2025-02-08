@@ -51,6 +51,7 @@ RSpec.shared_examples_for "time entry contract" do
   let(:time_entry_hours) { 5 }
   let(:time_entry_comments) { "A comment" }
   let(:work_package_visible) { true }
+  let(:user_visible) { true }
   let(:time_entry_day_sum) { 5 }
   let(:activities_scope) do
     scope = class_double(TimeEntryActivity)
@@ -97,6 +98,8 @@ RSpec.shared_examples_for "time entry contract" do
       .to receive(:active_in_project)
       .with(time_entry_project)
       .and_return(activities_scope)
+
+    allow(time_entry_user).to receive(:visible?).and_return(user_visible)
   end
 
   def expect_valid(valid, symbols = {})

@@ -43,7 +43,7 @@ zh-CN:
           尚未找到自动托管的项目文件夹。请稍等片刻，重新加载页面以获取最新数据，然后重试。
         managed_project_folder_no_access: >
           您目前还无法访问托管项目文件夹。请稍等片刻，然后重试。
-        cannot_create_folder: 创建文件夹失败。请避免使用特殊字符和符号。
+        cannot_create_folder: 创建文件夹失败。避免使用特殊字符和符号，并确保该文件夹尚不存在。
         upload_keep_both: "保留两者"
         upload_replace: "替换"
       file_links:

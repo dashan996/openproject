@@ -16,6 +16,7 @@
   [disabled]="disabled"
   (input)="changeValueFromInput($event.target.value)"
   (focus)="showDatePicker()"
+  (click)="sentCalendarToTopLayer()"
   [attr.data-remote-field-key]="remoteFieldKey"
 />
 

@@ -147,8 +147,8 @@ export class OpWorkPackagesCalendarService extends UntilDestroyedMixin {
     }
   }
 
-  async requireNonWorkingDays(date:Date|string) {
-    this.nonWorkingDays = await firstValueFrom(this.dayService.requireNonWorkingYear$(date));
+  async requireNonWorkingDays(start:Date|string, end:Date|string) {
+    this.nonWorkingDays = await firstValueFrom(this.dayService.requireNonWorkingYears$(start, end));
   }
 
   isNonWorkingDay(date:Date|string):boolean {
@@ -160,8 +160,7 @@ export class OpWorkPackagesCalendarService extends UntilDestroyedMixin {
     fetchInfo:{ start:Date, end:Date, timeZone:string },
     projectIdentifier:string|undefined,
   ):Promise<unknown> {
-    await this.requireNonWorkingDays(fetchInfo.start);
-    await this.requireNonWorkingDays(fetchInfo.end);
+    await this.requireNonWorkingDays(fetchInfo.start, fetchInfo.end);
 
     if (this.areFiltersEmpty && this.querySpace.query.value) {
       // nothing to do

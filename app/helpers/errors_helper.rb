@@ -33,6 +33,12 @@ module ErrorsHelper
     false
   end
 
+  def render_402(options = {}) # rubocop:disable Naming/VariableNumber
+    unset_template_magic
+    render_error({ message: :notice_requires_enterprise_token, status: 402 }.merge(options))
+    false
+  end
+
   def render_403(options = {}) # rubocop:disable Naming/VariableNumber
     unset_template_magic
     render_error({ message: :notice_not_authorized, status: 403 }.merge(options))

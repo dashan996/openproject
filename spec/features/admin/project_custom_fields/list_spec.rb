@@ -169,7 +169,7 @@ RSpec.describe "List project custom fields", :js do
 
       it "shows the number of projects using a custom field" do
         within_project_custom_field_container(boolean_project_custom_field) do
-          expect(page).to have_text("0 Projects")
+          expect(page).to have_text("0 projects")
         end
 
         project = create(:project)
@@ -178,7 +178,7 @@ RSpec.describe "List project custom fields", :js do
         visit admin_settings_project_custom_fields_path
 
         within_project_custom_field_container(boolean_project_custom_field) do
-          expect(page).to have_text("1 Project")
+          expect(page).to have_text("1 project")
         end
       end
 

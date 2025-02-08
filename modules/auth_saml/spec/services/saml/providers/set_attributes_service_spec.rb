@@ -60,7 +60,7 @@ RSpec.describe Saml::Providers::SetAttributesService, type: :model do
         expect(subject.slug).to eq "saml-foo"
         expect(subject.creator).to eq(current_user)
         expect(subject.sp_entity_id).to eq(OpenProject::StaticRouting::StaticUrlHelpers.new.root_url)
-        expect(subject.name_identifier_format).to eq("urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress")
+        expect(subject.name_identifier_format).to eq("urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified")
         expect(subject.signature_method).to eq(Saml::Defaults::SIGNATURE_METHODS["RSA SHA-1"])
         expect(subject.digest_method).to eq(Saml::Defaults::DIGEST_METHODS["SHA-1"])
 

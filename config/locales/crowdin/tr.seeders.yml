@@ -79,7 +79,7 @@ tr:
         item_0:
           name: Personel ve proje yöneticisi
         item_1:
-          name: Standard global role
+          name: Standart genel rol
     standard:
       life_cycles:
         item_0:
@@ -108,8 +108,8 @@ tr:
       projects:
         demo-project:
           name: Demo project
-          status_explanation: All tasks are on schedule. The people involved know their tasks. The system is completely set up.
-          description: This is a short summary of the goals of this demo project.
+          status_explanation: Tüm görevler programa uygundur. İlgili kişiler görevlerini biliyor. Sistem tamamen kurulmuştur.
+          description: Bu, bu demo projesinin hedeflerinin kısa bir özetidir.
           news:
             item_0:
               title: Welcome to your demo project
@@ -135,11 +135,11 @@ tr:
               name: Temel kurulu
               lists:
                 item_0:
-                  name: Wish list
+                  name: İstek listesi
                 item_1:
-                  name: Short list
+                  name: Kısa liste
                 item_2:
-                  name: Priority list for today
+                  name: Bugün için öncelik listesi
                 item_3:
                   name: Hiçbir zaman
             parent_child:
@@ -178,10 +178,10 @@ tr:
             item_0:
               subject: Start of project
             item_1:
-              subject: Organize open source conference
+              subject: Açık kaynak konferansı düzenleyin
               children:
                 item_0:
-                  subject: Set date and location of conference
+                  subject: Konferans tarihini ve yerini belirleyin
                   children:
                     item_0:
                       subject: Send invitation to speakers
@@ -226,8 +226,8 @@ tr:
             More information: [https://www.openproject.org/docs/user-guide/wiki/](https://www.openproject.org/docs/user-guide/wiki/)
         scrum-project:
           name: Scrum project
-          status_explanation: All tasks are on schedule. The people involved know their tasks. The system is completely set up.
-          description: This is a short summary of the goals of this demo Scrum project.
+          status_explanation: Tüm görevler programa uygundur. İlgili kişiler görevlerini biliyor. Sistem tamamen kurulmuştur.
+          description: Bu, bu demo Scrum projesinin hedeflerinin kısa bir özetidir.
           news:
             item_0:
               title: Welcome to your Scrum demo project
@@ -240,9 +240,9 @@ tr:
             item_1:
               name: Product Backlog
             item_2:
-              name: Sprint 1
+              name: Koşu 1
               wiki:
-                title: Sprint 1
+                title: Koşu 1
                 content: |
                   ### Sprint planning meeting
 
@@ -290,7 +290,7 @@ tr:
                   * After Sprint Review, will be moderated by Scrum Master.
                   * The team discusses the sprint: what went well, what needs to be improved to be more productive for the next sprint or even have more fun.
             item_3:
-              name: Sprint 2
+              name: Koşu 2
           categories:
             item_0: Category 1 (to be changed in Project settings)
           queries:
@@ -372,7 +372,7 @@ tr:
             item_5:
               subject: Wrong hover color
             item_6:
-              subject: SSL certificate
+              subject: SSL sertifikası
             item_7:
               subject: Set-up Staging environment
             item_8:
@@ -500,20 +500,20 @@ tr:
         item_6:
           name: Hata
       welcome:
-        title: Welcome to OpenProject!
+        title: OpenProject'e hoş geldiniz!
         text: |
-          OpenProject is the leading open source project management software. It supports classic, agile as well as hybrid project management and gives you full control over your data.
+          OpenProject, önde gelen açık kaynaklı proje yönetim yazılımıdır. Klasik, çevik ve hibrit proje yönetimini destekler ve verileriniz üzerinde tam kontrol sahibi olmanızı sağlar.
 
-          Core features and use cases:
+          Temel özellikler ve kullanım durumları:
 
-          * [Project Portfolio Management](https://www.openproject.org/collaboration-software-features/project-portfolio-management/)
-          * [Project Planning and Scheduling](https://www.openproject.org/collaboration-software-features/project-planning-scheduling/)
-          * [Task Management and Issue Tracking](https://www.openproject.org/collaboration-software-features/task-management/)
-          * [Agile Boards (Scrum and Kanban)](https://www.openproject.org/collaboration-software-features/agile-project-management/)
-          * [Requirements Management and Release Planning](https://www.openproject.org/collaboration-software-features/product-development/)
-          * [Time and Cost Tracking, Budgets](https://www.openproject.org/collaboration-software-features/time-tracking/)
-          * [Team Collaboration and Documentation](https://www.openproject.org/collaboration-software-features/team-collaboration/)
+          * [Proje Portföy Yönetimi](https://www.openproject.org/collaboration-software-features/project-portfolio-management/)
+          * [Proje Planlama ve Takvimlendirme](https://www.openproject.org/collaboration-software-features/project-planning-scheduling/)
+          * [Görev Yönetimi ve Sorun İzleme](https://www.openproject.org/collaboration-software-features/task-management/)
+          * [Çevik Panolar (Scrum ve Kanban)](https://www.openproject.org/collaboration-software-features/agile-project-management/)
+          * [Gereksinim Yönetimi ve Sürüm Planlama](https://www.openproject.org/collaboration-software-features/product-development/)
+          * [Zaman ve Maliyet Takibi, Bütçeler](https://www.openproject.org/collaboration-software-features/time-tracking/)
+          * [Ekip İşbirliği ve Belgeleme](https://www.openproject.org/collaboration-software-features/team-collaboration/)
 
-          Welcome to the future of project management.
+          Proje yönetiminin geleceğine hoş geldiniz.
 
-          For Admins: You can change this welcome text [here]({{opSetting:base_url}}/admin/settings/general).
+          Yöneticiler için: Bu [karşılama metnini]({{opSetting:base_url}}/admin/settings/general) değiştirebilirsiniz.

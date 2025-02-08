@@ -31,8 +31,7 @@
 require "spec_helper"
 
 RSpec.describe "Alternative name autocompleting",
-               :js,
-               :with_cuprite do
+               :js do
   let!(:project)      { create(:project_with_types) }
   let!(:work_package) { create(:work_package, project:) }
   let!(:user)         { create(:admin) }

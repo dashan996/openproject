@@ -8,10 +8,11 @@
     [principal]="item"
     [hideName]="true"
     [hoverCard]="hoverCards"
-    [hoverCardModalTarget]="isOpenedInModal ? 'custom' : 'default'"
     size="mini"
   ></op-principal>
   <span [opSearchHighlight]="search"
+        [attr.data-hover-card-url]="getHoverCardUrl(item)"
+        data-hover-card-trigger-target="trigger"
         class="op-user-autocompleter--name">
       {{ item.name }}
     </span>

@@ -492,7 +492,7 @@ RSpec.describe SharesController do
       it "responds with updated permission buttons" do
         make_request
         expect(controller).to have_received(:respond_with_bulk_updated_permission_buttons)
-          .with([view_member, edit_member])
+          .with(a_collection_containing_exactly(view_member, edit_member))
       end
     end
 

@@ -357,10 +357,10 @@ pl:
           learn_about: "Dowiedz się więcej o nowych funkcjach"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_1":
+          "15_2":
             standard:
               new_features_html: >
-                Ta wersja wprowadza różne funkcje i ulepszenia, np. <br> <ul class="%{list_styling_class}"> <li>Niestandardowe pola hierarchii typów (dodatek wersji Enterprise).</li> <li>Przeprojektowanie karty Relacje w pakietach roboczych.</li> <li>Przeprojektowanie strony indeksu Spotkania.</li> <li>Ręczne podziały stron w eksporcie pakietów roboczych w formacie PDF.</li> <li>Tryb Zen dla list projektów.</li> </ul>
+                Wersja wprowadza różne funkcje i ulepszenia, takie jak <br> <ul class="%{list_styling_class}"> <li>Ustawianie przypomnień dla pakietów roboczych w celu generowania powiadomień o datach.</li> <li>Tworzenie nowych folderów bezpośrednio z selektora lokalizacji w celu przechowywania plików.</li> <li>Określanie wymaganego odstępu między następcami i poprzednikami pakietów roboczych.</li> <li>Włączanie porządkowania i grupowania pakietów roboczych na podstawie wartości hierarchii typów pól niestandardowych.</li> <li>Eksportowanie wpisów czasu jako kart czasu pracy w formacie PDF.</li> <li>Dodawanie okienka wyskakującego wyświetlającego informacje o użytkowniku po najechaniu nań myszą.</li> </ul>
     ical_sharing_modal:
       title: "Subskrybuj kalendarz"
       inital_setup_error_message: "Podczas pobierania danych wystąpił błąd."
@@ -621,15 +621,15 @@ pl:
         prioritized: "Ma priorytet"
         dateAlert: "Alert dotyczący daty"
         shared: "Udostępniono"
-        reminder: "Reminder"
+        reminder: "Przypomnienie"
       date_alerts:
         milestone_date: "Data  kamienia milowego"
         overdue: "Przekroczony termin"
-        overdue_since: "od %{difference_in_days}"
-        property_today: "jest dzisiaj"
-        property_is: "jest za %{difference_in_days}"
-        property_was: "była %{difference_in_days} temu"
-        property_is_deleted: "usunięto"
+        overdue_since: "since %{difference_in_days}."
+        property_today: "is today."
+        property_is: "is in %{difference_in_days}."
+        property_was: "was %{difference_in_days} ago."
+        property_is_deleted: "is deleted."
         upsale:
           title: "Alerty dotyczące dat"
           description: "Dzięki alertom dotyczącym dat będziesz otrzymywać powiadomienia o zbliżających się terminach rozpoczęcia lub zakończenia pracy, dzięki czemu nigdy nie przegapisz ani nie zapomnisz ważnego terminu."
@@ -657,7 +657,7 @@ pl:
           message: "Masz nowe powiadomienia."
           link_text: "Kliknij tutaj, aby je załadować."
       reminders:
-        note: "Note: “%{note}”"
+        note: "Uwaga: „%{note}”"
       settings:
         change_notification_settings: 'Możesz zmodyfikować <a target="_blank" href="%{url}">ustawienia powiadomień</a>, aby upewnić się, że nigdy nie przegapisz ważnej aktualizacji.'
         title: "Ustawienia powiadomień"
@@ -745,7 +745,7 @@ pl:
         immediate:
           title: "Wyślij mi przypomnienie e-mail"
           mentioned: "Natychmiast, gdy pojawi się @wzmianka o mnie"
-          personal_reminder: "Immediately when I receive a personal reminder"
+          personal_reminder: "Natychmiast po otrzymaniu osobistego przypomnienia"
         alerts:
           title: "Powiadomienia e-mail dla innych elementów (które nie są pakietami roboczymi)"
           explanation: >
@@ -1046,11 +1046,11 @@ pl:
           duplicate_query_title: "Nazwa tego widoku już istnieje. Zmienić mimo to?"
         text_no_results: "Nie znaleziono żadnych pasujących widoków."
       reminders:
-        button_label: "Set reminder"
+        button_label: "Ustaw przypomnienie"
         title:
-          new: "Set reminder"
-          edit: "Edit reminder"
-        subtitle: "You will receive a notification for this work package at the chosen time."
+          new: "Ustaw przypomnienie"
+          edit: "Edytuj przypomnienie"
+        subtitle: "W wybranym terminie otrzymasz powiadomienie dotyczące tego pakietu roboczego."
       scheduling:
         is_parent: "Daty tego pakietu roboczego są automatycznie odejmowane od jego elementów podrzędnych. Włącz funkcję Planowanie ręczne, aby ustawić daty."
         is_switched_from_manual_to_automatic: "Po przełączeniu planowania z ręcznego na automatyczne konieczne może być ponowne obliczenie dat tego pakietu roboczego ze względu na jego powiązania z innymi pakietami roboczymi."

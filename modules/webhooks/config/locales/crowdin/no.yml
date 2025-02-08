@@ -8,6 +8,7 @@
         url: 'Nyttelast-URL'
         secret: 'Hemmelig signaturnøkkel'
         events: 'Hendelser'
+        enabled: 'Enabled'
         projects: 'Aktiverte prosjekter'
       webhooks/log:
         event_name: 'Navn på hendelse'

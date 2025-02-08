@@ -55,7 +55,7 @@ module DemoData
         DemoData::WikiSeeder,
         DemoData::WorkPackageSeeder,
         DemoData::WorkPackageBoardSeeder,
-        ::Meetings::DemoData::MeetingSeeder,
+        ::Meetings::DemoData::MeetingSeriesSeeder,
         ::Meetings::DemoData::MeetingAgendaItemsSeeder
       ]
     end

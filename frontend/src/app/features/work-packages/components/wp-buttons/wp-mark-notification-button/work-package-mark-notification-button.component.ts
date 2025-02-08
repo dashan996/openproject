@@ -11,8 +11,6 @@ import { WpSingleViewService } from 'core-app/features/work-packages/routing/wp-
 export class WorkPackageMarkNotificationButtonComponent {
   @Input() public workPackage:WorkPackageResource;
 
-  @Input() public showWithText:boolean;
-
   text = {
     mark_as_read: this.I18n.t('js.notifications.center.mark_as_read'),
   };

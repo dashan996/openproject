@@ -73,8 +73,7 @@ class WorkPackages::CreateService < BaseServices::BaseCallable
   end
 
   def set_templated_subject(work_package)
-    return true unless work_package.type&.replacement_patterns_defined?
-    return true unless work_package.type.enabled_patterns[:subject]
+    return true unless work_package.type&.replacement_pattern_defined_for?(:subject)
 
     work_package.subject = work_package.type.enabled_patterns[:subject].resolve(work_package)
     work_package.save

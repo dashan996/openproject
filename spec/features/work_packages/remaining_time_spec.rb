@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Work packages remaining time", :js, :with_cuprite do
+RSpec.describe "Work packages remaining time", :js do
   shared_current_user { create(:admin) }
   shared_let(:project) do
     create(:project,

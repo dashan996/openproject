@@ -29,7 +29,9 @@
 require "spec_helper"
 require "features/page_objects/notification"
 
-RSpec.describe "Upload attachment to documents", :js,
+RSpec.describe "Upload attachment to documents",
+               :js,
+               :selenium,
                with_settings: {
                  journal_aggregation_time_minutes: 0
                } do

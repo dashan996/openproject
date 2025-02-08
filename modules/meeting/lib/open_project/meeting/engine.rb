@@ -62,15 +62,16 @@ module OpenProject::Meeting
         permission :edit_meetings,
                    {
                      meetings: %i[edit cancel_edit update update_title details_dialog update_details update_participants],
-                     recurring_meetings: %i[edit cancel_edit update update_title details_dialog update_details],
+                     recurring_meetings: %i[edit cancel_edit update update_title details_dialog update_details
+                                            notify end_series end_series_dialog],
                      work_package_meetings_tab: %i[add_work_package_to_meeting_dialog add_work_package_to_meeting]
                    },
                    permissible_on: :project,
                    require: :member
         permission :delete_meetings,
                    {
-                     meetings: [:destroy],
-                     recurring_meetings: %i[destroy delete_scheduled]
+                     meetings: %i[delete_dialog destroy],
+                     recurring_meetings: %i[delete_dialog destroy delete_scheduled_dialog destroy_scheduled]
                    },
                    permissible_on: :project,
                    require: :member

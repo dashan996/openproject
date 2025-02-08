@@ -15,7 +15,13 @@
 
         grid.with_area(:assignee, tag: :div, font_size: :small, color: :muted) do
           if @assignee.present?
-            render(Users::AvatarComponent.new(user: @assignee, show_name: true, link: false, size: :mini, classes: "op-wp-hover-card--principal"))
+            # Render the avatar without a hover card => opening another hover card within a hover card is not supported
+            render(Users::AvatarComponent.new(user: @assignee,
+                                              show_name: true,
+                                              link: false,
+                                              size: :mini,
+                                              classes: "op-wp-hover-card--principal",
+                                              hover_card: { active: false }))
           else
             concat(render(Primer::Beta::Octicon.new(icon: :person, mr: 1)))
             concat(render(Primer::Beta::Text.new) { "-" })

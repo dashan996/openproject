@@ -1,3 +1,33 @@
+# frozen_string_literal: true
+
+#-- copyright
+# OpenProject is an open source project management software.
+# Copyright (C) the OpenProject GmbH
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License version 3.
+#
+# OpenProject is a fork of ChiliProject, which is a fork of Redmine. The copyright follows:
+# Copyright (C) 2006-2013 Jean-Philippe Lang
+# Copyright (C) 2010-2013 the ChiliProject Team
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
+# See COPYRIGHT and LICENSE files for more details.
+#++
+
 class RecurringMeeting < ApplicationRecord
   # Magical maximum of iterations
   MAX_ITERATIONS = 1000
@@ -27,6 +57,7 @@ class RecurringMeeting < ApplicationRecord
 
   after_initialize :set_defaults
   after_save :unset_schedule
+  before_destroy :remove_jobs
 
   enum frequency: {
     daily: 0,
@@ -36,8 +67,9 @@ class RecurringMeeting < ApplicationRecord
 
   enum end_after: {
     specific_date: 0,
-    iterations: 1
-  }.freeze, _prefix: true, _default: "specific_date"
+    iterations: 1,
+    never: 3
+  }.freeze, _prefix: true, _default: "never"
 
   has_many :meetings,
            inverse_of: :recurring_meeting,
@@ -65,6 +97,14 @@ class RecurringMeeting < ApplicationRecord
     nil
   end
 
+  def will_end?
+    last_occurrence.present?
+  end
+
+  def has_ended?
+    will_end? && last_occurrence < Time.zone.now
+  end
+
   def human_frequency
     I18n.t("recurring_meeting.frequency.#{frequency}")
   end
@@ -82,7 +122,7 @@ class RecurringMeeting < ApplicationRecord
   end
 
   def schedule
-    @schedule ||= IceCube::Schedule.new(start_time, end_time: end_date).tap do |s|
+    @schedule ||= IceCube::Schedule.new(start_time, duration: template&.duration).tap do |s|
       s.add_recurrence_rule count_rule(frequency_rule)
       exclude_non_working_days(s) if frequency_working_days?
     end
@@ -107,11 +147,22 @@ class RecurringMeeting < ApplicationRecord
     end
   end
 
-  def full_schedule_in_words
-    I18n.t("recurring_meeting.in_words.full",
-           base: base_schedule,
-           time: format_time(start_time, include_date: false),
-           end_date: format_date(last_occurrence))
+  def full_schedule_in_words # rubocop:disable Metrics/AbcSize
+    if has_ended?
+      I18n.t("recurring_meeting.in_words.full_past",
+             base: base_schedule,
+             time: format_time(start_time, include_date: false),
+             end_date: format_date(last_occurrence))
+    elsif will_end?
+      I18n.t("recurring_meeting.in_words.full",
+             base: base_schedule,
+             time: format_time(start_time, include_date: false),
+             end_date: format_date(last_occurrence))
+    else
+      I18n.t("recurring_meeting.in_words.never_ending",
+             base: base_schedule,
+             time: format_time(start_time, include_date: false))
+    end
   end
 
   def human_frequency_schedule
@@ -125,11 +176,13 @@ class RecurringMeeting < ApplicationRecord
   end
 
   def first_occurrence
-    schedule.first
+    @first_occurrence ||= schedule.first
   end
 
   def last_occurrence
-    schedule.last
+    return if end_after_never?
+
+    @last_occurrence ||= schedule.last
   end
 
   def next_occurrence(from_time: Time.current)
@@ -137,9 +190,10 @@ class RecurringMeeting < ApplicationRecord
   end
 
   def remaining_occurrences
-    if end_date.present?
-      schedule.occurrences_between(Time.current, end_date)
-    else
+    case end_after
+    when "specific_date"
+      schedule.occurrences_between(Time.current, end_date.to_time(:utc).end_of_day)
+    when "iterations"
       schedule.remaining_occurrences(Time.current)
     end
   end
@@ -155,10 +209,28 @@ class RecurringMeeting < ApplicationRecord
       .order(start_time: direction)
   end
 
+  def upcoming_instantiated_meetings
+    scheduled_meetings
+      .includes(:meeting)
+      .not_cancelled
+      .joins(:meeting)
+      .where("meetings.start_time + (interval '1 hour' * meetings.duration) >= ?", Time.current)
+      .order(start_time: :asc)
+  end
+
+  def upcoming_cancelled_meetings
+    scheduled_meetings
+      .upcoming
+      .cancelled
+      .order(start_time: :asc)
+  end
+
   private
 
   def unset_schedule
     @schedule = nil
+    @first_occurence = nil
+    @last_occurrence = nil
   end
 
   def end_date_constraints
@@ -198,14 +270,21 @@ class RecurringMeeting < ApplicationRecord
   end
 
   def count_rule(rule)
-    if end_after_iterations?
+    case end_after
+    when "specific_date"
+      rule.until((end_date + 1.day).to_time(:utc))
+    when "iterations"
       rule.count(iterations)
     else
-      rule.until(end_date.to_time(:utc))
+      rule
     end
   end
 
   def set_defaults
-    self.end_date ||= 1.year.from_now
+    self.end_date ||= 1.year.from_now if end_after_specific_date?
+  end
+
+  def remove_jobs
+    RecurringMeetings::InitNextOccurrenceJob.delete_jobs(self)
   end
 end

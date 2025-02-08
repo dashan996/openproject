@@ -43,8 +43,10 @@ module Meetings
         banner.with_action_button(
           tag: :a,
           href: helpers.meeting_path(meeting),
-          data: { turbo: false, poll_for_changes_target: "reloadButton" },
-          size: :medium
+          size: :medium,
+          data: {
+            keep_scroll_position_target: "triggerButton"
+          }
         ) { I18n.t("label_meeting_reload") }
 
         I18n.t("notice_meeting_updated")

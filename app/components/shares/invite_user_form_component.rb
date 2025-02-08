@@ -32,15 +32,14 @@ module Shares
     include OpTurbo::Streamable
     include OpPrimer::ComponentHelpers
 
-    attr_reader :entity, :strategy, :errors, :allow_hover_cards
+    attr_reader :entity, :strategy, :errors
 
-    def initialize(strategy:, errors: nil, allow_hover_cards: false)
+    def initialize(strategy:, errors: nil)
       super
 
       @strategy = strategy
       @entity = strategy.entity
       @errors = errors
-      @allow_hover_cards = allow_hover_cards
     end
 
     def new_share

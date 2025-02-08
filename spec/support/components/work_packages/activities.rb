@@ -38,12 +38,13 @@ module Components
 
       def initialize(work_package)
         @work_package = work_package
-        @container = ".work-package-details-activities-list"
       end
 
       def expect_wp_has_been_created_activity(work_package)
-        within @container do
-          expect(page).to have_content("created on #{work_package.created_at.strftime('%m/%d/%Y')}")
+        within "#work-package-activites-container" do
+          created_date = work_package.created_at.strftime("%m/%d/%Y")
+          expect(page).to have_text("created this on", wait: 10)
+          expect(page).to have_text(created_date, wait: 10)
         end
       end
 
@@ -64,6 +65,22 @@ module Components
 
       # helpers for new primerized activities
 
+      def ckeditor
+        Components::WysiwygEditor.new("#work-package-journal-form-element")
+      end
+
+      def get_editor_form_field_element
+        FormFields::Primerized::EditorFormField.new("notes", selector: "#work-package-journal-form-element")
+      end
+
+      def journals_container_class_name
+        "work-packages-activities-tab-journals-index-component"
+      end
+
+      def within_journals_container(&)
+        page.within(".#{journals_container_class_name}", &)
+      end
+
       def within_journal_entry(journal, &)
         wait_for { page }.to have_test_selector("op-wp-journal-entry-#{journal.id}") # avoid flakyness
         page.within_test_selector("op-wp-journal-entry-#{journal.id}", &)
@@ -74,39 +91,51 @@ module Components
       end
 
       def expect_no_journal_changed_attribute(text: nil)
-        expect(page).not_to have_test_selector("op-journal-detail-description", text:)
+        expect(page).not_to have_test_selector("op-journal-detail-description", text:, wait: 10)
       end
 
       def expect_no_journal_notes(text: nil)
-        expect(page).not_to have_test_selector("op-journal-notes-body", text:)
+        expect(page).not_to have_test_selector("op-journal-notes-body", text:, wait: 10)
       end
 
-      def expect_journal_details_header(text: nil)
-        expect(page).to have_test_selector("op-journal-details-header", text:)
+      def expect_journal_details_header(text: nil, count: nil)
+        expect(page).to have_test_selector("op-journal-details-header", text:, count:, wait: 10)
       end
 
       def expect_no_journal_details_header(text: nil)
-        expect(page).not_to have_test_selector("op-journal-details-header", text:)
+        expect(page).not_to have_test_selector("op-journal-details-header", text:, wait: 10)
       end
 
       def expect_journal_notes_header(text: nil)
-        expect(page).to have_test_selector("op-journal-notes-header", text:)
+        expect(page).to have_test_selector("op-journal-notes-header", text:, wait: 10)
       end
 
       def expect_no_journal_notes_header(text: nil)
-        expect(page).not_to have_test_selector("op-journal-notes-header", text:)
+        expect(page).not_to have_test_selector("op-journal-notes-header", text:, wait: 10)
       end
 
-      def expect_journal_notes(text: nil)
-        expect(page).to have_test_selector("op-journal-notes-body", text:, wait: 10)
+      def expect_journal_notes(text: nil, subselector: nil, count: nil)
+        if text && subselector
+          expect(page).to have_css("#{page.test_selector('op-journal-notes-body')} #{subselector}", text:, wait: 10)
+        elsif text
+          expect(page).to have_test_selector("op-journal-notes-body", text:, wait: 10)
+        elsif count
+          expect(page).to have_test_selector("op-journal-notes-body", count:, wait: 10)
+        end
+      end
+
+      def expect_journal_mention(text: nil)
+        expect_journal_notes # wait for the notes to be loaded
+
+        expect(page).to have_css("a.user-mention", text:, wait: 10)
       end
 
       def expect_notification_bubble
-        expect(page).to have_test_selector("op-journal-unread-notification")
+        expect(page).to have_test_selector("op-journal-unread-notification", wait: 10)
       end
 
       def expect_no_notification_bubble
-        expect(page).not_to have_test_selector("op-journal-unread-notification")
+        expect(page).not_to have_test_selector("op-journal-unread-notification", wait: 10)
       end
 
       def expect_journal_container_at_bottom
@@ -130,19 +159,19 @@ module Components
       end
 
       def expect_empty_state
-        expect(page).to have_test_selector("op-wp-journals-container-empty")
+        expect(page).to have_test_selector("op-wp-journals-container-empty", wait: 10)
       end
 
       def expect_no_empty_state
-        expect(page).not_to have_test_selector("op-wp-journals-container-empty")
+        expect(page).not_to have_test_selector("op-wp-journals-container-empty", wait: 10)
       end
 
       def expect_input_field
-        expect(page).to have_test_selector("op-work-package-journal-form")
+        expect(page).to have_test_selector("op-work-package-journal-form", wait: 10)
       end
 
       def expect_no_input_field
-        expect(page).not_to have_test_selector("op-work-package-journal-form")
+        expect(page).not_to have_test_selector("op-work-package-journal-form", wait: 10)
       end
 
       def open_new_comment_editor
@@ -155,6 +184,49 @@ module Components
         end
       end
 
+      def expect_activity_anchor_link(text:)
+        expect(page).to have_test_selector("activity-anchor-link", text:)
+      end
+
+      def expect_unsaved_content(text)
+        page.within_test_selector("op-work-package-journal-form-element") do
+          editor = get_editor_form_field_element
+          expect(editor.input_element.value).to eq(text)
+        end
+      end
+
+      def type_comment(text)
+        open_new_comment_editor if page.find_test_selector("op-open-work-package-journal-form-trigger")
+
+        # Wait for the editor form to be present and ready
+        wait_for { page }.to have_test_selector("op-work-package-journal-form-element")
+
+        page.within_test_selector("op-work-package-journal-form-element") do
+          editor = get_editor_form_field_element
+          # Wait for the editor to be initialized
+          wait_for { editor.input_element }.to be_present
+          editor.input_element.send_keys(text)
+        end
+
+        # Wait for any pending requests to complete
+        wait_for_network_idle
+      end
+
+      def clear_comment(blur: false)
+        page.within_test_selector("op-work-package-journal-form-element") do
+          editor = get_editor_form_field_element
+          editor.set_value("")
+
+          if blur
+            editor.input_element.send_keys(:tab) # triggers blur by moving focus away
+          end
+        end
+      end
+
+      def submit_comment
+        page.find_test_selector("op-submit-work-package-journal-form").click
+      end
+
       def add_comment(text: nil, save: true)
         if page.find_test_selector("op-open-work-package-journal-form-trigger")
           open_new_comment_editor
@@ -163,7 +235,7 @@ module Components
         end
 
         page.within_test_selector("op-work-package-journal-form-element") do
-          FormFields::Primerized::EditorFormField.new("notes", selector: "#work-package-journal-form-element").set_value(text)
+          get_editor_form_field_element.set_value(text)
           page.find_test_selector("op-submit-work-package-journal-form").click if save
         end
 
@@ -183,13 +255,27 @@ module Components
           page.find_test_selector("op-wp-journal-#{journal.id}-edit").click
 
           page.within_test_selector("op-work-package-journal-form-element") do
-            FormFields::Primerized::EditorFormField.new("notes", selector: "#work-package-journal-form-element").set_value(text)
+            get_editor_form_field_element.set_value(text)
             page.find_test_selector("op-submit-work-package-journal-form").click if save
           end
 
           if save
             # wait for the comment to be loaded
             wait_for { page }.to have_test_selector("op-journal-notes-body", text:)
+          end
+        end
+      end
+
+      def type_comment_in_edit(journal, text)
+        within_journal_entry(journal) do
+          page.find_test_selector("op-wp-journal-#{journal.id}-action-menu").click
+          page.find_test_selector("op-wp-journal-#{journal.id}-edit").click
+
+          page.within_test_selector("op-work-package-journal-form-element") do
+            editor = get_editor_form_field_element
+            # Wait for the editor to be initialized
+            wait_for { editor.input_element }.to be_present
+            editor.input_element.send_keys(text)
           end
         end
       end

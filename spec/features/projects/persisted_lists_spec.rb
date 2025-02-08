@@ -29,8 +29,7 @@
 require "spec_helper"
 
 RSpec.describe "Persisted lists on projects index page",
-               :js,
-               :with_cuprite do
+               :js do
   shared_let(:non_member) { create(:non_member, permissions: %i(view_project_attributes)) }
   shared_let(:admin) { create(:admin) }
   shared_let(:user) { create(:user) }

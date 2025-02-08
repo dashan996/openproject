@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Quarantined attachments", :js, :with_cuprite do
+RSpec.describe "Quarantined attachments", :js do
   shared_let(:other_author) { create(:user) }
   shared_let(:admin) { create(:admin) }
 

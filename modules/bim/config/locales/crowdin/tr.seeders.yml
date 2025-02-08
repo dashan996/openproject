@@ -88,8 +88,8 @@ tr:
       projects:
         demo-construction-project:
           name: "(Demo) Construction project"
-          status_explanation: All tasks and the sub-projects are on schedule. The people involved know their tasks. The system is completely set up.
-          description: This is a short summary of the goals of this demo construction project.
+          status_explanation: Tüm görevler ve alt projeler programa uygundur. İlgili kişiler görevlerini biliyor. Sistem tamamen kurulmuştur.
+          description: Bu, bu demo inşaat projesinin hedeflerinin kısa bir özetidir.
           news:
             item_0:
               title: Welcome to your demo project
@@ -150,8 +150,8 @@ tr:
                   name: Aşamalar
         demo-planning-constructing-project:
           name: "(Demo) Planning & constructing"
-          status_explanation: All tasks are on schedule. The people involved know their tasks. The system is completely set up.
-          description: This is a short summary of the goals of this demo planning and constructing project.
+          status_explanation: Tüm görevler programa uygundur. İlgili kişiler görevlerini biliyor. Sistem tamamen kurulmuştur.
+          description: Bu, bu demo planlama ve inşa projesinin hedeflerinin kısa bir özetidir.
           news:
             item_0:
               title: Welcome to your demo project
@@ -404,8 +404,8 @@ tr:
                     *   Bring some drinks, snacks and your smile
         demo-bim-project:
           name: "(Demo) BIM project"
-          status_explanation: All tasks and sub-projects are on schedule. The people involved know their tasks. The system is completely set up.
-          description: This is a short summary of the goals of this demo BIM project.
+          status_explanation: Tüm görevler ve alt projeler programa uygundur. İlgili kişiler görevlerini biliyor. Sistem tamamen kurulmuştur.
+          description: Bu, bu demo BIM projesinin hedeflerinin kısa bir özetidir.
           news:
             item_0:
               title: Welcome to your demo project
@@ -666,11 +666,11 @@ tr:
                 *   ...
             item_14:
               subject: Asset Management
-              description: Enjoy your building :)
+              description: Binanızın keyfini çıkarın :)
         demo-bcf-management-project:
           name: "(Demo) BCF management"
-          status_explanation: All tasks are on schedule. The people involved know their tasks. The system is completely set up.
-          description: This is a short summary of the goals of this demo BCF management project.
+          status_explanation: Tüm görevler programa uygundur. İlgili kişiler görevlerini biliyor. Sistem tamamen kurulmuştur.
+          description: Bu, bu demo BCF yönetim projesinin hedeflerinin kısa bir özetidir.
           ifc_models:
             item_0:
               name: Hospital - Architecture (cc-by-sa-3.0 Autodesk Inc.)

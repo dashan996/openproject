@@ -365,17 +365,44 @@ RSpec.describe User do
   end
 
   describe "#authentication_provider" do
+    let!(:provider) { create(:oidc_provider, slug: "test_provider") }
+
     before do
       user.identity_url = "test_provider:veryuniqueid"
       user.save!
     end
 
-    it "returns the internal provider slug" do
-      expect(user.authentication_provider).to eql("test_provider")
+    it "returns the provider" do
+      expect(user.authentication_provider).to eql(provider)
     end
 
-    it "creates a human readable name" do
-      expect(user.human_authentication_provider).to eql("Test Provider")
+    context "when no matching provider exists" do
+      let!(:provider) { nil }
+
+      it "returns nil" do
+        expect(user.authentication_provider).to be_nil
+      end
+    end
+  end
+
+  describe "#human_authentication_provider" do
+    let!(:provider) { create(:oidc_provider, slug: "test_provider", display_name: "Karl") }
+
+    before do
+      user.identity_url = "test_provider:veryuniqueid"
+      user.save!
+    end
+
+    it "returns a human readable name" do
+      expect(user.human_authentication_provider).to eql("Karl")
+    end
+
+    context "when no matching provider exists" do
+      let!(:provider) { nil }
+
+      it "returns nil" do
+        expect(user.authentication_provider).to be_nil
+      end
     end
   end
 

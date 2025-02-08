@@ -30,7 +30,6 @@ require "spec_helper"
 
 RSpec.describe "authorization for BCF api",
                :js,
-               :with_cuprite,
                with_config: { edition: "bim" } do
   let!(:user) { create(:admin) }
   let(:client_secret) { app.plaintext_secret }

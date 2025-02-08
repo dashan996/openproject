@@ -78,7 +78,7 @@ zh-TW:
       text_2fa_disabled: "使用者沒有透過「我的帳戶頁面」設定 2FA 裝置"
       only_sms_allowed: "只能為其他用戶設置短信發送。"
     upsale:
-      title: "雙重身分驗證"
+      title: "雙因素驗證"
       description: "向所有專案成員提供(或強制執行) 兩階段驗證，以加強 OpenProject 實例的安全性。"
     backup_codes:
       none_found: 這個帳戶沒有存在備份代碼
@@ -151,7 +151,7 @@ zh-TW:
       resdt: "SMS Rest API"
       webauthn: "WebAuthn"
     mobile_transmit_notification: "已將一次性密碼發送給您的手機。"
-    label_two_factor_authentication: "雙重身分驗證"
+    label_two_factor_authentication: "雙因素驗證"
     forced_registration:
       required_to_add_device: "活動安全性原則要求您啟用雙重身份驗證。請使用以下表格註冊設備。"
     remember:

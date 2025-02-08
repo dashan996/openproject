@@ -1,7 +1,7 @@
 
 # PDF Export Styling yml
 
-This document describes the style settings format for the [PDF Export styling file](https://github.com/opf/openproject/blob/dev/app/models/work_package/pdf_export/standard.yml)
+This document describes the style settings format for the [PDF Export styling file](https://github.com/opf/openproject/blob/dev/app/models/work_package/pdf_export/export/standard.yml)
 
 | Key | Description | Data type |
 | - | - | - |
@@ -189,6 +189,7 @@ header:
 | `padding_top` | **Padding top**<br/>Padding only on the top side of the hero banner<br/>Examples: `10mm`, `10` | number or string<br/>See [Units](#units) |
 | `title` | **The first block in the hero**<br/>See [The first block in the hero](#the-first-block-in-the-hero) | object |
 | `heading` | **The main block in the hero**<br/>See [The main block in the hero](#the-main-block-in-the-hero) | object |
+| `dates` | **The dates block in the hero**<br/>See [The dates block in the hero](#the-dates-block-in-the-hero) | object |
 | `subheading` | **The last block in the hero**<br/>See [The last block in the hero](#the-last-block-in-the-hero) | object |
 
 ## Font properties
@@ -216,6 +217,32 @@ leading: 2
 | `leading` | A number >= 0 and an optional unit<br/>Examples: `10mm`, `10` | number or string<br/>See [Units](#units) |
 | `color` | **Color**<br/>A color in RRGGBB format<br/>Example: `F0F0F0` | string |
 | `styles` | Example: `[bold]`<br/>Valid values:<br/>`bold`, `italic`, `underline`, `strikethrough`, `superscript`, `subscript` | array of string |
+
+## HTML table
+
+Key: `html_table`
+
+Example:
+
+```yaml
+table:
+  auto_width: true
+  header:
+    background_color: F0F0F0
+    no_repeating: true
+    size: 12
+  cell:
+    background_color: 000FFF
+    size: 10
+```
+
+| Key | Description | Data type |
+| - | - | - |
+| `auto_width` | **Automatic column widths**<br/>Table columns should fit the content, equal spacing of columns if value is `false` | boolean |
+| `header` | **Table header cell**<br/>Styling for a table header cell<br/>See [Table header cell](#table-header-cell) | object |
+| `cell` | **Table cell**<br/>Styling for a table cell<br/>See [Table cell](#table-cell) | object |
+| … | See [Margin properties](#margin-properties) |  |
+| … | See [Border Properties](#border-properties) |  |
 
 ## Image caption
 
@@ -301,6 +328,7 @@ markdown:
 | `font` | **Font properties**<br/>Properties to set the font style<br/>See [Font properties](#font-properties) | object |
 | `paragraph` | **Markdown paragraph**<br/>A block of text<br/>See [Markdown paragraph](#markdown-paragraph) | object |
 | `table` | **Markdown table**<br/>See [Markdown table](#markdown-table) | object |
+| `html_table` | **HTML table**<br/>See [HTML table](#html-table) | object |
 | `headless_table` | **Markdown headless table**<br/>Tables without or empty header rows can be styled differently.<br/>See [Markdown headless table](#markdown-headless-table) | object |
 | `code` | **Markdown code**<br/>Styling to denote a word or phrase as code<br/>See [Markdown code](#markdown-code) | object |
 | `codeblock` | **Markdown code block**<br/>Styling to denote a paragraph as code<br/>See [Markdown code block](#markdown-code-block) | object |
@@ -520,7 +548,7 @@ Example:
 ```yaml
 ordered_list_point:
   template: "<number>."
-  alphabetical: false
+  list_style_type: decimal
   spacing: 0.75mm
   spanning: true
 ```
@@ -528,7 +556,8 @@ ordered_list_point:
 | Key | Description | Data type |
 | - | - | - |
 | `spacing` | A number >= 0 and an optional unit<br/>Examples: `10mm`, `10` | number or string<br/>See [Units](#units) |
-| `alphabetical` | **Alphabetical bullet points**<br/>Convert the list item number into a character, eg. `a.` `b.` `c.` | boolean |
+| `alphabetical` | **Alphabetical bullet points**<br/>(deprecated; use list_style_type) Convert the list item number into a character, eg. `a.` `b.` `c.` | boolean |
+| `list_style_type` | **List style type**<br/>The style of the list bullet points, eg. `decimal`, `lower-latin`, `upper-roman`<br/>Valid values:<br/>`decimal`, `lower-latin`, `lower-roman`, `upper-latin`, `upper-roman` | string |
 | `spanning` | **Spanning**<br/>Use the width of the largest bullet as indention. | boolean |
 | `template` | **Template**<br/>customize what the prefix should contain, eg. `(<number>)` | string |
 | … | See [Font properties](#font-properties) |  |
@@ -650,14 +679,14 @@ overview:
   table: {}
 ```
 
-| Key | Description                                                                                                                                   | Data type |
-| - |-----------------------------------------------------------------------------------------------------------------------------------------------| - |
-| `group_heading` | **Overview group heading**<br/>Styling for the group level if grouping is activated<br/>See [Overview group heading](#overview-group-heading) | object |
-| `table` | **Overview table**<br/>See [Overview table](#overview-table)                                                                                  | object |
+| Key | Description | Data type |
+| - | - | - |
+| `group_heading` | **Overview group heading**<br/>Styling for the group label if grouping is activated<br/>See [Overview group heading](#overview-group-heading) | object |
+| `table` | **Overview table**<br/>See [Overview table](#overview-table) | object |
 
 ## Overview group heading
 
-Styling for the group level if grouping is activated
+Styling for the group label if grouping is activated
 
 Key: `group_heading`
 
@@ -942,6 +971,28 @@ Key: `item_level_x`
 | - | - | - |
 | … | See [Font properties](#font-properties) |  |
 | … | See [Margin properties](#margin-properties) |  |
+
+## The dates block in the hero
+
+Key: `dates`
+
+Example:
+
+```yaml
+heading:
+  spacing: 10
+  max_height: 20
+  size: 32
+  color: 414d5f
+  styles:
+    - bold
+```
+
+| Key | Description | Data type |
+| - | - | - |
+| `max_height` | **Maximum height of the block**<br/>A number >= 0 and an optional unit<br/>Example: `30` | number or string<br/>See [Units](#units) |
+| `spacing` | **Minimum spacing between dates and subheading**<br/>A number >= 0 and an optional unit<br/>Example: `10` | number or string<br/>See [Units](#units) |
+| … | See [Font properties](#font-properties) |  |
 
 ## The first block in the hero
 

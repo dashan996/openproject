@@ -23,7 +23,7 @@ ms:
   plugin_openproject_reporting:
     name: "Pelaporan OpenProject"
     description: "Plugin ini membenarkan untuk mencipta laporan kos tersuai dengan penyaring dan pengumpulan yang dibuat oleh plugin Masa dan kos OpenProject."
-  button_save_report_as: "Save report as..."
+  button_save_report_as: "Simpan laporan sebagai..."
   comments: "Komen"
   cost_reports_title: "Masa dan kos"
   label_cost_report: "Laporan kos"
@@ -45,6 +45,8 @@ ms:
   label_greater: ">"
   label_is_not_project_with_subprojects: "adalah tidak (termasuk subprojek)"
   label_is_project_with_subprojects: "adalah (termasuk subprojek)"
+  label_is_work_package_with_descendants: "is (includes descendants)"
+  label_is_not_work_package_with_descendants: "is not (includes descendants)"
   label_work_package_attributes: "Atribut pakej kerja"
   label_less: "<"
   label_logged_by_reporting: "Dilog oleh"
@@ -87,12 +89,15 @@ ms:
   validation_failure_integer: "bukan integer yang sah"
   export:
     timesheet:
-      title: "Your PDF timesheet export"
-      button: "Export PDF timesheet"
-      timesheet: "Timesheet"
-      time: "Time"
+      title: "Eksport helaian masa PDF anda"
+      button: "Eksport lembaran masa PDF"
+      timesheet: "Lembaran masa"
+      time: "Masa"
+      sum_hours: Sum
     cost_reports:
       title: "Eksport Laporan Kos XLS anda"
+      start_time: "Start time"
+      end_time: "End time"
   reporting:
     group_by:
       selected_columns: "Kolum terpilih"

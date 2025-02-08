@@ -45,6 +45,19 @@ module Redmine
           .sort
     end
 
+    def self.start_of_week
+      case Setting.start_of_week.to_i
+      when 1
+        :monday
+      when 7
+        :sunday
+      when 6
+        :saturday
+      else
+        Date.beginning_of_week
+      end
+    end
+
     def self.valid_languages
       all_languages & (Setting.available_languages + [Setting.default_language])
     end
@@ -170,6 +183,21 @@ module Redmine
       # of a current time.
       # https://github.com/rails/rails/issues/7297
       "UTC#{user.time_zone.now.formatted_offset}"
+    end
+
+    ##
+    # Formats an ActiveSupport::TimeZone object into a user-friendly string.
+    # @param time_zone [ActiveSupport::TimeZone] The time zone to format.
+    # @return [String] The formatted time zone string.
+    def friendly_timezone_name(time_zone)
+      tz_info = time_zone.tzinfo
+
+      if tz_info.canonical_zone.name == "Etc/UTC"
+        "UTC"
+      else
+        friendly_names = ActiveSupport::TimeZone::MAPPING.select { |_, v| v == tz_info.canonical_zone.name }.keys.sort
+        "(UTC#{ActiveSupport::TimeZone.seconds_to_utc_offset(tz_info.base_utc_offset)}) #{friendly_names.join(', ')}"
+      end
     end
 
     def day_name(day)

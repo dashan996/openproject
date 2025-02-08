@@ -31,15 +31,14 @@
 require "spec_helper"
 
 RSpec.describe "Work package reminder modal",
-               :js,
-               :with_cuprite do
+               :js do
   let!(:project) { create(:project) }
   let!(:work_package) { create(:work_package, project:) }
   let!(:role_that_allows_managing_own_reminders) do
-    create(:project_role, permissions: %i[view_work_packages manage_own_reminders])
+    create(:project_role, permissions: %i[view_work_packages])
   end
   let!(:role_that_does_not_allow_managing_own_reminders) do
-    create(:project_role, permissions: %i[view_work_packages])
+    create(:project_role, permissions: %i[view_project])
   end
 
   let!(:user_with_permissions) do
@@ -379,6 +378,21 @@ RSpec.describe "Work package reminder modal",
 
     it "does not render the reminder button when visiting the work package page" do
       work_package_page.visit!
+      work_package_page.expect_no_reminder_button
+    end
+  end
+
+  context "with anonymous user with role that can view work packages", with_settings: { login_required: false } do
+    before do
+      ProjectRole.anonymous.add_permission! :view_work_packages
+      project.update!(public: true)
+    end
+
+    current_user { User.anonymous }
+
+    it "does not render the reminder button when visiting the work package page" do
+      work_package_page.visit!
+      work_package_page.ensure_loaded
       work_package_page.expect_no_reminder_button
     end
   end

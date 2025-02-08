@@ -106,14 +106,16 @@ You will then be prompted to select a file (or multiple files) on your computer 
 
 Alternatively, you can also simply drag a file or folder from your computer to the drag zone that will appear under the name of your Nextcloud file storage.
 
-Once you have selected or dropped the files you would like to upload, you will need to select a folder on Nextcloud to which they should be stored.
+Once you have selected or dropped the files you would like to upload, you will need to select a folder on Nextcloud to which they should be added. 
 
 > [!TIP]
 > The default project that opens in the location picker is defined by the project administrators in the [File storages settings](../../projects/project-settings/files/).
 
 ![Select the destination folder on Nextcloud](NC_12.5-selectLocationToUploadTo.png)
 
-You can click on folders you see to navigate to them. A helpful breadcrumb shows you where you are in the folder hierarchy.
+You can click on folders you see to navigate to them. A helpful breadcrumb shows you where you are in the folder hierarchy. 
+
+You can also directly create a new folder by clicking the **New folder** button on the left. 
 
 To navigate one level up or to go back to the root, simply click on the relevant parent in the breadcrumb.
 

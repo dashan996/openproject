@@ -41,6 +41,14 @@ module BreadcrumbHelper
     end
   end
 
+  def nested_breadcrumb_element(section_header, title)
+    output = "".html_safe
+    output << "#{section_header}: "
+    output << content_tag(:strong, title)
+
+    output
+  end
+
   def breadcrumb_paths(*args)
     if args.empty?
       @breadcrumb_paths ||= [default_breadcrumb]

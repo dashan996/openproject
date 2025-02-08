@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector } from '@angular/core';
 import { InjectField } from 'core-app/shared/helpers/angular/inject-field.decorator';
-import { TimeEntryEditService } from 'core-app/shared/components/time_entries/edit/edit.service';
 import { I18nService } from 'core-app/core/i18n/i18n.service';
 import { ToastService } from 'core-app/shared/components/toaster/toast.service';
 import {
@@ -9,6 +8,8 @@ import {
 import { ApiV3Service } from 'core-app/core/apiv3/api-v3.service';
 import { TimeEntryResource } from 'core-app/features/hal/resources/time-entry-resource';
 import { Observable, switchMap } from 'rxjs';
+import { PathHelperService } from 'core-app/core/path-helper/path-helper.service';
+import { TurboRequestsService } from 'core-app/core/turbo/turbo-requests.service';
 
 @Component({
   selector: 'opce-time-entry-trigger-actions',
@@ -27,12 +28,11 @@ import { Observable, switchMap } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     HalResourceEditingService,
-    TimeEntryEditService,
+    PathHelperService,
+    TurboRequestsService,
   ],
 })
 export class TriggerActionsEntryComponent {
-  @InjectField() readonly timeEntryEditService:TimeEntryEditService;
-
   @InjectField() readonly apiv3Service:ApiV3Service;
 
   @InjectField() readonly toastService:ToastService;
@@ -42,6 +42,10 @@ export class TriggerActionsEntryComponent {
   @InjectField() i18n!:I18nService;
 
   @InjectField() readonly cdRef:ChangeDetectorRef;
+
+  @InjectField() readonly pathHelper:PathHelperService;
+
+  @InjectField() readonly turboRequestService:TurboRequestsService;
 
   public text = {
     edit: this.i18n.t('js.button_edit'),
@@ -54,18 +58,18 @@ export class TriggerActionsEntryComponent {
   }
 
   editTimeEntry() {
-    void this
-      .loadEntry()
-      .subscribe((entry) => {
-        this.timeEntryEditService
-          .edit(entry)
-          .then(() => {
-            window.location.reload();
-          })
-          .catch(() => {
-            // User canceled the modal
-          });
+    void this.loadEntry().subscribe((entry:TimeEntryResource) => {
+      document.addEventListener('dialog:close', (event:CustomEvent) => {
+        const { detail: { dialog, submitted } } = event as { detail:{ dialog:HTMLDialogElement, submitted:boolean } };
+        if (dialog.id === 'time-entry-dialog' && submitted) {
+          window.location.reload();
+        }
       });
+      void this.turboRequestService.request(
+        this.pathHelper.timeEntryEditDialog(entry.id as string),
+        { method: 'GET' },
+      );
+    });
   }
 
   deleteTimeEntry() {

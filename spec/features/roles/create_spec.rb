@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Role creation", :js, :with_cuprite do
+RSpec.describe "Role creation", :js do
   let!(:admin) { create(:admin) }
   let!(:existing_role) { create(:project_role) }
   let!(:existing_workflow) { create(:workflow_with_default_status, role: existing_role, type:) }

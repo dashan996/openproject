@@ -1,15 +1,17 @@
 ja:
   plugin_openproject_ldap_groups:
-    name: "OpenProject LDAP groups"
-    description: "Synchronization of LDAP group memberships."
+    name: "OpenProject LDAP グループ"
+    description: "LDAP グループメンバシップの同期。"
   activerecord:
     attributes:
       ldap_groups/synchronized_group:
         dn: 'DN'
+        auth_source: 'Auth source'
         ldap_auth_source: 'LDAP 接続'
         sync_users: 'ユーザーを同期'
       ldap_groups/synchronized_filter:
         filter_string: 'LDAPフィルタ'
+        auth_source: 'Auth source'
         ldap_auth_source: 'LDAP 接続'
         group_name_attribute: "グループ名属性"
         sync_users: 'ユーザーを同期'

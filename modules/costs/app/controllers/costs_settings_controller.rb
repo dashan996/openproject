@@ -27,5 +27,5 @@
 #++
 
 class CostsSettingsController < Admin::SettingsController
-  menu_item :admin_costs
+  menu_item :costs_settings
 end

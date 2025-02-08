@@ -63,7 +63,7 @@ class Members::IndexPageHeaderComponent < ApplicationComponent
 
     if @query && query_name
       if menu_header.present?
-        I18n.t("menus.breadcrumb.nested_element", section_header: menu_header, title: query_name).html_safe
+        helpers.nested_breadcrumb_element(menu_header, query_name)
       else
         query_name
       end

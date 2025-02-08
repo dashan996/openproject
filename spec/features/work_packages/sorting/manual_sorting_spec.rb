@@ -29,7 +29,7 @@
 require "spec_helper"
 require "features/work_packages/work_packages_page"
 
-RSpec.describe "Manual sorting of WP table", :js do
+RSpec.describe "Manual sorting of WP table", :js, :selenium do
   let(:user) { create(:admin) }
   let(:wp_table) { Pages::WorkPackagesTable.new(project) }
 

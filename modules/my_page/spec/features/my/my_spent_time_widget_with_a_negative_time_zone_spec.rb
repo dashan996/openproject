@@ -100,7 +100,7 @@ RSpec.describe "My spent time widget with a negative time zone", :js,
 
     aggregate_failures("when clicking a day, time entry day is set to the day clicked (Thursday)") do
       find(".fc-day-thu .te-calendar--add-entry", visible: false).click
-      time_logging_modal.has_field_with_value "spentOn", thursday.iso8601
+      time_logging_modal.has_field_with_value "spent_on", thursday.iso8601
     end
   end
 end

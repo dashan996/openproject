@@ -357,10 +357,10 @@ it:
           learn_about: "Scopri di più sulle nuove funzionalità"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_1":
+          "15_2":
             standard:
               new_features_html: >
-                Questa versione offre varie funzionalità e miglioramenti, ad esempio <br> <ul class="%{list_styling_class}"> <li>Campi personalizzati di tipo gerarchia (componente aggiuntivo Enterprise).</li> <li>Riprogettazione della scheda Relazioni nelle macro-attività.</li> <li>Riprogettazione della pagina indice Riunioni.</li> <li>Interruzioni di pagina manuali nelle esportazioni dei PDF delle macro-attività.</li> <li>Modalità Zen per gli elenchi di progetti.</li> </ul>
+                Questa versione offre diverse funzionalità e miglioramenti, ad esempio <br> <ul class="%{list_styling_class}"> <li>Impostare dei promemoria per le macro-attività per generare notifiche di avviso di data.</li> <li>Creare nuove cartelle direttamente dal selettore di posizione per l'archiviazione dei file.</li> <li>Specificare un ritardo necessario tra i successori e i predecessori delle macro-attività.</li> <li>Abilitare l'ordinamento e il raggruppamento per le macro-attività in base ai valori della gerarchia di tipo dei campi personalizzati.</li> <li>Esportare le voci temporali come fogli presenze in PDF.</li> <li>Aggiungere un pop-up che mostra le informazioni dell'utente quando ci si passa su il mouse.</li> </ul>
     ical_sharing_modal:
       title: "Iscriviti al calendario"
       inital_setup_error_message: "Si è verificato un errore recuperando i dati."
@@ -621,15 +621,15 @@ it:
         prioritized: "Assegnata priorità"
         dateAlert: "Avviso data"
         shared: "Condiviso"
-        reminder: "Reminder"
+        reminder: "Promemoria"
       date_alerts:
         milestone_date: "Data inizio"
         overdue: "In ritardo"
-        overdue_since: "da %{difference_in_days}"
-        property_today: "è oggi"
-        property_is: "tra %{difference_in_days}"
-        property_was: "era %{difference_in_days} fa"
-        property_is_deleted: "è eliminato"
+        overdue_since: "since %{difference_in_days}."
+        property_today: "is today."
+        property_is: "is in %{difference_in_days}."
+        property_was: "was %{difference_in_days} ago."
+        property_is_deleted: "is deleted."
         upsale:
           title: "Avvisi data"
           description: "Con gli avvisi sulle date, sarai avvisato delle prossime date di inizio o di fine in modo da non perdere mai o dimenticare una scadenza importante."
@@ -655,7 +655,7 @@ it:
           message: "Ci sono nuove notifiche."
           link_text: "Clicca qui per caricarli."
       reminders:
-        note: "Note: “%{note}”"
+        note: "Nota: \"%{note}\""
       settings:
         change_notification_settings: 'Puoi modificare le tue <a target="_blank" href="%{url}">impostazioni di notifica</a> per assicurarti di non perderti mai un aggiornamento importante.'
         title: "Impostazioni notifiche"
@@ -743,7 +743,7 @@ it:
         immediate:
           title: "Inviami un promemoria email"
           mentioned: "Subito quando qualcuno mi @menziona"
-          personal_reminder: "Immediately when I receive a personal reminder"
+          personal_reminder: "Immediatamente quando ricevo un promemoria personale"
         alerts:
           title: "Avvisi email per altri elementi (che non sono macro-attività)"
           explanation: >
@@ -1044,11 +1044,11 @@ it:
           duplicate_query_title: "Il nome di questa vista è già esistente. Cambiarlo comunque?"
         text_no_results: "Nessuna vista corrispondente trovata."
       reminders:
-        button_label: "Set reminder"
+        button_label: "Imposta promemoria"
         title:
-          new: "Set reminder"
-          edit: "Edit reminder"
-        subtitle: "You will receive a notification for this work package at the chosen time."
+          new: "Imposta promemoria"
+          edit: "Modifica promemoria"
+        subtitle: "Riceverai una notifica per questa macro-attività all'ora scelta."
       scheduling:
         is_parent: "Le date di questa macro-attività vengono automaticamente dedotte dai suoi figli. Attiva 'Programmazione manuale' per impostare le date."
         is_switched_from_manual_to_automatic: "Potrebbe essere necessario ricalcolare le date di questa macro-attività dopo il passaggio dalla programmazione manuale alla programmazione automatica a causa delle relazioni con altre macro-attività."

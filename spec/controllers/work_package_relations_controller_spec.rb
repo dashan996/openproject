@@ -117,7 +117,7 @@ RSpec.describe WorkPackageRelationsController do
       new_relation = Relation.last
 
       expect(WorkPackageRelationsTab::IndexComponent).to have_received(:new)
-        .with(work_package:, relations: [relation, new_relation], children:, scroll_to_id: unrelated_work_package.id)
+        .with(work_package:, relation_to_scroll_to: new_relation)
       expect(controller).to have_received(:replace_via_turbo_stream)
         .with(component: an_instance_of(WorkPackageRelationsTab::IndexComponent))
     end
@@ -142,7 +142,7 @@ RSpec.describe WorkPackageRelationsController do
       expect(response).to be_successful
 
       expect(WorkPackageRelationsTab::IndexComponent).to have_received(:new)
-        .with(work_package:, relations: [relation], children:)
+        .with(work_package:)
       expect(controller).to have_received(:replace_via_turbo_stream)
         .with(component: an_instance_of(WorkPackageRelationsTab::IndexComponent))
     end
@@ -160,7 +160,7 @@ RSpec.describe WorkPackageRelationsController do
       expect(response).to be_successful
 
       expect(WorkPackageRelationsTab::IndexComponent).to have_received(:new)
-        .with(work_package:, relations: [], children:)
+        .with(work_package:)
       expect(controller).to have_received(:replace_via_turbo_stream)
         .with(component: an_instance_of(WorkPackageRelationsTab::IndexComponent))
       expect { relation.reload }.to raise_error(ActiveRecord::RecordNotFound)

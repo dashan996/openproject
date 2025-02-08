@@ -33,14 +33,14 @@ ja:
             labels:
               invalid_schema: "must be an array of hashes with keys: color, title"
   project_module_gitlab: "GitLab"
-  permission_show_gitlab_content: "Show GitLab content"
+  permission_show_gitlab_content: "GitLabのコンテンツを表示する"
   gitlab_integration:
     merge_request_opened_comment: >
-      **MR Opened:** Merge request %{mr_number} [%{mr_title}](%{mr_url}) for [%{repository}](%{repository_url}) has been opened by [%{gitlab_user}](%{gitlab_user_url}).
+      **オープン：** [%{gitlab_user}](%{gitlab_user_url})によって[%{repository}](%{repository_url})へのマージリクエスト%{mr_number}[%{mr_title}](%{mr_url})がオープンされました。
     merge_request_closed_comment: >
-      **MR Closed:** Merge request %{mr_number} [%{mr_title}](%{mr_url}) for [%{repository}](%{repository_url}) has been closed by [%{gitlab_user}](%{gitlab_user_url}).
+      **クローズ：** [%{gitlab_user}](%{gitlab_user_url})によって[%{repository}](%{repository_url})へのマージリクエスト%{mr_number}[%{mr_title}](%{mr_url})がクローズされました。
     merge_request_merged_comment: >
-      **MR Merged:** Merge request %{mr_number} [%{mr_title}](%{mr_url}) for [%{repository}](%{repository_url}) has been merged by [%{gitlab_user}](%{gitlab_user_url}).
+      **マージ済み：** [%{gitlab_user}](%{gitlab_user_url})によって[%{repository}](%{repository_url})へのマージリクエスト%{mr_number}[%{mr_title}](%{mr_url})がマージされました。
     merge_request_reopened_comment: >
       **MR Reopened:** Merge request %{mr_number} [%{mr_title}](%{mr_url}) for [%{repository}](%{repository_url}) has been reopened by [%{gitlab_user}](%{gitlab_user_url}).
     note_commit_referenced_comment: >

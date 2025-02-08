@@ -3,7 +3,6 @@ require_relative "../shared_two_factor_examples"
 
 RSpec.describe "Login with 2FA remember cookie",
                :js,
-               :with_cuprite,
                with_settings: {
                  plugin_openproject_two_factor_authentication: {
                    active_strategies: [:developer],

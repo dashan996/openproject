@@ -8,6 +8,7 @@ ru:
         url: 'URL-адрес загрузки'
         secret: 'Секретный ключ-подпись'
         events: 'События'
+        enabled: 'Включено'
         projects: 'Доступные проекты'
       webhooks/log:
         event_name: 'Название события'

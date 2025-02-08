@@ -54,7 +54,7 @@ RSpec.describe Reminders::BaseContract do
 
       before do
         mock_permissions_for(user) do |mock|
-          mock.allow_in_project(:manage_own_reminders, project: reminder.remindable.project)
+          mock.allow_in_project(:view_work_packages, project: reminder.remindable.project)
         end
       end
 
@@ -66,6 +66,18 @@ RSpec.describe Reminders::BaseContract do
 
       it_behaves_like "contract is invalid", base: :error_unauthorized
     end
+  end
+
+  describe "anonymous user" do
+    let(:user) { build_stubbed(:anonymous) }
+
+    before do
+      mock_permissions_for(user) do |mock|
+        mock.allow_in_project(:view_work_packages, project: reminder.remindable.project)
+      end
+    end
+
+    it_behaves_like "contract is invalid", base: :error_unauthorized
   end
 
   describe "validate creator exists" do

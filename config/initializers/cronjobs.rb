@@ -65,6 +65,10 @@ Rails.application.config.after_initialize do
       "Ldap::SynchronizationJob": {
         cron: "30 23 * * *",
         class: Ldap::SynchronizationJob.name
+      },
+      "RecurringMeetings::InitNextOccurrenceWatchdogJob": {
+        cron: "11 05 * * *",
+        class: RecurringMeetings::InitNextOccurrenceWatchdogJob.name
       }
     }
   )

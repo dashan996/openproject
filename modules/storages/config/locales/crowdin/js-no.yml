@@ -43,7 +43,7 @@
           Den automatisk administrerte prosjektmappen ble ikke funnet ennå. Vent litt, last siden på nytt for å hente nyeste data, og prøv på nytt.
         managed_project_folder_no_access: >
           Du har ikke tilgang til den administrerte prosjektmappen. Vennligst vent litt og prøv igjen.
-        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols.
+        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols and make sure the folder does not exist already.
         upload_keep_both: "Behold begge"
         upload_replace: "Erstatt"
       file_links:

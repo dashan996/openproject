@@ -47,11 +47,9 @@ See COPYRIGHT and LICENSE files for more details.
         t(:button_edit)
       end
     end
-    watcher_button_args = watcher_button_arguments(@news, User.current)
-    header.with_action_button(**watcher_button_args) do |button|
-      button.with_leading_visual_icon(icon: watcher_button_args[:mobile_icon])
-      watcher_button_args[:mobile_label]
-    end
+
+    watcher_action_button(header, @news)
+
     if User.current.allowed_in_project?(:manage_news, @project)
       header.with_action_button(scheme: :danger,
                                 tag: :a,

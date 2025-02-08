@@ -63,6 +63,10 @@ module Pages::StructuredMeeting
       end
     end
 
+    def expect_modal(...)
+      expect(page).to have_modal(...)
+    end
+
     def expect_no_add_form
       expect(page).not_to have_test_selector("#meeting-agenda-items-form-component")
     end
@@ -204,11 +208,11 @@ module Pages::StructuredMeeting
 
     def open_participant_form
       page.find_test_selector("manage-participants-button").click
-      expect(page).to have_css("#edit-participants-dialog")
+      expect_modal("Participants")
     end
 
     def in_participant_form(&)
-      page.within("#edit-participants-dialog", &)
+      page.within_modal("Participants", &)
     end
 
     def expect_participant(participant, invited: false, attended: false, editable: true)
@@ -217,8 +221,17 @@ module Pages::StructuredMeeting
       expect(page).to have_field(id: "checkbox_attended_#{participant.id}", checked: attended, disabled: !editable)
     end
 
+    def expect_participant_invited(participant, invited: true)
+      expect(page).to have_text(participant.name)
+      expect(page).to have_field(id: "checkbox_invited_#{participant.id}", checked: invited)
+    end
+
     def invite_participant(participant)
-      check(id: "checkbox_invited_#{participant.id}")
+      id = "checkbox_invited_#{participant.id}"
+      retry_block do
+        check(id:)
+        raise "Expected #{participant.id} to be invited now" unless page.has_checked_field?(id:)
+      end
     end
 
     def expect_available_participants(count:)
@@ -248,11 +261,13 @@ module Pages::StructuredMeeting
     end
 
     def add_section(&)
-      page.within("#meeting-agenda-items-new-button-component") do
-        click_on I18n.t(:button_add)
-        click_on "Section"
-        # wait for the disabled button, indicating the turbo streams are applied
-        expect(page).to have_css("#meeting-agenda-items-new-button-component button[disabled='disabled']")
+      retry_block do
+        page.within("#meeting-agenda-items-new-button-component") do
+          click_on I18n.t(:button_add)
+          click_on "Section"
+          # wait for the disabled button, indicating the turbo streams are applied
+          expect(page).to have_css("#meeting-agenda-items-new-button-component button[disabled='disabled']")
+        end
       end
 
       in_latest_section_form(&)

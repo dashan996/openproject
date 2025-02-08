@@ -300,4 +300,9 @@ module WorkPackage::PDFExport::Common::Common
       height, color
     )
   end
+
+  def start_new_page_if_needed
+    is_first_on_page = pdf.bounds.absolute_top - pdf.y < 10
+    pdf.start_new_page unless is_first_on_page
+  end
 end

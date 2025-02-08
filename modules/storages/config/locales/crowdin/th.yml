@@ -3,6 +3,8 @@ th:
     attributes:
       storages/file_link:
         origin_id: Origin Id
+      storages/project_storage:
+        storage: Storage
       storages/storage:
         creator: Creator
         drive: Drive ID
@@ -72,6 +74,7 @@ th:
         confirmation_text: Please, confirm you understand and want to remove this file storage from this project
         heading_text: Remove project from %{storage}
         text: This action is irreversible and will remove all links from work packages of this project to files and folders of that storage.
+        title: Remove project from storage
       label: Remove project
   services:
     attributes:
@@ -344,7 +347,7 @@ th:
         title: Integration setup completed
       timeout:
         link_text: health status of the file storage setup
-        subtitle: OpenProject could not provide you access to the project folder within the expected period of time. Please, try once again.<br><br> If that problem persists please contact your OpenProject administrator to check the %{storages_health_link}.
+        subtitle: OpenProject could not provide you access to the project folder within the expected period of time. Please, try once again.<br><br> If that problem persists please contact your OpenProject administrator to check %{storages_health_link}.
       waiting:
         subtitle: One moment please, this might take some time...
         title: We are setting up your permissions on the project folder.

@@ -6,10 +6,12 @@ pt-PT:
     attributes:
       ldap_groups/synchronized_group:
         dn: 'DN'
+        auth_source: 'Fonte de autenticação'
         ldap_auth_source: 'Ligação LDAP'
         sync_users: 'Sincronizar utilizadores'
       ldap_groups/synchronized_filter:
         filter_string: 'Filtro LDAP'
+        auth_source: 'Fonte de autenticação'
         ldap_auth_source: 'Ligação LDAP'
         group_name_attribute: "Atributo nome do grupo"
         sync_users: 'Sincronizar utilizadores'

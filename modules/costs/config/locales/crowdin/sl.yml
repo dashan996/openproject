@@ -33,6 +33,7 @@ sl:
       cost_type:
         unit: "Ime enote"
         unit_plural: "Pluralizirano ime enote"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Porabljene enote"
         labor_costs: "Stroški dela"
@@ -44,6 +45,16 @@ sl:
         rate: "Stopnja"
       user:
         default_rates: "Privzeti tečaj"
+      time_entry:
+        project: Project
+        user: User
+        work_package: Work package
+        hours: Ure
+        comments: Comment
+        activity: Aktivnost
+        spent_on: Datum
+        start_time: Start time
+        end_time: Finish time
     models:
       cost_type:
         one: "Vrsta stroška"
@@ -53,6 +64,8 @@ sl:
       rate: "Stopnja"
     errors:
       models:
+        time_entry:
+          invalid_time: "must be between 00:00 and 23:59."
         work_package:
           is_not_a_valid_target_for_cost_entries: "Delovni paket #%{id} ni veljaven cilj za prerazporeditev vnosov stroškov."
           nullify_is_not_valid_for_cost_entries: "Vnosa stroškov ni mogoče dodeliti projektu."
@@ -67,6 +80,7 @@ sl:
     fixed_date: "Fiksen datum"
   button_add_rate: "Vnesi tečaj"
   button_log_costs: "Stroški enote dnevnika"
+  button_log_time: "Log"
   caption_booked_on_project: "Rezervirano na projektu"
   caption_default: "Privzeto"
   caption_default_rate_history_for: "Zgodovina privzetih tečajev za %{user}"
@@ -78,6 +92,7 @@ sl:
   caption_save_rate: "Shrani tečaj"
   caption_set_rate: "Nastavite trenutni tečaj"
   caption_show_locked: "Pokaži zaklenjene enote"
+  caption_log_time_dialog: "Log time"
   description_date_for_new_rate: "Datum novega tečaja"
   group_by_others: "ni v nobeni skupini"
   label_between: "med"
@@ -117,10 +132,12 @@ sl:
   label_until: "do"
   label_valid_from: "Veljavno od"
   label_yes: "Da"
+  placeholder_activity_select_work_package_first: Work package selection is required first
   notice_something_wrong: "nekaj je šlo narobe. Prosim poskusite ponovno."
   notice_successful_restore: "Uspešna obnovitev."
   notice_successful_lock: "Uspešno zaklenjeno."
   notice_cost_logged_successfully: "Stroški na enoto so bili uspešno prijavljeni."
+  notice_different_time_zones: "This user has a different time zone (%{tz}). Time will be logged using their time zone."
   permission_edit_cost_entries: "Uredite rezervirane stroške na enoto"
   permission_edit_own_cost_entries: "Uredite lastne rezervirane stroške na enoto"
   permission_edit_hourly_rates: "Urejanje urnih postavk"
@@ -148,3 +165,7 @@ sl:
   week: "teden"
   js:
     text_are_you_sure: "Ste prepričani?"
+  api_v3:
+    errors:
+      validation:
+        start_time_different_date: "Date part of startTime (%{start_time}) must be the same as the spentOn (%{spent_on}) date."

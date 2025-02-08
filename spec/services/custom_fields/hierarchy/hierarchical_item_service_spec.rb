@@ -31,8 +31,8 @@
 require "spec_helper"
 
 RSpec.describe CustomFields::Hierarchy::HierarchicalItemService do
-  let(:custom_field) { create(:custom_field, field_format: "hierarchy", hierarchy_root: nil) }
-  let(:invalid_custom_field) { create(:custom_field, field_format: "text", hierarchy_root: nil) }
+  let!(:custom_field) { create(:custom_field, field_format: "hierarchy", hierarchy_root: nil) }
+  let!(:invalid_custom_field) { create(:custom_field, field_format: "text", hierarchy_root: nil) }
 
   let!(:root) { service.generate_root(custom_field).value! }
   let!(:luke) { service.insert_item(parent: root, label: "luke", short: "LS").value! }
@@ -89,6 +89,14 @@ RSpec.describe CustomFields::Hierarchy::HierarchicalItemService do
         bob = service.insert_item(parent: root, label: "Bob", sort_order: 1).value!
         expect(root.reload.children).to contain_exactly(luke, bob, leia)
       end
+
+      it "updates the position_cache" do
+        leia = service.insert_item(parent: root, label: "leia").value!
+        expect(root.reload.position_cache).to eq(64)
+
+        service.insert_item(parent: root, label: "Bob", sort_order: 1).value!
+        expect(leia.reload.position_cache).to eq(200)
+      end
     end
 
     context "with invalid item" do
@@ -132,6 +140,13 @@ RSpec.describe CustomFields::Hierarchy::HierarchicalItemService do
         expect(luke).to be_frozen
         expect(CustomField::Hierarchy::Item.count).to eq(1)
         expect(root.reload.children).to be_empty
+      end
+
+      it "updates the position_cache" do
+        result = service.delete_branch(item: luke)
+
+        expect(result).to be_success
+        expect(root.reload.position_cache).to eq(27)
       end
     end
 
@@ -214,6 +229,13 @@ RSpec.describe CustomFields::Hierarchy::HierarchicalItemService do
       expect(luke.reload.ancestors).to contain_exactly(root, lando)
       expect(mara.reload.ancestors).to contain_exactly(root, lando, luke)
     end
+
+    it "updates the position_cache" do
+      service.move_item(item: luke, new_parent: lando)
+
+      preordered_descendants = root.reload.self_and_descendants_preordered.pluck(:label)
+      expect(root.self_and_descendants.reorder(:position_cache).pluck(:label)).to eq(preordered_descendants)
+    end
   end
 
   describe "#reorder_item" do
@@ -274,6 +296,13 @@ RSpec.describe CustomFields::Hierarchy::HierarchicalItemService do
       expect(luke.reload.sort_order).to eq(0)
       expect(lando.reload.sort_order).to eq(1)
       expect(chewbacca.reload.sort_order).to eq(2)
+    end
+
+    it "updates the position_cache" do
+      service.reorder_item(item: chewbacca, new_sort_order: 0)
+
+      preordered_descendants = root.reload.self_and_descendants_preordered.pluck(:label)
+      expect(root.self_and_descendants.reorder(:position_cache).pluck(:label)).to eq(preordered_descendants)
     end
   end
 

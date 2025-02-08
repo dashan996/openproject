@@ -62,7 +62,8 @@ To add a filter criterion, choose one from the drop-down list next to **+ Add fi
 You can add as many filter criteria as needed.
 Also, you can filter by [custom fields](../../../system-admin-guide/custom-fields) if you set this in the custom field configuration.
 
-> **Good to know**: Filtering a work package table will temporarily change the default work package type and default status to the values used in the filters to make newly created work packages visible in the table.
+> [!TIP]
+> Filtering a work package table will temporarily change the default work package type and default status to the values used in the filters to make newly created work packages visible in the table.
 
 ### Filter operators
 
@@ -156,7 +157,8 @@ Clicking the blue **Apply** button will save your changes and display the result
 
 ![sort-work-packages](sort-work-packages.png)
 
-> **Please note**:  If you have the hierarchy mode activated, all filtered table results will be augmented with their ancestors. Hierarchies can be expanded and collapsed.
+> [!NOTE]
+> If you have the hierarchy mode activated, all filtered table results will be augmented with their ancestors. Hierarchies can be expanded and collapsed.
 
 Therefore, the results may differ if you sort in a flat list or in a hierarchy mode.
 
@@ -166,7 +168,7 @@ The same filter applied in the hierarchy mode.
 
 ### Manual sorting of the work package table
 
-You can sort the work package table manually, using the icon with the 6 dots on the left of each work package to drag and drop it.
+You can sort the work package table manually, using the icon with the three dots on the left of each work package to drag and drop it.
 
 Moving a work package will change its attributes, depending on the kind of table displayed, e.g. hierarchy changes or priority.
 
@@ -247,7 +249,8 @@ If you check the public visibility, the view will be saved under your public vie
 
 ![Work-packages-public-views](Work-packages-public-views.png)
 
-**Please note:** The collapse status (collapsed or expanded groups) can not be saved.
+> [!NOTE]
+> The collapse status (collapsed or expanded groups) can not be saved.
 
 ### Change saved work package views
 
@@ -257,4 +260,5 @@ If you make changes to a saved view, e.g. change a filter criteria, you have to 
 
 If you want to save a completely new work package view, again click on the settings and select **Save as...** as described [above](#save-work-package-views).
 
-> **Please note**:  You can't change the default "All open" view. Therefore pressing the disc icon won't have any effect on the default view that is displayed when navigating to the work packages module. You always have to create a new view (filter, group, etc.), set a name and save it (private or public).
+> [!IMPORTANT]
+> You can't change the default "All open" view. Therefore pressing the disc icon won't have any effect on the default view that is displayed when navigating to the work packages module. You always have to create a new view (filter, group, etc.), set a name and save it (private or public).

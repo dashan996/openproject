@@ -37,28 +37,25 @@ RSpec.describe "Timesheet PDF export", :js do
   shared_let(:cost_entry) { create(:cost_entry, user:, work_package:, project:, cost_type:) }
   let(:report_page) { Pages::CostReportPage.new project }
 
-  subject { @download_list.refresh_from(page).latest_download.to_s } # rubocop:disable RSpec/InstanceVariable
-
-  before do
-    @download_list = DownloadList.new
-    login_as(user)
-  end
-
-  after do
-    DownloadList.clear
-  end
+  current_user { user }
 
   it "can download the PDF" do
     report_page.visit!
-    click_on I18n.t("export.timesheet.button")
 
-    expect(page).to have_content I18n.t("job_status_dialog.generic_messages.in_queue"),
-                                 wait: 10
-    perform_enqueued_jobs
+    # The export opens a new tab with the result
+    new_window = window_opened_by do
+      click_on I18n.t("export.timesheet.button")
 
-    expect(page).to have_text(I18n.t("export.succeeded"),
-                              wait: 10)
+      expect(page).to have_content I18n.t("job_status_dialog.generic_messages.in_queue")
 
-    expect(subject).to have_text(".pdf")
+      perform_enqueued_jobs
+
+      expect(page).to have_text(I18n.t("export.succeeded"))
+    end
+
+    # Switching to that tab and checking that the content is a PDF
+    within_window new_window do
+      expect(page.source).to have_css("[type='application/pdf']")
+    end
   end
 end

@@ -100,7 +100,7 @@ RSpec.describe "scheduling mode", :js do
            parent: wp_suc)
   end
   let(:work_packages_page) { Pages::SplitWorkPackage.new(wp, project) }
-
+  let(:activity_tab) { Components::WorkPackages::Activities.new(wp) }
   let(:combined_field) { work_packages_page.edit_field(:combinedDate) }
 
   def expect_dates(work_package, start_date, due_date)
@@ -130,8 +130,13 @@ RSpec.describe "scheduling mode", :js do
 
     work_packages_page.expect_and_dismiss_toaster message: "Successful update."
 
+    # Switch to activity tab and wait for it to load
+    work_packages_page.switch_to_tab(tab: :activity)
+    work_packages_page.wait_for_activity_tab
+
     # Changing the scheduling mode is journalized
-    work_packages_page.expect_activity_message("Manual scheduling activated")
+    activity_tab.expect_journal_changed_attribute(text: "Manual scheduling activated")
+    work_packages_page.switch_to_tab(tab: :overview)
 
     expect_dates(wp, "2016-01-05", "2016-01-10")
     expect(wp.schedule_manually).to be_truthy

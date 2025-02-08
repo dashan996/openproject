@@ -109,7 +109,7 @@ class WorkPackagesController < ApplicationController
   def show_conflict_flash_message
     scheme = params[:scheme]&.to_sym || :danger
 
-    update_flash_message_via_turbo_stream(
+    render_flash_message_via_turbo_stream(
       component: WorkPackages::UpdateConflictComponent,
       scheme:,
       message: I18n.t("notice_locking_conflict_#{scheme}"),

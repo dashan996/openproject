@@ -86,10 +86,6 @@ module AuthenticationHelpers
     RSpec.current_example.metadata[:js]
   end
 
-  def using_cuprite?
-    RSpec.current_example.metadata[:with_cuprite]
-  end
-
   def session_value_for(user)
     { user_id: user.id, updated_at: Time.current }
   end

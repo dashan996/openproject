@@ -28,8 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Project templates", :js, :with_cuprite,
-               with_good_job_batches: [CopyProjectJob, SendCopyProjectStatusEmailJob] do
+RSpec.describe "Project templates", :js, with_good_job_batches: [CopyProjectJob, SendCopyProjectStatusEmailJob] do
   describe "making project a template" do
     let(:project) { create(:project) }
 

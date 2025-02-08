@@ -1,12 +1,8 @@
-<%= component_wrapper do
+<%=
+component_wrapper do
   flex_layout do |flex|
     flex.with_row do
-      render(
-        Primer::Beta::Link.new(
-          font_weight: :semibold,
-          href: principal_show_path,
-        )
-      ) { user.name }
+      helpers.primer_link_to_user(user, font_weight: :semibold, href: principal_show_path)
     end
 
     flex.with_row(classes: "ellipsis") do
@@ -24,7 +20,8 @@
               concat(
                 form_with(url: resend_invite_path, method: :post) do
                   render(Primer::Beta::Button.new(type: :submit, px: 0, scheme: :link)) { I18n.t("sharing.user_details.resend_invite") }
-                end)
+                end
+              )
             end
           end
         else
@@ -35,4 +32,5 @@
       end
     end
   end
-end %>
+end
+%>

@@ -77,7 +77,7 @@ RSpec.describe "subject inplace editor", :js, :selenium do
   end
 
   context "with conflicting modification" do
-    it "shows a conflict when modified elsewhere", with_flag: { primerized_work_package_activities: true } do
+    it "shows a conflict when modified elsewhere" do
       work_package.subject = "Some other subject!"
       work_package.save!
 
@@ -87,15 +87,6 @@ RSpec.describe "subject inplace editor", :js, :selenium do
       wait_for { page }.to have_content(I18n.t("notice_locking_conflict_danger"))
 
       work_packages_page.expect_conflict_error_banner
-    end
-
-    it "shows a conflict when modified elsewhere", with_flag: { primerized_work_package_activities: false } do
-      work_package.subject = "Some other subject!"
-      work_package.save!
-
-      field.display_element.click
-
-      notification.expect_error(I18n.t("api_v3.errors.code_409"))
     end
   end
 end

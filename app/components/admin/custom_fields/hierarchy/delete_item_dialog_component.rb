@@ -34,13 +34,19 @@ module Admin
       class DeleteItemDialogComponent < ApplicationComponent
         include OpTurbo::Streamable
 
-        DIALOG_ID = "op-hierarchy-item--deletion-confirmation"
         TEST_SELECTOR = "op-custom-fields--delete-item-dialog"
 
         def initialize(custom_field:, hierarchy_item:)
           super
           @custom_field = custom_field
           @hierarchy_item = hierarchy_item
+        end
+
+        def form_arguments
+          {
+            action: custom_field_item_path(custom_field_id: @custom_field.id, id: @hierarchy_item.id),
+            method: :delete
+          }
         end
       end
     end

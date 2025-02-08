@@ -66,7 +66,7 @@ ru:
           name: Просмотрщик пакета работ
       project_roles:
         item_0:
-          name: Неучастник
+          name: Новый участник
         item_1:
           name: Аноним
         item_2:
@@ -77,7 +77,7 @@ ru:
           name: Администратор проекта
       global_roles:
         item_0:
-          name: Персонал и менеджер проектов
+          name: Менеджер по персоналу и проектам
         item_1:
           name: Стандартная глобальная роль
     standard:
@@ -98,13 +98,13 @@ ru:
           name: Закрытие
       priorities:
         item_0:
-          name: Низкое
+          name: Низкий
         item_1:
-          name: Обычное
+          name: Обычный
         item_2:
-          name: Высокое
+          name: Высокий
         item_3:
-          name: Срочно
+          name: Немедленно
       projects:
         demo-project:
           name: Демо-проект
@@ -486,7 +486,7 @@ ru:
           name: Другие
       types:
         item_0:
-          name: Задание
+          name: Задача
         item_1:
           name: Веха
         item_2:

@@ -1,7 +1,7 @@
 <%=
   if strategy.manageable?
     modal_content.with_row do
-      render(Shares::InviteUserFormComponent.new(strategy:, errors:, allow_hover_cards:))
+      render(Shares::InviteUserFormComponent.new(strategy:, errors:))
     end
   end
 
@@ -100,15 +100,9 @@
         end
       else
         strategy.shares.each do |share|
-          render(Shares::ShareRowComponent.new(share:, strategy:, container: border_box, allow_hover_cards:))
+          render(Shares::ShareRowComponent.new(share:, strategy:, container: border_box))
         end
       end
-    end
-  end
-
-  if allow_hover_cards
-    modal_content.with_row do
-      helpers.angular_component_tag 'opce-custom-modal-overlay', class: 'op-user-share-modal-overlay'
     end
   end
 %>

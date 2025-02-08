@@ -30,7 +30,9 @@ require "spec_helper"
 require_relative "shared_context"
 require_relative "../support/components/add_existing_pane"
 
-RSpec.describe "Team planner add existing work packages", :js do
+RSpec.describe "Team planner add existing work packages",
+               :js,
+               :selenium do
   include_context "with team planner full access"
 
   let(:closed_status) { create(:status, is_closed: true) }

@@ -32,6 +32,8 @@
 
 class AddWorkPackageNoteService
   include Contracted
+  include Shared::ServiceContext
+
   attr_accessor :user, :work_package
 
   def initialize(user:, work_package:)
@@ -41,7 +43,7 @@ class AddWorkPackageNoteService
   end
 
   def call(notes, send_notifications: nil)
-    Journal::NotificationConfiguration.with send_notifications do
+    in_context(work_package, send_notifications:) do
       work_package.add_journal(user:, notes:)
 
       success, errors = validate_and_yield(work_package, user) do

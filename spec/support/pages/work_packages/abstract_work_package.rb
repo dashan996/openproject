@@ -79,14 +79,10 @@ module Pages
       raise NotImplementedError
     end
 
-    def expect_comment(**args)
-      subselector = args.delete(:subselector)
-
-      retry_block do
-        unless page.has_selector?(".user-comment .message #{subselector}".strip, **args)
-          raise "Failed to find comment with #{args.inspect}. Retrying."
-        end
-      end
+    def wait_for_activity_tab
+      expect(page).to have_test_selector("op-wp-activity-tab", wait: 10)
+      # wait for stimulus js component to be mounted
+      expect(page).to have_css('[data-test-selector="op-wp-activity-tab"][data-stimulus-controller-connected="true"]')
     end
 
     def expect_any_active_inline_edit_field
@@ -115,12 +111,6 @@ module Pages
 
     def ensure_page_loaded
       expect_angular_frontend_initialized
-      unless OpenProject::FeatureDecisions.primerized_work_package_activities_active?
-        expect(page).to have_css(".op-user-activity--user-name",
-                                 text: work_package.journals.last.user.name,
-                                 minimum: 1,
-                                 wait: 10)
-      end
     end
 
     def disable_ajax_requests
@@ -156,18 +146,6 @@ module Pages
     end
 
     alias :expect_attribute_hidden :expect_no_attribute
-
-    def expect_activity(user, number: nil)
-      container = "#work-package-activites-container"
-      container += " #activity-#{number}" if number
-
-      expect(page).to have_css("#{container} .op-user-activity--user-line", text: user.name)
-    end
-
-    def expect_activity_message(message)
-      expect(page).to have_css(".work-package-details-activities-messages .message",
-                               text: message)
-    end
 
     def expect_no_parent
       visit_tab!("relations")
@@ -297,26 +275,8 @@ module Pages
       page.click_button(I18n.t("js.button_edit"))
     end
 
-    def trigger_edit_comment
-      add_comment_container.find(".work-package-comment").click
-    end
-
-    def update_comment(comment)
-      editor = ::Components::WysiwygEditor.new ".work-packages--activity--add-comment"
-      editor.click_and_type_slowly comment
-    end
-
-    def save_comment
-      label = "Comment: Save"
-      add_comment_container.find(:xpath, "//button[@title='#{label}']").click
-    end
-
     def save!
       page.click_button(I18n.t("js.button_save"))
-    end
-
-    def add_comment_container
-      find(".work-packages--activity--add-comment")
     end
 
     def click_add_wp_button

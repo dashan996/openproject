@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "index users", :js, :with_cuprite do
+RSpec.describe "index users", :js do
   shared_let(:user) { create(:admin) }
   shared_let(:other_user) { create(:user) }
 

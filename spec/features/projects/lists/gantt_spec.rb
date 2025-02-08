@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Projects lists page with Gantt menu", :js, :with_cuprite, with_settings: { login_required?: false } do
+RSpec.describe "Projects lists page with Gantt menu", :js, with_settings: { login_required?: false } do
   include Components::Autocompleter::NgSelectAutocompleteHelpers
 
   shared_let(:admin) { create(:admin) }

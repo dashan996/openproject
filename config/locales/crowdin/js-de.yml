@@ -356,10 +356,10 @@ de:
           learn_about: "Erfahren Sie mehr über die neuen Funktionen"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_1":
+          "15_2":
             standard:
               new_features_html: >
-                Die Version bringt verschiedene Funktionen und Verbesserungen für Sie, z.B. <br> <ul class="%{list_styling_class}"> <li>Selbstdefinierte Felder vom Typ Hierarchie (Enterprise Add-on).</li> <li>Neugestaltung des Beziehungen-Tabs in Arbeitspaketen.</li> <li>Neugestaltung der Besprechungen-Indexseite.</li> <li>Manuelle Seitenumbrüche beim PDF-Export von Arbeitspaketen.</li> <li>Zen-Modus für Projektlisten.</li> </ul>
+                Die Version bringt Ihnen verschiedene Funktionen und Verbesserungen, z.B. <br> <ul class="%{list_styling_class}"> <li>Legen Sie Erinnerungen für Arbeitspakete fest, um Benachrichtigungen zu generieren.</li> <li>Erstellen Sie neue Ordner direkt beim Hochladen einer Datei.</li> <li>Legen Sie einen gewünschten Abstand zwischen Nachfolgern und Vorgängern von Arbeitspaketen fest.</li> <li>Aktivieren Sie die Sortierung und Gruppierung von Arbeitspaketen nach ihren Werten für benutzerdefinierte Felder vom Typ Hierarchie.</li> <li>Exportieren Sie Zeiteinträge als PDF-Zeiterfassungsbögen.</li> <li>Nutzen Sie ein Popover mit Benutzerinformationen indem Sie den Mauszeiger über Avatare bewegen.</li> </ul>
     ical_sharing_modal:
       title: "Kalender abonnieren"
       inital_setup_error_message: "Beim Abrufen der Daten ist ein Fehler aufgetreten."
@@ -624,11 +624,11 @@ de:
       date_alerts:
         milestone_date: "Datum des Meilensteins"
         overdue: "Überfällig"
-        overdue_since: "seit %{difference_in_days}"
-        property_today: "ist heute"
-        property_is: "ist in %{difference_in_days}"
-        property_was: "war vor %{difference_in_days}"
-        property_is_deleted: "wurde gelöscht"
+        overdue_since: "seit %{difference_in_days}."
+        property_today: "ist heute."
+        property_is: "ist in %{difference_in_days}."
+        property_was: "war vor %{difference_in_days}."
+        property_is_deleted: "ist gelöscht."
         upsale:
           title: "Datums-Erinnerungen"
           description: "Mit Datums-Erinnerungen werden Sie über bevorstehende Start- oder Endtermine informiert, so dass Sie nie einen wichtigen Termin verpassen oder übersehen."
@@ -742,7 +742,7 @@ de:
         immediate:
           title: "Eine E-Mail Erinnerung an mich senden"
           mentioned: "Sofort, wenn mich jemand @erwähnt"
-          personal_reminder: "Immediately when I receive a personal reminder"
+          personal_reminder: "Sofort, wenn ich eine persönliche Erinnerung erhalte"
         alerts:
           title: "E-Mail-Benachrichtigungen für andere Objekte (die keine Arbeitspakete sind)"
           explanation: >

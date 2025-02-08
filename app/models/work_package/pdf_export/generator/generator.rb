@@ -29,6 +29,7 @@
 #++
 
 require "md_to_pdf/core"
+require "md_to_pdf/hyphen"
 
 module WorkPackage::PDFExport::Generator::Generator
   class MD2PDFGenerator
@@ -65,7 +66,7 @@ module WorkPackage::PDFExport::Generator::Generator
                  .merge(@styles.default_fields)
                  .merge(options)
       doc = parse_frontmatter_markdown(markdown, fields)
-      @hyphens = Text::Hyphen.new(language: options[:language], left: 2, right: 2) if options[:language].present?
+      @hyphens = Hyphen.new(options[:language], true) if options[:language].present?
       render_doc(doc)
     end
 
@@ -89,7 +90,7 @@ module WorkPackage::PDFExport::Generator::Generator
     def hyphenate(text)
       return text if @hyphens.nil?
 
-      @hyphens.visualize(text, Prawn::Text::SHY)
+      @hyphens.hyphenate(text)
     end
 
     def handle_mention_html_tag(tag, node, opts)

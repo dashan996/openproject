@@ -224,9 +224,9 @@ RSpec.describe Project, "customizable" do
                           bool_custom_field.id => true
                         })
 
-        expect(project).not_to be_valid
+        expect(project).not_to be_valid(:saving_custom_fields)
 
-        expect { project.save! }.to raise_error(ActiveRecord::RecordInvalid)
+        expect { project.save!(context: :saving_custom_fields) }.to raise_error(ActiveRecord::RecordInvalid)
       end
 
       it "validates only custom values of a section if section scope is provided while updating" do
@@ -236,7 +236,7 @@ RSpec.describe Project, "customizable" do
                            required_text_custom_field.id => "bar"
                          })
 
-        expect(project).to be_valid
+        expect(project).to be_valid(:saving_custom_fields)
 
         # after a project is created, a new required custom field is added
         # which gets automatically activated for all projects
@@ -245,20 +245,20 @@ RSpec.describe Project, "customizable" do
                project_custom_field_section: another_section)
 
         # thus, the project is invalid in total
-        expect(project.reload).not_to be_valid
-        expect { project.save! }.to raise_error(ActiveRecord::RecordInvalid)
+        expect(project.reload).not_to be_valid(:saving_custom_fields)
+        expect { project.save!(context: :saving_custom_fields) }.to raise_error(ActiveRecord::RecordInvalid)
 
         # but we still want to allow updating other sections without invalid required custom field values
         # by limiting the validation scope to a section temporarily
         project._limit_custom_fields_validation_to_section_id = section.id
 
-        expect(project).to be_valid
+        expect(project).to be_valid(:saving_custom_fields)
 
-        expect { project.save! }.not_to raise_error
+        expect { project.save!(context: :saving_custom_fields) }.not_to raise_error
 
         # Removing the section scoped limitation should result a validation error again.
         project._limit_custom_fields_validation_to_section_id = nil
-        expect { project.save! }.to raise_error(ActiveRecord::RecordInvalid)
+        expect { project.save!(context: :saving_custom_fields) }.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
   end
@@ -312,7 +312,7 @@ RSpec.describe Project, "customizable" do
           bool_custom_field.id => true
         }
 
-        project.save!
+        project.save!(context: :saving_custom_fields)
       end
 
       it_behaves_like "implicitly enabled and saved custom values"
@@ -426,7 +426,7 @@ RSpec.describe Project, "customizable" do
       before do
         project.send(:"custom_field_#{text_custom_field.id}=", "foo")
         project.send(:"custom_field_#{bool_custom_field.id}=", true)
-        project.save!
+        project.save!(context: :saving_custom_fields)
       end
 
       it_behaves_like "implicitly enabled and saved custom values"

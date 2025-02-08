@@ -83,6 +83,18 @@ RSpec.describe API::V3::WorkPackages::Schema::TypedWorkPackageSchema do
     it "finish date is writable" do
       expect(subject).to be_writable(:due_date)
     end
+
+    it "subject is writable" do
+      expect(subject).to be_writable(:subject)
+    end
+
+    context "when the type has automatic subject generation enabled" do
+      let(:type) { create(:type, patterns: { subject: { blueprint: "Hello world", enabled: true } }) }
+
+      it "subject is not writable" do
+        expect(subject).not_to be_writable(:subject)
+      end
+    end
   end
 
   describe "#milestone?" do

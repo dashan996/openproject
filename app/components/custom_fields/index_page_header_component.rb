@@ -39,9 +39,11 @@ class CustomFields::IndexPageHeaderComponent < ApplicationComponent
   end
 
   def breadcrumb_items
-    [{ href: admin_index_path, text: t("label_administration") },
-     I18n.t("menus.breadcrumb.nested_element", section_header: t(:label_custom_field_plural),
-                                               title: I18n.t(currently_selected_tab[:label].to_s)).html_safe]
+    [
+      { href: admin_index_path, text: t("label_administration") },
+      helpers.nested_breadcrumb_element(t(:label_custom_field_plural),
+                                        I18n.t(currently_selected_tab[:label].to_s))
+    ]
   end
 
   def currently_selected_tab

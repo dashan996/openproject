@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # -- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) 2010-2024 the OpenProject GmbH
@@ -28,11 +30,8 @@
 
 require "spec_helper"
 
-RSpec.describe "Projects lists ordering", :js, :with_cuprite, with_settings: { login_required?: false } do
+RSpec.describe "Projects lists ordering", :js, with_settings: { login_required?: false } do
   shared_let(:admin) { create(:admin) }
-
-  shared_let(:manager)   { create(:project_role, name: "Manager") }
-  shared_let(:developer) { create(:project_role, name: "Developer") }
 
   shared_let(:custom_field) { create(:text_project_custom_field) }
   shared_let(:invisible_custom_field) { create(:project_custom_field, admin_only: true) }
@@ -52,7 +51,7 @@ RSpec.describe "Projects lists ordering", :js, :with_cuprite, with_settings: { l
   # first but then reorders in ruby
   shared_let(:child_project_z) { create(:project, parent: project, name: "Z Child") }
 
-  # intentionally written lowercase to test for case insensitive sorting
+  # intentionally written lowercase to test for case-insensitive sorting
   shared_let(:child_project_m) { create(:project, parent: project, name: "m Child") }
 
   shared_let(:child_project_a) { create(:project, parent: project, name: "A Child") }
@@ -272,5 +271,171 @@ RSpec.describe "Projects lists ordering", :js, :with_cuprite, with_settings: { l
     wait_for_reload
 
     projects_page.expect_project_at_place(project, 1)
+  end
+
+  context "when sorting by life cycle", with_flag: { stages_and_gates: true } do
+    let(:stage_def) { create(:project_stage_definition) }
+    let(:stage) do
+      create(:project_stage,
+             project:,
+             definition: stage_def,
+             start_date: Date.new(2025, 1, 1),
+             end_date: Date.new(2025, 1, 13))
+    end
+    let!(:public_stage) do
+      create(:project_stage,
+             project: public_project,
+             definition: stage_def,
+             start_date: Date.new(2025, 2, 12),
+             end_date: Date.new(2025, 2, 20))
+    end
+    let!(:child_stage) do
+      create(:project_stage,
+             project: child_project_m,
+             definition: stage_def,
+             start_date: public_stage.start_date,
+             end_date: public_stage.end_date + 1.day)
+    end
+    let!(:last_stage) do
+      create(:project_stage,
+             project: development_project,
+             definition: stage_def,
+             start_date: public_stage.start_date,
+             end_date: public_stage.end_date + 2.days)
+    end
+
+    let(:gate_def) { create(:project_gate_definition) }
+    let(:gate) do
+      create(:project_gate,
+             project:,
+             definition: gate_def,
+             date: Date.new(2025, 1, 1))
+    end
+    let!(:public_gate) do
+      create(:project_gate,
+             project: public_project,
+             definition: gate_def,
+             date: Date.new(2025, 2, 12))
+    end
+    let!(:child_gate) do
+      create(:project_gate,
+             project: child_project_m,
+             definition: gate_def,
+             date: public_gate.date + 1.day)
+    end
+    let!(:last_gate) do
+      create(:project_gate,
+             project: development_project,
+             definition: gate_def,
+             date: public_gate.date + 2.days)
+    end
+
+    shared_let(:life_cycle_permissions) { %i(view_project view_project_stages_and_gates) }
+    shared_let(:basic_permissions) { %i(view_project) }
+
+    shared_let(:user) do
+      create(:user, member_with_permissions: { project => life_cycle_permissions,
+                                               development_project => life_cycle_permissions,
+                                               child_project_z => basic_permissions,
+                                               child_project_m => basic_permissions,
+                                               child_project_a => basic_permissions,
+                                               public_project => life_cycle_permissions })
+    end
+
+    before do
+      Setting.enabled_projects_columns += [stage.column_name, gate.column_name]
+      visit projects_path
+    end
+
+    context "when sorting by life cycle stage definition" do
+      it "sorts projects by life cycle stage asc" do
+        projects_page.click_table_header_to_open_action_menu(stage.column_name)
+        projects_page.sort_via_action_menu(stage.column_name, direction: :asc)
+        wait_for_reload
+
+        projects_page.expect_project_at_place(project, 1)
+        # For the next three projects, the start date is the same, but the end date differs.
+        # Ensure the end date is used as a secondary sorting criterion:
+        projects_page.expect_project_at_place(public_project, 2)
+        projects_page.expect_project_at_place(child_project_m, 3)
+        projects_page.expect_project_at_place(development_project, 4)
+      end
+
+      it "sorts projects by life cycle stage desc" do
+        projects_page.click_table_header_to_open_action_menu(stage.column_name)
+        projects_page.sort_via_action_menu(stage.column_name, direction: :desc)
+        wait_for_reload
+
+        projects_page.expect_project_at_place(development_project, 3)
+        projects_page.expect_project_at_place(child_project_m, 4)
+        projects_page.expect_project_at_place(public_project, 5)
+        projects_page.expect_project_at_place(project, 6)
+      end
+    end
+
+    context "when sorting by life cycle gate definition" do
+      it "sorts projects by life cycle gate asc" do
+        projects_page.click_table_header_to_open_action_menu(gate.column_name)
+        projects_page.sort_via_action_menu(gate.column_name, direction: :asc)
+        wait_for_reload
+
+        projects_page.expect_project_at_place(project, 1)
+        projects_page.expect_project_at_place(public_project, 2)
+        projects_page.expect_project_at_place(child_project_m, 3)
+        projects_page.expect_project_at_place(development_project, 4)
+      end
+
+      it "sorts projects by life cycle gate desc" do
+        projects_page.click_table_header_to_open_action_menu(gate.column_name)
+        projects_page.sort_via_action_menu(gate.column_name, direction: :desc)
+        wait_for_reload
+
+        projects_page.expect_project_at_place(development_project, 3)
+        projects_page.expect_project_at_place(child_project_m, 4)
+        projects_page.expect_project_at_place(public_project, 5)
+        projects_page.expect_project_at_place(project, 6)
+      end
+    end
+
+    context "when sorting by both stage and gate at once" do
+      it "sorts correctly" do
+        projects_page.click_table_header_to_open_action_menu(gate.column_name)
+        projects_page.sort_via_action_menu(gate.column_name, direction: :asc)
+        wait_for_reload
+
+        projects_page.click_table_header_to_open_action_menu(stage.column_name)
+        projects_page.sort_via_action_menu(stage.column_name, direction: :desc)
+        wait_for_reload
+
+        projects_page.expect_project_at_place(development_project, 3)
+        projects_page.expect_project_at_place(child_project_m, 4)
+        projects_page.expect_project_at_place(public_project, 5)
+        projects_page.expect_project_at_place(project, 6)
+      end
+    end
+
+    context "without permission to view stages and gates" do
+      before do
+        login_as(user)
+        visit projects_path
+      end
+
+      it "does not consider the life cycle dates of projects without permission" do
+        projects_page.click_table_header_to_open_action_menu(gate.column_name)
+        projects_page.sort_via_action_menu(gate.column_name, direction: :desc)
+        wait_for_reload
+
+        projects_page
+          .expect_projects_in_order(child_project_a,
+                                    # child project M has life cycles, but user has no permission
+                                    # to see them. That is why they are ignored for sorting.
+                                    child_project_m,
+                                    child_project_z,
+                                    # Regular life cycle sorting for the remaining projects:
+                                    development_project,
+                                    public_project,
+                                    project)
+      end
+    end
   end
 end

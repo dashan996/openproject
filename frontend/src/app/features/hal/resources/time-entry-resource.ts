@@ -35,7 +35,7 @@ import Formattable = api.v3.Formattable;
 export class TimeEntryResource extends HalResource {
   project:ProjectResource;
 
-  activity:HalResource;
+  activity:HalResource|null;
 
   comment:Formattable;
 

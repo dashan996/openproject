@@ -29,9 +29,9 @@
 # ++
 
 module EnterpriseEdition
-  # Add a general description of component here
-  # Add additional usage considerations or best practices that may aid the user to use the component correctly.
-  # @accessibility Add any accessibility considerations
+  # A banner indicating that a given feature requires the enterprise edition of OpenProject.
+  # This component uses conventional names for translation keys or URL look-ups based on the feature_key passed in.
+  # It will only be rendered if necessary.
   class BannerComponent < ApplicationComponent
     include OpPrimer::ComponentHelpers
 
@@ -50,6 +50,7 @@ module EnterpriseEdition
                    **system_arguments)
       @system_arguments = system_arguments
       @system_arguments[:tag] = "div"
+      @system_arguments[:test_selector] = "op-ee-banner-#{feature_key.to_s.tr('_', '-')}"
       super
 
       @feature_key = feature_key

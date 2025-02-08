@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Work package activity", :js, :with_cuprite do
+RSpec.describe "Work package activity", :js do
   shared_let(:admin) { create(:admin) }
   shared_let(:project) { create(:project) }
 
@@ -46,6 +46,7 @@ RSpec.describe "Work package activity", :js, :with_cuprite do
 
   let(:parent_page) { Pages::FullWorkPackage.new(parent) }
   let(:popover) { Components::WorkPackages::ProgressPopover.new }
+  let(:activity_tab) { Components::WorkPackages::Activities.new(parent) }
 
   current_user { admin }
 
@@ -56,17 +57,16 @@ RSpec.describe "Work package activity", :js, :with_cuprite do
       popover.set_values(work: "100", remaining_time: "5")
       popover.save
       parent_page.expect_and_dismiss_toaster(message: "Successful update.")
+      parent_page.wait_for_activity_tab
     end
 
     it "displays changed attributes in the activity tab", :aggregate_failures do
-      within("activity-entry", text: admin.name) do
-        expect(page).to have_list_item(text: "% Complete set to 95%")
-        expect(page).to have_list_item(text: "Work set to 100h")
-        expect(page).to have_list_item(text: "Remaining work set to 5h")
-        expect(page).to have_list_item(text: "Total work set to 110h")
-        expect(page).to have_list_item(text: "Total remaining work set to 8h")
-        expect(page).to have_list_item(text: "Total % complete set to 93%")
-      end
+      activity_tab.expect_journal_changed_attribute(text: "% Complete set to 95%")
+      activity_tab.expect_journal_changed_attribute(text: "Work set to 100h")
+      activity_tab.expect_journal_changed_attribute(text: "Remaining work set to 5h")
+      activity_tab.expect_journal_changed_attribute(text: "Total work set to 110h")
+      activity_tab.expect_journal_changed_attribute(text: "Total remaining work set to 8h")
+      activity_tab.expect_journal_changed_attribute(text: "Total % complete set to 93%")
     end
   end
 end

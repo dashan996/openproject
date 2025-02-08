@@ -82,7 +82,7 @@ See COPYRIGHT and LICENSE files for more details.
       <% if authorize_for(:meetings, :destroy) %>
         <li>
           <%= link_to(t(:button_delete),
-                      meeting_path(@meeting),
+                      polymorphic_path([@project, @meeting]),
                       class: 'icon-context icon-delete',
                       method: :delete,
                       data: { confirm: t(:text_are_you_sure) }) %>

@@ -67,7 +67,7 @@ namespace :parallel do
   end
 
   def group_option_string(parsed_options)
-    group_options  = parsed_options ? "-n #{parsed_options[:num_cpus]}" : ""
+    group_options  = parsed_options[:num_cpus] ? "-n #{parsed_options[:num_cpus]}" : ""
     group_options += " --only-group #{parsed_options[:group]}" if parsed_options[:group]
 
     group_options

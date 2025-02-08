@@ -72,9 +72,7 @@ class MeetingMailer < UserMailer
 
   def with_attached_ics(meeting, user)
     User.execute_as(user) do
-      call = ::Meetings::ICalService
-        .new(user:, meeting: @meeting)
-        .call
+      call = ics_service_call(meeting, user)
 
       call.on_success do
         attachments["meeting.ics"] = call.result
@@ -85,6 +83,18 @@ class MeetingMailer < UserMailer
       call.on_failure do
         Rails.logger.error { "Failed to create ICS attachment for meeting #{meeting.id}: #{call.message}" }
       end
+    end
+  end
+
+  def ics_service_call(meeting, user)
+    if meeting.recurring?
+      ::RecurringMeetings::ICalService
+        .new(user:, series: meeting.recurring_meeting)
+        .generate_occurrence(meeting.scheduled_meeting)
+    else
+      ::Meetings::ICalService
+        .new(user:, meeting:)
+        .call
     end
   end
 

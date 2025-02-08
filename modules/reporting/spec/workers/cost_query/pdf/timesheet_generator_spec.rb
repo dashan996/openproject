@@ -100,7 +100,7 @@ RSpec.describe CostQuery::PDF::TimesheetGenerator do
      user.name, export_time_formatted].compact
   end
 
-  def expected_first_page_content
+  def expected_starting_content
     [query.name]
   end
 
@@ -118,6 +118,11 @@ RSpec.describe CostQuery::PDF::TimesheetGenerator do
     [page_number, export_date_formatted, query.name]
   end
 
+  def expected_sum_row(row_user, _with_times_column)
+    sum = time_entries.filter { |t_entry| t_entry.user == row_user }.sum(&:hours)
+    [generator.format_hours(sum)]
+  end
+
   def expected_entry_row(t_entry, with_times_column)
     [format_date(t_entry.spent_on)].concat(expected_entry_columns(t_entry, with_times_column))
   end
@@ -125,7 +130,7 @@ RSpec.describe CostQuery::PDF::TimesheetGenerator do
   def expected_entry_columns(t_entry, with_times_column)
     time_column = generator.format_spent_on_time(t_entry)
     [
-      t_entry.work_package.subject,
+      t_entry.work_package&.subject || "",
       with_times_column && time_column.present? ? time_column : nil,
       generator.format_hours(t_entry.hours),
       t_entry.activity.name,
@@ -133,15 +138,27 @@ RSpec.describe CostQuery::PDF::TimesheetGenerator do
     ].compact
   end
 
-  def expected_document(with_times_column)
-    [
-      *expected_cover_page,
-      *expected_first_page_content,
+  def expected_overview_page_content
+    result = [query.name,
+              TimeEntry.human_attribute_name(:user), I18n.t("export.timesheet.sum_hours")]
+    time_entries.group_by(&:user).each do |user, entries|
+      result << user.name
+      result << generator.format_hours(entries.sum(&:hours))
+    end
+    result << generator.format_hours(time_entries.sum(&:hours))
+  end
 
+  def expected_first_user_table(with_times_column)
+    [
       user.name,
       *expected_table_header(with_times_column),
       *expected_entry_row(user_time_entry, with_times_column),
+      *expected_sum_row(user, with_times_column)
+    ]
+  end
 
+  def expected_second_user_table(with_times_column)
+    [
       time_entry.user.name,
       *expected_table_header(with_times_column),
       format_date(time_entry.spent_on), # merged date rows
@@ -149,8 +166,21 @@ RSpec.describe CostQuery::PDF::TimesheetGenerator do
       *expected_entry_columns(other_time_entry, with_times_column),
       *expected_entry_row(time_entry_with_comment, with_times_column),
       *expected_entry_row(time_entry_without_time, with_times_column),
+      *expected_sum_row(time_entry.user, with_times_column)
+    ]
+  end
 
-      *expected_page_footer("2/2")
+  def expected_document(with_times_column)
+    [
+      *expected_cover_page,
+
+      *expected_overview_page_content,
+      *expected_page_footer("2/3"),
+
+      *expected_starting_content,
+      *expected_first_user_table(with_times_column),
+      *expected_second_user_table(with_times_column),
+      *expected_page_footer("3/3")
     ].join(" ")
   end
 

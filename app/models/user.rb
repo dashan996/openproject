@@ -304,16 +304,16 @@ class User < Principal
     end
   end
 
-  # Return user's authentication provider for display
   def authentication_provider
-    return if identity_url.blank?
+    return nil if identity_url.blank?
 
-    identity_url.split(":", 2).first
+    slug = identity_url.split(":", 2).first
+    AuthProvider.find_by(slug:)
   end
 
   # Return user's authentication provider for display
   def human_authentication_provider
-    authentication_provider&.titleize
+    authentication_provider&.display_name
   end
 
   ##

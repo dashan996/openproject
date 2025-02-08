@@ -30,7 +30,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Statuses admin page", :js, :with_cuprite do
+RSpec.describe "Statuses admin page", :js do
   shared_let(:admin) { create(:admin) }
   shared_let(:status_new) { create(:status, name: "New", default_done_ratio: 0, is_default: true) }
   shared_let(:status_in_progress) { create(:status, name: "In Progress", default_done_ratio: 40) }

@@ -6,10 +6,12 @@ ru:
     attributes:
       ldap_groups/synchronized_group:
         dn: 'DN'
+        auth_source: 'Источник аутентификации'
         ldap_auth_source: 'Подключение к LDAP'
         sync_users: 'Синхронизация пользователей'
       ldap_groups/synchronized_filter:
         filter_string: 'Фильтр LDAP'
+        auth_source: 'Источник аутентификации'
         ldap_auth_source: 'Подключение к LDAP'
         group_name_attribute: "Атрибут имени группы"
         sync_users: 'Синхронизация пользователей'

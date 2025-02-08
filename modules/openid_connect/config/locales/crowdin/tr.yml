@@ -80,18 +80,18 @@ tr:
       mapping_admin: >
         Provide a custom mapping in the userinfo response to be used for the admin status. It expects a boolean attribute to be returned.
     settings:
-      metadata_none: I don't have this information
+      metadata_none: Bu bilgiye sahip değilim
       metadata_url: I have a discovery endpoint URL
       endpoint_url: Endpoint URL
     providers:
-      label_providers: "Providers"
+      label_providers: "Sağlayıcılar"
       seeded_from_env: "This provider was seeded from the environment configuration. It cannot be edited."
       google:
         name: Google
       microsoft_entra:
         name: Microsoft Entra
       custom:
-        name: Custom
+        name: Özel
       upsale:
         description: Connect OpenProject to an OpenID connect identity provider
       label_add_new: Yeni bir OpenID sağlayıcı ekle
@@ -99,9 +99,9 @@ tr:
       label_empty_title: No OpenID providers configured yet.
       label_empty_description: Add a provider to see them here.
       label_metadata: OpenID Connect Discovery Endpoint
-      label_automatic_configuration: Automatic configuration
-      label_optional_configuration: Optional configuration
-      label_advanced_configuration: Advanced configuration
+      label_automatic_configuration: Otomatik yapılandırma
+      label_optional_configuration: İsteğe bağlı yapılandırma
+      label_advanced_configuration: Gelişmiş yapılandırma
       label_configuration_details: Metadata
       label_client_details: Client details
       label_attribute_mapping: Attribute mapping

@@ -32,17 +32,24 @@ module Migration
       module_function
 
       def add(having, add)
-        Role
+        added_permission = OpenProject::AccessControl.permission(add)
+
+        role_scope = Role
           .joins(:role_permissions)
           .where(role_permissions: { permission: having.to_s })
           .references(:role_permissions)
-          .find_each do |role|
+
+        role_scope.find_each do |role|
           # Check if the add-permission already exists before adding
-          already_exists = RolePermission
-                             .exists?(role_id: role.id, permission: add.to_s)
-          unless already_exists
-            role.add_permission! add
-          end
+          next if RolePermission.exists?(role_id: role.id, permission: add.to_s)
+
+          # we cannot add permissions that require a member to a non-member role
+          next if added_permission.require_member? && role.builtin == Role::BUILTIN_NON_MEMBER
+
+          # we cannot add permissions that require a logged in user to an anonymous role
+          next if added_permission.require_loggedin? && role.builtin == Role::BUILTIN_ANONYMOUS
+
+          role.add_permission! add
         end
       end
     end

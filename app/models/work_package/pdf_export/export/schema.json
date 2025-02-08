@@ -769,6 +769,45 @@
             }
           ]
         },
+        "html_table" : {
+          "type" : "object",
+          "title" : "HTML table",
+          "x-example" : {
+            "table" : {
+              "auto_width" : true,
+              "header" : {
+                "background_color" : "F0F0F0",
+                "no_repeating" : true,
+                "size" : 12
+              },
+              "cell" : {
+                "background_color" : "000FFF",
+                "size" : 10
+              }
+            }
+          },
+          "properties" : {
+            "auto_width" : {
+              "title" : "Automatic column widths",
+              "description" : "Table columns should fit the content, equal spacing of columns if value is `false`",
+              "type" : "boolean"
+            },
+            "header" : {
+              "$ref" : "#/$defs/table_header"
+            },
+            "cell" : {
+              "$ref" : "#/$defs/table_cell"
+            }
+          },
+          "allOf" : [
+            {
+              "$ref" : "#/$defs/margin"
+            },
+            {
+              "$ref" : "#/$defs/border"
+            }
+          ]
+        },
         "headless_table" : {
           "type" : "object",
           "title" : "Markdown headless table",
@@ -1554,7 +1593,7 @@
       "x-example" : {
         "ordered_list_point" : {
           "template" : "<number>.",
-          "alphabetical" : false,
+          "list_style_type" : "decimal",
           "spacing" : "0.75mm",
           "spanning" : true
         }
@@ -1563,10 +1602,22 @@
         "spacing" : {
           "$ref" : "#/$defs/measurement"
         },
-        "alphabetical" : {
-          "title" : "Alphabetical bullet points",
-          "description" : "Convert the list item number into a character, eg. `a.` `b.` `c.`",
-          "type" : "boolean"
+        "alphabetical": {
+          "title": "Alphabetical bullet points",
+          "description": "(deprecated; use list_style_type) Convert the list item number into a character, eg. `a.` `b.` `c.`",
+          "type": "boolean"
+        },
+        "list_style_type": {
+          "title": "List style type",
+          "description": "The style of the list bullet points, eg. `decimal`, `lower-latin`, `upper-roman`",
+          "type": "string",
+          "enum": [
+            "decimal",
+            "lower-latin",
+            "lower-roman",
+            "upper-latin",
+            "upper-roman"
+          ]
         },
         "spanning" : {
           "title" : "Spanning",

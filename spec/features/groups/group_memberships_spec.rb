@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "group memberships through groups page", :js, :with_cuprite do
+RSpec.describe "group memberships through groups page", :js do
   include Components::Autocompleter::NgSelectAutocompleteHelpers
 
   shared_let(:admin) { create(:admin) }

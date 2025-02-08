@@ -75,6 +75,11 @@ class Enumeration < ApplicationRecord
     end
   end
 
+  # boolean to define if the enumeration can set a default
+  def self.can_have_default_value?
+    true
+  end
+
   # Destroys enumerations in a single transaction
   # It ensures, that the transactions can be safely transferred to each
   # entry's parent

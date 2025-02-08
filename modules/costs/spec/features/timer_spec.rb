@@ -28,7 +28,7 @@
 
 require_relative "../spec_helper"
 
-RSpec.describe "Work Package timer", :js do
+RSpec.describe "Work Package timer", :js, :selenium do
   shared_let(:project) { create(:project_with_types) }
 
   shared_let(:work_package_a) { create(:work_package, subject: "WP A", project:) }
@@ -65,16 +65,15 @@ RSpec.describe "Work Package timer", :js do
 
       time_logging_modal.is_visible true
 
-      time_logging_modal.has_field_with_value "spentOn", Date.current.strftime
+      time_logging_modal.has_field_with_value "spent_on", Date.current.strftime
       time_logging_modal.has_field_with_value "hours", /(\d\.)?\d+/
-      time_logging_modal.work_package_is_missing false
+      time_logging_modal.activity_input_disabled_because_work_package_missing? false
       # wait for available_work_packages query to finish before saving
-      time_logging_modal.expect_work_package(work_package_a.subject)
+      time_logging_modal.expect_work_package(work_package_a)
 
-      time_logging_modal.perform_action "Save"
+      time_logging_modal.submit
       time_logging_modal.is_visible false
 
-      wp_view_a.expect_and_dismiss_toaster message: I18n.t(:notice_successful_update)
       timer_button.expect_inactive
 
       timer_entry.reload
@@ -101,18 +100,17 @@ RSpec.describe "Work Package timer", :js do
       expect(timer_entry.work_package).to eq work_package_a
       expect(timer_entry.hours).to be_nil
 
-      page.within(".spot-modal") { click_button "Stop current timer" }
+      page.within(".spot-modal") { click_on "Stop current timer" }
       time_logging_modal.is_visible true
-      time_logging_modal.has_field_with_value "spentOn", Date.current.strftime
+      time_logging_modal.has_field_with_value "spent_on", Date.current.strftime
       time_logging_modal.has_field_with_value "hours", /(\d\.)?\d+/
-      time_logging_modal.work_package_is_missing false
+      time_logging_modal.activity_input_disabled_because_work_package_missing? false
       # wait for available_work_packages query to finish before saving
-      time_logging_modal.expect_work_package(work_package_a.subject)
+      time_logging_modal.expect_work_package(work_package_a)
 
-      time_logging_modal.perform_action "Save"
+      time_logging_modal.submit
 
       # Closing the modal starts the next timer
-      wp_view_b.expect_and_dismiss_toaster message: I18n.t(:notice_successful_update)
       time_logging_modal.is_visible false
       timer_button.expect_active
 
@@ -130,7 +128,7 @@ RSpec.describe "Work Package timer", :js do
   end
 
   context "when user has permission to log time" do
-    let(:permissions) { %i[log_own_time edit_own_time_entries view_own_time_entries view_work_packages] }
+    let(:permissions) { %i[log_own_time edit_own_time_entries view_own_time_entries view_work_packages view_project] }
 
     it_behaves_like "allows time tracking"
 
@@ -166,42 +164,40 @@ RSpec.describe "Work Package timer", :js do
       expect(page).to have_css(".op-timer-stop-modal")
       expect(page).to have_text("Tracking time:")
 
-      page.within(".spot-modal") { click_button "Stop current timer" }
-      time_logging_modal.is_visible true
-      time_logging_modal.has_field_with_value "spentOn", Date.current.strftime
-      time_logging_modal.has_field_with_value "hours", /(\d\.)?\d+/
-      time_logging_modal.work_package_is_missing false
-      # wait for available_work_packages query to finish before saving
-      time_logging_modal.expect_work_package(work_package_a.subject)
+      page.within(".spot-modal") { click_on "Stop current timer" }
 
-      time_logging_modal.perform_action "Save"
-      wp_view_b.expect_and_dismiss_toaster message: I18n.t(:notice_successful_update)
+      time_logging_modal.is_visible true
+      time_logging_modal.has_field_with_value "spent_on", Date.current.strftime
+      time_logging_modal.has_field_with_value "hours", /(\d\.)?\d+/
+      time_logging_modal.activity_input_disabled_because_work_package_missing? false
+      # wait for available_work_packages query to finish before saving
+      time_logging_modal.expect_work_package(work_package_a)
+
+      time_logging_modal.submit
       time_logging_modal.is_visible false
       timer_button.expect_active
 
       timer_button.stop
       time_logging_modal.is_visible true
-      time_logging_modal.has_field_with_value "spentOn", Date.current.strftime
+      time_logging_modal.has_field_with_value "spent_on", Date.current.strftime
       time_logging_modal.has_field_with_value "hours", /(\d\.)?\d+/
-      time_logging_modal.work_package_is_missing false
+      time_logging_modal.activity_input_disabled_because_work_package_missing? false
       # wait for available_work_packages query to finish before saving
-      time_logging_modal.expect_work_package(work_package_a.subject)
+      time_logging_modal.expect_work_package(work_package_a)
 
-      time_logging_modal.perform_action "Save"
-      wp_view_b.expect_and_dismiss_toaster message: I18n.t(:notice_successful_update)
+      time_logging_modal.submit
       time_logging_modal.is_visible false
       timer_button.expect_inactive
 
       within_window(second_window) do
         timer_button.expect_active
         timer_button.stop
-        wp_view_b.expect_and_dismiss_toaster message: I18n.t("js.timer.timer_already_stopped"), type: :warning
       end
     end
   end
 
   context "when user has no permission to log time" do
-    let(:permissions) { %i[view_work_packages] }
+    let(:permissions) { %i[view_work_packages view_project] }
 
     it "does not show the timer" do
       wp_view_a.visit!
@@ -213,13 +209,13 @@ RSpec.describe "Work Package timer", :js do
   end
 
   context "when user has permission to add, but not edit or view" do
-    let(:permissions) { %i[view_work_packages log_own_time] }
+    let(:permissions) { %i[view_work_packages log_own_time view_project] }
 
     it_behaves_like "allows time tracking"
   end
 
   context "when user has permission to add and view but not edit" do
-    let(:permissions) { %i[view_work_packages log_own_time view_own_logged_time] }
+    let(:permissions) { %i[view_work_packages log_own_time view_own_logged_time view_project] }
 
     it_behaves_like "allows time tracking"
   end

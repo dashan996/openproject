@@ -50,6 +50,15 @@ module API
           schema :spent_on,
                  type: "Date"
 
+          schema :start_time,
+                 type: "DateTime",
+                 required: -> { TimeEntry.must_track_start_and_end_time? },
+                 writable: -> { TimeEntry.can_track_start_and_end_time? }
+
+          schema :end_time,
+                 type: "DateTime",
+                 writable: false
+
           schema :hours,
                  type: "Duration"
 

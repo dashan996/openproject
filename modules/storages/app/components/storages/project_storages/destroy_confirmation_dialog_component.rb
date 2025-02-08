@@ -44,6 +44,10 @@ module Storages::ProjectStorages
       "project-storage-#{@project_storage.id}-destroy-confirmation-dialog"
     end
 
+    def title
+      I18n.t("project_storages.remove_project.dialog.title")
+    end
+
     def heading
       I18n.t("project_storages.remove_project.dialog.heading_text", storage: @storage.name)
     end

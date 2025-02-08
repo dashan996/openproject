@@ -82,7 +82,7 @@ RSpec.describe "Work package overview graph widget on dashboard", :js do
   end
 
   # As a graph is rendered as a canvas, we have limited abilities to test the widget
-  it "can add the widget" do
+  it "can add the widget", :selenium do
     sleep(0.1)
 
     dashboard.add_widget(1, 1, :within, "Work packages overview")

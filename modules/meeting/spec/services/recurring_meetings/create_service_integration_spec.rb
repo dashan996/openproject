@@ -54,11 +54,7 @@ RSpec.describe RecurringMeetings::CreateService, "integration", type: :model do
       }
     end
 
-    it "creates the series, template, and schedule the init job" do
-      expect { subject }.to have_enqueued_job(RecurringMeetings::InitNextOccurrenceJob)
-      job = enqueued_jobs.detect { |h| h["job_class"] == "RecurringMeetings::InitNextOccurrenceJob" }
-      expect(DateTime.parse(job["scheduled_at"])).to eq(Time.zone.tomorrow + 10.hours)
-
+    it "creates the series and template" do
       expect(service_result).to be_success
       expect(series).to be_persisted
 

@@ -56,7 +56,7 @@ module OpenProject::GithubIntegration
       ::Redmine::MenuManager.map(:admin_menu) do |menu|
         menu.push :admin_github_integration,
                   { controller: "/deploy_targets", action: "index" },
-                  if: Proc.new { OpenProject::FeatureDecisions.deploy_targets_active? && User.current.admin? },
+                  if: ->(_) { OpenProject::FeatureDecisions.deploy_targets_active? && User.current.admin? },
                   caption: :label_github_integration,
                   icon: "mark-github"
       end

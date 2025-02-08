@@ -42,9 +42,7 @@ class WorkPackages::UpdateService < BaseServices::Update
   private
 
   def set_templated_attributes
-    return unless model.type.replacement_patterns_defined?
-
-    model.type.patterns.all_enabled.each do |key, pattern|
+    model.type.enabled_patterns.each do |key, pattern|
       model.public_send(:"#{key}=", pattern.resolve(model))
     end
   end

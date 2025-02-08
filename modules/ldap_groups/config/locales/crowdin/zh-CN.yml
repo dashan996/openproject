@@ -6,10 +6,12 @@ zh-CN:
     attributes:
       ldap_groups/synchronized_group:
         dn: 'DN'
+        auth_source: '认证源'
         ldap_auth_source: 'LDAP 连接'
         sync_users: '同步用户'
       ldap_groups/synchronized_filter:
         filter_string: 'LDAP 筛选器'
+        auth_source: '认证源'
         ldap_auth_source: 'LDAP 连接'
         group_name_attribute: "组名称属性"
         sync_users: '同步用户'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -29,8 +31,7 @@
 require "spec_helper"
 
 RSpec.describe "Projects", "creation",
-               :js,
-               :with_cuprite do
+               :js do
   shared_let(:name_field) { FormFields::InputFormField.new :name }
   shared_let(:project_custom_field_section) { create(:project_custom_field_section, name: "Section A") }
 
@@ -126,16 +127,27 @@ RSpec.describe "Projects", "creation",
                                     project_custom_field_section:)
     end
 
-    it "separates optional and required custom fields for new" do
-      visit new_project_path
+    context "with required custom fields" do
+      let!(:required_user_custom_field) do
+        create(:user_project_custom_field, name: "Required User",
+                                           is_for_all: true,
+                                           is_required: true,
+                                           project_custom_field_section:)
+      end
 
-      expect(page).to have_content "Required Foo"
+      it "separates optional and required custom fields for new" do
+        visit new_project_path
 
-      click_on "Advanced settings"
+        expect(page).to have_content "Required Foo"
+        expect(page).to have_content "Required User"
 
-      within(".op-fieldset") do
-        expect(page).to have_text "Optional Foo"
-        expect(page).to have_no_text "Required Foo"
+        click_on "Advanced settings"
+
+        within(".op-fieldset") do
+          expect(page).to have_text "Optional Foo"
+          expect(page).to have_no_text "Required Foo"
+          expect(page).to have_no_text "Required User"
+        end
       end
     end
 

@@ -7,7 +7,7 @@ nl:
     standard:
       projects:
         demo-project:
-          meetings:
+          meeting_series:
             item_0:
               title: Wekelijks
           meeting_agenda_items:

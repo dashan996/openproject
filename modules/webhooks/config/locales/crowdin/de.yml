@@ -8,6 +8,7 @@ de:
         url: 'Payload-URL'
         secret: 'Schlüssel für Signatur'
         events: 'Ereignisse'
+        enabled: 'Aktiviert'
         projects: 'Aktivierte Projekte'
       webhooks/log:
         event_name: 'Ereignisname'

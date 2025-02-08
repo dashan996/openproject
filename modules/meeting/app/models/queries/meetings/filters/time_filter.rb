@@ -45,9 +45,9 @@ class Queries::Meetings::Filters::TimeFilter < Queries::Meetings::Filters::Meeti
 
   def where
     if past?
-      '"meetings"."start_time" < NOW()'
+      ['"meetings"."start_time" < ?', Time.current]
     else
-      '"meetings"."start_time" + "meetings"."duration" * interval \'1 hour\' > NOW()'
+      ['"meetings"."start_time" + "meetings"."duration" * interval \'1 hour\' >= ?', Time.current]
     end
   end
 

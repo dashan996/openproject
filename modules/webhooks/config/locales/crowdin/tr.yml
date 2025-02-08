@@ -8,6 +8,7 @@ tr:
         url: 'Taşıma kapasitesi URL'
         secret: 'İmza sırrı'
         events: 'Etkinlikler'
+        enabled: 'Etkin'
         projects: 'Etkin projeler'
       webhooks/log:
         event_name: 'Etkinlik ismi'

@@ -226,6 +226,10 @@ zh-CN:
           item:
             title: 该项目下面没有任何层级
             description: 在此列表中添加条目，以便在另一个列表中创建子条目
+        delete_dialog:
+          title: "删除自定义字段项"
+          heading: "Delete custom field item?"
+          description: "此操作将不可逆转地删除该项及其所有子项。任何分配的值都将被永久删除。 如果需要此字段，删除项目可能会导致现有工作包无效。"
         placeholder:
           label: "项目标签"
           short: "短名"
@@ -246,6 +250,7 @@ zh-CN:
     confirm_destroy_option: "删除某个选项将会删除其所有实例 (例如, 在工作包中)。确定要删除？"
     reorder_alphabetical: "按字母顺序重新排序"
     reorder_confirmation: "警告：可用值的当前顺序将丢失。是否继续？"
+    placeholder_version_select: "需要先选择工作包或项目"
     instructions:
       is_required: "将自定义字段标记为必填项。这将使在创建新资源或更新现有资源时，填写该字段成为强制要求。"
       is_required_for_project: "选中可启用此属性，并使其成为所有项目的必选项。单个项目不能停用该属性。"
@@ -284,6 +289,7 @@ zh-CN:
       label: "标签"
       short: "简称"
       parent: "父级"
+      blueprint: "图案蓝图"
   global_search:
     placeholder: "在%{app_title}中搜索"
     overwritten_tabs:
@@ -459,6 +465,7 @@ zh-CN:
   my:
     access_token:
       create_dialog:
+        title: Token generated
         header: '%{type} 令牌已生成'
         warning: '注意: 这将是您看到这个令牌的唯一机会, 请务必立即复制它。'
       errors:
@@ -633,6 +640,7 @@ zh-CN:
         title: "工作包共享缺少工作流"
         message: "没有为\"工作包编辑者\"角色配置工作流。没有工作流，共享用户就无法更改工作包的状态。工作流可以复制。选择一个源类型（例如\"任务\"）和源角色（例如\"成员\"）。然后选择目标类型。一开始，您可以将所有类型都选择为目标类型。最后，选择\"工作包编辑者\"角色作为目标，然后点击\"复制\"。在创建默认设置之后，像对其他角色一样进行微调，对工作流进行详细调整。"
         link_message: "在管理中配置工作流。"
+    templated_subject_hint: 通过类型 %{type}自动生成
     summary:
       reports:
         category:
@@ -655,14 +663,15 @@ zh-CN:
       no_results_title_text: 目前没有任何关系。
       blankslate_heading: "没有关系"
       blankslate_description: "此工作包还没有任何关系。"
+    label_add_child_button: "子项"
     label_add_x: "添加 %{x}"
     label_edit_x: "编辑 %{x}"
     label_add_description: "添加说明"
     lag:
       subject: "间隔"
-      title: "间隔(天数)"
-      caption: "两个工作包之间相隔的工作日数"
+      caption: "两个工作包之间的最低工作日数。"
     relations:
+      label_new_child_created: "创建新工作包并将其添加为子项"
       label_relates_singular: "关联到"
       label_relates_plural: "关联到"
       label_relates_to_singular: "关联到"
@@ -676,7 +685,10 @@ zh-CN:
       label_follows_plural: "前任(之前)"
       follows_description: "相关工作包必须在本工作包启动前完成"
       label_child_singular: "子节点"
-      label_child_plural: "子节点"
+      label_child_plural: "子项"
+      new_child: "新建子项"
+      new_child_text: "创建工作包，作为当前(父)工作包的子项"
+      existing_child: "添加现有子项"
       child_description: "使相关工作包成为当前(父) 工作包的子项目"
       label_blocks_singular: "阻止"
       label_blocks_plural: "阻止"
@@ -713,6 +725,8 @@ zh-CN:
       required_description: "将此工作包标记为相关工作包的需求"
       label_parent_singular: "父级"
       label_parent_plural: "父级"
+      ghost_relation_title: "相关工作包"
+      ghost_relation_description: "由于权限问题，您无法看到这些信息。"
   label_invitation: 邀请
   account:
     delete: "删除帐户"
@@ -777,6 +791,7 @@ zh-CN:
         is_required: "必填"
         max_length: "最大长度"
         min_length: "最小长度"
+        content_right_to_left: "内容从右到左"
         multi_value: "允许多选"
         possible_values: "可能的值"
         regexp: "正则表达式"
@@ -812,6 +827,8 @@ zh-CN:
         attr_lastname: "姓氏属性"
         attr_login: "用户名属性"
         attr_mail: "电子邮件属性"
+        filter_string: "筛选字符串"
+        admin: "管理员"
         base_dn: "基本 DN"
         host: "主机"
         onthefly: "自动创建用户"
@@ -855,6 +872,9 @@ zh-CN:
       project_custom_field:
         is_required: "在所有项目中应用"
         custom_field_section: 单元
+      project/life_cycle_step_definition:
+        name: "名称"
+        color: "颜色"
       query:
         column_names: "列"
         relations_to_type_column: "与%{type} 的关系"
@@ -1194,6 +1214,10 @@ zh-CN:
             from:
               error_not_found: "找不到这个工作包"
               error_readonly: "关系要持久"
+            lag:
+              greater_than_or_equal_to:
+                zero: "cannot be negative."
+              less_than_or_equal_to: "is too high."
         repository:
           not_available: "SCM提供商不可用"
           not_whitelisted: "配置所不允许的。"
@@ -1538,8 +1562,9 @@ zh-CN:
   button_copy_and_follow: "复制和跟踪"
   button_create: "创建"
   button_create_and_continue: "创建并继续"
-  button_delete: "删除"
   button_decline: "拒绝"
+  button_delete: "删除"
+  button_delete_permanently: "永久删除"
   button_delete_watcher: "删除关注者 %{name}"
   button_download: "下载"
   button_duplicate: "复制"
@@ -1724,6 +1749,8 @@ zh-CN:
     units:
       hour:
         other: "小时"
+      day:
+        other: "天"
   description_active: "激活？"
   description_attachment_toggle: "显示/隐藏附件"
   description_autocomplete: >
@@ -1759,6 +1786,10 @@ zh-CN:
     upsale:
       title: "企业附加组件"
       link_title: "更多信息"
+      automatic_subject_generation:
+        description: "使用引用的属性和文本自动生成主题。"
+      customize_life_cycle:
+        description: "创建和组织与 PM2 项目周期规划不同的项目阶段和关口。"
       form_configuration:
         description: "使用以下附加组件自定义表单配置："
         add_groups: "添加新属性组"
@@ -2041,8 +2072,6 @@ zh-CN:
       api_and_webhooks: "API 和 Webhook"
     quick_add:
       label: "打开快速添加菜单"
-    breadcrumb:
-      nested_element: "%{section_header}: <b>%{title}</b>"
   my_account:
     access_tokens:
       no_results:
@@ -2123,6 +2152,7 @@ zh-CN:
   label_add_subtask: "添加子任务"
   label_added: "已添加"
   label_added_by: "由%{author}添加"
+  label_added_by_on: "Added by %{author} on %{date}"
   label_added_time_by: "由 %{author} %{age} 前添加"
   label_additional_workflow_transitions_for_assignee: "当用户是受理人时允许额外的转移"
   label_additional_workflow_transitions_for_author: "当用户是作者时允许额外转移"
@@ -2543,6 +2573,7 @@ zh-CN:
   label_project_new: "新的项目"
   label_project_plural: "项目"
   label_project_list_plural: "项目列表"
+  label_project_lifecycle: "项目生命周期"
   label_project_attributes_plural: "项目属性"
   label_project_custom_field_plural: "项目属性"
   label_project_settings: "项目设置"
@@ -2569,6 +2600,7 @@ zh-CN:
   label_relation: "关系"
   label_relation_actions: "关联操作"
   label_relation_delete: "删除关系"
+  label_relation_edit: "编辑关系"
   label_relation_new: "新的关系"
   label_release_notes: "更新日志"
   label_remaining_work: "剩余工时"
@@ -2982,6 +3014,7 @@ zh-CN:
   notice_bad_request: "错误的请求。"
   notice_not_authorized: "您无权访问此页。"
   notice_not_authorized_archived_project: "您尝试访问的项目已存档。"
+  notice_requires_enterprise_token: "企业令牌缺失或不允许访问此页面。"
   notice_password_confirmation_failed: "您的密码不正确。无法继续。"
   notice_principals_found_multiple: "找到 %{number} 条结果。\n 点击以关注第一条结果。"
   notice_principals_found_single: "这有一个结果。\n点击来关注它。"
@@ -3028,7 +3061,7 @@ zh-CN:
     text_getting_started_description: "快速了解 OpenProject 的项目管理和团队协作。您可以从帮助菜单重新启动此视频。"
     welcome: "欢迎使用 %{app_title}"
     select_language: "请选择您的语言"
-  permission_add_work_package_notes: "添加注释"
+  permission_add_work_package_notes: "添加评论"
   permission_add_work_packages: "添加工作包"
   permission_add_messages: "发布消息"
   permission_add_project: "创建项目"
@@ -3058,10 +3091,11 @@ zh-CN:
   permission_delete_timelines: "删除时间线"
   permission_delete_wiki_pages: "删除维基页面"
   permission_delete_wiki_pages_attachments: "删除附件"
-  permission_edit_work_package_notes: "编辑注释"
+  permission_edit_work_package_notes: "中度评论"
+  permission_edit_work_package_notes_explanation: "注意：拥有此权限的用户可以编辑任何人的评论。"
   permission_edit_work_packages: "编辑工作包"
   permission_edit_messages: "编辑消息"
-  permission_edit_own_work_package_notes: "编辑自己的注释"
+  permission_edit_own_work_package_notes: "编辑自己的评论"
   permission_edit_own_messages: "编辑自己的消息"
   permission_edit_own_time_entries: "编辑自己的时间记录"
   permission_edit_project: "编辑项目"
@@ -3288,6 +3322,7 @@ zh-CN:
     activated: "已激活"
     deactivated: "已取消激活"
   search_input_placeholder: "搜索"
+  setting_apiv3_cors_title: "跨源资源共享 (CORS)"
   setting_apiv3_cors_enabled: "启用 CORS"
   setting_apiv3_cors_origins: "API v3 跨域资源共享 (CORS) 允许的域"
   setting_apiv3_cors_origins_text_html: >
@@ -3513,6 +3548,27 @@ zh-CN:
       new:
         heading: "新建属性"
         description: "对该项目属性的更改将反映在启用该属性的所有项目中。不能按项目禁用必填属性。"
+    project_life_cycle_step_definitions:
+      heading: "项目生命周期"
+      heading_description: "项目生命周期由阶段和关口组成，用于构建项目。它们将显示在项目的概述页面，并在项目列表中提供。可以选择单个阶段和关口来定制项目，但无法在项目级别上重新排序。"
+      label_add: "添加"
+      label_add_description: "添加生命周期定义"
+      label_add_stage: "阶段"
+      label_add_gate: "关口"
+      filter:
+        label: "搜索项目阶段或关口"
+      section_header: "阶段和关口"
+      non_defined: "目前既未定义阶段也未定关口。"
+      new:
+        description: "对该项目步骤的更改将反映在启用该步骤的所有项目中。"
+      new_stage:
+        heading: "新阶段"
+      new_gate:
+        heading: "新关口"
+      edit_stage:
+        heading: "编辑阶段"
+      edit_gate:
+        heading: "编辑阶段"
     projects:
       missing_dependencies: "已检查依赖于 %{dependencies} 的项目模块 %{module}。您也需要检查这些依赖项。"
       section_new_projects: "新项目的设置"
@@ -3546,6 +3602,7 @@ zh-CN:
   text_are_you_sure_continue: "确定要继续吗？"
   text_are_you_sure_with_children: "删除工作包和所有子工作包吗？"
   text_are_you_sure_with_project_custom_fields: "删除该属性也会删除其在所有项目中的值。您确定要这样做吗？"
+  text_are_you_sure_with_project_life_cycle_step: "删除该步骤也会删除其在所有项目中的使用。您确定要这样做吗？"
   text_assign_to_project: "分配给项目"
   text_form_configuration: >
     您可以自定义哪些字段将显示在工作包窗体中。您可以自由地对字段进行分组, 以反映您的域的需求。
@@ -3625,6 +3682,7 @@ zh-CN:
   text_notice_security_badge_displayed_html: >
     注：如果启用，这会在 <a href="%{information_panel_path}">%{information_panel_label}</a> 管理面板中和首页上显示一个包含您的安装状态的徽章。徽章仅向管理员显示。<br/>徽章将根据官方的 OpenProject 版本数据库检查您当前的 OpenProject 版本，提醒您是否存在任何更新或已知漏洞。如需详细了解检查可以提供哪些信息，需要哪些数据来提供可用更新，以及如何禁用此检查，请访问<a href="%{more_info_url}">配置文档</a>。
   text_own_membership_delete_confirmation: "您要移除部分或全部权限，并且可能无法在此后编辑这个项目。\n您确定要继续吗？"
+  text_permanent_delete_confirmation_checkbox_label: "我理解这种删除不可逆转"
   text_plugin_assets_writable: "插件资产目录可写"
   text_powered_by: "Powered by %{link}"
   text_project_identifier_info: "只有小写字母 (a-z)、 数字、 短划线和下划线被允许，必须以小写字母开头。"
@@ -3991,6 +4049,8 @@ zh-CN:
       builtin: 内置实例应用程序
       confidential: 机密
       singular: "OAuth应用程序"
+      scopes: "范围"
+      client_credentials: "客户端凭据"
       plural: "OAuth应用程序"
       named: "OAuth 应用程序“%{name}”"
       new: "新的 OAuth 应用程序"

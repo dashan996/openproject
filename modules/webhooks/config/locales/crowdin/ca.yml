@@ -8,6 +8,7 @@ ca:
         url: 'URL de càrrega'
         secret: 'Signatura secreta'
         events: 'Esdeveniments'
+        enabled: 'Enabled'
         projects: 'Projectes habilitats'
       webhooks/log:
         event_name: 'Nom de l''esdeveniment'

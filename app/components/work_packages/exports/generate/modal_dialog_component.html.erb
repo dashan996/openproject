@@ -1,7 +1,7 @@
 <%= render(Primer::Alpha::Dialog.new(
   title: I18n.t("pdf_generator.dialog.title"),
   id: MODAL_ID,
-  size: :large
+  size: :medium_portrait
 )) do |dialog|
   dialog.with_header(variant: :large)
   dialog.with_body do

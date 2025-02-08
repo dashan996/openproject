@@ -33,16 +33,7 @@ class WorkPackageRelationsTabController < ApplicationController
   before_action :authorize_global
 
   def index
-    @children = WorkPackage.where(parent_id: @work_package.id)
-    @relations = @work_package
-      .relations
-      .includes(:to, :from)
-
-    component = WorkPackageRelationsTab::IndexComponent.new(
-      work_package: @work_package,
-      relations: @relations,
-      children: @children
-    )
+    component = WorkPackageRelationsTab::IndexComponent.new(work_package: @work_package)
 
     respond_to do |format|
       format.html do

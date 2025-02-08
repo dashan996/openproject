@@ -33,6 +33,7 @@ bg:
       cost_type:
         unit: "Име на единица"
         unit_plural: "Плурализирано име на единица"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Изразходвани единици"
         labor_costs: "Разходи за труд"
@@ -44,6 +45,16 @@ bg:
         rate: "Ставка"
       user:
         default_rates: "Ставка по подразбиране"
+      time_entry:
+        project: Project
+        user: User
+        work_package: Work package
+        hours: Часове
+        comments: Comment
+        activity: Активност
+        spent_on: Дата
+        start_time: Start time
+        end_time: Finish time
     models:
       cost_type:
         one: "Тип разход"
@@ -51,6 +62,8 @@ bg:
       rate: "Ставка"
     errors:
       models:
+        time_entry:
+          invalid_time: "must be between 00:00 and 23:59."
         work_package:
           is_not_a_valid_target_for_cost_entries: "Работния пакет #%{id} не е валидна цел за преназначение на разходите."
           nullify_is_not_valid_for_cost_entries: "Вписванията за разходи не могат да бъдат зададени на проект."
@@ -65,6 +78,7 @@ bg:
     fixed_date: "Фиксирана дата"
   button_add_rate: "Добавете курс"
   button_log_costs: "Разходи за единична регистрация"
+  button_log_time: "Log"
   caption_booked_on_project: "Разходи за единична регистрация"
   caption_default: "По подразбиране"
   caption_default_rate_history_for: "История на тарифите по подразбиране за %{user}"
@@ -76,6 +90,7 @@ bg:
   caption_save_rate: "Съхраняване на ставката"
   caption_set_rate: "Задайте текуща ставка"
   caption_show_locked: "Показване на заключените типове"
+  caption_log_time_dialog: "Log time"
   description_date_for_new_rate: "Дата за нова ставка"
   group_by_others: "не е в нито една група"
   label_between: "между"
@@ -115,10 +130,12 @@ bg:
   label_until: "докато"
   label_valid_from: "Валиден от"
   label_yes: "Да"
+  placeholder_activity_select_work_package_first: Work package selection is required first
   notice_something_wrong: "Нещо се обърка. Моля, опитайте отново."
   notice_successful_restore: "Успешно възстановяване."
   notice_successful_lock: "Заключено успешно."
   notice_cost_logged_successfully: "Единичната цена е регистрирана успешно."
+  notice_different_time_zones: "This user has a different time zone (%{tz}). Time will be logged using their time zone."
   permission_edit_cost_entries: "Редактирайте резервираните единични разходи"
   permission_edit_own_cost_entries: "Редактирайте собствените резервирани единични разходи"
   permission_edit_hourly_rates: "Редактирайте почасовите ставки"
@@ -146,3 +163,7 @@ bg:
   week: "седмица"
   js:
     text_are_you_sure: "Сигурни ли сте?"
+  api_v3:
+    errors:
+      validation:
+        start_time_different_date: "Date part of startTime (%{start_time}) must be the same as the spentOn (%{spent_on}) date."

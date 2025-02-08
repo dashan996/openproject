@@ -229,6 +229,10 @@ si:
           item:
             title: This item doesn't have any hierarchy level below
             description: Add items to this list to create sub-items inside another one
+        delete_dialog:
+          title: "Delete custom field item"
+          heading: "Delete custom field item?"
+          description: "This action will irreversibly remove the item and all its sub-items. Any assigned values will be permanently deleted. If this field is required, removing items may cause existing work packages to become invalid."
         placeholder:
           label: "Item label"
           short: "Short name"
@@ -249,6 +253,7 @@ si:
     confirm_destroy_option: "විකල්පයක් මකා දැමීමෙන් එහි සියලු සිදුවීම් මකා දමනු ඇත (උදා: වැඩ පැකේජවල). ඔබට එය මකා දැමීමට අවශ්ය බව ඔබට විශ්වාසද?"
     reorder_alphabetical: "Reorder values alphabetically"
     reorder_confirmation: "Warning: The current order of available values will be lost. Continue?"
+    placeholder_version_select: "Work package or project selection is required first"
     instructions:
       is_required: "Mark the custom field as required. This will make it mandatory to fill in the field when creating new or updating existing resources."
       is_required_for_project: "Check to enable this attribute and make it required in all projects. It cannot be deactived for individual projects."
@@ -287,6 +292,7 @@ si:
       label: "Label"
       short: "Short name"
       parent: "Parent"
+      blueprint: "Pattern blueprint"
   global_search:
     placeholder: "Search in %{app_title}"
     overwritten_tabs:
@@ -469,6 +475,7 @@ si:
   my:
     access_token:
       create_dialog:
+        title: Token generated
         header: The %{type} token has been generated
         warning: Note that this is the only time you will see this token, make sure to copy it now.
       errors:
@@ -646,6 +653,7 @@ si:
         title: "Workflow missing for work package sharing"
         message: "No workflow is configured for the 'Work package editor' role. Without a workflow, the shared with user cannot alter the status of the work package. Workflows can be copied. Select a source type (e.g. 'Task') and source role (e.g. 'Member'). Then select the target types. To start with, you could select all the types as targets. Finally, select the 'Work package editor' role as the target and press 'Copy'. After having thus created the defaults, fine tune the workflows as you do for every other role."
         link_message: "Configure the workflows in the administration."
+    templated_subject_hint: Automatically generated through type %{type}
     summary:
       reports:
         category:
@@ -668,14 +676,15 @@ si:
       no_results_title_text: There are currently no relations available.
       blankslate_heading: "No relations"
       blankslate_description: "This work package does not have any relations yet."
+    label_add_child_button: "Child"
     label_add_x: "Add %{x}"
     label_edit_x: "Edit %{x}"
     label_add_description: "Add description"
     lag:
       subject: "Lag"
-      title: "Lag (in days)"
-      caption: "The gap in number of working days in between the two work packages"
+      caption: "The minimum number of working days to keep in between the two work packages."
     relations:
+      label_new_child_created: "New work package created and added as a child"
       label_relates_singular: "related to"
       label_relates_plural: "related to"
       label_relates_to_singular: "related to"
@@ -690,6 +699,9 @@ si:
       follows_description: "The related work package necessarily needs to finish before this one can start"
       label_child_singular: "child"
       label_child_plural: "children"
+      new_child: "New child"
+      new_child_text: "Creates a related work package as a sub-item of the current (parent) work package"
+      existing_child: "Existing child"
       child_description: "Makes the related work package a sub-item of the current (parent) work package"
       label_blocks_singular: "blocks"
       label_blocks_plural: "blocks"
@@ -726,6 +738,8 @@ si:
       required_description: "Marks this work package as being a requirement to the related one"
       label_parent_singular: "parent"
       label_parent_plural: "parent"
+      ghost_relation_title: "Related work package"
+      ghost_relation_description: "This is not visible to you due to permissions."
   label_invitation: ඇරයුම
   account:
     delete: "ගිණුම මකන්න"
@@ -790,6 +804,7 @@ si:
         is_required: "අවශ්‍යයි"
         max_length: "උපරිම දිග"
         min_length: "අවම දිග"
+        content_right_to_left: "Right-to-Left content"
         multi_value: "බහු-තේරීමට ඉඩ දෙන්න"
         possible_values: "හැකි අගයන්"
         regexp: "නිතිපතා ප්රකාශනය"
@@ -825,6 +840,8 @@ si:
         attr_lastname: "අවසාන නාමය ලක්ෂණය"
         attr_login: "පරිශීලක නාමය ගුණාංග"
         attr_mail: "ඊ-තැපැල් ගුණාංග"
+        filter_string: "Filter string"
+        admin: "Administrator"
         base_dn: "ඩී. එන් මූලික"
         host: "සත්කාරක"
         onthefly: "Automatic user creation"
@@ -868,6 +885,9 @@ si:
       project_custom_field:
         is_required: "Required for all projects"
         custom_field_section: Section
+      project/life_cycle_step_definition:
+        name: "Name"
+        color: "Color"
       query:
         column_names: "තීරු"
         relations_to_type_column: "සබඳතා %{type}"
@@ -1207,6 +1227,10 @@ si:
             from:
               error_not_found: "සොයාගත නොහැකි හෝ දෘශ්යමාන නොවන `from` තත්ත්වය තුළ වැඩ පැකේජය"
               error_readonly: "පවතින සම්බන්ධතාවයක `from` සබැඳිය නොසැලකිය හැකි ය"
+            lag:
+              greater_than_or_equal_to:
+                zero: "cannot be negative."
+              less_than_or_equal_to: "is too high."
         repository:
           not_available: "SCM වෙළෙන්දා ලබා ගත නොහැක"
           not_whitelisted: "වින්යාසය මගින් අවසර නැත."
@@ -1561,8 +1585,9 @@ si:
   button_copy_and_follow: "පිටපත් කර අනුගමනය කරන්න"
   button_create: "සාදන්න"
   button_create_and_continue: "සාදන්න සහ ඉදිරියට යන්න"
-  button_delete: "මකන්න"
   button_decline: "පරිහානිය"
+  button_delete: "මකන්න"
+  button_delete_permanently: "Delete permanently"
   button_delete_watcher: "මුරකරු මකන්න %{name}"
   button_download: "බාගත කරන්න"
   button_duplicate: "අනුපිටපත්"
@@ -1765,6 +1790,9 @@ si:
       hour:
         one: "පැය"
         other: "පැය"
+      day:
+        one: "day"
+        other: "days"
   description_active: "ක්රියාකාරී?"
   description_attachment_toggle: "ඇමුණුම් පෙන්වන්න/සඟවන්න"
   description_autocomplete: >
@@ -1800,6 +1828,10 @@ si:
     upsale:
       title: "Enterprise add-on"
       link_title: "More information"
+      automatic_subject_generation:
+        description: "Create automatically generated subjects using referenced attributes and text."
+      customize_life_cycle:
+        description: "Create and organize different project stages and gates than the ones provided by PM2 project cycle planning."
       form_configuration:
         description: "Customize the form configuration with these additional add-ons:"
         add_groups: "නව ගුණාංග කණ්ඩායම් එකතු කරන්න"
@@ -2082,8 +2114,6 @@ si:
       api_and_webhooks: "API and webhooks"
     quick_add:
       label: "Open quick add menu"
-    breadcrumb:
-      nested_element: "%{section_header}: <b>%{title}</b>"
   my_account:
     access_tokens:
       no_results:
@@ -2164,6 +2194,7 @@ si:
   label_add_subtask: "උප කාර්යය එකතු කරන්න"
   label_added: "එකතු"
   label_added_by: "Added by %{author}"
+  label_added_by_on: "Added by %{author} on %{date}"
   label_added_time_by: "%{author} %{age} පෙර විසින් එකතු කරන ලදි"
   label_additional_workflow_transitions_for_assignee: "පරිශීලකයා වන විට අතිරේක සංක්රමණයන් අවසර දෙනු ලැබේ"
   label_additional_workflow_transitions_for_author: "පරිශීලකයා කතුවරයා වන විට අතිරේක සංක්රමණයන් අවසර දෙනු ලැබේ"
@@ -2584,6 +2615,7 @@ si:
   label_project_new: "නව ව්යාපෘතිය"
   label_project_plural: "ව්‍යාපෘති"
   label_project_list_plural: "Project lists"
+  label_project_lifecycle: "Project lifecycle"
   label_project_attributes_plural: "Project attributes"
   label_project_custom_field_plural: "Project attributes"
   label_project_settings: "ව්යාපෘති සැකසුම්"
@@ -2610,6 +2642,7 @@ si:
   label_relation: "Relation"
   label_relation_actions: "Relation actions"
   label_relation_delete: "සම්බන්ධතාවය මකන්න"
+  label_relation_edit: "Edit relation"
   label_relation_new: "නව සම්බන්ධතාවය"
   label_release_notes: "සටහන් නිකුත් කිරීම"
   label_remaining_work: "Remaining work"
@@ -3026,6 +3059,7 @@ si:
   notice_bad_request: "නරක ඉල්ලීම."
   notice_not_authorized: "මෙම පිටුවට ප්රවේශ වීමට ඔබට අවසර නැත."
   notice_not_authorized_archived_project: "ඔබ ප්රවේශ වීමට උත්සාහ කරන ව්යාපෘතිය සංරක්ෂණය කර ඇත."
+  notice_requires_enterprise_token: "Enterprise token missing or doesn't allow access to this page."
   notice_password_confirmation_failed: "ඔබගේ මුරපදය නිවැරදි නොවේ. දිගටම කරගෙන යා නොහැක."
   notice_principals_found_multiple: "සොයාගෙන ඇත %{number} ප්රතිඵල. \n පළමු ප්රතිඵලය අවධානය යොමු කිරීමට ටැබ්."
   notice_principals_found_single: "එක් ප්රති result ලයක් තිබේ. \n එය අවධානය යොමු කිරීමට ටැබ්."
@@ -3074,7 +3108,7 @@ si:
     text_getting_started_description: "Get a quick overview of project management and team collaboration with OpenProject. You can restart this video from the help menu."
     welcome: "Welcome to %{app_title}"
     select_language: "කරුණාකර ඔබේ භාෂාව තෝරන්න"
-  permission_add_work_package_notes: "සටහන් එකතු කරන්න"
+  permission_add_work_package_notes: "Add comments"
   permission_add_work_packages: "වැඩ පැකේජ එකතු කරන්න"
   permission_add_messages: "තැපැල් පණිවිඩ"
   permission_add_project: "Create projects"
@@ -3104,10 +3138,11 @@ si:
   permission_delete_timelines: "කාලනියමයන් මකන්න"
   permission_delete_wiki_pages: "විකි පිටු මකන්න"
   permission_delete_wiki_pages_attachments: "ඇමුණුම් මකන්න"
-  permission_edit_work_package_notes: "සටහන් සංස්කරණය කරන්න"
+  permission_edit_work_package_notes: "Moderate comments"
+  permission_edit_work_package_notes_explanation: "Caution: Users with this permission are able to edit anyone's comment."
   permission_edit_work_packages: "වැඩ පැකේජ සංස්කරණය කරන්න"
   permission_edit_messages: "පණිවිඩ සංස්කරණය කරන්න"
-  permission_edit_own_work_package_notes: "තමන්ගේම සටහන් සංස්කරණය කරන්න"
+  permission_edit_own_work_package_notes: "Edit own comments"
   permission_edit_own_messages: "තමන්ගේම පණිවිඩ සංස්කරණය කරන්න"
   permission_edit_own_time_entries: "ම කාලය ලඝු-සටහන් සංස්කරණය"
   permission_edit_project: "ව්යාපෘතිය සංස්කරණය කරන්න"
@@ -3200,9 +3235,9 @@ si:
       are_you_sure: "ඔබට '%{name}' ව්යාපෘතිය සංරක්ෂණය කිරීමට අවශ්ය බව ඔබට විශ්වාසද?"
       archived: "සංරක්ෂිත"
     count:
-      zero: "0 Projects"
-      one: "1 Project"
-      other: "%{count} Projects"
+      zero: "0 projects"
+      one: "1 project"
+      other: "%{count} projects"
   project_module_activity: "ක්‍රියාකාරකම"
   project_module_forums: "සංසද"
   project_module_work_package_tracking: "වැඩ පැකේජ"
@@ -3336,6 +3371,7 @@ si:
     activated: "activated"
     deactivated: "deactivated"
   search_input_placeholder: "සොයන්න..."
+  setting_apiv3_cors_title: "Cross-Origin Resource Sharing (CORS)"
   setting_apiv3_cors_enabled: "Enable CORS"
   setting_apiv3_cors_origins: "API V3 Cross-Origin Resource Sharing (CORS) allowed origins"
   setting_apiv3_cors_origins_text_html: >
@@ -3561,6 +3597,27 @@ si:
       new:
         heading: "New attribute"
         description: "Changes to this project attribute will be reflected in all projects where it is enabled. Required attributes cannot be disabled on a per-project basis."
+    project_life_cycle_step_definitions:
+      heading: "Project lifecycle"
+      heading_description: "The project lifecycle consists of stages and gates that structure your projects. They will appear in the overview page of a project and be available in the projects list. Individual stages and gates can be selected to customize a project but reordering is not possible on a project level."
+      label_add: "Add"
+      label_add_description: "Add lifecycle definition"
+      label_add_stage: "Stage"
+      label_add_gate: "Gate"
+      filter:
+        label: "Search project stage or gate"
+      section_header: "Stages and gates"
+      non_defined: "Neither stages nor gates are currently defined."
+      new:
+        description: "Changes to this project step will be reflected in all projects where it is enabled."
+      new_stage:
+        heading: "New stage"
+      new_gate:
+        heading: "New gate"
+      edit_stage:
+        heading: "Edit stage"
+      edit_gate:
+        heading: "Edit gate"
     projects:
       missing_dependencies: "Project module %{module} was checked which depends on %{dependencies}. You need to check these dependencies as well."
       section_new_projects: "Settings for new projects"
@@ -3594,6 +3651,7 @@ si:
   text_are_you_sure_continue: "Are you sure you want to continue?"
   text_are_you_sure_with_children: "වැඩ පැකේජය සහ සියලුම ළමා වැඩ පැකේජ මකන්න?"
   text_are_you_sure_with_project_custom_fields: "Deleting this attribute will also delete its values in all projects. Are you sure you want to do this?"
+  text_are_you_sure_with_project_life_cycle_step: "Deleting this step will also delete its usages in all projects. Are you sure you want to do this?"
   text_assign_to_project: "ව්යාපෘතියට පැවරීම"
   text_form_configuration: >
     වැඩ පැකේජ ආකෘතිවල කුමන ක්ෂේත්රයන් පෙන්විය හැකිද යන්න ඔබට රිසිකරණය කළ හැකිය. ඔබ නිදහසේ ඔබේ වසම සඳහා අවශ්යතා පිළිබිඹු කිරීමට ක්ෂේත්ර කණ්ඩායම් හැකි.
@@ -3673,6 +3731,7 @@ si:
   text_notice_security_badge_displayed_html: >
     සටහන: සක්රීය කර ඇත්නම්, මෙය <a href="%{information_panel_path}">%{information_panel_label}</a> පරිපාලන පැනලයේ ඔබේ ස්ථාපන තත්ත්වය සහිත ලාංඡනයක් සහ මුල් පිටුවේ පෙන්වනු ඇත. එය පරිපාලකයින්ට පමණක් පෙන්වනු ලැබේ. <br/> මෙම ලාංඡනය මඟින් ඔබගේ වර්තමාන OpenProject අනුවාදය නිල OpenProject නිකුතු දත්ත ගබඩාවට එරෙහිව පරීක්ෂා කරනු ඇත. චෙක්පත සපයන දේ පිළිබඳ වැඩි විස්තර සඳහා, ලබා ගත හැකි යාවත්කාලීන ලබා දීමට අවශ්ය දත්ත මොනවාද, සහ මෙම චෙක්පත අක්රිය කරන්නේ කෙසේද, කරුණාකර <a href="%{more_info_url}">මානකරන ලියකියවිලි</a>වෙත පිවිසෙන්න.
   text_own_membership_delete_confirmation: "ඔබ ඔබේ අවසර කිහිපයක් හෝ සියල්ල ඉවත් කිරීමට ආසන්නව සිටින අතර ඉන් පසුව මෙම ව්යාපෘතිය සංස්කරණය කිරීමට තවදුරටත් නොහැකි වනු ඇත.\nඔබට දිගටම කරගෙන යාමට අවශ්ය බව ඔබට විශ්වාසද?"
+  text_permanent_delete_confirmation_checkbox_label: "I understand that this deletion cannot be reversed"
   text_plugin_assets_writable: "ප්ලගිනය වත්කම් නාමාවලිය ලිවිය හැකි"
   text_powered_by: "%{link}විසින් තල්ලු"
   text_project_identifier_info: "අඩු සිද්ධි අකුරු (a-z), අංක, ඩෂ් සහ යටි ඉරි වලට පමණක් අවසර ඇත, අඩු සිද්ධි අකුරකින් ආරම්භ කළ යුතුය."
@@ -4041,6 +4100,8 @@ si:
       builtin: Built-in instance application
       confidential: Confidential
       singular: "OAUTH අයදුම්"
+      scopes: "Scopes"
+      client_credentials: "Client credentials"
       plural: "OAUTH අයදුම්පත්"
       named: "OAUTH යෙදුම '%{name}'"
       new: "නව OAUTH අයදුම්"

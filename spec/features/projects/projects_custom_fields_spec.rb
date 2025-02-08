@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Projects custom fields", :js, :with_cuprite do
+RSpec.describe "Projects custom fields", :js do
   shared_let(:current_user) { create(:admin) }
   shared_let(:project) { create(:project, name: "Foo project", identifier: "foo-project") }
   let(:name_field) { FormFields::InputFormField.new :name }
@@ -169,8 +169,7 @@ RSpec.describe "Projects custom fields", :js, :with_cuprite do
     end
 
     context "with german locale",
-            driver: :firefox_de,
-            with_cuprite: false do
+            driver: :firefox_de do
       let(:current_user) { create(:admin, language: "de") }
 
       it "displays the float with german locale" do

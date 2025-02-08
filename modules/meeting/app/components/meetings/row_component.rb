@@ -30,6 +30,8 @@
 
 module Meetings
   class RowComponent < ::OpPrimer::BorderBoxRowComponent
+    delegate :current_project, to: :table
+
     def project_name
       helpers.link_to_project model.project, {}, {}, false
     end
@@ -60,7 +62,7 @@ module Meetings
     end
 
     def duration
-      "#{number_with_delimiter model.duration} h"
+      render OpenProject::Common::DurationComponent.new(model.duration, :hours, abbreviated: false)
     end
 
     def location
@@ -140,19 +142,12 @@ module Meetings
 
       menu.with_item(label: recurring_meeting.present? ? I18n.t(:label_recurring_meeting_delete) : I18n.t(:label_meeting_delete),
                      scheme: :danger,
-                     href: meeting_path(model),
-                     form_arguments: {
-                       method: :delete, data: { confirm: delete_confirm_message, turbo: false }
+                     href: polymorphic_path([:delete_dialog, current_project, model.becomes(Meeting)]),
+                     tag: :a,
+                     content_arguments: {
+                       data: { controller: "async-dialog" }
                      }) do |item|
         item.with_leading_visual_icon(icon: :trash)
-      end
-    end
-
-    def delete_confirm_message
-      if recurring_meeting.present?
-        I18n.t(:label_recurring_meeting_delete_confirmation, name: recurring_meeting.title)
-      else
-        I18n.t("text_are_you_sure")
       end
     end
 

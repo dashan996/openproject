@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   HostBinding,
+  Injector,
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
@@ -27,6 +28,9 @@ import { HalResourceEditingService } from '../../fields/edit/services/hal-resour
 import { SchemaCacheService } from 'core-app/core/schemas/schema-cache.service';
 import { TimezoneService } from 'core-app/core/datetime/timezone.service';
 import { ToastService } from 'core-app/shared/components/toaster/toast.service';
+import { InjectField } from 'core-app/shared/helpers/angular/inject-field.decorator';
+import { PathHelperService } from 'core-app/core/path-helper/path-helper.service';
+import { TurboRequestsService } from 'core-app/core/turbo/turbo-requests.service';
 
 export const timerAccountSelector = 'op-timer-account-menu';
 
@@ -41,6 +45,8 @@ export const timerAccountSelector = 'op-timer-account-menu';
 })
 export class TimerAccountMenuComponent extends UntilDestroyedMixin implements OnInit {
   @HostBinding('class.op-timer-account-menu') className = true;
+  @InjectField() PathHelper:PathHelperService;
+  @InjectField() TurboRequests:TurboRequestsService;
 
   timer$ = this.timeEntryService.activeTimer$;
 
@@ -58,6 +64,7 @@ export class TimerAccountMenuComponent extends UntilDestroyedMixin implements On
   };
 
   constructor(
+    readonly injector:Injector,
     readonly elementRef:ElementRef<HTMLElement>,
     readonly timeEntryService:TimeEntryTimerService,
     readonly cdRef:ChangeDetectorRef,
@@ -84,10 +91,14 @@ export class TimerAccountMenuComponent extends UntilDestroyedMixin implements On
 
   public async stopTimer():Promise<unknown> {
     const active = await firstValueFrom(this.timeEntryService.refresh());
+
     if (!active) {
       return this.toastService.addWarning(this.text.timer_already_stopped);
     }
 
-    return this.timeEntryEditService.stopTimerAndEdit(active);
+    return this.TurboRequests.request(
+      `${this.PathHelper.timeEntryEditDialog(active.id as string)}`,
+      { method: 'GET' },
+    );
   }
 }

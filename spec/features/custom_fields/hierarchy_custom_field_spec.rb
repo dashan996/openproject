@@ -30,7 +30,7 @@
 
 require "spec_helper"
 
-RSpec.describe "custom fields of type hierarchy", :js, :with_cuprite do
+RSpec.describe "custom fields of type hierarchy", :js do
   let(:admin) { create(:admin) }
   let(:custom_field_index_page) { Pages::CustomFields::IndexPage.new }
   let(:new_custom_field_page) { Pages::CustomFields::NewPage.new }
@@ -128,7 +128,8 @@ RSpec.describe "custom fields of type hierarchy", :js, :with_cuprite do
     hierarchy_page.open_action_menu_for("Phoenix Squad")
     click_on "Delete"
     expect(page).to have_test_selector("op-custom-fields--delete-item-dialog")
-    click_on "Delete"
+    check "I understand that this deletion cannot be reversed", allow_label_click: true
+    click_on "Delete permanently"
     expect(page).not_to have_test_selector("op-custom-fields--delete-item-dialog")
     expect(page).to have_test_selector("op-custom-fields--hierarchy-item", count: 1)
     expect(page).not_to have_test_selector("op-custom-fields--hierarchy-item", text: "Phoenix Squad")

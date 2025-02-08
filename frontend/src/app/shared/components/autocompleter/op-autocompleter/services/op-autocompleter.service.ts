@@ -10,6 +10,12 @@ import { HalResource } from 'core-app/features/hal/resources/hal-resource';
 import { ApiV3Service } from 'core-app/core/apiv3/api-v3.service';
 import { forkJoin, Observable } from 'rxjs';
 import { UntilDestroyedMixin } from 'core-app/shared/helpers/angular/until-destroyed.mixin';
+import {
+  IAPIFilter,
+  TOpAutocompleterResource,
+} from 'core-app/shared/components/autocompleter/op-autocompleter/typings';
+import { ProjectResource } from 'core-app/features/hal/resources/project-resource';
+import { ApiV3ProjectPaths } from 'core-app/core/apiv3/endpoints/projects/apiv3-project-paths';
 
 @Injectable()
 
@@ -45,7 +51,7 @@ export class OpAutocompleterService extends UntilDestroyedMixin {
 
   protected loadSingleValue(id:string, resource:TOpAutocompleterResource) {
     return (this.apiV3Service[resource] as
-      ApiV3ResourceCollection<UserResource|WorkPackageResource, ApiV3UserPaths|ApiV3WorkPackagePaths>)
+      ApiV3ResourceCollection<UserResource|WorkPackageResource|ProjectResource, ApiV3UserPaths|ApiV3WorkPackagePaths|ApiV3ProjectPaths>)
       .id(id)
       .get();
   }

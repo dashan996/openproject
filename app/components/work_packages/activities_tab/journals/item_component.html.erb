@@ -1,14 +1,17 @@
 <%=
   component_wrapper(data: wrapper_data_attributes, class: "work-packages-activities-tab-journals-item-component") do
-    flex_layout(data: { 
+    flex_layout(data: {
       test_selector: "op-wp-journal-entry-#{journal.id}"
     }) do |journal_container|
       if show_comment_container?
         journal_container.with_row do
           render(border_box_container(
-                  id: "activity-anchor-#{journal.sequence_version}",
                   padding: :condensed,
-                  "aria-label": I18n.t("activities.work_packages.activity_tab.commented")
+                  "aria-label": I18n.t("activities.work_packages.activity_tab.commented"),
+                  data: {
+                    "anchor-activity-id": journal.sequence_version,
+                    "anchor-comment-id": journal.id,
+                  }
                 )) do |border_box_component|
             border_box_component.with_header(px: 2, py: 1, data: { test_selector: "op-journal-notes-header" }) do
               flex_layout(align_items: :center, justify_content: :space_between) do |header_container|
@@ -28,7 +31,7 @@
                   end
                   header_start_container.with_column(mr: 1,
                                                     classes: "work-packages-activities-tab-journals-item-component--user-name ellipsis hidden-for-mobile") do
-                    truncated_user_name(journal.user)
+                    truncated_user_name(journal.user, hover_card: true)
                   end
                   if journal.initial?
                       header_start_container.with_column(
@@ -41,7 +44,11 @@
                       end
                     end
                   header_start_container.with_column(mr: 1, classes: "hidden-for-mobile") do
-                    render(Primer::Beta::Text.new(font_size: :small, color: :subtle, mt: 1)) { format_time(journal.updated_at) }
+                    if OpenProject::FeatureDecisions.work_package_comment_id_url_active?
+                      activity_anchor_link(journal) { journal_updated_at_formatted_time(journal) }
+                    else
+                      journal_updated_at_formatted_time(journal)
+                    end
                   end
                 end
                 header_container.with_column(flex_layout: true, align_items: :center) do |header_end_container|
@@ -55,21 +62,13 @@
                             ))
                     end
                   end
-                  header_end_container.with_column do
-                    render(Primer::Beta::Link.new(
-                            href: activity_url(journal),
-                            scheme: :secondary,
-                            underline: false,
-                            font_size: :small,
-                            data: {
-                              turbo: false,
-                              action: "click->work-packages--activities-tab--index#setAnchor:prevent",
-                              "work-packages--activities-tab--index-id-param": journal.sequence_version
-                            }
-                          )) do
-                      "##{journal.sequence_version}"
+
+                  unless OpenProject::FeatureDecisions.work_package_comment_id_url_active?
+                    header_end_container.with_column do
+                      activity_anchor_link(journal)
                     end
                   end
+
                   header_end_container.with_column(ml: 1,
                                                   classes: "work-packages-activities-tab-journals-item-component--action-menu") do
                     render(Primer::Alpha::ActionMenu.new(data: { test_selector: "op-wp-journal-#{journal.id}-action-menu" })) do |menu|

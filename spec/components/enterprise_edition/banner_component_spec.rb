@@ -95,6 +95,7 @@ RSpec.describe EnterpriseEdition::BannerComponent, type: :component do
     it "renders the component" do
       render_component_in_mo
 
+      expect(page).to have_test_selector("op-ee-banner-some-enterprise-feature")
       expect(page).to have_css ".op-ee-banner--title-container", text: title
       expect(page).to have_css ".op-ee-banner--description-container", text: description
       expect(page).to have_link link_title, href:

@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Progress tracking admin page", :js, :with_cuprite do
+RSpec.describe "Progress tracking admin page", :js do
   include ActionView::Helpers::SanitizeHelper
   include Toasts::Expectations
 

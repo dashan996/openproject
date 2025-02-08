@@ -88,7 +88,7 @@ class CostReportsController < ApplicationController
   def render_html
     session[session_name].try(:delete, :name)
     # get rid of unsaved filters and grouping
-    store_query(@query) if @query&.id != session[session_name].try(:id)
+    store_query if @query && @query&.id != session[session_name].try(:id)
     render locals: { menu_name: project_or_global_menu }
   end
 
@@ -150,7 +150,7 @@ class CostReportsController < ApplicationController
   # at :id does not exist
   def show
     if @query
-      store_query(@query)
+      store_query
       table
       render action: "index", locals: { menu_name: project_or_global_menu } unless performed?
     else
@@ -174,12 +174,16 @@ class CostReportsController < ApplicationController
   # Update a record with new query parameters and save it. Redirects to the
   # specified record or renders the updated table on XHR
   def update
-    if params[:set_filter].to_i == 1 # save
+    if save_query? # save
       old_query = @query
       prepare_query
-      old_query.migrate(@query)
-      old_query.save!
-      @query = old_query
+      if old_query
+        old_query.migrate(@query)
+        old_query.save!
+        @query = old_query
+      end
+    elsif set_filter? # apply
+      prepare_query
     end
     if request.xhr?
       table
@@ -195,7 +199,7 @@ class CostReportsController < ApplicationController
     @query.name = params[:query_name]
     @query.public! if make_query_public?
     @query.save!
-    store_query(@query)
+    store_query
     if request.xhr?
       render plain: @query.name
     else
@@ -466,6 +470,12 @@ class CostReportsController < ApplicationController
   end
 
   ##
+  # Determines if the request contains a query to save
+  def save_query?
+    params[:save_query].to_i == 1
+  end
+
+  ##
   # Extract active filters from the http params
   def http_filter_parameters
     params[:fields] ||= []
@@ -539,12 +549,12 @@ class CostReportsController < ApplicationController
 
   ##
   # Store query in the session
-  def store_query(_query)
+  def store_query
     cookie = {}
     cookie[:groups] = cookie_groups
     cookie[:filters] = cookie_filters
-    cookie[:name] = @query.name if @query.name
-    cookie[:id] = @query.id
+    cookie[:name] = @query.name if @query&.name
+    cookie[:id] = @query.id if @query&.id
     session[session_name] = cookie
   end
 

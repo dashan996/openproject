@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Invite user modal", :js, :with_cuprite do
+RSpec.describe "Invite user modal", :js do
   let!(:standard) { create(:standard_global_role) }
   let!(:project) { create(:project) }
   let!(:work_package) { create(:work_package, project:) }
@@ -270,7 +270,7 @@ RSpec.describe "Invite user modal", :js, :with_cuprite do
                    roles: [role_no_permissions])
           end
 
-          it "disables projects for which you do not have rights", with_cuprite: false do
+          it "disables projects for which you do not have rights", :js, :selenium do
             ngselect = modal.open_select_in_step ".ng-select-container"
             expect(ngselect).to have_text "#{project_no_permissions.name}\nYou are not allowed to invite members to this project"
           end
@@ -281,7 +281,7 @@ RSpec.describe "Invite user modal", :js, :with_cuprite do
           # Use admin to ensure all projects are visible
           let(:current_user) { create(:admin) }
 
-          it "disables projects for which you do not have rights", with_cuprite: false do
+          it "disables projects for which you do not have rights", :js do
             ngselect = modal.open_select_in_step ".ng-select-container"
             expect(ngselect).to have_no_text archived_project
           end

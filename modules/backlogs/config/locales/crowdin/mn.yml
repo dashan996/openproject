@@ -26,7 +26,7 @@ mn:
   activerecord:
     attributes:
       work_package:
-        position: "Байрлал"
+        position: "Байршил"
         story_points: "Гүйцэтгэлийн оноо"
         backlogs_work_package_type: "Backlog type"
     errors:

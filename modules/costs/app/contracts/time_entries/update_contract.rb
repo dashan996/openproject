@@ -62,9 +62,10 @@ module TimeEntries
     end
 
     def user_allowed_to_modify_ongoing?(time_entry)
-      model.user == user && (user.allowed_in_project?(:log_time,
-                                                      time_entry.project) || user.allowed_in_work_package?(:log_own_time,
-                                                                                                           time_entry.work_package))
+      model.user == user && (
+        user.allowed_in_project?(:log_time, time_entry.project) ||
+        user.allowed_in_work_package?(:log_own_time, time_entry.work_package)
+      )
     end
   end
 end

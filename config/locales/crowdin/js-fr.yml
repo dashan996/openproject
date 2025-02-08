@@ -357,10 +357,10 @@ fr:
           learn_about: "En savoir plus sur les nouvelles fonctionnalités"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_1":
+          "15_2":
             standard:
               new_features_html: >
-                Cette version apporte diverses fonctionnalités et améliorations, par exemple <br> <ul class="%{list_styling_class}"> <li>Champs personnalisés de type hiérarchique (module Enterprise).</li> <li>Refonte de l'onglet Relations dans les lots de travaux.</li> <li>Refonte de la page d'index des réunions.</li> <li>Sauts de page manuels dans les exportations de lots de travaux PDF.</li> <li>Mode Zen pour les listes de projets.</li> </ul>
+                Cette version apporte diverses fonctionnalités et améliorations, par exemple :<br> <ul class="%{list_styling_class}"> <li>Définissez des rappels pour les lots de travaux afin de générer des notifications d'alerte de date.</li> <li>Créez de nouveaux dossiers directement à partir du sélecteur d'emplacement pour le stockage des fichiers.</li> <li>Spécifiez un délai requis entre les successeurs et les prédécesseurs des lots de travaux.</li> <li>Activez l'ordre et le regroupement des lots de travaux en fonction des valeurs des champs personnalisés de type hiérarchique.</li> <li>Exportez les entrées de temps sous forme de feuilles de temps PDF.</li> <li>Ajoutez une fenêtre contextuelle affichant des informations sur l'utilisateur lors du survol à l'écran.</li> </ul>
     ical_sharing_modal:
       title: "S'abonner au calendrier"
       inital_setup_error_message: "Une erreur est survenue lors de la récupération des données."
@@ -625,11 +625,11 @@ fr:
       date_alerts:
         milestone_date: "Date jalon"
         overdue: "En retard"
-        overdue_since: "depuis %{difference_in_days}"
-        property_today: "est aujourd’hui"
-        property_is: "est dans %{difference_in_days}"
-        property_was: "était il y a %{difference_in_days}"
-        property_is_deleted: "est supprimé"
+        overdue_since: "since %{difference_in_days}."
+        property_today: "is today."
+        property_is: "is in %{difference_in_days}."
+        property_was: "was %{difference_in_days} ago."
+        property_is_deleted: "is deleted."
         upsale:
           title: "Alarmes"
           description: "Avec les alarmes, vous serez informé(e) à l'approche des dates de début ou de fin vous concernant afin de ne jamais manquer ou oublier une échéance importante."
@@ -743,7 +743,7 @@ fr:
         immediate:
           title: "Envoyez-moi un rappel par e-mail"
           mentioned: "Immédiatement quand quelqu'un me @mentionne"
-          personal_reminder: "Immediately when I receive a personal reminder"
+          personal_reminder: "Immédiatement lorsque je reçois un rappel personnel"
         alerts:
           title: "Alertes par e-mail pour les autres éléments (qui ne sont pas des lots de travaux)"
           explanation: >

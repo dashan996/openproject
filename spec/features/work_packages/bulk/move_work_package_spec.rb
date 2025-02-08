@@ -95,7 +95,7 @@ RSpec.describe "Moving a work package through Rails view", :js do
 
       context "when the limit to move in the frontend is 1",
               with_settings: { work_packages_bulk_request_limit: 1 } do
-        it "copies them in the background and shows a status page", :with_cuprite do
+        it "copies them in the background and shows a status page" do
           click_on "Move and follow"
           wait_for_reload
 
@@ -122,7 +122,7 @@ RSpec.describe "Moving a work package through Rails view", :js do
         end
       end
 
-      it "moves parent and child wp to a new project", :with_cuprite do
+      it "moves parent and child wp to a new project" do
         click_on "Move and follow"
         wait_for_reload
         page.find(".inline-edit--container.subject", text: work_package.subject)
@@ -136,7 +136,7 @@ RSpec.describe "Moving a work package through Rails view", :js do
       context "when the target project does not have the type" do
         let!(:project2) { create(:project, name: "Target", types: [type2]) }
 
-        it "does not move the work package", :with_cuprite do
+        it "does not move the work package" do
           click_on "Move and follow"
           wait_for_reload
 

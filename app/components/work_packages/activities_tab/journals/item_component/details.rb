@@ -66,7 +66,10 @@ module WorkPackages
             flex_layout: true,
             justify_content: :space_between,
             classes: "work-packages-activities-tab-journals-item-component-details--journal-details-header-container",
-            id: "activity-anchor-#{journal.sequence_version}"
+            data: {
+              "anchor-activity-id": journal.sequence_version,
+              "anchor-comment-id": journal.id
+            }
           ) do |header_container|
             render_header_start(header_container)
             render_header_end(header_container)
@@ -105,7 +108,7 @@ module WorkPackages
             mr: 1,
             classes: "work-packages-activities-tab-journals-item-component-details--user-name ellipsis hidden-for-mobile"
           ) do
-            truncated_user_name(journal.user)
+            truncated_user_name(journal.user, hover_card: true)
           end
         end
 
@@ -160,13 +163,21 @@ module WorkPackages
 
         def render_mobile_updated_time(container)
           container.with_column do
-            render(Primer::Beta::Text.new(font_size: :small, color: :subtle, mt: 1)) { format_time(journal.updated_at) }
+            if OpenProject::FeatureDecisions.work_package_comment_id_url_active?
+              activity_anchor_link(journal) { journal_updated_at_formatted_time(journal) }
+            else
+              journal_updated_at_formatted_time(journal)
+            end
           end
         end
 
         def render_updated_time(container)
           container.with_column(mr: 1, classes: "hidden-for-mobile") do
-            render(Primer::Beta::Text.new(font_size: :small, color: :subtle, mt: 1)) { format_time(journal.updated_at) }
+            if OpenProject::FeatureDecisions.work_package_comment_id_url_active?
+              activity_anchor_link(journal) { journal_updated_at_formatted_time(journal) }
+            else
+              journal_updated_at_formatted_time(journal)
+            end
           end
         end
 
@@ -189,20 +200,13 @@ module WorkPackages
         end
 
         def render_activity_link(container)
+          return if OpenProject::FeatureDecisions.work_package_comment_id_url_active?
+
           container.with_column(
             pr: 3,
             classes: "work-packages-activities-tab-journals-item-component-details--activity-link-container"
           ) do
-            render(Primer::Beta::Link.new(
-                     href: activity_url(journal),
-                     scheme: :secondary,
-                     underline: false,
-                     font_size: :small,
-                     data: { turbo: false, action: "click->work-packages--activities-tab--index#setAnchor:prevent",
-                             "work-packages--activities-tab--index-id-param": journal.sequence_version }
-                   )) do
-              "##{journal.sequence_version}"
-            end
+            activity_anchor_link(journal)
           end
         end
 

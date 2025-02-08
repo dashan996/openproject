@@ -104,15 +104,11 @@ class Type < ApplicationRecord
     object.types.include?(self)
   end
 
-  def replacement_patterns_defined?
-    return false if patterns.blank?
-
-    enabled_patterns.any?
+  def replacement_pattern_defined_for?(attribute)
+    enabled_patterns.key?(attribute)
   end
 
   def enabled_patterns
-    return {} if patterns.blank?
-
     patterns.all_enabled
   end
 

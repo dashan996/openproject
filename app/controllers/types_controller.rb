@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -60,19 +62,17 @@ class TypesController < ApplicationController
     end
   end
 
-  def create # rubocop:disable Metrics/AbcSize
+  def create
     CreateTypeService
       .new(current_user)
-      .call(permitted_type_params, copy_workflow_from: params[:copy_workflow_from]) do |call|
+      .call(permitted_type_params, copy_workflow_from: params.dig(:type, :copy_workflow_from)) do |call|
       @type = call.result
 
       call.on_success do
         redirect_to_type_tab_path(@type, t(:notice_successful_create))
       end
 
-      call.on_failure do |result|
-        flash[:error] = result.errors.full_messages.join("\n")
-        load_projects_and_types
+      call.on_failure do
         render action: :new, status: :unprocessable_entity
       end
     end
@@ -135,8 +135,7 @@ class TypesController < ApplicationController
 
   def redirect_to_type_tab_path(type, notice)
     tab = params["tab"] || "settings"
-    redirect_to(edit_type_tab_path(type, tab:),
-                notice:)
+    redirect_to(edit_tab_type_path(type, tab:), notice:, status: :see_other)
   end
 
   def render_edit_tab(type, status: :ok)

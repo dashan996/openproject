@@ -28,7 +28,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + "/../../spec_helper.rb")
 
-RSpec.describe "updating a budget", :js do
+RSpec.describe "updating a budget", :js, :selenium do
   let(:project) do
     create(:project_with_types,
            enabled_module_names: %i[budgets costs work_package_tracking],
@@ -39,7 +39,7 @@ RSpec.describe "updating a budget", :js do
 
   current_user { user }
 
-  describe "with new cost items", :with_cuprite do
+  describe "with new cost items" do
     let(:cost_type) do
       create(:cost_type, name: "Post-war", unit: "cap", unit_plural: "caps")
     end

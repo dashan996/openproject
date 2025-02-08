@@ -29,12 +29,12 @@
         end
 
         if @project.nil?
-          modal_body.with_row(mt: 3) do
+          modal_body.with_row(mb: 3) do
             render(Meeting::ProjectAutocompleter.new(f))
           end
         end
 
-        modal_body.with_row(mt: 3) do
+        modal_body.with_row do
           render(Meeting::Title.new(f))
         end
 
@@ -86,7 +86,7 @@
                 hidden: @meeting.frequency_working_days?,
               ) do
                 flex_layout do |end_after|
-                  end_after.with_row(hidden: @meeting.end_after_iterations?,
+                  end_after.with_row(hidden: !@meeting.end_after_specific_date?,
                                      data: {
                                        value: "specific_date",
                                        target_name: "end_after",
@@ -95,7 +95,7 @@
                     render(RecurringMeeting::SpecificDate.new(f, meeting: @meeting))
                   end
 
-                  end_after.with_row(hidden: @meeting.end_after_specific_date?,
+                  end_after.with_row(hidden: !@meeting.end_after_iterations?,
                                      data: {
                                        value: "iterations",
                                        target_name: "end_after",

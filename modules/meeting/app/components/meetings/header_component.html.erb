@@ -1,8 +1,8 @@
 <%=
-  helpers.content_controller "poll-for-changes",
+  helpers.content_controller "poll-for-changes keep-scroll-position",
                      poll_for_changes_url_value: check_for_updates_meeting_path(@meeting),
                      poll_for_changes_interval_value: check_for_updates_interval,
-                     poll_for_changes_autoscroll_enabled_value: true
+                     keep_scroll_position_url_value: meeting_path(@meeting)
 
   component_wrapper do
     render(Primer::OpenProject::PageHeader.new(
@@ -68,7 +68,7 @@
             end
 
             menu.with_item(label: t(:label_icalendar_download),
-                           href: download_ics_meeting_path(@meeting)) do |item|
+                           href: ics_download_path) do |item|
               item.with_leading_visual_icon(icon: :download)
             end
 
@@ -95,9 +95,10 @@
 
         menu.with_item(label: delete_label,
                        scheme: :danger,
-                       href: meeting_path(@meeting),
-                       form_arguments: {
-                         method: :delete, data: { confirm: t("text_are_you_sure"), turbo: 'false' }
+                       href: polymorphic_path([:delete_dialog, @project, @meeting.becomes(Meeting)]),
+                       tag: :a,
+                       content_arguments: {
+                         data: { controller: "async-dialog" }
                        }) do |item|
           item.with_leading_visual_icon(icon: :trash)
         end if delete_enabled?

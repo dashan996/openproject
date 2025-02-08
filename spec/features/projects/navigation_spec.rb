@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Projects navigation", :js, :with_cuprite do
+RSpec.describe "Projects navigation", :js do
   shared_let(:project) { create(:project) }
   shared_let(:user) do
     create(:user, member_with_permissions: {

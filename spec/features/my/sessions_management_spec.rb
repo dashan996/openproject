@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "My account session management", :js do
+RSpec.describe "My account session management", :js, :selenium do
   include Redmine::I18n
   let(:user) { create(:user) }
 

@@ -6,10 +6,12 @@ ka:
     attributes:
       ldap_groups/synchronized_group:
         dn: 'DN'
+        auth_source: 'Auth source'
         ldap_auth_source: 'LDAP მიერთება'
         sync_users: 'მომხმარებლების სინქრონიზაცია'
       ldap_groups/synchronized_filter:
         filter_string: 'LDAP ფილტრი'
+        auth_source: 'Auth source'
         ldap_auth_source: 'LDAP მიერთება'
         group_name_attribute: "Group name attribute"
         sync_users: 'მომხმარებლების სინქრონიზაცია'

@@ -111,7 +111,9 @@ class DurationConverter
 
     def parseable?(duration_string)
       if number = Integer(duration_string, 10, exception: false) || Float(duration_string, exception: false)
-        number >= 0
+        # ruby 3.4 started being able to parse strings like "1." as 1.0.
+        # However, that does not work with ChronicDuration.
+        number >= 0 && !duration_string.ends_with?(".")
       else
         begin
           do_parse(duration_string)

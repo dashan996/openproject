@@ -106,6 +106,9 @@ RSpec.describe "Inline editing work packages", :js do
       subject_field.expect_invalid
 
       subject_field.save!
+
+      wp_table.expect_and_dismiss_toaster(type: :error, message: "Subject can't be blank.")
+
       expect(work_package.reload.subject).to eq "Foobar"
     end
   end

@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Multi-value custom fields creation", :js do
+RSpec.describe "Multi-value custom fields creation", :js, :selenium do
   shared_let(:admin) { create(:admin) }
 
   before do

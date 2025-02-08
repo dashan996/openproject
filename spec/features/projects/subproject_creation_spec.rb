@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Subproject creation", :js, :with_cuprite do
+RSpec.describe "Subproject creation", :js do
   let(:name_field) { FormFields::InputFormField.new :name }
   let(:parent_field) { FormFields::SelectFormField.new :parent }
   let(:add_subproject_role) { create(:project_role, permissions: %i[edit_project add_subprojects]) }

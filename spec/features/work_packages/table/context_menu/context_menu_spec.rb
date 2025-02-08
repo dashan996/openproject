@@ -2,8 +2,7 @@ require "spec_helper"
 require_relative "context_menu_shared_examples"
 
 RSpec.describe "Work package table context menu",
-               :js,
-               :with_cuprite do
+               :js do
   shared_let(:user) { create(:admin) }
   shared_let(:project) { create(:project, enabled_module_names: %i[work_package_tracking gantt costs]) }
   shared_let(:work_package) { create(:work_package, project:) }

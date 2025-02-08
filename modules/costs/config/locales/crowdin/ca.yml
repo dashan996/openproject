@@ -33,6 +33,7 @@ ca:
       cost_type:
         unit: "Nom d'unitat"
         unit_plural: "Noms d'unitat pluralitzats"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Unitats gastades"
         labor_costs: "Costs de treball"
@@ -44,6 +45,16 @@ ca:
         rate: "Tarifa"
       user:
         default_rates: "Tarifes per defecte"
+      time_entry:
+        project: Project
+        user: User
+        work_package: Work package
+        hours: Hores
+        comments: Comment
+        activity: Activitat
+        spent_on: Data
+        start_time: Start time
+        end_time: Finish time
     models:
       cost_type:
         one: "Estil de cost"
@@ -51,6 +62,8 @@ ca:
       rate: "Tarifa"
     errors:
       models:
+        time_entry:
+          invalid_time: "must be between 00:00 and 23:59."
         work_package:
           is_not_a_valid_target_for_cost_entries: "El paquet de treball #%{id} no és un objectiu vàlid per reassignar les entrades de costs."
           nullify_is_not_valid_for_cost_entries: "Les entrades de cost no poden ser assignades a un projecte."
@@ -65,6 +78,7 @@ ca:
     fixed_date: "Data fixada"
   button_add_rate: "Afegeix tarifa"
   button_log_costs: "Registra unitat de costs"
+  button_log_time: "Log"
   caption_booked_on_project: "Registrat a un projecte"
   caption_default: "Per defecte"
   caption_default_rate_history_for: "Història de tarifa per defecte per %{user}"
@@ -76,6 +90,7 @@ ca:
   caption_save_rate: "Guardar tarifa"
   caption_set_rate: "Estableix la tarifa actual"
   caption_show_locked: "Mostra els estils fixats"
+  caption_log_time_dialog: "Log time"
   description_date_for_new_rate: "Data per una tarifa nova"
   group_by_others: "no està a cap grup"
   label_between: "entre"
@@ -115,10 +130,12 @@ ca:
   label_until: "fins a"
   label_valid_from: "Vàlid des de"
   label_yes: "Si"
+  placeholder_activity_select_work_package_first: Work package selection is required first
   notice_something_wrong: "Alguna cosa ha anat malament. Si us plau, prova-ho de nou."
   notice_successful_restore: "Restaurat correctament."
   notice_successful_lock: "Fixat correctament."
   notice_cost_logged_successfully: "Cost d'unitat registrat correctament."
+  notice_different_time_zones: "This user has a different time zone (%{tz}). Time will be logged using their time zone."
   permission_edit_cost_entries: "Editar costs d'unitat registrats"
   permission_edit_own_cost_entries: "Editar costs d'unitat registrats propis"
   permission_edit_hourly_rates: "Editar tarifes per hora"
@@ -146,3 +163,7 @@ ca:
   week: "setmana"
   js:
     text_are_you_sure: "N'estas segur?"
+  api_v3:
+    errors:
+      validation:
+        start_time_different_date: "Date part of startTime (%{start_time}) must be the same as the spentOn (%{spent_on}) date."

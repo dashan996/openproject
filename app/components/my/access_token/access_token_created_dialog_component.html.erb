@@ -29,15 +29,15 @@ See COPYRIGHT and LICENSE files for more details.
 
 <%=
   render(Primer::OpenProject::FeedbackDialog.new(
-    id:,
-    title: nil,
-    size: :large
-  )) do |dialog|
+           id:,
+           title: I18n.t("my.access_token.create_dialog.title"),
+           size: :large
+         )) do |dialog|
     dialog.with_feedback_message do |message|
       message.with_heading(tag: :h2) { I18n.t("my.access_token.create_dialog.header", type: "API") }
     end
 
-    dialog.with_additional_content do
+    dialog.with_additional_details do
       flex_layout do |flex|
         flex.with_row(mb: 2) do
           render(Primer::OpenProject::InputGroup.new) do |input_group|

@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "my", :js, :with_cuprite do
+RSpec.describe "my", :js do
   let(:user_password) { "bob" * 4 }
   let!(:string_cf) { create(:user_custom_field, :string, name: "Hobbies", is_required: false) }
   let(:user) do

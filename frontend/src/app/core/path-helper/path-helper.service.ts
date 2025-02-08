@@ -304,6 +304,10 @@ export class PathHelperService {
     return `${this.workPackagePath(workPackageId)}/split_view/update_counter?counter=${counter}`;
   }
 
+  public workPackageGetRelationsCounterPath(workPackageId:string|number) {
+    return `${this.workPackagePath(workPackageId)}/split_view/get_relations_counter`;
+  }
+
   // Work Package Bulk paths
 
   public workPackagesBulkEditPath() {
@@ -328,5 +332,29 @@ export class PathHelperService {
 
   public jobStatusModalPath(jobId:string) {
     return `${this.staticBase}/job_statuses/${jobId}/dialog`;
+  }
+
+  public timeEntriesUserTimezoneCaption(userId:string) {
+    return `${this.staticBase}/time_entries/users/${userId}/tz_caption`;
+  }
+
+  public timeEntriesWorkPackageActivity(workPackageId:string) {
+    return `${this.staticBase}/time_entries/work_packages/${workPackageId}/time_entry_activities`;
+  }
+
+  public timeEntryDialog() {
+    return `${this.staticBase}/time_entries/dialog`;
+  }
+
+  public timeEntryEditDialog(timeEntryId:string) {
+    return `${this.staticBase}/time_entries/${timeEntryId}/dialog`;
+  }
+
+  public timeEntryWorkPackageDialog(workPackageId:string) {
+    return `${this.workPackagePath(workPackageId)}/time_entries/dialog`;
+  }
+
+  public timeEntryProjectDialog(projectId:string) {
+    return `${this.projectPath(projectId)}/time_entries/dialog`;
   }
 }

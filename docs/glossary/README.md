@@ -360,7 +360,7 @@ The quick context menu in OpenProject opens when you open a [work package table]
 
 ## Relations
 
-In OpenProject, you can set work packages in relation to each other. Some relation types simply create a visible link between the two work packages. Others have an additional effect, e.g. force one work package to be finished before the other one starts (Predecessor). The simpliest way to add a relation between two existing work packages is to click the +Relation button on the Relations tab of one of the work packages. [Read more about work package relations and hierarchies in our user guide](../user-guide/work-packages/work-package-relations-hierarchies/).
+In OpenProject, you can set work packages in relation to each other. Some relation types simply create a visible link between the two work packages. Others have an additional effect, e.g. force one work package to be finished before the other one starts (Predecessor). The simplest way to add a relation between two existing work packages is to click the +Relation button on the Relations tab of one of the work packages. [Read more about work package relations and hierarchies in our user guide](../user-guide/work-packages/work-package-relations-hierarchies/).
 
 ## Repository
 

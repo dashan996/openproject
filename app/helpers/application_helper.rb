@@ -189,13 +189,10 @@ module ApplicationHelper
     I18n.t(label, author: link_to_user(author), age: time_tag(created)).html_safe
   end
 
-  def authoring_at(created, author)
+  def authoring_at(creation_date, author)
     return if author.nil?
 
-    I18n.t(:"js.label_added_time_by",
-           author: html_escape(author.name),
-           age: created,
-           authorLink: user_path(author)).html_safe
+    I18n.t(:label_added_by_on, author: link_to_user(author), date: creation_date).html_safe
   end
 
   def time_tag(time)
@@ -293,7 +290,7 @@ module ApplicationHelper
 
   def body_data_attributes(local_assigns)
     {
-      controller: "application",
+      controller: "application hover-card-trigger",
       relative_url_root: root_path,
       overflowing_identifier: ".__overflowing_body",
       rendered_at: Time.zone.now.iso8601,

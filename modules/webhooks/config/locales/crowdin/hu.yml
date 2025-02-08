@@ -8,6 +8,7 @@ hu:
         url: 'Tartalom URL-címe'
         secret: 'titkos aláírás'
         events: 'Események'
+        enabled: 'Enabled'
         projects: 'Engedélyezett projektek'
       webhooks/log:
         event_name: 'Esemény neve'

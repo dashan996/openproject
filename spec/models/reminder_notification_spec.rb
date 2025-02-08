@@ -31,6 +31,6 @@ require "spec_helper"
 RSpec.describe ReminderNotification do
   describe "Associations" do
     it { is_expected.to belong_to(:reminder) }
-    it { is_expected.to belong_to(:notification) }
+    it { is_expected.to belong_to(:notification).dependent(:destroy) }
   end
 end

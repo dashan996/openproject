@@ -45,6 +45,8 @@ lv:
   label_greater: "lielāks >"
   label_is_not_project_with_subprojects: "nav (ietver apakšprojektus)"
   label_is_project_with_subprojects: "ir (ieskaitot apakšprojektus)"
+  label_is_work_package_with_descendants: "is (includes descendants)"
+  label_is_not_work_package_with_descendants: "is not (includes descendants)"
   label_work_package_attributes: "Darba pieteikumu atribūti"
   label_less: "mazāk <"
   label_logged_by_reporting: "Ielogoja"
@@ -91,8 +93,11 @@ lv:
       button: "Export PDF timesheet"
       timesheet: "Timesheet"
       time: "Time"
+      sum_hours: Sum
     cost_reports:
       title: "Your Cost Reports XLS export"
+      start_time: "Start time"
+      end_time: "End time"
   reporting:
     group_by:
       selected_columns: "Izvēlētās kolonnas"

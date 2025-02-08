@@ -3,11 +3,7 @@
     header.with_title { @topic.subject }
     header.with_breadcrumbs(breadcrumb_items)
 
-    watcher_button_args = watcher_button_arguments(@topic, User.current)
-    header.with_action_button(**watcher_button_args) do |button|
-      button.with_leading_visual_icon(icon: watcher_button_args[:mobile_icon])
-      watcher_button_args[:mobile_label]
-    end
+    watcher_action_button(header, @topic)
 
     if !@topic.locked? && authorize_for('messages', 'reply')
       header.with_action_button(tag: :a,

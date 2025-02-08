@@ -22,9 +22,9 @@ description: |-
 
   The `_dependencies` property contains the list of dependencies that exist between the value selected for one of the properties of the described resource and the resource's structure. Depending on the value, additional properties might exist or properties might have other values allowed to be assigned. See [SchemaDependency](https://www.openproject.org/docs/api/endpoints/schemas/#schema-dependencies) for more information.
 
-  # Field schema
+  ## Field schema
 
-  ## Linked Properties
+  ### Linked Properties
 
   | Property             | Description                                                    | Conditions                                           |
   | :--------------:     | -------------------------------------------------------------- | ---------------------------------------------        |
@@ -39,7 +39,7 @@ description: |-
 
   Only one of the links (`allowedValues`, `allowedValuesSchemas`) will exist for any given property.
 
-  ## Local Properties
+  ### Local Properties
 
   | Property          | Description                                                                        | Type         | Default |
   |:-----------------:| ---------------------------------------------------------------------------------- | ------------ | ------- |
@@ -72,7 +72,7 @@ description: |-
   property set to `_links`. This means that the `user` property will be found under the path
   `_links.user` of the json payload of the work package resource.
 
-  # Schema Dependencies
+  ## Schema Dependencies
 
   A `SchemaDependency` describes the dependencies between a value chosen for a resource's property
   and the resource's structure. By that, additional properties or changes in a property are
@@ -89,11 +89,11 @@ description: |-
 
   SchemaDependencies are always embedded inside a Schema's `_dependencies` attribute. As such, they are not independently existing resources. Consequently, they do not have a `self` reference.
 
-  ## Linked Properties
+  ### Linked Properties
 
   A SchemaDependency does not have any links.
 
-  ## Local Properties
+  ### Local Properties
 
   | Property            | Description                                                                        | Type             |
   | :-----------------: | ---------------------------------------------------------------------------------- | ---------------- |

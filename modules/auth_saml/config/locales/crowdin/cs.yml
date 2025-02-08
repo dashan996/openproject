@@ -6,8 +6,8 @@ cs:
         identifier: Identifikátor
         secret: Tajné
         scope: Rozsah
-        assertion_consumer_service_url: ACS (Assertion consumer service) URL
-        limit_self_registration: Limit self registration
+        assertion_consumer_service_url: Adresa URL služby ACS (Assertion consumer service)
+        limit_self_registration: Omezit vlastní registraci
         sp_entity_id: ID entity služby
         metadata_url: Identity provider metadata URL
         name_identifier_format: Formát identifikátoru názvu
@@ -17,7 +17,7 @@ cs:
         authn_requests_signed: Podepsat SAML AuthnRequests
         want_assertions_signed: Požadovat podepsané odpovědi
         want_assertions_encrypted: Vyžadovat šifrované odpovědi
-        certificate: Certificate used by OpenProject for SAML requests
+        certificate: Certifikát používaný OpenProject pro žádosti SAML
         private_key: Corresponding private key for OpenProject SAML requests
         signature_method: Algoritmus podpisu
         digest_method: Algoritmus výběru
@@ -37,13 +37,13 @@ cs:
     info:
       title: "Parametry konfigurace SAML protokolu"
       description: >
-        Use these parameters to configure your identity provider connection to OpenProject.
+        Pomocí těchto parametrů nakonfigurujte připojení poskytovatele identit k aplikaci OpenProject.
     metadata_parser:
       success: "Successfully updated the configuration using the identity provider metadata."
       invalid_url: "Provided metadata URL is invalid. Provide a HTTP(s) URL."
       error: "Failed to retrieve the identity provider metadata: %{error}"
     providers:
-      label_empty_title: "No SAML providers configured yet."
+      label_empty_title: "Zatím nenastaveni žádní poskytovatelé SAML."
       label_empty_description: "Přidejte poskytovatele, abyste je viděli zde."
       label_automatic_configuration: Automatická konfigurace
       label_metadata: Metadata
@@ -51,7 +51,7 @@ cs:
       label_openproject_information: Informace o OpenProject
       label_configuration_details: "Identity provider endpoints and certificates"
       label_configuration_encryption: "Podpisy a šifrování"
-      label_add_new: New SAML identity provider
+      label_add_new: Nový poskytovatel identity SAML
       label_edit: Edit SAML identity provider %{name}
       label_uid: Interní ID uživatele
       label_mapping: Mapování

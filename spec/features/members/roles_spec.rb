@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Members Role CRUD", :js, :with_cuprite do
+RSpec.describe "Members Role CRUD", :js do
   shared_let(:admin) { create(:admin) }
   let(:project) do
     create(:project,

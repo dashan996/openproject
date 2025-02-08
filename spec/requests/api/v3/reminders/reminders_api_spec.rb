@@ -31,8 +31,8 @@ require "spec_helper"
 RSpec.describe API::V3::Reminders::RemindersAPI do
   let!(:project) { create(:project) }
 
-  let!(:role_with_permissions) { create(:project_role, permissions: %i[view_work_packages manage_own_reminders]) }
-  let!(:role_without_permissions) { create(:project_role, permissions: %i[view_work_packages]) }
+  let!(:role_with_permissions) { create(:project_role, permissions: %i[view_work_packages]) }
+  let!(:role_without_permissions) { create(:project_role, permissions: %i[view_project]) }
 
   let!(:user_with_permissions) do
     create(:user, member_with_roles: { project => role_with_permissions })
@@ -110,7 +110,7 @@ RSpec.describe API::V3::Reminders::RemindersAPI do
     current_user { other_user_without_permissions }
 
     it "responds with unprocessable entity" do
-      expect(result["errorIdentifier"]).to eq("urn:openproject-org:api:v3:errors:MissingPermission")
+      expect(result["errorIdentifier"]).to eq("urn:openproject-org:api:v3:errors:NotFound")
     end
   end
 

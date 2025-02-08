@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -28,7 +30,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Projects copy", :js, :with_cuprite,
+RSpec.describe "Projects copy", :js,
                with_good_job_batches: [CopyProjectJob, Storages::CopyProjectFoldersJob, SendCopyProjectStatusEmailJob] do
   describe "with a full copy example" do
     let!(:project) do
@@ -65,10 +67,10 @@ RSpec.describe "Projects copy", :js, :with_cuprite,
     end
     let!(:project_custom_field_section) { create(:project_custom_field_section, name: "Section A") }
     let!(:project_custom_field) do
-      create(:text_project_custom_field, is_required: true, project_custom_field_section:)
+      create(:text_project_custom_field, name: "Required Foo", is_required: true, project_custom_field_section:)
     end
     let!(:optional_project_custom_field) do
-      create(:text_project_custom_field, is_required: false, project_custom_field_section:)
+      create(:text_project_custom_field, name: "Optional Foo", is_required: false, project_custom_field_section:)
     end
     let!(:optional_project_custom_field_with_default) do
       create(:text_project_custom_field, is_required: false, default_value: "foo", project_custom_field_section:)
@@ -160,6 +162,34 @@ RSpec.describe "Projects copy", :js, :with_cuprite,
       # The jobs are created as part of the object creation.
       clear_enqueued_jobs
       clear_performed_jobs
+    end
+
+    context "with optional and required custom fields" do
+      let!(:required_user_custom_field) do
+        create(:user_project_custom_field, name: "Required User",
+                                           is_required: true,
+                                           project_custom_field_section:)
+      end
+
+      before do
+        Pages::Projects::Settings::General.new(project).visit!
+
+        page.find_test_selector("project-settings-more-menu").click
+        page.find_test_selector("project-settings--copy").click
+      end
+
+      it "separates optional and required custom fields for new" do
+        expect(page).to have_content "Required Foo"
+        expect(page).to have_content "Required User"
+
+        click_on "Advanced settings"
+
+        within(".op-fieldset", match: :first) do
+          expect(page).to have_text "Optional Foo"
+          expect(page).to have_no_text "Required Foo"
+          expect(page).to have_no_text "Required User"
+        end
+      end
     end
 
     context "with correct project custom field activations" do
@@ -475,7 +505,7 @@ RSpec.describe "Projects copy", :js, :with_cuprite,
       # Using the db directly due to performance and clarity
       copied_work_packages = copied_project.work_packages
 
-      expect(copied_work_packages.length).to eql 1
+      expect(copied_work_packages.length).to be 1
 
       copied_work_package = copied_work_packages[0]
 
@@ -491,7 +521,7 @@ RSpec.describe "Projects copy", :js, :with_cuprite,
       expect(copied_work_package.custom_value_attributes).to eql(wp_custom_field.id => "Some wp cf text")
       expect(copied_work_package.attachments.map(&:filename)).to eq ["work_package_attachment.pdf"]
 
-      expect(ActionMailer::Base.deliveries.count).to eql(1)
+      expect(ActionMailer::Base.deliveries.count).to be(1)
       expect(ActionMailer::Base.deliveries.last.subject).to eql("Created project Copied project")
       expect(ActionMailer::Base.deliveries.last.to).to contain_exactly(user.mail)
     end

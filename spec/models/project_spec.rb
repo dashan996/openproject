@@ -455,6 +455,38 @@ RSpec.describe Project do
   it_behaves_like "acts_as_customizable included" do
     let(:model_instance) { project }
     let(:custom_field) { create(:string_project_custom_field) }
+
+    describe "valid?" do
+      let(:custom_field) { create(:string_project_custom_field, is_required: true) }
+
+      before do
+        model_instance.custom_field_values = { custom_field.id => "test" }
+        model_instance.save
+        model_instance.custom_field_values = { custom_field.id => nil }
+      end
+
+      context "without a validation context" do
+        it "does not validates the custom fields" do
+          expect(model_instance).to be_valid
+        end
+
+        it "does not includes the default validation context in the validation_context" do
+          model_instance.send(:validation_context=, :custom_context)
+          expect(model_instance.validation_context).to eq(:custom_context)
+        end
+      end
+
+      context "with the :saving_custom_fields validation context" do
+        it "validates the custom fields" do
+          expect(model_instance).not_to be_valid(:saving_custom_fields)
+        end
+
+        it "includes the default validation context too in the validation_context" do
+          model_instance.send(:validation_context=, :saving_custom_fields)
+          expect(model_instance.validation_context).to eq(%i(saving_custom_fields update))
+        end
+      end
+    end
   end
 
   describe "url identifier" do
@@ -482,6 +514,31 @@ RSpec.describe Project do
         project.validate
 
         expect(project.identifier).not_to eq(word)
+      end
+    end
+
+    # The acts_as_url plugin defines validation callbacks on :create and it is not automatically
+    # called when calling a custom context. However we need the acts_as_url callback to set the
+    # identifier when the validations are called with the :saving_custom_fields context.
+    context "when validating with :saving_custom_fields context" do
+      it "is set from name" do
+        project = described_class.new(name: "foo")
+
+        project.validate(:saving_custom_fields)
+
+        expect(project.identifier).to eq("foo")
+      end
+
+      it "is not allowed to clash with projects routing" do
+        expect(reserved).not_to be_empty
+
+        reserved.each do |word|
+          project = described_class.new(name: word)
+
+          project.validate(:saving_custom_fields)
+
+          expect(project.identifier).not_to eq(word)
+        end
       end
     end
   end

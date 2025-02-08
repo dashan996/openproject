@@ -226,6 +226,10 @@ de:
           item:
             title: Dieses Element hat keine untergeordnete Hierarchieebene
             description: Füge Elemente zu dieser Liste hinzu, um Unterelemente innerhalb eines anderen zu erstellen
+        delete_dialog:
+          title: "Benutzerdefiniertes Feldelement löschen"
+          heading: "Delete custom field item?"
+          description: "Mit dieser Aktion werden das Element und alle seine Unterelemente unwiderruflich entfernt. Alle zugewiesenen Werte werden endgültig gelöscht. Wenn dieses Feld erforderlich ist, kann das Entfernen von Elementen dazu führen, dass bestehende Arbeitspakete ungültig werden."
         placeholder:
           label: "Elementbezeichnung"
           short: "Kurzname"
@@ -246,6 +250,7 @@ de:
     confirm_destroy_option: "Löschen eines Werts entfernt alle bereits gesetzten Werte (z.B. bei Arbeitspaketen). Sind Sie sicher, dass Sie den Wert löschen möchten?"
     reorder_alphabetical: "Alphabetisch umsortieren"
     reorder_confirmation: "Warnung: Die aktuelle Reihenfolge der verfügbaren Werte geht verloren. Fortfahren?"
+    placeholder_version_select: "Zunächst muss ein Arbeitspaket oder ein Projekt ausgewählt werden"
     instructions:
       is_required: "Markieren Sie das benutzerdefinierte Feld als erforderlich. Dies macht es zwingend erforderlich, das Feld auszufüllen, wenn neue oder aktualisierte Ressourcen erstellt werden."
       is_required_for_project: "Das Attribut in allen Projekten erforderlich machen. Es kann dann nicht für einzelne Projekte deaktiviert werden."
@@ -284,6 +289,7 @@ de:
       label: "Bezeichnung"
       short: "Kurzname"
       parent: "Übergeordnetes Arbeitspaket"
+      blueprint: "Blaupause für Muster"
   global_search:
     placeholder: "Suche in %{app_title}"
     overwritten_tabs:
@@ -356,17 +362,17 @@ de:
       life_cycle:
         header:
           title: "Projektlebenszyklus"
-          description_html: 'These project stages and gates in the project lifecycle will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> and are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. You can enable or disable individual attributes.'
-        non_defined: "Neither stages nor gates are currently defined."
-        section_header: "Stages and gates"
+          description_html: 'Diese Stages und -Gates des Projektlebenszyklus werden auf Ihrer <a href=%{overview_url} target="_blank">Projektübersichtsseite</a> angezeigt und werden in den <a href=%{admin_settings_url} target="_blank">Administrationseinstellungen</a> vom Administrator der Instanz definiert. Sie können einzelne Attribute aktivieren oder deaktivieren.'
+        non_defined: "Keine Stages oder Gates definiert."
+        section_header: "Stages und Gates"
         step:
           use_in_project: "%{step} in diesem Projekt verwenden"
         filter:
-          label: "Search project stage or gate"
+          label: "Stage oder Gate suchen"
       project_custom_fields:
         header:
           title: "Projektattribute"
-          description_html: 'These project attributes will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> under their respective sections. You can enable or disable individual attributes. Project attributes and sections are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. '
+          description_html: 'Diese Projektattribute werden auf Ihrer <a href=%{overview_url} target="_blank">Projektübersichtsseite</a> in den jeweiligen Abschnitten angezeigt. Sie können einzelne Attribute aktivieren oder deaktivieren. Projektattribute und -abschnitte werden in den <a href=%{admin_settings_url} target="_blank">Administrationseinstellungen</a> durch den Administrator der Instanz definiert. '
         filter:
           label: "Projektattribut suchen"
         actions:
@@ -387,8 +393,8 @@ de:
         no_results_title_text: Durch dieses Projekt wird kein zusätzlicher erfasster Speicherplatz verbraucht.
   project_stage:
     working_days_count:
-      one: "Duration: %{count} working day"
-      other: "Duration: %{count} working days"
+      one: "Dauer: %{count} Arbeitstag"
+      other: "Dauer: %{count} Arbeitstage"
   lists:
     create:
       success: "Die geänderte Liste wurde als neue Liste gespeichert"
@@ -466,6 +472,7 @@ de:
   my:
     access_token:
       create_dialog:
+        title: Token generated
         header: Das %{type}-Token wurde generiert
         warning: 'Hinweis: Dieser Token ist nur einmal sichtbar, der Token kann jetzt kopiert werden.'
       errors:
@@ -582,7 +589,7 @@ de:
       no_results_content_text: Neuen Typ erstellen
     edit:
       form_configuration:
-        tab: "Form configuration"
+        tab: "Form-Konfiguration"
       more_info_text_html: >
         Mit der Enterprise Edition können Sie die Formularkonfiguration mit diesen zusätzlichen Add-ons anpassen: <br> <ul class="%{list_styling_class}"> <li><b>Neue Attributgruppen hinzufügen</b></li> <li><b>Attributgruppen umbenennen</b></li> </li> <li><b>Eine Tabelle mit verwandten Arbeitspaketen hinzufügen</b></li> </ul>
       projects:
@@ -590,18 +597,18 @@ de:
         enabled_projects: "Aktivierte Projekte"
       settings:
         tab: "Einstellungen"
-        type_color_text: The selected color distinguishes different types in Gantt charts or work packages tables. It is therefore recommended to use a strong color.
+        type_color_text: "Die ausgewählte Farbe unterscheidet verschiedene Typen\nin Gantt-Diagrammen und Arbeitspakettabellen. Es wird daher empfohlen, gut unterscheidbare Farben zu verwenden."
       subject_configuration:
-        tab: "Subject configuration"
+        tab: "Thema konfigurieren"
         manually_editable_subjects:
-          label: "Manually editable subjects"
-          caption: "Users can manually enter and edit work package subjects without restrictions."
+          label: "Manuell bearbeitbare Themen"
+          caption: "Benutzer können die Themen der Arbeitspakete ohne Einschränkungen manuell eingeben und bearbeiten."
         automatically_generated_subjects:
-          label: "Automatically generated subjects"
-          caption: "Define a pattern using referenced attributes and text to automatically generate work package subjects. Users will not be able to manually edit subjects."
+          label: "Automatisch generierte Themen"
+          caption: "Definieren Sie ein Schema aus referenzierten Attributen und Freitext für die automatische Generierung von Arbeitspaketthemen. Nutzer können diese nicht manuell editieren."
         pattern:
-          label: "Subject pattern"
-          caption: "Search for an attribute or add text. To create a space between elements add it as a text."
+          label: "Thema-Schema"
+          caption: "Suchen Sie nach einem Attribut oder fügen Sie Text hinzu. Um ein Leerzeichen zwischen Elementen zu erstellen, fügen Sie es als Text hinzu."
   versions:
     overview:
       work_packages_in_archived_projects: "Die Version wird mit archivierten Projekten geteilt, die immer noch Arbeitspakete auf diese Version zugewiesen haben. Die Arbeitspakete werden beim Zählen berücksichtigt, erscheinen aber nicht in den verknüpften Ansichten."
@@ -639,6 +646,7 @@ de:
         title: "Der Workflow für das Teilen von Arbeitspaketen fehlt"
         message: "Es ist kein Workflow für die Rolle ‚Work package editor‘ konfiguriert. Nur mit einem solchen Workflow können Benutzer, mit denen ein Arbeitspaket geteilt wurde, den Status des Arbeitspakets ändern. Workflows lassen sich einfach kopieren. Wählen Sie dazu einen Quell-Typ (z. B. ‚Task‘) und eine Quell-Rolle (z. B. 'Member') aus. Wählen Sie dann die Ziel-Typen aus. Als ersten Schritt können Sie alle Typen als Ziel-Typen auswählen. Danach wählen Sie die Ziel-Rolle ‚Work package editor‘ aus und drücken Sie auf den Knopf ‚Kopieren‘. Nachdem Sie hiermit eine Grundlage geschaffen haben, können Sie danach diese Workflows weiter anpassen, ganz genau wie Sie es für jede andere Rolle bereits getan haben."
         link_message: "Konfigurieren Sie die Workflows in der Administration."
+    templated_subject_hint: Automatisch durch den Typ %{type} erzeugt
     summary:
       reports:
         category:
@@ -661,14 +669,15 @@ de:
       no_results_title_text: Derzeit sind keine Beziehungen verfügbar.
       blankslate_heading: "Keine Beziehungen"
       blankslate_description: "Dieses Arbeitspaket hat noch keine Beziehungen."
+    label_add_child_button: "Kind"
     label_add_x: "%{x} hinzufügen"
     label_edit_x: "%{x} editieren"
     label_add_description: "Beschreibung hinzufügen"
     lag:
       subject: "Verzögerung"
-      title: "Verzögerung (in Tagen)"
-      caption: "Die Anzahl der Arbeitstage, die zwischen den beiden Arbeitspaketen liegen"
+      caption: "Die minimale Anzahl von Arbeitstagen zwischen den zwei Arbeitspaketen."
     relations:
+      label_new_child_created: "Neues Arbeitspaket erstellt und als Kind hinzugefügt"
       label_relates_singular: "Beziehung mit"
       label_relates_plural: "Beziehungen mit"
       label_relates_to_singular: "Beziehung mit"
@@ -683,6 +692,9 @@ de:
       follows_description: "Das verknüpfte Arbeitspaket muss beendet sein bevor dieses Arbeitspaket starten kann"
       label_child_singular: "Untergeordnetes Arbeitspaket"
       label_child_plural: "Untergeordnete Arbeitspakete"
+      new_child: "Neues Kind"
+      new_child_text: "Erstellt ein zugehöriges Arbeitspaket als Unterelement des aktuellen (übergeordneten) Arbeitspakets"
+      existing_child: "Vorhandenes Kind"
       child_description: "Macht das zugehörige Arbeitspaket zu einem Unterelement des aktuellen (übergeordneten) Arbeitspakets"
       label_blocks_singular: "Blockiert"
       label_blocks_plural: "Blockiert"
@@ -719,6 +731,8 @@ de:
       required_description: "Markiert dieses Arbeitspaket als Voraussetzung für das verknüpfte Arbeitspaket"
       label_parent_singular: "Übergeordnetes Arbeitspaket"
       label_parent_plural: "Übergeordnete Arbeitspakete"
+      ghost_relation_title: "Zugehöriges Arbeitspaket"
+      ghost_relation_description: "Dies ist für Sie aufgrund von Berechtigungen nicht sichtbar."
   label_invitation: Einladung
   account:
     delete: "Konto löschen"
@@ -783,6 +797,7 @@ de:
         is_required: "Erforderlich"
         max_length: "Maximale Länge"
         min_length: "Minimale Länge"
+        content_right_to_left: "Linksläufiger Inhalt"
         multi_value: "Mehrfachauswahl zulassen"
         possible_values: "Mögliche Werte"
         regexp: "Regulärer Ausdruck"
@@ -818,6 +833,8 @@ de:
         attr_lastname: "Attribut für Nachname"
         attr_login: "Attribut für Benutzername"
         attr_mail: "Attribut für E-Mail"
+        filter_string: "Zeichenketten filtern"
+        admin: "Administrator"
         base_dn: "Basis-DN"
         host: "Host"
         onthefly: "Benutzer automatisch erzeugen"
@@ -861,6 +878,9 @@ de:
       project_custom_field:
         is_required: "In allen Projekten erforderlich"
         custom_field_section: Abschnitt
+      project/life_cycle_step_definition:
+        name: "Name"
+        color: "Farbe"
       query:
         column_names: "Spalten"
         relations_to_type_column: "Beziehungen zu %{type}"
@@ -1124,38 +1144,38 @@ de:
           attributes:
             type:
               must_be_a_stage_or_gate: "muss entweder ein Project::StageDefinition oder Project::GateDefinition sein"
-              type_and_class_name_mismatch: "must match the instantiated class name"
+              type_and_class_name_mismatch: "muss mit dem instanziierten Klassennamen übereinstimmen"
         project/gate_definition:
           attributes:
             type:
-              type_and_class_name_mismatch: "must be a Project::GateDefinition"
+              type_and_class_name_mismatch: "muss eine Project::GateDefinition sein"
         project/stage_definition:
           attributes:
             type:
-              type_and_class_name_mismatch: "must be a Project::StageDefinition"
+              type_and_class_name_mismatch: "muss eine Project::StageDefinition sein"
         project/life_cycle_step:
           attributes:
             type:
               must_be_a_stage_or_gate: "muss entweder ein Project::Stage oder Project::Gate sein"
               must_be_a_stage: "muss ein Project::Stage sein"
               must_be_a_gate: "muss ein Project::Gate sein"
-              type_and_class_name_mismatch: "must match the instantiated class name"
+              type_and_class_name_mismatch: "muss mit dem instanziierten Klassennamen übereinstimmen"
         project/gate:
           attributes:
             base:
-              end_date_not_allowed: "Cannot assign end date to a Project::Gate"
+              end_date_not_allowed: "Kann einem Project::Gate kein Enddatum zuweisen"
             type:
-              type_and_class_name_mismatch: "must be a Project::Gate"
+              type_and_class_name_mismatch: "muss ein Project::Gate sein"
             date:
-              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+              non_continuous_dates: "kann nicht vor dem Enddatum des vorherigen %{step} liegen."
         project/stage:
           attributes:
             date_range:
-              start_date_must_be_before_end_date: "start date must be before the end date."
-              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
-              incomplete: "is incomplete."
+              start_date_must_be_before_end_date: "Startdatum muss vor dem Enddatum liegen."
+              non_continuous_dates: "kann nicht vor dem vorherigen Enddatum von %{step} liegen."
+              incomplete: "ist unvollständig."
             type:
-              type_and_class_name_mismatch: "must be a Project::Stage"
+              type_and_class_name_mismatch: "muss ein Project::Stage sein"
         query:
           attributes:
             project:
@@ -1200,6 +1220,10 @@ de:
             from:
               error_not_found: "Arbeitspaket in 'von' Position nicht gefunden oder nicht sichtbar"
               error_readonly: "der 'von' Link einer bestehenden Relation kann nicht geändert werden"
+            lag:
+              greater_than_or_equal_to:
+                zero: "cannot be negative."
+              less_than_or_equal_to: "is too high."
         repository:
           not_available: "SCM-Anbieter ist nicht verfügbar"
           not_whitelisted: "wird durch die Konfiguration nicht erlaubt."
@@ -1554,8 +1578,9 @@ de:
   button_copy_and_follow: "Kopieren und Arbeitspaket anzeigen"
   button_create: "Anlegen"
   button_create_and_continue: "Anlegen und weiter"
-  button_delete: "Löschen"
   button_decline: "Ablehnen"
+  button_delete: "Löschen"
+  button_delete_permanently: "Endgültig löschen"
   button_delete_watcher: "Lösche Beobachter %{name}"
   button_download: "Download"
   button_duplicate: "Duplizieren"
@@ -1758,6 +1783,9 @@ de:
       hour:
         one: "Stunde"
         other: "Stunde"
+      day:
+        one: "Tag"
+        other: "Tage"
   description_active: "Aktiv?"
   description_attachment_toggle: "Dateien ein-/ausblenden"
   description_autocomplete: >
@@ -1793,6 +1821,10 @@ de:
     upsale:
       title: "Enterprise Add-on"
       link_title: "Weitere Informationen"
+      automatic_subject_generation:
+        description: "Erstellen Sie automatisch generierte Betreffe mit referenzierten Attributen und Text."
+      customize_life_cycle:
+        description: "Erstellen und organisieren Sie andere Projektstages und Gates als die nach PM2 vorgesehenen."
       form_configuration:
         description: "Anpassen der Form-Konfiguration mit diesen zusätzlichen Add-ons:"
         add_groups: "Neue Attributgruppen hinzufügen"
@@ -2075,8 +2107,6 @@ de:
       api_and_webhooks: "API und Webhooks"
     quick_add:
       label: "Schnellmenue öffnen"
-    breadcrumb:
-      nested_element: "%{section_header}: <b>%{title}</b>"
   my_account:
     access_tokens:
       no_results:
@@ -2157,6 +2187,7 @@ de:
   label_add_subtask: "Unteraufgabe hinzufügen"
   label_added: "hinzugefügt"
   label_added_by: "Von %{author} hinzugefügt"
+  label_added_by_on: "Added by %{author} on %{date}"
   label_added_time_by: "Von %{author} vor %{age} hinzugefügt"
   label_additional_workflow_transitions_for_assignee: "Zusätzliche Workflow-Übergänge für den Nutzer, dem ein Arbeitspaket zugewiesen ist"
   label_additional_workflow_transitions_for_author: "Zusätzliche Workflow-Übergänge wenn der Nutzer der Autor des Arbeitspakets ist"
@@ -2577,6 +2608,7 @@ de:
   label_project_new: "Neues Projekt"
   label_project_plural: "Projekte"
   label_project_list_plural: "Projektlisten"
+  label_project_lifecycle: "Projektlebenszyklus"
   label_project_attributes_plural: "Projektattribute"
   label_project_custom_field_plural: "Projektattribute"
   label_project_settings: "Projektkonfiguration"
@@ -2603,6 +2635,7 @@ de:
   label_relation: "Beziehung"
   label_relation_actions: "Beziehungsaktionen"
   label_relation_delete: "Beziehung löschen"
+  label_relation_edit: "Beziehung bearbeiten"
   label_relation_new: "Neue Beziehung"
   label_release_notes: "Release Notes"
   label_remaining_work: "Verbleibender Aufwand"
@@ -2854,13 +2887,13 @@ de:
         prefix: "Erhalten aufgrund Benachrichtigungseinstellung: %{reason}"
         date_alert_start_date: "Datums-Erinnerung"
         date_alert_due_date: "Datums-Erinnerung"
-        reminder: "Reminder"
+        reminder: "Erinnerung"
       see_all: "Alle anzeigen"
       updated_at: "Aktualisiert %{timestamp} von %{user} "
     reminder_notifications:
-      subject: "Reminder: %{note}"
-      heading: "You have a new reminder"
-      note: "Note: “%{note}”"
+      subject: "Erinnerung: %{note}"
+      heading: "Sie haben eine neue Erinnerung"
+      note: "Anmerkung: “%{note}”"
     sharing:
       work_packages:
         allowed_actions: "Sie haben auf diesem Arbeitspakte folgende Berechtigungen: %{allowed_actions}. Dies kann sich je nach Ihrer Projektrolle und Berechtigungen ändern."
@@ -3019,6 +3052,7 @@ de:
   notice_bad_request: "Fehlerhafte Anfrage."
   notice_not_authorized: "Sie sind nicht berechtigt, auf diese Seite zuzugreifen."
   notice_not_authorized_archived_project: "Das Projekt wurde archiviert und ist daher nicht verfügbar."
+  notice_requires_enterprise_token: "Kein Enterprise-Token vorhanden oder das vorhandene Token erlaubt keinen Zugriff auf diese Seite."
   notice_password_confirmation_failed: "Ihr Passwort ist nicht korrekt. Kann nicht fortgesetzt werden."
   notice_principals_found_multiple: "Es wurden %{number} Ergebnisse gefunden.\nDrücke Tab um das erste Ergebnis zu fokussieren."
   notice_principals_found_single: "Es wurde ein Ergebnis gefunden.\nDrücke Tab um es zu fokussieren."
@@ -3097,7 +3131,8 @@ de:
   permission_delete_timelines: "Zeitplan-Reporte löschen"
   permission_delete_wiki_pages: "Wiki-Seiten löschen"
   permission_delete_wiki_pages_attachments: "Anhänge löschen"
-  permission_edit_work_package_notes: "Kommentare bearbeiten"
+  permission_edit_work_package_notes: "Kommentare moderieren"
+  permission_edit_work_package_notes_explanation: "Achtung: Benutzer mit dieser Berechtigung können den Kommentar eines anderen Benutzers bearbeiten."
   permission_edit_work_packages: "Arbeitspakete bearbeiten"
   permission_edit_messages: "Forenbeiträge bearbeiten"
   permission_edit_own_work_package_notes: "Eigene Kommentare bearbeiten"
@@ -3105,7 +3140,7 @@ de:
   permission_edit_own_time_entries: "Selbstgebuchte Aufwände bearbeiten"
   permission_edit_project: "Projekt bearbeiten"
   permission_edit_project_attributes: "Projektattribute bearbeiten"
-  permission_edit_project_stages_and_gates: "Edit project stages and gates"
+  permission_edit_project_stages_and_gates: "Projekt-Stages und Gates bearbeiten"
   permission_edit_reportings: "Statusberichte bearbeiten"
   permission_edit_time_entries: "Zeitaufwand für andere Benutzer bearbeiten"
   permission_edit_timelines: "Zeitplan-Reporte bearbeiten"
@@ -3135,8 +3170,8 @@ de:
   permission_search_project: "Projekt suchen"
   permission_select_custom_fields: "Benutzerdefinierte Felder verwalten"
   permission_select_project_custom_fields: "Projektattribute auswählen"
-  permission_select_project_life_cycle: "Select project stages and gates"
-  permission_select_project_life_cycle_explanation: "Activate/Deactivate the stages and gates in a project. Enables the user to select the lifecycle appropriate for the project as inactive stages and gates will not be visible in the project overview page nor the project list."
+  permission_select_project_life_cycle: "Projekt-Stages und Gates wählen"
+  permission_select_project_life_cycle_explanation: "(De-)Aktivieren der Stages und Gates in einem Projekt. Erlaubt dem Nutzer die Auswahl des passenden Lebenszyklus-Modells da definierte, aber inaktive Stages und Gates weder auf der Projekt-Übersichtsseite noch in der Projektliste sichtbar sind."
   permission_select_project_modules: "Projektmodule auswählen"
   permission_share_work_packages: "Arbeitspakete teilen"
   permission_manage_types: "Typen auswählen"
@@ -3161,7 +3196,7 @@ de:
   permission_work_package_assigned_explanation: "Arbeitspakete können Benutzern und Gruppen im Besitz dieser Rolle in dem jeweiligen Projekt zugeordnet werden"
   permission_view_project_activity: "Projektaktivität anzeigen"
   permission_view_project_attributes: "Projektattribute ansehen"
-  permission_view_project_stages_and_gates: "View project stages and gates"
+  permission_view_project_stages_and_gates: "Projekt-Stages und Gates sehen"
   permission_save_bcf_queries: "BCF-Abfragen speichern"
   permission_manage_public_bcf_queries: "Öffentliche BCF-Abfragen verwalten"
   permission_edit_attribute_help_texts: "Attribut-Hilfetxt bearbeiten"
@@ -3329,6 +3364,7 @@ de:
     activated: "Aktiviert"
     deactivated: "Deaktiviert"
   search_input_placeholder: "Suchen ..."
+  setting_apiv3_cors_title: "Cross-Origin Resource Sharing (CORS)"
   setting_apiv3_cors_enabled: "CORS aktivieren"
   setting_apiv3_cors_origins: "API V3 Cross-Origin Resource Sharing (CORS) erlaubte Origins"
   setting_apiv3_cors_origins_text_html: >
@@ -3554,6 +3590,27 @@ de:
       new:
         heading: "Neues Attribut"
         description: "Änderungen an diesem Projektattribut werden in allen Projekten übernommen, in denen es aktiviert ist. Erforderliche Attribute können nicht projektweise deaktiviert werden."
+    project_life_cycle_step_definitions:
+      heading: "Projektlebenszyklus"
+      heading_description: "Der Projektlebenszyklus besteht aus Stages und Gates, die Ihre Projekte strukturieren. Sie werden auf der Übersichtsseite eines Projekts angezeigt und sind in der Projektliste verfügbar. Einzelne Stages und Gates können ausgewählt werden, um ein Projekt anzupassen, aber eine Neuordnung ist auf Projektebene nicht möglich."
+      label_add: "Hinzufügen"
+      label_add_description: "Lebenszyklus-Definition hinzufügen"
+      label_add_stage: "Stage"
+      label_add_gate: "Gate"
+      filter:
+        label: "Stage oder Gate suchen"
+      section_header: "Stage und Gate"
+      non_defined: "Derzeit sind keine Stages oder Gates definiert."
+      new:
+        description: "Änderungen an diesem Lebenszyklus-Schritt werden in allen ihn verwendenden Projekten sichtbar."
+      new_stage:
+        heading: "Neue Stage"
+      new_gate:
+        heading: "Neues Gate"
+      edit_stage:
+        heading: "Stage bearbeiten"
+      edit_gate:
+        heading: "Gate bearbeiten"
     projects:
       missing_dependencies: "Projektmodul %{module} wurde aktiviert, hängt aber ab von %{dependencies}. Sie müssen diese Module ebenfalls aktivieren."
       section_new_projects: "Einstellungen für neue Projekte"
@@ -3587,6 +3644,7 @@ de:
   text_are_you_sure_continue: "Sind Sie sicher, dass Sie fortfahren möchten?"
   text_are_you_sure_with_children: "Lösche Aufgabe und alle Unteraufgaben?"
   text_are_you_sure_with_project_custom_fields: "Wenn Sie dieses Attribut löschen, werden auch dessen Werte in allen Projekten gelöscht. Sind Sie sicher, dass Sie dies tun möchten?"
+  text_are_you_sure_with_project_life_cycle_step: "Das Entfernen dieses Lebenszyklus-Schritts entfernt ihn auch aus allen Projekten, in denen er bisher Verwendung fand. Sind Sie sicher, dass sie dies möchten?"
   text_assign_to_project: "Dem Projekt zuweisen"
   text_form_configuration: >
     Sie können anpassen, welche Felder in den Arbeitspaket-Formularen angezeigt werden. Sie können die Felder entsprechend Ihren Bedürfnissen frei gruppieren.
@@ -3666,6 +3724,7 @@ de:
   text_notice_security_badge_displayed_html: >
     Hinweis: Wenn aktiviert, wird dies eine Plakette mit dem Status Ihrer Installation in der <a href="%{information_panel_path}">%{information_panel_label}</a> unter Administration und auf der Startseite anzeigen. Es wird nur Administratoren gezeigt. <br/> Die Plakette überprüft Ihre aktuelle OpenProject-Version gegen die offizielle Release Datenbank, um Sie über Updates oder bekannten Sicherheitslücken zu informieren. Für die Überprüfung der Version werden Daten benötigt, um verfügbare Updates für Ihre Umgebung zurückzugeben. Für mehr Informationen über die Plakette, welche Daten sie benötigt und wie Sie diese Überprüfung deaktivieren können, besuchen Sie bitte <a href="%{more_info_url}">die Konfigurationsdokumentation</a>.
   text_own_membership_delete_confirmation: "Sie sind dabei, einige oder alle Ihre Berechtigungen zu entfernen. Es ist möglich, dass Sie danach das Projekt nicht mehr ansehen oder bearbeiten dürfen.\nSind Sie sicher, dass Sie dies tun möchten?"
+  text_permanent_delete_confirmation_checkbox_label: "Ich verstehe, dass diese Löschung nicht rückgängig gemacht werden kann"
   text_plugin_assets_writable: "Verzeichnis für Plugin-Assets beschreibbar"
   text_powered_by: "Powered by %{link}"
   text_project_identifier_info: "Kleinbuchstaben (a-z), Ziffern, Binde- und Unterstriche erlaubt. Muss mit einem Kleinbuchstaben beginnen."
@@ -4033,6 +4092,8 @@ de:
       builtin: Interne Anwendung für diese Instanz
       confidential: Vertraulich
       singular: "OAuth-Anwendung"
+      scopes: "Geltungsbereiche"
+      client_credentials: "Anmeldeinformationen des Clients"
       plural: "OAuth-Anwendungen"
       named: "OAuth-Anwendung '%{name}'"
       new: "Neue OAuth-Anwendung"

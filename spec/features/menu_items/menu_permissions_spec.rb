@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "menu permissions", :js, :with_cuprite do
+RSpec.describe "menu permissions", :js do
   let(:user) do
     create(:user,
            member_with_permissions: { project => %i[manage_versions view_work_packages] })

@@ -33,7 +33,7 @@ ro:
         label_activity_show_only_changes: "Arată doar modificările"
         label_sort_asc: "Cele mai noi jos"
         label_sort_desc: "Cele mai noi sus"
-        label_type_to_comment: "Add a comment. Type @ to notify people."
+        label_type_to_comment: "Adaugă un comentariu. Tastează @ pentru a notifica persoane."
         label_submit_comment: "Submit comment"
         changed_on: "changed on"
         created_on: "a creat-o pe"
@@ -229,6 +229,10 @@ ro:
           item:
             title: This item doesn't have any hierarchy level below
             description: Add items to this list to create sub-items inside another one
+        delete_dialog:
+          title: "Delete custom field item"
+          heading: "Delete custom field item?"
+          description: "This action will irreversibly remove the item and all its sub-items. Any assigned values will be permanently deleted. If this field is required, removing items may cause existing work packages to become invalid."
         placeholder:
           label: "Item label"
           short: "Short name"
@@ -249,6 +253,7 @@ ro:
     confirm_destroy_option: "Ștergerea unei opțiuni va șterge toate aparițiile acesteia (de exemplu, în pachetele de lucru). Sunteți sigur că doriți să o ștergeți?"
     reorder_alphabetical: "Reordonează valorile alfabetic"
     reorder_confirmation: "Avertisment: Ordinea curentă a valorilor disponibile se va pierde. Continuați?"
+    placeholder_version_select: "Work package or project selection is required first"
     instructions:
       is_required: "Mark the custom field as required. This will make it mandatory to fill in the field when creating new or updating existing resources."
       is_required_for_project: "Bifează pentru a activa acest atribut și a-l face obligatoriu în toate proiectele. Nu poate fi dezactivat pentru proiecte individuale."
@@ -287,6 +292,7 @@ ro:
       label: "Label"
       short: "Short name"
       parent: "Parent"
+      blueprint: "Pattern blueprint"
   global_search:
     placeholder: "Caută în %{app_title}"
     overwritten_tabs:
@@ -476,6 +482,7 @@ ro:
   my:
     access_token:
       create_dialog:
+        title: Token generated
         header: The %{type} token has been generated
         warning: Note that this is the only time you will see this token, make sure to copy it now.
       errors:
@@ -655,6 +662,7 @@ ro:
         title: "Workflow missing for work package sharing"
         message: "No workflow is configured for the 'Work package editor' role. Without a workflow, the shared with user cannot alter the status of the work package. Workflows can be copied. Select a source type (e.g. 'Task') and source role (e.g. 'Member'). Then select the target types. To start with, you could select all the types as targets. Finally, select the 'Work package editor' role as the target and press 'Copy'. After having thus created the defaults, fine tune the workflows as you do for every other role."
         link_message: "Configure the workflows in the administration."
+    templated_subject_hint: Automatically generated through type %{type}
     summary:
       reports:
         category:
@@ -677,14 +685,15 @@ ro:
       no_results_title_text: Momentan nu există relaţii disponibile.
       blankslate_heading: "Fără relații"
       blankslate_description: "Acest pachet de lucru nu are încă o relație."
+    label_add_child_button: "Child"
     label_add_x: "Adaugă %{x}"
     label_edit_x: "Editează %{x}"
-    label_add_description: "Add description"
+    label_add_description: "Adaugă descriere"
     lag:
-      subject: "Lag"
-      title: "Lag (in days)"
-      caption: "Diferența în numărul de zile lucrătoare dintre cele două pachete de lucru"
+      subject: "Întârziere"
+      caption: "The minimum number of working days to keep in between the two work packages."
     relations:
+      label_new_child_created: "New work package created and added as a child"
       label_relates_singular: "asociat cu"
       label_relates_plural: "asociat cu"
       label_relates_to_singular: "asociat cu"
@@ -699,6 +708,9 @@ ro:
       follows_description: "Pachetul de lucru asociat trebuie neapărat să înceapă după finalizarea acestuia"
       label_child_singular: "copil"
       label_child_plural: "copii"
+      new_child: "New child"
+      new_child_text: "Creates a related work package as a sub-item of the current (parent) work package"
+      existing_child: "Existing child"
       child_description: "Face din pachetul de lucru asociat un subelement al pachetului de lucru actual (părinte)"
       label_blocks_singular: "blochează"
       label_blocks_plural: "blochează"
@@ -727,14 +739,16 @@ ro:
       label_part_of_plural: "parte din"
       partof_description: "Marchează pachetul de lucru asociat ca incluzând acesta, fără niciun efect suplimentar"
       part_of_description: "Marchează pachetul de lucru asociat ca făcând parte din acesta fără niciun efect suplimentar"
-      label_requires_singular: "requires"
-      label_requires_plural: "requires"
+      label_requires_singular: "necesită"
+      label_requires_plural: "necesită"
       requires_description: "Marchează pachetul de lucru asociat ca o cerință pentru acesta"
-      label_required_singular: "required by"
-      label_required_plural: "required by"
+      label_required_singular: "cerut de"
+      label_required_plural: "cerut de"
       required_description: "Marchează acest pachet de lucru ca fiind o cerință pentru cel asociat"
-      label_parent_singular: "parent"
-      label_parent_plural: "parent"
+      label_parent_singular: "părinte"
+      label_parent_plural: "părinte"
+      ghost_relation_title: "Related work package"
+      ghost_relation_description: "This is not visible to you due to permissions."
   label_invitation: Invitație
   account:
     delete: "Ştergere cont"
@@ -799,6 +813,7 @@ ro:
         is_required: "Obligatoriu"
         max_length: "Lungime maximă"
         min_length: "Lungime minimă"
+        content_right_to_left: "Right-to-Left content"
         multi_value: "Permite selecție multiplă"
         possible_values: "Valori posibile"
         regexp: "Expresie regulată"
@@ -834,6 +849,8 @@ ro:
         attr_lastname: "Câmp nume"
         attr_login: "Atribut nume de utilizator"
         attr_mail: "Atribut e-mail"
+        filter_string: "Filter string"
+        admin: "Administrator"
         base_dn: "Nume domeniu de bază"
         host: "Server gazdă"
         onthefly: "Crearea automată a utilizatorilor"
@@ -877,6 +894,9 @@ ro:
       project_custom_field:
         is_required: "Obligatoriu în toate proiectele"
         custom_field_section: Secțiune
+      project/life_cycle_step_definition:
+        name: "Name"
+        color: "Color"
       query:
         column_names: "Coloane"
         relations_to_type_column: "Relații cu %{type}"
@@ -885,7 +905,7 @@ ro:
         filters: "Filtre"
         timeline_labels: "Etichete de cronologie"
       relation:
-        lag: "Lag"
+        lag: "Întârziere"
         from: "Pachet de lucru"
         to: "Pachet de lucru asociat"
       reminder:
@@ -1216,6 +1236,10 @@ ro:
             from:
               error_not_found: "pachetul de lucru din poziția `from` nu este găsit sau nu este vizibil"
               error_readonly: "legătura `from` a unei relații existente este imuabilă"
+            lag:
+              greater_than_or_equal_to:
+                zero: "cannot be negative."
+              less_than_or_equal_to: "is too high."
         repository:
           not_available: "Nu este disponibil furnizorul de SCM"
           not_whitelisted: "nu este permisă de configurație."
@@ -1580,8 +1604,9 @@ ro:
   button_copy_and_follow: "Copiază și continuă"
   button_create: "Creează"
   button_create_and_continue: "Creează și continuă"
-  button_delete: "Șterge"
   button_decline: "Refuză"
+  button_delete: "Șterge"
+  button_delete_permanently: "Delete permanently"
   button_delete_watcher: "Ștergere observator %{name}"
   button_download: "Descărcare"
   button_duplicate: "Duplicare"
@@ -1802,6 +1827,10 @@ ro:
         one: "oră"
         few: "ore"
         other: "ore"
+      day:
+        one: "day"
+        few: "days"
+        other: "days"
   description_active: "Activ?"
   description_attachment_toggle: "Afișare/Ascundere atașamente"
   description_autocomplete: >
@@ -1837,6 +1866,10 @@ ro:
     upsale:
       title: "Enterprise add-on"
       link_title: "More information"
+      automatic_subject_generation:
+        description: "Create automatically generated subjects using referenced attributes and text."
+      customize_life_cycle:
+        description: "Create and organize different project stages and gates than the ones provided by PM2 project cycle planning."
       form_configuration:
         description: "Personalizați configurația formularului cu aceste add-on-uri suplimentare:"
         add_groups: "Adaugă noi grupuri de atribut"
@@ -1974,7 +2007,7 @@ ro:
           drag_area_label: "Manage long text fields"
       xls:
         include_relations:
-          label: "Include relations"
+          label: "Include relații"
           caption: "Această opțiune va crea un duplicat al fiecărui pachet de lucru pentru fiecare relație pe care acesta o are cu un alt pachet de lucru."
         include_descriptions:
           label: "Include descriptions"
@@ -2119,8 +2152,6 @@ ro:
       api_and_webhooks: "API și webhook-uri"
     quick_add:
       label: "Deschide meniul adăugare rapidă"
-    breadcrumb:
-      nested_element: "%{section_header}: <b>%{title}</b>"
   my_account:
     access_tokens:
       no_results:
@@ -2201,6 +2232,7 @@ ro:
   label_add_subtask: "Adaugă sub-sarcină"
   label_added: "adăugat"
   label_added_by: "Adăugat de %{author}"
+  label_added_by_on: "Added by %{author} on %{date}"
   label_added_time_by: "Adăugat de %{author} acum %{age}"
   label_additional_workflow_transitions_for_assignee: "Tranziții suplimentare permise când utilizatorul este executantul"
   label_additional_workflow_transitions_for_author: "Tranziții suplimentare permise când utilizatorul este autorul"
@@ -2621,6 +2653,7 @@ ro:
   label_project_new: "Proiect nou"
   label_project_plural: "Proiecte"
   label_project_list_plural: "Listă proiecte"
+  label_project_lifecycle: "Project lifecycle"
   label_project_attributes_plural: "Atribute proiect"
   label_project_custom_field_plural: "Atribute proiect"
   label_project_settings: "Setările proiectului"
@@ -2644,9 +2677,10 @@ ro:
   label_related_work_packages: "Pachete de lucru asociate"
   label_relates: "asociat cu"
   label_relates_to: "asociat cu"
-  label_relation: "Relation"
-  label_relation_actions: "Relation actions"
+  label_relation: "Relație"
+  label_relation_actions: "Acțiuni relație"
   label_relation_delete: "Ștergere relație"
+  label_relation_edit: "Edit relation"
   label_relation_new: "Relație nouă"
   label_release_notes: "Note privind lansarea noii versiuni"
   label_remaining_work: "Muncă rămasă"
@@ -3063,6 +3097,7 @@ ro:
   notice_bad_request: "Cerere invalidă."
   notice_not_authorized: "Nu sunteți autorizat să accesați această pagină."
   notice_not_authorized_archived_project: "Proiectul pe care încercați să îl accesați a fost arhivat."
+  notice_requires_enterprise_token: "Enterprise token missing or doesn't allow access to this page."
   notice_password_confirmation_failed: "Parola dvs. nu este corectă. Nu se poate continua."
   notice_principals_found_multiple: "S-au găsit %{number} rezultate\n Tab pentru a se concentra pe primul rezultat."
   notice_principals_found_single: "Există un singur rezultat\n Tab pentru a-l concentra."
@@ -3112,7 +3147,7 @@ ro:
     text_getting_started_description: "Obțineți o imagine de ansamblu rapidă a gestionării proiectelor și a colaborării în echipă cu OpenProject. Puteți reporni acest videoclip din meniul de ajutor."
     welcome: "Bun venit la %{app_title}"
     select_language: "Te rog selectează limba"
-  permission_add_work_package_notes: "Adaugă note"
+  permission_add_work_package_notes: "Add comments"
   permission_add_work_packages: "Adaugă pachete de lucru"
   permission_add_messages: "Publicare mesaje"
   permission_add_project: "Creează proiecte"
@@ -3142,10 +3177,11 @@ ro:
   permission_delete_timelines: "Ștergere linii de timp"
   permission_delete_wiki_pages: "Ștergere pagini wiki"
   permission_delete_wiki_pages_attachments: "Ștergere atașamente"
-  permission_edit_work_package_notes: "Editare note"
+  permission_edit_work_package_notes: "Moderate comments"
+  permission_edit_work_package_notes_explanation: "Caution: Users with this permission are able to edit anyone's comment."
   permission_edit_work_packages: "Editare pachete de lucru"
   permission_edit_messages: "Editare mesaje"
-  permission_edit_own_work_package_notes: "Editare note proprii"
+  permission_edit_own_work_package_notes: "Edit own comments"
   permission_edit_own_messages: "Editare mesaje proprii"
   permission_edit_own_time_entries: "Editare jurnale de timp proprii"
   permission_edit_project: "Editare proiect"
@@ -3238,9 +3274,9 @@ ro:
       are_you_sure: "Sunteţi sigur că doriţi să arhivaţi proiectul '%{name}'?"
       archived: "Arhivat"
     count:
-      zero: "0 proiecte"
-      one: "1 Project"
-      other: "%{count} proiecte"
+      zero: "0 projects"
+      one: "1 project"
+      other: "%{count} projects"
   project_module_activity: "Activitate"
   project_module_forums: "Forumuri"
   project_module_work_package_tracking: "Pachete de lucru"
@@ -3374,6 +3410,7 @@ ro:
     activated: "Activat"
     deactivated: "Dezactivat"
   search_input_placeholder: "Caută ..."
+  setting_apiv3_cors_title: "Cross-Origin Resource Sharing (CORS)"
   setting_apiv3_cors_enabled: "Activați CORS"
   setting_apiv3_cors_origins: "API V3 Cross-Origin Resource Sharing (CORS) origini permise"
   setting_apiv3_cors_origins_text_html: >
@@ -3599,6 +3636,27 @@ ro:
       new:
         heading: "New attribute"
         description: "Modificările la acest atribut al proiectului se vor reflecta în toate proiectele în care este activată. Atributele necesare nu pot fi dezactivate pentru fiecare proiect."
+    project_life_cycle_step_definitions:
+      heading: "Project lifecycle"
+      heading_description: "The project lifecycle consists of stages and gates that structure your projects. They will appear in the overview page of a project and be available in the projects list. Individual stages and gates can be selected to customize a project but reordering is not possible on a project level."
+      label_add: "Add"
+      label_add_description: "Add lifecycle definition"
+      label_add_stage: "Stage"
+      label_add_gate: "Gate"
+      filter:
+        label: "Search project stage or gate"
+      section_header: "Stages and gates"
+      non_defined: "Neither stages nor gates are currently defined."
+      new:
+        description: "Changes to this project step will be reflected in all projects where it is enabled."
+      new_stage:
+        heading: "New stage"
+      new_gate:
+        heading: "New gate"
+      edit_stage:
+        heading: "Edit stage"
+      edit_gate:
+        heading: "Edit gate"
     projects:
       missing_dependencies: "Project module %{module} was checked which depends on %{dependencies}. You need to check these dependencies as well."
       section_new_projects: "Setări pentru proiecte noi"
@@ -3632,6 +3690,7 @@ ro:
   text_are_you_sure_continue: "Sigur dorești să continui?"
   text_are_you_sure_with_children: "Doriți ștergerea pachetului de lucru și a tuturor pachetelor fii?"
   text_are_you_sure_with_project_custom_fields: "Deleting this attribute will also delete its values in all projects. Are you sure you want to do this?"
+  text_are_you_sure_with_project_life_cycle_step: "Deleting this step will also delete its usages in all projects. Are you sure you want to do this?"
   text_assign_to_project: "Alocare la proiect"
   text_form_configuration: >
     Puteți personaliza ce câmpuri vor fi afișate în formularele pachetelor de lucru. Puteți grupa în mod liber câmpurile pentru a reflecta nevoile domeniului dumneavoastră.
@@ -3711,6 +3770,7 @@ ro:
   text_notice_security_badge_displayed_html: >
     Notă: dacă este activată, aceasta va afișa o insignă cu starea instalării în fereastra <a href="%{information_panel_path}">%{information_panel_label}</a> panoul de administrare și pe pagina principală. Aceasta este afișată numai pentru administratori. <br/> Insigna va verifica versiunea curentă a OpenProject în raport cu baza de date oficială a versiunilor OpenProject pentru a alerta cu privire la orice actualizări sau vulnerabilități cunoscute. Pentru mai multe informații despre ce oferă verificarea, ce date sunt necesare pentru a furniza actualizările disponibile și cum să dezactivezi această verificare, te rog să vizitezi <a href="%{more_info_url}">documentația de configurare</a>.
   text_own_membership_delete_confirmation: "Sunteţi cale de a elimina unele sau toate permisiunile şi e posibil să nu mai puteți edita acest proiect după aceea. \nSunteţi sigur că doriţi să continuaţi?"
+  text_permanent_delete_confirmation_checkbox_label: "I understand that this deletion cannot be reversed"
   text_plugin_assets_writable: "Se poate scrie în directorul de resurse pentru module"
   text_powered_by: "Propulsat de %{link}"
   text_project_identifier_info: "Doar litere mici (a-z), numere, cratime şi linii de subliniere sunt permise, trebuie să înceapă cu o literă mică."
@@ -4080,6 +4140,8 @@ ro:
       builtin: Built-in instance application
       confidential: Confidential
       singular: "Aplicație OAuth"
+      scopes: "Scopes"
+      client_credentials: "Client credentials"
       plural: "Aplicație OAuth"
       named: "OAuth aplicație '%{name}'"
       new: "Aplicație OAuth"

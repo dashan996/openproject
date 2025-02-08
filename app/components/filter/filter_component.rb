@@ -67,18 +67,40 @@ module Filter
       case filter
       when Queries::Filters::Shared::ProjectFilter::Required,
            Queries::Filters::Shared::ProjectFilter::Optional
-        {
-          autocomplete_options: {
-            component: "opce-project-autocompleter",
-            resource: "projects",
-            filters: [
-              { name: "active", operator: "=", values: ["t"] }
-            ]
-          }
-        }
+        { autocomplete_options: project_autocomplete_options }
+      when Queries::Filters::Shared::CustomFields::User
+        { autocomplete_options: user_autocomplete_options }
       else
         {}
       end
+    end
+
+    def project_autocomplete_options
+      {
+        component: "opce-project-autocompleter",
+        resource: "projects",
+        filters: [
+          { name: "active", operator: "=", values: ["t"] }
+        ]
+      }
+    end
+
+    def user_autocomplete_options
+      {
+        component: "opce-user-autocompleter",
+        hideSelected: true,
+        defaultData: false,
+        placeholder: I18n.t(:label_user_search),
+        resource: "principals",
+        url: ::API::V3::Utilities::PathHelper::ApiV3Path.principals,
+        filters: [
+          { name: "type", operator: "=", values: ["User"] },
+          { name: "status", operator: "!", values: [Principal.statuses["locked"].to_s] },
+          { name: "member", operator: "=", values: Project.visible.pluck(:id) }
+        ],
+        searchKey: "any_name_attribute",
+        focusDirectly: false
+      }
     end
   end
 end

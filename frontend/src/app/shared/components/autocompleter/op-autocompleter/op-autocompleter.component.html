@@ -4,6 +4,7 @@
     *ngIf="inputName && !(multiple && multipleAsSeparateInputs)"
     type="hidden"
     [attr.name]="inputName"
+    [value]="mappedInputValue"
     [attr.data-action]="hiddenFieldAction">
   <ng-container *ngIf="multiple && multipleAsSeparateInputs">
     <input
@@ -204,7 +205,10 @@
 
   <ng-container
     *ngSwitchCase="resource ==='subproject' || resource ==='version' || resource ==='status' || resource ==='default' || (!resource && !item.depth)">
-    <span [ngOptionHighlight]="search">{{ item.name }}</span>
+    <span
+      [ngClass]=" additionalClassProperty ? item[additionalClassProperty] : ''"
+      [ngOptionHighlight]="search">{{ item.name }}
+    </span>
     <span
       class="op-autocompleter__option-principal-email"
       *ngIf="item.email"
@@ -228,6 +232,7 @@
     <span class="ng-value-icon left" (click)="clear(item)">×</span>
     <span
       [ngOptionHighlight]="search"
+      [ngClass]=" additionalClassProperty ? item[additionalClassProperty] : ''"
       class="ng-value-label">{{ item.name }}</span>
   </ng-container>
 </ng-template>

@@ -1,6 +1,6 @@
 ---
 sidebar_navigation:
-  title: GitHub integration
+  title: GitHub integration - Documentation
   priority: 900
 description: Integrate the GitHub pull request workflow into OpenProject.
 keywords: github integration
@@ -90,7 +90,7 @@ First you will need to create a user in OpenProject that will make the comments.
 The user will have to be added to each project with a role that allows them
 to see work packages and comment on them.
 
-The role needs two permissions and should only receive those two: "View work packages" and "Add notes" which you will find in the "Work package tracking" section.
+The role needs two permissions and should only receive those two: "View work packages" and "Add notes" which you will find in the "Work packages and Gantt charts" section.
 
 ![GitHub role with 'add notes' permission](github-role.png)
 

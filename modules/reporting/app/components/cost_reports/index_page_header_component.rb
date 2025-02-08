@@ -62,7 +62,7 @@ module CostReports
       return I18n.t(:label_new_report) unless @query.persisted?
 
       if current_section && current_section.header.present?
-        I18n.t("menus.breadcrumb.nested_element", section_header: current_section.header, title: @query.name).html_safe
+        helpers.nested_breadcrumb_element(current_section.header, @query.name)
       else
         I18n.t(:label_new_report)
       end

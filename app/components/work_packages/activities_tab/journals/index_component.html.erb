@@ -7,7 +7,7 @@
           mb: inner_container_margin_bottom
         ) do
           flex_layout(id: insert_target_modifier_id,
-                      data: { test_selector: "op-wp-journals-container" }) do |journals_index_container|
+                     data: { test_selector: "op-wp-journals-container" }) do |journals_index_container|
             if empty_state?
               journals_index_container.with_row(mt: 2, mb: 3) do
                 render(
@@ -22,12 +22,16 @@
               end
             end
 
-            recent_journals.each do |journal|
+            recent_journals.each do |record|
               journals_index_container.with_row do
-                render(WorkPackages::ActivitiesTab::Journals::ItemComponent.new(
-                        journal:, filter:,
-                        grouped_emoji_reactions: wp_journals_grouped_emoji_reactions[journal.id]
-                      ))
+                if record.is_a?(Changeset)
+                  render(WorkPackages::ActivitiesTab::Journals::RevisionComponent.new(changeset: record, filter:))
+                else
+                  render(WorkPackages::ActivitiesTab::Journals::ItemComponent.new(
+                          journal: record, filter:,
+                          grouped_emoji_reactions: wp_journals_grouped_emoji_reactions[record.id]
+                        ))
+                end
               end
             end
 
@@ -48,12 +52,16 @@
   else
     helpers.turbo_frame_tag("work-package-activities-tab-content-older-journals") do
       flex_layout do |older_journals_container|
-        older_journals.each do |journal|
+        older_journals.each do |record|
           older_journals_container.with_row do
-          render(WorkPackages::ActivitiesTab::Journals::ItemComponent.new(
-                  journal:, filter:,
-                  grouped_emoji_reactions: wp_journals_grouped_emoji_reactions[journal.id]
-                ))
+            if record.is_a?(Changeset)
+              render(WorkPackages::ActivitiesTab::Journals::RevisionComponent.new(changeset: record, filter:))
+            else
+              render(WorkPackages::ActivitiesTab::Journals::ItemComponent.new(
+                      journal: record, filter:,
+                      grouped_emoji_reactions: wp_journals_grouped_emoji_reactions[record.id]
+                    ))
+            end
           end
         end
       end

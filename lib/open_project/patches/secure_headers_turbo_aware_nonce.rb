@@ -37,6 +37,6 @@ module OpenProject::Patches::SecureHeadersTurboAwareNonce
   end
 end
 
-OpenProject::Patches.patch_gem_version "secure_headers", "7.0.0" do
+OpenProject::Patches.patch_gem_version "secure_headers", "7.1.0" do
   SecureHeaders.singleton_class.prepend OpenProject::Patches::SecureHeadersTurboAwareNonce
 end

@@ -299,6 +299,16 @@ RSpec.describe API::V3::WorkPackages::Schema::SpecificWorkPackageSchema do
         expect(subject).to be_writable(:priority)
       end
     end
+
+    describe "subject" do
+      it { is_expected.to be_writable(:subject) }
+
+      context "when the type has automatic subject generation enabled" do
+        let(:type) { build_stubbed(:type, patterns: { subject: { blueprint: "Hello world", enabled: true } }) }
+
+        it { is_expected.not_to be_writable(:subject) }
+      end
+    end
   end
 
   describe "#assignable_custom_field_values" do

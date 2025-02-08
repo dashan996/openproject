@@ -267,8 +267,11 @@ RSpec.describe OpenProject::TextFormatting,
       let(:work_package_link) do
         link_to("##{work_package.id}",
                 work_package_path(work_package),
-                data: { "hover-card-url": hover_card_work_package_path(work_package.id) },
-                class: "issue work_package op-hover-card--preview-trigger op-uc-link",
+                data: {
+                  hover_card_trigger_target: "trigger",
+                  hover_card_url: hover_card_work_package_path(work_package.id)
+                },
+                class: "issue work_package op-uc-link",
                 target: "_top")
       end
 
@@ -338,8 +341,11 @@ RSpec.describe OpenProject::TextFormatting,
         let(:work_package_link) do
           link_to("##{work_package.id}",
                   work_package_path(work_package),
-                  data: { "hover-card-url": hover_card_work_package_path(work_package.id) },
-                  class: "issue work_package op-hover-card--preview-trigger op-uc-link",
+                  data: {
+                    hover_card_trigger_target: "trigger",
+                    hover_card_url: hover_card_work_package_path(work_package.id)
+                  },
+                  class: "issue work_package op-uc-link",
                   target: "_top")
         end
 
@@ -658,7 +664,7 @@ RSpec.describe OpenProject::TextFormatting,
       let(:expected) do
         <<~EXPECTED
           <p class='op-uc-p'><a class="wiki-page op-uc-link" target="_top" href="/projects/#{project.identifier}/wiki/cookbook-documentation">CookBook documentation</a></p>
-          <p class='op-uc-p'><a class="issue work_package op-hover-card--preview-trigger op-uc-link" data-hover-card-url="/work_packages/#{work_package.id}/hover_card" target="_top" href="/work_packages/#{work_package.id}">##{work_package.id}</a></p>
+          <p class='op-uc-p'><a class="issue work_package op-uc-link" data-hover-card-url="/work_packages/#{work_package.id}/hover_card" data-hover-card-trigger-target="trigger" target="_top" href="/work_packages/#{work_package.id}">##{work_package.id}</a></p>
           <pre class="op-uc-code-block">
           [[CookBook documentation]]
 

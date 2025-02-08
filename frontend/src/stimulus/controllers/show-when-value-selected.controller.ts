@@ -5,12 +5,14 @@ export default class OpShowWhenValueSelectedController extends ApplicationContro
 
   declare readonly effectTargets:HTMLInputElement[];
 
+  private boundListener = this.toggleDisabled.bind(this);
+
   causeTargetConnected(target:HTMLElement) {
-    target.addEventListener('change', this.toggleDisabled.bind(this));
+    target.addEventListener('change', this.boundListener);
   }
 
   causeTargetDisconnected(target:HTMLElement) {
-    target.removeEventListener('change', this.toggleDisabled.bind(this));
+    target.removeEventListener('change', this.boundListener);
   }
 
   private toggleDisabled(evt:InputEvent):void {

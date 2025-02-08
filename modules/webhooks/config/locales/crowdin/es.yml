@@ -8,6 +8,7 @@ es:
         url: 'URL de carga'
         secret: 'Secreto de firma'
         events: 'Eventos'
+        enabled: 'Activado'
         projects: 'Proyectos habilitados'
       webhooks/log:
         event_name: 'Nombre del evento'

@@ -129,10 +129,10 @@ RSpec.describe Type do
   end
 
   describe "#patterns" do
-    it "returns nil when no patterns are defined" do
+    it "returns an empty collection when no patterns are defined" do
       type = create(:type)
 
-      expect(type.patterns).to be_nil
+      expect(type.patterns).to eq(Types::Patterns::Collection.empty)
     end
 
     it "returns a PatternCollection" do
@@ -141,7 +141,7 @@ RSpec.describe Type do
                     })
 
       expect(type.patterns).to be_a(Types::Patterns::Collection)
-      expect(type.patterns[:subject])
+      expect(type.patterns.subject)
         .to eq(Types::Pattern.new("{{work_package:custom_field_123}} - {{project:custom_field_321}}", true))
     end
   end
@@ -149,22 +149,35 @@ RSpec.describe Type do
   describe "#patterns=" do
     subject(:type) { build(:type) }
 
+    it "assigns a patterns collection as-is" do
+      collection = Types::Patterns::Collection.build(patterns: {
+                                                       subject: { blueprint: "some_string", enabled: false }
+                                                     }).value!
+
+      type.patterns = collection
+
+      expect(type.patterns).to eq(collection)
+      expect { type.save! }.not_to raise_error
+    end
+
     context "when an invalid value is passed" do
-      it "defaults to nil" do
+      it "defaults to an empty collection" do
         type.patterns = 4
 
-        expect(type.patterns).to be_nil
+        expect(type.patterns).to eq(Types::Patterns::Collection.empty)
         expect { type.save! }.not_to raise_error
       end
     end
 
-    it "converts the incoming hash into a PatternCollection" do
-      type.patterns = { subject: { blueprint: "some_string", enabled: false } }
+    context "when a hash is passed" do
+      it "converts the incoming hash into a PatternCollection" do
+        type.patterns = { subject: { blueprint: "some_string", enabled: false } }
 
-      expect(type.patterns).to be_a(Types::Patterns::Collection)
-      expect(type.patterns[:subject]).to be_a(Types::Pattern)
+        expect(type.patterns).to be_a(Types::Patterns::Collection)
+        expect(type.patterns.subject).to be_a(Types::Pattern)
 
-      expect { type.save! }.not_to raise_error
+        expect { type.save! }.not_to raise_error
+      end
     end
   end
 end

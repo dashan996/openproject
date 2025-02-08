@@ -229,6 +229,10 @@ fil:
           item:
             title: This item doesn't have any hierarchy level below
             description: Add items to this list to create sub-items inside another one
+        delete_dialog:
+          title: "Delete custom field item"
+          heading: "Delete custom field item?"
+          description: "This action will irreversibly remove the item and all its sub-items. Any assigned values will be permanently deleted. If this field is required, removing items may cause existing work packages to become invalid."
         placeholder:
           label: "Item label"
           short: "Short name"
@@ -249,6 +253,7 @@ fil:
     confirm_destroy_option: "Kapag nagbubura ng opsyon ay makakabura sa lahat ng mga pangyayari nito (e.g. sa mga package na trabaho). Sigurado ka bang gusto mong burahin ito?"
     reorder_alphabetical: "Reorder values alphabetically"
     reorder_confirmation: "Warning: The current order of available values will be lost. Continue?"
+    placeholder_version_select: "Work package or project selection is required first"
     instructions:
       is_required: "Mark the custom field as required. This will make it mandatory to fill in the field when creating new or updating existing resources."
       is_required_for_project: "Check to enable this attribute and make it required in all projects. It cannot be deactived for individual projects."
@@ -287,6 +292,7 @@ fil:
       label: "Label"
       short: "Short name"
       parent: "Parent"
+      blueprint: "Pattern blueprint"
   global_search:
     placeholder: "Search in %{app_title}"
     overwritten_tabs:
@@ -469,6 +475,7 @@ fil:
   my:
     access_token:
       create_dialog:
+        title: Token generated
         header: The %{type} token has been generated
         warning: Note that this is the only time you will see this token, make sure to copy it now.
       errors:
@@ -646,6 +653,7 @@ fil:
         title: "Workflow missing for work package sharing"
         message: "No workflow is configured for the 'Work package editor' role. Without a workflow, the shared with user cannot alter the status of the work package. Workflows can be copied. Select a source type (e.g. 'Task') and source role (e.g. 'Member'). Then select the target types. To start with, you could select all the types as targets. Finally, select the 'Work package editor' role as the target and press 'Copy'. After having thus created the defaults, fine tune the workflows as you do for every other role."
         link_message: "Configure the workflows in the administration."
+    templated_subject_hint: Automatically generated through type %{type}
     summary:
       reports:
         category:
@@ -668,14 +676,15 @@ fil:
       no_results_title_text: There are currently no relations available.
       blankslate_heading: "No relations"
       blankslate_description: "This work package does not have any relations yet."
+    label_add_child_button: "Child"
     label_add_x: "Add %{x}"
     label_edit_x: "Edit %{x}"
     label_add_description: "Add description"
     lag:
       subject: "Lag"
-      title: "Lag (in days)"
-      caption: "The gap in number of working days in between the two work packages"
+      caption: "The minimum number of working days to keep in between the two work packages."
     relations:
+      label_new_child_created: "New work package created and added as a child"
       label_relates_singular: "related to"
       label_relates_plural: "related to"
       label_relates_to_singular: "related to"
@@ -690,6 +699,9 @@ fil:
       follows_description: "The related work package necessarily needs to finish before this one can start"
       label_child_singular: "child"
       label_child_plural: "children"
+      new_child: "New child"
+      new_child_text: "Creates a related work package as a sub-item of the current (parent) work package"
+      existing_child: "Existing child"
       child_description: "Makes the related work package a sub-item of the current (parent) work package"
       label_blocks_singular: "blocks"
       label_blocks_plural: "blocks"
@@ -726,6 +738,8 @@ fil:
       required_description: "Marks this work package as being a requirement to the related one"
       label_parent_singular: "parent"
       label_parent_plural: "parent"
+      ghost_relation_title: "Related work package"
+      ghost_relation_description: "This is not visible to you due to permissions."
   label_invitation: Imbitasyon
   account:
     delete: "Alisin ang akawnt"
@@ -790,6 +804,7 @@ fil:
         is_required: "Kinakailangan"
         max_length: "Ang pinaka mahaba"
         min_length: "Ang pinaka mababang sukat ng haba"
+        content_right_to_left: "Right-to-Left content"
         multi_value: "Pinahintulutan ang multi-select"
         possible_values: "Ang mga posibleng halaga"
         regexp: "Ang madalas na pagpapahayag"
@@ -825,6 +840,8 @@ fil:
         attr_lastname: "Ang huling katangian ng apelyido"
         attr_login: "Username attribute"
         attr_mail: "Ang katangian ng Email"
+        filter_string: "Filter string"
+        admin: "Administrator"
         base_dn: "Ang Base DN"
         host: "Host"
         onthefly: "Automatic user creation"
@@ -868,6 +885,9 @@ fil:
       project_custom_field:
         is_required: "Required for all projects"
         custom_field_section: Section
+      project/life_cycle_step_definition:
+        name: "Name"
+        color: "Color"
       query:
         column_names: "Mga hanay"
         relations_to_type_column: "Mga relasyon sa %{type}"
@@ -1207,6 +1227,10 @@ fil:
             from:
               error_not_found: "work package sa 'mula sa' ang posisyon ay hindi nakita o hindi nakikita"
               error_readonly: "isang umiiral na realsyon 'mula sa' ang link ay hindi mababago"
+            lag:
+              greater_than_or_equal_to:
+                zero: "cannot be negative."
+              less_than_or_equal_to: "is too high."
         repository:
           not_available: "Ang SCM vendor ay hindi available"
           not_whitelisted: "ay hindi pinayagan ng kumpigurasyon."
@@ -1561,8 +1585,9 @@ fil:
   button_copy_and_follow: "Kopyahin at sundin"
   button_create: "Lumikha"
   button_create_and_continue: "Lumikha at magpatuloy"
-  button_delete: "Burahin"
   button_decline: "Decline"
+  button_delete: "Burahin"
+  button_delete_permanently: "Delete permanently"
   button_delete_watcher: "Burahin ang manunuod %{name}"
   button_download: "I-download"
   button_duplicate: "Kapareha"
@@ -1765,6 +1790,9 @@ fil:
       hour:
         one: "oras"
         other: "mga oras"
+      day:
+        one: "day"
+        other: "days"
   description_active: "Aktibo?"
   description_attachment_toggle: "Ipakita/Itagi ang mga paglalakip"
   description_autocomplete: >
@@ -1800,6 +1828,10 @@ fil:
     upsale:
       title: "Enterprise add-on"
       link_title: "More information"
+      automatic_subject_generation:
+        description: "Create automatically generated subjects using referenced attributes and text."
+      customize_life_cycle:
+        description: "Create and organize different project stages and gates than the ones provided by PM2 project cycle planning."
       form_configuration:
         description: "Customize the form configuration with these additional add-ons:"
         add_groups: "Magdgdag ng mga bagong attribute na grupo"
@@ -2082,8 +2114,6 @@ fil:
       api_and_webhooks: "API and webhooks"
     quick_add:
       label: "Open quick add menu"
-    breadcrumb:
-      nested_element: "%{section_header}: <b>%{title}</b>"
   my_account:
     access_tokens:
       no_results:
@@ -2164,6 +2194,7 @@ fil:
   label_add_subtask: "Magdagdag ng subtask"
   label_added: "nadagdag"
   label_added_by: "Added by %{author}"
+  label_added_by_on: "Added by %{author} on %{date}"
   label_added_time_by: "Idinagdag ni %{author}%{age} ng nakaraan"
   label_additional_workflow_transitions_for_assignee: "Karagdagang transistion pinahintulutan kung ang gumagamit ay nakatalaga"
   label_additional_workflow_transitions_for_author: "Karagdagang transistion pinahintulutan kung ang gumagamit ay ang akda"
@@ -2584,6 +2615,7 @@ fil:
   label_project_new: "Bagong proyekto"
   label_project_plural: "Mga proyekto"
   label_project_list_plural: "Project lists"
+  label_project_lifecycle: "Project lifecycle"
   label_project_attributes_plural: "Project attributes"
   label_project_custom_field_plural: "Project attributes"
   label_project_settings: "Ang mga setting ng proyekto"
@@ -2610,6 +2642,7 @@ fil:
   label_relation: "Relation"
   label_relation_actions: "Relation actions"
   label_relation_delete: "Burahin ang relasyon"
+  label_relation_edit: "Edit relation"
   label_relation_new: "Bagong relasyon"
   label_release_notes: "Paglabas ng mga talaan"
   label_remaining_work: "Remaining work"
@@ -3026,6 +3059,7 @@ fil:
   notice_bad_request: "Masamang kahilingan."
   notice_not_authorized: "Hindi ka inanyayahan na i-access ang pahina na ito."
   notice_not_authorized_archived_project: "Ang iyong proyekto na sinusubukan mong i-access ay na archive na."
+  notice_requires_enterprise_token: "Enterprise token missing or doesn't allow access to this page."
   notice_password_confirmation_failed: "Ang iyong password ay hindi tama. Hindi maaring magpatuloy."
   notice_principals_found_multiple: "Mayroong %{number} mga resulta ang natagpuan.\n Ang tab ay tumuon sa unang resulta."
   notice_principals_found_single: "Mayroong isang resulta. \n Tab upang ituon ito."
@@ -3074,7 +3108,7 @@ fil:
     text_getting_started_description: "Get a quick overview of project management and team collaboration with OpenProject. You can restart this video from the help menu."
     welcome: "Welcome to %{app_title}"
     select_language: "Please select your language"
-  permission_add_work_package_notes: "Magdagdag ng mga talaan"
+  permission_add_work_package_notes: "Add comments"
   permission_add_work_packages: "Magdagdag ng mga work package"
   permission_add_messages: "Mga post na mensahe"
   permission_add_project: "Create projects"
@@ -3104,10 +3138,11 @@ fil:
   permission_delete_timelines: "Burahin ang mga timeline"
   permission_delete_wiki_pages: "Burahin ang pahina g wiki"
   permission_delete_wiki_pages_attachments: "Burahin ang paglalakip"
-  permission_edit_work_package_notes: "I-edit ang mga talaan"
+  permission_edit_work_package_notes: "Moderate comments"
+  permission_edit_work_package_notes_explanation: "Caution: Users with this permission are able to edit anyone's comment."
   permission_edit_work_packages: "I-edit ang mga work package"
   permission_edit_messages: "E-edit ang mga mensahe"
-  permission_edit_own_work_package_notes: "I-edit ang mga sariling talaan"
+  permission_edit_own_work_package_notes: "Edit own comments"
   permission_edit_own_messages: "I-edit ang mga sariling mensahe"
   permission_edit_own_time_entries: "I-edit ang mga log ng oras"
   permission_edit_project: "I-edit ang proyekto"
@@ -3200,9 +3235,9 @@ fil:
       are_you_sure: "Sigurado ka bang na gusto mong i-archive ang proyekto'%{name}'?"
       archived: "Archived"
     count:
-      zero: "0 Projects"
-      one: "1 Project"
-      other: "%{count} Projects"
+      zero: "0 projects"
+      one: "1 project"
+      other: "%{count} projects"
   project_module_activity: "Aktibidad"
   project_module_forums: "Mga forum"
   project_module_work_package_tracking: "Ang mga work package"
@@ -3334,6 +3369,7 @@ fil:
     activated: "activated"
     deactivated: "deactivated"
   search_input_placeholder: "Hanapin ..."
+  setting_apiv3_cors_title: "Cross-Origin Resource Sharing (CORS)"
   setting_apiv3_cors_enabled: "Enable CORS"
   setting_apiv3_cors_origins: "API V3 Cross-Origin Resource Sharing (CORS) allowed origins"
   setting_apiv3_cors_origins_text_html: >
@@ -3559,6 +3595,27 @@ fil:
       new:
         heading: "New attribute"
         description: "Changes to this project attribute will be reflected in all projects where it is enabled. Required attributes cannot be disabled on a per-project basis."
+    project_life_cycle_step_definitions:
+      heading: "Project lifecycle"
+      heading_description: "The project lifecycle consists of stages and gates that structure your projects. They will appear in the overview page of a project and be available in the projects list. Individual stages and gates can be selected to customize a project but reordering is not possible on a project level."
+      label_add: "Add"
+      label_add_description: "Add lifecycle definition"
+      label_add_stage: "Stage"
+      label_add_gate: "Gate"
+      filter:
+        label: "Search project stage or gate"
+      section_header: "Stages and gates"
+      non_defined: "Neither stages nor gates are currently defined."
+      new:
+        description: "Changes to this project step will be reflected in all projects where it is enabled."
+      new_stage:
+        heading: "New stage"
+      new_gate:
+        heading: "New gate"
+      edit_stage:
+        heading: "Edit stage"
+      edit_gate:
+        heading: "Edit gate"
     projects:
       missing_dependencies: "Project module %{module} was checked which depends on %{dependencies}. You need to check these dependencies as well."
       section_new_projects: "Settings for new projects"
@@ -3592,6 +3649,7 @@ fil:
   text_are_you_sure_continue: "Are you sure you want to continue?"
   text_are_you_sure_with_children: "Burahi ang work packaage at lahag ng batang work pckage?"
   text_are_you_sure_with_project_custom_fields: "Deleting this attribute will also delete its values in all projects. Are you sure you want to do this?"
+  text_are_you_sure_with_project_life_cycle_step: "Deleting this step will also delete its usages in all projects. Are you sure you want to do this?"
   text_assign_to_project: "Nakatalaga sa proyekto"
   text_form_configuration: >
     Pwede mong i-customize kung saan ang mga patlang ay maipapakita sa mga porma ng pakete ng mga gawain. Pwede kang malayang magpapagrupo sa mga patlang para ito ay sumasalamin sa mga kailangan mo para sa iyong domain.
@@ -3671,6 +3729,7 @@ fil:
   text_notice_security_badge_displayed_html: >
     Note: if enabled, this will display a badge with your installation status in the <a href="%{information_panel_path}">%{information_panel_label}</a> administration panel, and on the home page. It is displayed to administrators only. <br/> The badge will check your current OpenProject version against the official OpenProject release database to alert you of any updates or known vulnerabilities. For more information on what the check provides, what data is needed to provide available updates, and how to disable this check, please visit <a href="%{more_info_url}">the configuration documentation</a>.
   text_own_membership_delete_confirmation: "Kinakailangan mong alisin ang ilan o lahat ng iyong perniso at hindi na maaring magagawa na i-edit ang itong proyekto pagkatapos na iyan.\nSigurado ka ba gusto mong magpatuloy?"
+  text_permanent_delete_confirmation_checkbox_label: "I understand that this deletion cannot be reversed"
   text_plugin_assets_writable: "Plugin asstes directory writable"
   text_powered_by: "Pinalatakbo ng %{link}"
   text_project_identifier_info: "Maliit na titik lamang (a-z), mga numero, mga dash at underscore ang pinahintulutan, dapat magsimula sa maliit na titik."
@@ -4039,6 +4098,8 @@ fil:
       builtin: Built-in instance application
       confidential: Confidential
       singular: "OAuth application"
+      scopes: "Scopes"
+      client_credentials: "Client credentials"
       plural: "OAuth applications"
       named: "OAuth application '%{name}'"
       new: "New OAuth application"

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -46,25 +48,25 @@ RSpec.describe UpdateTypeService do
     it "raises an exception for invalid structure" do
       # Example for invalid structure:
       result = instance.call(attribute_groups: ["foo"])
-      expect(result.success?).to be_falsey
+      expect(result).to be_failure
       # Example for invalid structure:
       result = instance.call(attribute_groups: [[]])
-      expect(result.success?).to be_falsey
+      expect(result).to be_failure
       # Example for invalid group name:
       result = instance.call(attribute_groups: [["", ["date"]]])
-      expect(result.success?).to be_falsey
+      expect(result).to be_failure
     end
 
     it "fails for duplicate group names" do
       result = instance.call(attribute_groups: [valid_group, valid_group])
-      expect(result.success?).to be_falsey
+      expect(result).to be_failure
       expect(result.errors[:attribute_groups].first).to include "used more than once."
     end
 
     it "passes validations for known attributes" do
       expect(type).to receive(:save).and_return(true)
       result = instance.call(attribute_groups: [valid_group])
-      expect(result.success?).to be_truthy
+      expect(result).to be_success
     end
 
     it "passes validation for defaults" do
@@ -75,7 +77,7 @@ RSpec.describe UpdateTypeService do
       # A reset is to save an empty Array
       expect(type).to receive(:save).and_return(true)
       result = instance.call(attribute_groups: [])
-      expect(result.success?).to be_truthy
+      expect(result).to be_success
       expect(type).to be_valid
     end
 
@@ -83,7 +85,29 @@ RSpec.describe UpdateTypeService do
       let(:params) { { attribute_groups: [{ "type" => "query", name: "some name", query: "wat" }] } }
 
       it "is invalid" do
-        expect(service_call.success?).to be_falsey
+        expect(service_call).to be_failure
+      end
+    end
+  end
+
+  describe "#validate_work_package_subject_generation" do
+    context "if enterprise token does not allow subject generation", with_ee: %i[] do
+      let(:params) { { patterns: { subject: { blueprint: "Vacation - {{assignee}}", enabled: true } } } }
+
+      it "is invalid" do
+        expect(service_call).to be_failure
+        expect(service_call.errors[:patterns].first)
+          .to include "is only available in the OpenProject Enterprise edition"
+      end
+    end
+
+    context "if pattern build returns validation error", with_ee: %i[work_package_subject_generation] do
+      let(:params) { { patterns: { subject: { blueprint: "", enabled: true } } } }
+
+      it "is invalid" do
+        expect(service_call).to be_failure
+        expect(service_call.errors[:patterns].first)
+          .to include "Pattern blueprint must be filled"
       end
     end
   end

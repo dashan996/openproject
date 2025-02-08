@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) 2012-2024 the OpenProject GmbH
@@ -29,7 +31,7 @@
 require "spec_helper"
 require "support/flash/expectations"
 
-RSpec.describe "Work package activity", :js, :with_cuprite, with_flag: { primerized_work_package_activities: true } do
+RSpec.describe "Work package activity", :js, :with_cuprite do
   include Flash::Expectations
 
   let(:project) { create(:project) }
@@ -881,33 +883,97 @@ RSpec.describe "Work package activity", :js, :with_cuprite, with_flag: { primeri
     end
 
     describe "scrolls to comment specified in the URL" do
+      include Redmine::I18n
+
       context "when sorting set to asc" do
         let!(:admin_preferences) { create(:user_preference, user: admin, others: { comments_sorting: :asc }) }
 
-        before do
-          visit project_work_package_path(project, work_package.id, "activity", anchor: "activity-1")
-          wp_page.wait_for_activity_tab
+        context "with #activity- anchor" do
+          before do
+            visit project_work_package_path(project, work_package.id, "activity", anchor: "activity-1")
+            wp_page.wait_for_activity_tab
+          end
+
+          it "scrolls to the comment specified in the URL", :aggregate_failures do
+            wait_for_auto_scrolling_to_finish
+            activity_tab.expect_journal_container_at_position(50) # would be at the bottom if no anchor would be provided
+
+            activity_tab.expect_activity_anchor_link(text: "#1")
+          end
         end
 
-        it "scrolls to the comment specified in the URL", :aggregate_failures do
-          sleep 1 # wait for auto scrolling to finish
-          activity_tab.expect_journal_container_at_position(50) # would be at the bottom if no anchor would be provided
+        context "with #comment- anchor", with_flag: { work_package_comment_id_url: true } do
+          before do
+            visit project_work_package_path(project, work_package.id, "activity", anchor: "comment-#{comment_1.id}")
+            wp_page.wait_for_activity_tab
+          end
+
+          it "scrolls to the comment specified in the URL", :aggregate_failures do
+            wait_for_auto_scrolling_to_finish
+            activity_tab.expect_journal_container_at_position(50) # would be at the bottom if no anchor would be provided
+
+            activity_tab.expect_activity_anchor_link(text: format_time(comment_1.updated_at))
+
+            activity_tab.filter_journals(:only_changes)
+
+            activity_tab.expect_activity_anchor_link(text: format_time(comment_1.updated_at))
+          end
+        end
+
+        context "when on mobile screen size", with_flag: { work_package_comment_id_url: true } do
+          before do
+            page.current_window.resize_to(500, 1000)
+
+            visit project_work_package_path(project, work_package.id, "activity", anchor: "comment-#{comment_1.id}")
+            wp_page.wait_for_activity_tab
+          end
+
+          it "scrolls to the comment specified in the URL", :aggregate_failures do
+            wait_for_auto_scrolling_to_finish
+            activity_tab.expect_journal_container_at_position(50) # would be at the bottom if no anchor would be provided
+
+            activity_tab.expect_activity_anchor_link(text: format_time(comment_1.updated_at))
+
+            activity_tab.filter_journals(:only_changes)
+
+            activity_tab.expect_activity_anchor_link(text: format_time(comment_1.updated_at))
+          end
         end
       end
 
       context "when sorting set to desc" do
         let!(:admin_preferences) { create(:user_preference, user: admin, others: { comments_sorting: :desc }) }
 
-        before do
-          visit project_work_package_path(project, work_package.id, "activity", anchor: "activity-1")
-          wp_page.wait_for_activity_tab
+        context "with #activity- anchor" do
+          before do
+            visit project_work_package_path(project, work_package.id, "activity", anchor: "activity-2")
+            wp_page.wait_for_activity_tab
+          end
+
+          it "scrolls to the comment specified in the URL", :aggregate_failures do
+            wait_for_auto_scrolling_to_finish
+            activity_tab.expect_journal_container_at_bottom # would be at the top if no anchor would be provided
+
+            activity_tab.expect_activity_anchor_link(text: "#2")
+          end
         end
 
-        it "scrolls to the comment specified in the URL", :aggregate_failures do
-          sleep 1 # wait for auto scrolling to finish
-          activity_tab.expect_journal_container_at_bottom # would be at the top if no anchor would be provided
+        context "with #comment- anchor", with_flag: { work_package_comment_id_url: true } do
+          before do
+            visit project_work_package_path(project, work_package.id, "activity", anchor: "comment-#{comment_1.id}")
+            wp_page.wait_for_activity_tab
+          end
+
+          it "scrolls to the comment specified in the URL", :aggregate_failures do
+            wait_for_auto_scrolling_to_finish
+            activity_tab.expect_journal_container_at_bottom # would be at the top if no anchor would be provided
+
+            activity_tab.expect_activity_anchor_link(text: format_time(comment_1.updated_at))
+          end
         end
       end
+
+      def wait_for_auto_scrolling_to_finish = sleep(1)
     end
 
     context "when sorting set to asc" do
@@ -922,24 +988,70 @@ RSpec.describe "Work package activity", :js, :with_cuprite, with_flag: { primeri
         wp_page.wait_for_activity_tab
       end
 
-      it "scrolls to the bottom when the newest journal entry is on the bottom", :aggregate_failures do
-        sleep 1 # wait for auto scrolling to finish
-        activity_tab.expect_journal_container_at_bottom
+      context "when on desktop" do
+        it "scrolls to the bottom when the newest journal entry is on the bottom", :aggregate_failures do
+          sleep 1 # wait for auto scrolling to finish
+          activity_tab.expect_journal_container_at_bottom
 
-        # auto-scrolls to the bottom when a new comment is added by the user
-        # add a comment
-        activity_tab.add_comment(text: "New comment by admin")
-        activity_tab.expect_journal_container_at_bottom
+          # auto-scrolls to the bottom when a new comment is added by the user
+          # add a comment
+          activity_tab.add_comment(text: "New comment by admin")
+          activity_tab.expect_journal_container_at_bottom
 
-        # auto-scrolls to the bottom when a new comment is added by another user
-        # add a comment
-        latest_journal_version = work_package.journals.last.version
-        create(:work_package_journal, user: member, notes: "New comment by member", journable: work_package,
-                                      version: latest_journal_version + 1)
-        # wait for the comment to be added
-        wait_for { page }.to have_test_selector("op-journal-notes-body", text: "New comment by member")
-        sleep 1 # wait for auto scrolling to finish
-        activity_tab.expect_journal_container_at_bottom
+          # auto-scrolls to the bottom when a new comment is added by another user
+          # add a comment
+          latest_journal_version = work_package.journals.last.version
+          create(:work_package_journal, user: member, notes: "New comment by member", journable: work_package,
+                                        version: latest_journal_version + 1)
+          # wait for the comment to be added
+          wait_for { page }.to have_test_selector("op-journal-notes-body", text: "New comment by member")
+          sleep 1 # wait for auto scrolling to finish
+          activity_tab.expect_journal_container_at_bottom
+        end
+      end
+
+      context "when on narrow desktop screen size" do
+        before do
+          page.current_window.resize_to(900, 1200)
+          # simulate a desktop screen which was resized to a smaller width
+          # the height in this spec is important as the activity tab must be visible
+          # otherwise the (in this case undesired) auto scrolling would not be triggered
+
+          wp_page.visit!
+          wp_page.wait_for_activity_tab
+        end
+
+        it "does not scroll to the bottom when the newest journal entry is on the bottom", :aggregate_failures do
+          sleep 1 # wait for a potential auto scrolling to finish
+          # expect activity tab not to be visibe, as the page is not scrolled to the bottom
+          scroll_position = page.evaluate_script("document.querySelector(\"#content-body\").scrollTop")
+          expect(scroll_position).to eq(0)
+        end
+      end
+
+      context "when on mobile screen size" do
+        before do
+          page.current_window.resize_to(500, 1000)
+          # simulate a mobile screen size
+          # the height in this spec is important as the activity tab must be visible
+          # otherwise the (in this case undesired) auto scrolling would not be triggered
+
+          wp_page.visit!
+          wp_page.wait_for_activity_tab
+        end
+
+        # this one is actually failing, but it's not caused by the activity tab
+        # the scroll position is at around 700, some other part of the frontend code seems to trigger a scroll
+        # happens for the files tab as well for example
+        #
+        it "does not scroll to the bottom when the newest journal entry is on the bottom", :aggregate_failures do
+          pending "bug/59916-on-narrow-screens-(including-mobile)-the-view-always-scrolls-to-the-activity"
+
+          sleep 1 # wait for a potential auto scrolling to finish
+          # expect activity tab not to be visibe, as the page is not scrolled to the bottom
+          scroll_position = page.evaluate_script("document.querySelector(\"#content-body\").scrollTop")
+          expect(scroll_position).to eq(0)
+        end
       end
     end
 
@@ -959,7 +1071,8 @@ RSpec.describe "Work package activity", :js, :with_cuprite, with_flag: { primeri
   end
 
   describe "images in the comment",
-           with_cuprite: false,
+           :js,
+           :selenium,
            with_settings: { journal_aggregation_time_minutes: 0, show_work_package_attachments: false } do
     let(:work_package) { create(:work_package, project:, author: admin) }
     let(:image_fixture) { UploadedFile.load_from("spec/fixtures/files/image.png") }

@@ -1,3 +1,31 @@
+//-- copyright
+// OpenProject is an open source project management software.
+// Copyright (C) the OpenProject GmbH
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License version 3.
+//
+// OpenProject is a fork of ChiliProject, which is a fork of Redmine. The copyright follows:
+// Copyright (C) 2006-2013 Jean-Philippe Lang
+// Copyright (C) 2010-2013 the ChiliProject Team
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+//
+// See COPYRIGHT and LICENSE files for more details.
+//++
+
 import {
   IDynamicFieldGroupConfig,
   IOPFormlyFieldSettings,
@@ -8,11 +36,11 @@ import { I18nService } from 'core-app/core/i18n/i18n.service';
 import { PathHelperService } from 'core-app/core/path-helper/path-helper.service';
 import { UntilDestroyedMixin } from 'core-app/shared/helpers/angular/until-destroyed.mixin';
 import { CurrentProjectService } from 'core-app/core/current-project/current-project.service';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { JobStatusModalService } from 'core-app/features/job-status/job-status-modal.service';
 
-
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './copy-project.component.html',
 })
 export class CopyProjectComponent extends UntilDestroyedMixin implements OnInit {
@@ -70,16 +98,16 @@ export class CopyProjectComponent extends UntilDestroyedMixin implements OnInit 
       .map((field) => ({ ...field, hide: this.isHiddenField(field.key) }));
   }
 
-  private isPrimaryAttribute(to?:IOPFormlyTemplateOptions):boolean {
-    if (!to) {
+  private isPrimaryAttribute(templateOptions?:IOPFormlyTemplateOptions):boolean {
+    if (!templateOptions) {
       return false;
     }
 
-    return (to.required
-      && !to.hasDefault
-      && to.payloadValue == null)
-      || to.property === 'name'
-      || to.property === 'parent';
+    const nameOrParent = ['name', 'parent'].includes(templateOptions.property!);
+    const noPayload = templateOptions.payloadValue == null
+      || templateOptions.payloadValue?.href == null;
+
+    return (templateOptions.required && !templateOptions.hasDefault && noPayload) || nameOrParent;
   }
 
   private isMeta(property:string|undefined):boolean {

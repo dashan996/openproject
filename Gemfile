@@ -36,7 +36,7 @@ ruby File.read(File.expand_path(".ruby-version", __dir__)).strip
 
 gem "actionpack-xml_parser", "~> 2.0.0"
 gem "activemodel-serializers-xml", "~> 1.0.1"
-gem "activerecord-import", "~> 2.0.0"
+gem "activerecord-import", "~> 2.1.0"
 gem "activerecord-session_store", "~> 2.1.0"
 gem "ox"
 gem "rails", "~> 7.1.3"
@@ -74,7 +74,7 @@ gem "addressable", "~> 2.8.0"
 gem "auto_strip_attributes", "~> 2.5"
 
 # Provide timezone info for TZInfo used by AR
-gem "tzinfo-data", "~> 1.2024.1"
+gem "tzinfo-data", "~> 1.2025.1"
 
 # to generate html-diffs (e.g. for wiki comparison)
 gem "htmldiff"
@@ -83,7 +83,7 @@ gem "htmldiff"
 gem "stringex", "~> 2.8.5"
 
 # CommonMark markdown parser with GFM extension
-gem "commonmarker", "~> 1.1.3"
+gem "commonmarker", "~> 2.0.2"
 
 # HTML pipeline for transformations on text formatter output
 # such as sanitization or additional features
@@ -95,7 +95,7 @@ gem "escape_utils", "~> 1.3"
 # Syntax highlighting used in html-pipeline with rouge
 gem "rouge", "~> 4.5.1"
 # HTML sanitization used for html-pipeline
-gem "sanitize", "~> 6.1.0"
+gem "sanitize", "~> 7.0.0"
 # HTML autolinking for mails and urls (replaces autolink)
 gem "rinku", "~> 2.0.4", require: %w[rinku rails_rinku]
 # Version parsing with semver
@@ -107,7 +107,7 @@ gem "svg-graph", "~> 2.2.0"
 
 gem "date_validator", "~> 0.12.0"
 gem "email_validator", "~> 2.2.3"
-gem "json_schemer", "~> 2.3.0"
+gem "json_schemer", "~> 2.4.0"
 gem "ruby-duration", "~> 3.2.0"
 
 # `config/initializers/mail_starttls_patch.rb` has also been patched to
@@ -126,7 +126,7 @@ gem "multi_json", "~> 1.15.0"
 gem "oj", "~> 3.16.0"
 
 gem "daemons"
-gem "good_job", "= 3.26.2" # update should be done manually in sync with saas-openproject version.
+gem "good_job", "= 3.99.1" # update should be done manually in sync with saas-openproject version.
 
 gem "rack-protection", "~> 3.2.0"
 
@@ -137,7 +137,7 @@ gem "rack-protection", "~> 3.2.0"
 gem "rack-attack", "~> 6.7.0"
 
 # CSP headers
-gem "secure_headers", "~> 7.0.0"
+gem "secure_headers", "~> 7.1.0"
 
 # Browser detection for incompatibility checks
 gem "browser", "~> 6.2.0"
@@ -158,7 +158,7 @@ gem "structured_warnings", "~> 0.4.0"
 gem "airbrake", "~> 13.0.0", require: false
 
 gem "markly", "~> 0.10" # another markdown parser like commonmarker, but with AST support used in PDF export
-gem "md_to_pdf", git: "https://github.com/opf/md-to-pdf", ref: "fe05b4f8bae8fd46f4fa93b8e0adee6295ef7388"
+gem "md_to_pdf", git: "https://github.com/opf/md-to-pdf", ref: "965034bdd4b119c7233ea4ecd62d3964d3dec11d"
 gem "prawn", "~> 2.4"
 gem "ttfunk", "~> 1.7.0" # remove after https://github.com/prawnpdf/prawn/issues/1346 resolved.
 
@@ -167,7 +167,7 @@ gem "matrix", "~> 0.4.2"
 
 gem "meta-tags", "~> 2.22.0"
 
-gem "paper_trail", "~> 15.2.0"
+gem "paper_trail", "~> 16.0.0"
 
 gem "op-clamav-client", "~> 3.4", require: "clamav"
 
@@ -191,7 +191,7 @@ gem "puma", "~> 6.5"
 gem "puma-plugin-statsd", "~> 2.0"
 gem "rack-timeout", "~> 0.7.0", require: "rack/timeout/base"
 
-gem "nokogiri", "~> 1.17.0"
+gem "nokogiri", "~> 1.18.1"
 
 gem "carrierwave", "~> 1.3.4"
 gem "carrierwave_direct", "~> 2.1.0"
@@ -207,7 +207,7 @@ gem "plaintext", "~> 0.3.2"
 
 gem "ruby-progressbar", "~> 1.13.0", require: false
 
-gem "mini_magick", "~> 5.0.1", require: false
+gem "mini_magick", "~> 5.1.2", require: false
 
 gem "validate_url"
 
@@ -218,7 +218,7 @@ gem "dry-monads"
 gem "dry-validation"
 
 # ActiveRecord extension which adds typecasting to store accessors
-gem "store_attribute", "~> 1.0"
+gem "store_attribute", "~> 2.0"
 
 # Appsignal integration
 gem "appsignal", "~> 3.10.0", require: false
@@ -241,7 +241,7 @@ gem "httpx"
 gem "ice_nine"
 
 group :test do
-  gem "launchy", "~> 3.0.0"
+  gem "launchy", "~> 3.1.0"
   gem "rack-test", "~> 2.2.0"
   gem "shoulda-context", "~> 2.0"
 
@@ -278,6 +278,7 @@ group :test do
   gem "capybara_accessible_selectors", git: "https://github.com/citizensadvice/capybara_accessible_selectors", tag: "v0.12.0"
   gem "capybara-screenshot", "~> 1.0.17"
   gem "cuprite", "~> 0.15.0"
+  gem "ferrum", github: "toy/ferrum", ref: "mouse-events-buttons-property-0.15"
   gem "rspec-wait"
   gem "selenium-devtools"
   gem "selenium-webdriver", "~> 4.20"
@@ -333,11 +334,11 @@ group :development, :test do
   # Output a stack trace anytime, useful when a process is stuck
   gem "rbtrace"
 
-  # REPL with debug commands
-  gem "debug"
+  # REPL with debug commands, Debug changed to byebug due to the issue below
+  # https://github.com/puma/puma/issues/2835#issuecomment-2302133927
+  gem "byebug"
 
   gem "pry-byebug", "~> 3.10.0", platforms: [:mri]
-  gem "pry-doc"
   gem "pry-rails", "~> 0.3.6"
   gem "pry-rescue", "~> 1.6.0"
 
@@ -356,7 +357,7 @@ group :development, :test do
   gem "erblint-github", require: false
 
   # Brakeman scanner
-  gem "brakeman", "~> 6.2.0"
+  gem "brakeman", "~> 7.0.0"
 
   # i18n-tasks helps find and manage missing and unused translations.
   gem "i18n-tasks", "~> 1.0.13", require: false
@@ -406,4 +407,4 @@ end
 
 gem "openproject-octicons", "~>19.20.0 "
 gem "openproject-octicons_helper", "~>19.20.0 "
-gem "openproject-primer_view_components", "~>0.51.0"
+gem "openproject-primer_view_components", "~>0.53.1"

@@ -29,8 +29,7 @@
 require "spec_helper"
 
 RSpec.describe "Shared Work Package Access",
-               :js, :with_cuprite,
-               with_ee: %i[work_package_sharing] do
+               :js, with_ee: %i[work_package_sharing] do
   shared_let(:project) { create(:project_with_types) }
   # This custom field is not explicitly displayed, but it's purpose is to ensure there are no errors
   # on the overview page while displaying project attributes.
@@ -49,6 +48,7 @@ RSpec.describe "Shared Work Package Access",
   let(:global_work_packages_page) { Pages::WorkPackagesTable.new }
   let(:work_packages_page) { Pages::WorkPackagesTable.new(project) }
   let(:work_package_page) { Pages::FullWorkPackage.new(work_package) }
+  let(:activity_tab) { Components::WorkPackages::Activities.new(work_package) }
   let(:share_modal) { Components::Sharing::WorkPackages::ShareModal.new(work_package) }
   let(:add_comment_button_selector) { ".work-packages--activity--add-comment" }
   let(:attach_files_button_selector) { "op-attachments--upload-button" }
@@ -194,11 +194,9 @@ RSpec.describe "Shared Work Package Access",
                         .time_log_icon_visible(true)
 
       work_package_page.ensure_page_loaded # waits for activity section to be ready
-      work_package_page.within_active_tab do
-        # Commenting is enabled
-        expect(page)
-          .to have_css(add_comment_button_selector)
-      end
+      work_package_page.switch_to_tab tab: :activity
+      work_package_page.wait_for_activity_tab
+      activity_tab.expect_input_field # commenting is enabled
 
       # Attachments are uploadable
       work_package_page.switch_to_tab(tab: "Files")
@@ -282,11 +280,9 @@ RSpec.describe "Shared Work Package Access",
                         .time_log_icon_visible(true)
 
       work_package_page.ensure_page_loaded # waits for activity section to be ready
-      work_package_page.within_active_tab do
-        # Commenting is enabled
-        expect(page)
-          .to have_css(add_comment_button_selector)
-      end
+      work_package_page.switch_to_tab tab: :activity
+      work_package_page.wait_for_activity_tab
+      activity_tab.expect_input_field # commenting is enabled
 
       # Attachments are uploadable
       work_package_page.switch_to_tab(tab: "Files")

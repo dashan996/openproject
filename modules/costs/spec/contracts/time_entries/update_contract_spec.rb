@@ -43,7 +43,7 @@ RSpec.describe TimeEntries::UpdateContract do
     end
     subject(:contract) { described_class.new(time_entry, current_user) }
 
-    let(:permissions) { %i(edit_time_entries) }
+    let(:permissions) { %i(edit_time_entries log_time) }
 
     context "if user is not allowed to edit time entries" do
       let(:permissions) { [] }
@@ -124,6 +124,19 @@ RSpec.describe TimeEntries::UpdateContract do
       it "is invalid" do
         time_entry.user = other_user
         expect_valid(false, base: %i(error_unauthorized))
+      end
+    end
+
+    context "if the user is changed to a user that the user has no access to" do
+      let(:new_user) do
+        create(:user).tap do |user|
+          allow(user).to receive(:visible?).and_return(false)
+        end
+      end
+
+      it "is invalid" do
+        time_entry.user = new_user
+        expect_valid(false, user_id: %i(invalid))
       end
     end
 

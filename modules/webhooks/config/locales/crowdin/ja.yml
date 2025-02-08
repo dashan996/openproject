@@ -1,13 +1,14 @@
 ja:
   plugin_openproject_webhooks:
     name: "OpenProject Webhooks"
-    description: "Provides a plug-in API to support OpenProject webhooks for better 3rd party integration."
+    description: "より良いサードパーティの統合のためにOpenProjectのWebhookをサポートするプラグイン API を提供します。"
   activerecord:
     attributes:
       webhooks/webhook:
         url: 'ペイロード URL'
         secret: '署名シークレット'
         events: 'イベント'
+        enabled: 'Enabled'
         projects: '有効なプロジェクト'
       webhooks/log:
         event_name: 'イベント名'

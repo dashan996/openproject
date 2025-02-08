@@ -2,15 +2,17 @@ class WorkPackageRelationsTab::RelationComponent < ApplicationComponent
   include ApplicationHelper
   include OpPrimer::ComponentHelpers
 
-  attr_reader :work_package, :relation, :child
+  attr_reader :work_package, :relation, :child, :visibility
 
   def initialize(work_package:,
                  relation:,
+                 visibility:,
                  child: nil)
     super()
 
     @work_package = work_package
     @relation = relation
+    @visibility = visibility
     @child = child
   end
 
@@ -47,6 +49,10 @@ class WorkPackageRelationsTab::RelationComponent < ApplicationComponent
     helpers.current_user.allowed_in_project?(:manage_work_package_relations, @work_package.project)
   end
 
+  def visible?
+    @visibility == :visible
+  end
+
   def underlying_resource_id
     @underlying_resource_id ||= if parent_child_relationship?
                                   @child.id
@@ -66,16 +72,18 @@ class WorkPackageRelationsTab::RelationComponent < ApplicationComponent
   end
 
   def should_display_dates_row?
-    return false if parent_child_relationship?
-
-    relation.follows? || relation.precedes?
+    parent_child_relationship? || relation.follows? || relation.precedes?
   end
 
   def follows?
+    return false if parent_child_relationship?
+
     relation.relation_type_for(work_package) == Relation::TYPE_FOLLOWS
   end
 
   def precedes?
+    return false if parent_child_relationship?
+
     relation.relation_type_for(work_package) == Relation::TYPE_PRECEDES
   end
 
@@ -89,7 +97,7 @@ class WorkPackageRelationsTab::RelationComponent < ApplicationComponent
 
   def destroy_path
     if parent_child_relationship?
-      work_package_child_path(@work_package, @child)
+      work_package_children_relation_path(@work_package, @child)
     else
       work_package_relation_path(@work_package, @relation)
     end

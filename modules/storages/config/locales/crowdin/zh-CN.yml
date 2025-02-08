@@ -3,6 +3,8 @@ zh-CN:
     attributes:
       storages/file_link:
         origin_id: 来源 ID
+      storages/project_storage:
+        storage: 存储
       storages/storage:
         creator: 创建者
         drive: 驱动器 ID
@@ -72,6 +74,7 @@ zh-CN:
         confirmation_text: 请确认您已理解并要从此项目中删除此文件存储
         heading_text: 从 %{storage} 中删除项目
         text: 此操作不可逆，将从此项目的工作包中删除所有链接到该存储的文件和文件夹。
+        title: Remove project from storage
       label: 删除项目
   services:
     attributes:
@@ -344,7 +347,7 @@ zh-CN:
         title: 集成设置已完成
       timeout:
         link_text: 文件存储设置的健康状态
-        subtitle: OpenProject 无法让您在预期时间内访问项目文件夹。请再试一次。<br><br> 如果问题仍然存在，请联系 OpenProject 管理员检查 %{storages_health_link}。
+        subtitle: OpenProject 无法让您在预期时间内访问项目文件夹。请再试一次。<br><br> 如果问题仍然存在，请联系 OpenProject 管理员 %{storages_health_link}。
       waiting:
         subtitle: 请稍候，此操作可能需要一些时间…
         title: 我们正在设置您对项目文件夹的权限。

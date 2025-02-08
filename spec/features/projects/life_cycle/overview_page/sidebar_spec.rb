@@ -29,7 +29,7 @@
 require "spec_helper"
 require_relative "shared_context"
 
-RSpec.describe "Show project life cycles on project overview page", :js, :with_cuprite, with_flag: { stages_and_gates: true } do
+RSpec.describe "Show project life cycles on project overview page", :js, with_flag: { stages_and_gates: true } do
   include_context "with seeded projects and stages and gates"
 
   let(:overview_page) { Pages::Projects::Show.new(project) }

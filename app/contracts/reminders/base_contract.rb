@@ -79,9 +79,13 @@ module Reminders
     def validate_manage_reminders_permissions
       return if errors.added?(:remindable, :not_found)
 
-      unless user.allowed_in_project?(:manage_own_reminders, model.remindable.project)
+      unless can_manage_reminders?
         errors.add :base, :error_unauthorized
       end
+    end
+
+    def can_manage_reminders?
+      user.logged? && user.allowed_in_project?(:view_work_packages, model.remindable.project)
     end
   end
 end

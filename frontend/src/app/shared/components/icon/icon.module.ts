@@ -52,6 +52,10 @@ import {
   OpGitlabPipelineStatusSuccessIconComponent,
   OpGitlabPipelineStatusWaitingIconComponent,
   XCircleIconComponent,
+  OpKebabVerticalIconComponent,
+  ReadIconComponent,
+  EyeIconComponent,
+  EyeClosedIconComponent,
 } from '@openproject/octicons-angular';
 
 @NgModule({
@@ -108,7 +112,13 @@ import {
     OpGitlabPipelineStatusSkippedIconComponent,
     OpGitlabPipelineStatusSuccessIconComponent,
     OpGitlabPipelineStatusWaitingIconComponent,
+
     XCircleIconComponent,
+
+    OpKebabVerticalIconComponent,
+    ReadIconComponent,
+    EyeIconComponent,
+    EyeClosedIconComponent,
   ],
   declarations: [
     OpIconComponent,
@@ -168,6 +178,11 @@ import {
     OpGitlabPipelineStatusSuccessIconComponent,
     OpGitlabPipelineStatusWaitingIconComponent,
     XCircleIconComponent,
+
+    OpKebabVerticalIconComponent,
+    ReadIconComponent,
+    EyeIconComponent,
+    EyeClosedIconComponent,
   ],
 })
 export class IconModule {}

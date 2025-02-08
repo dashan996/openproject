@@ -32,7 +32,6 @@ import { Injectable } from '@angular/core';
 import { ConfigurationService } from 'core-app/core/config/configuration.service';
 import { WorkPackageLinkedResourceCache } from 'core-app/features/work-packages/components/wp-single-view-tabs/wp-linked-resource-cache.service';
 import { TimezoneService } from 'core-app/core/datetime/timezone.service';
-import { ActivityEntryInfo } from './activity-entry-info';
 
 @Injectable()
 export class WorkPackagesActivityService extends WorkPackageLinkedResourceCache<HalResource[]> {
@@ -77,9 +76,5 @@ export class WorkPackagesActivityService extends WorkPackageLinkedResourceCache<
       return sorted.reverse();
     }
     return sorted;
-  }
-
-  public info(activities:HalResource[], activity:HalResource, index:number) {
-    return new ActivityEntryInfo(this.timezoneService, this.isReversed, activities, activity, index);
   }
 }

@@ -26,9 +26,6 @@
 // See COPYRIGHT and LICENSE files for more details.
 //++
 
-import { WorkPackageResource } from 'core-app/features/hal/resources/work-package-resource';
-import { ProjectResource } from 'core-app/features/hal/resources/project-resource';
-import { StateService } from '@uirouter/core';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -36,16 +33,18 @@ import {
   Injector,
   OnInit,
 } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { WorkPackageViewSelectionService } from 'core-app/features/work-packages/routing/wp-view-base/view-services/wp-view-selection.service';
-import { WorkPackageSingleViewBase } from 'core-app/features/work-packages/routing/wp-view-base/work-package-single-view.base';
-import { HalResourceNotificationService } from 'core-app/features/hal/services/hal-resource-notification.service';
-import { WorkPackageNotificationService } from 'core-app/features/work-packages/services/notifications/work-package-notification.service';
-import { WpSingleViewService } from 'core-app/features/work-packages/routing/wp-view-base/state/wp-single-view.service';
-import { CommentService } from 'core-app/features/work-packages/components/wp-activity/comment-service';
-import { RecentItemsService } from 'core-app/core/recent-items.service';
+import { StateService } from '@uirouter/core';
 import { ConfigurationService } from 'core-app/core/config/configuration.service';
 import { CurrentUserService } from 'core-app/core/current-user/current-user.service';
+import { RecentItemsService } from 'core-app/core/recent-items.service';
+import { ProjectResource } from 'core-app/features/hal/resources/project-resource';
+import { WorkPackageResource } from 'core-app/features/hal/resources/work-package-resource';
+import { HalResourceNotificationService } from 'core-app/features/hal/services/hal-resource-notification.service';
+import { WpSingleViewService } from 'core-app/features/work-packages/routing/wp-view-base/state/wp-single-view.service';
+import { WorkPackageViewSelectionService } from 'core-app/features/work-packages/routing/wp-view-base/view-services/wp-view-selection.service';
+import { WorkPackageSingleViewBase } from 'core-app/features/work-packages/routing/wp-view-base/work-package-single-view.base';
+import { WorkPackageNotificationService } from 'core-app/features/work-packages/services/notifications/work-package-notification.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   templateUrl: './wp-full-view.html',
@@ -54,7 +53,6 @@ import { CurrentUserService } from 'core-app/core/current-user/current-user.serv
   host: { class: 'work-packages-page--ui-view' },
   providers: [
     WpSingleViewService,
-    CommentService,
     { provide: HalResourceNotificationService, useExisting: WorkPackageNotificationService },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -63,7 +61,7 @@ export class WorkPackagesFullViewComponent extends WorkPackageSingleViewBase imp
   // Watcher properties
   public isWatched:boolean;
 
-  public displayReminderButton$:false|Observable<boolean> = false;
+  public displayReminderButton$:Observable<boolean> = of(false);
 
   public displayShareButton$:false|Observable<boolean> = false;
 
@@ -122,7 +120,10 @@ export class WorkPackagesFullViewComponent extends WorkPackageSingleViewBase imp
     this.displayWatchButton = Object.prototype.hasOwnProperty.call(wp, 'unwatch') || Object.prototype.hasOwnProperty.call(wp, 'watch');
     this.displayTimerButton = Object.prototype.hasOwnProperty.call(wp, 'logTime');
     this.displayShareButton$ = this.currentUserService.hasCapabilities$('work_package_shares/index', (wp.project as ProjectResource).id);
-    this.displayReminderButton$ = this.currentUserService.hasCapabilities$('work_package_reminders/modal_body', (wp.project as ProjectResource).id);
+    this.displayReminderButton$ = this.currentUserService.isLoggedInAndHasCapabalities$(
+      'work_packages/read',
+      (this.workPackage.project as ProjectResource).id,
+    );
 
     // watchers
     if (wp.watchers) {

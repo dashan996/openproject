@@ -28,31 +28,19 @@
  * ++
  */
 
-import { Controller } from '@hotwired/stimulus';
+import FormPreviewController from '../../form-preview.controller';
 
-export default class ProjectLifeCyclesFormController extends Controller {
-  static targets = ['form'];
-
-  declare readonly formTarget:HTMLFormElement;
-
-  handleChange(event:Event) {
+export default class ProjectLifeCyclesFormController extends FormPreviewController {
+  previewForm(event:Event) {
     const target = event.target as HTMLElement;
-    const previewUrl = this.formTarget.dataset.previewUrl;
-
-    if (!previewUrl || this.datePickerVisible(target)) {
+    if (this.datePickerVisible(target)) {
       return; // flatpickr is still open, do not submit yet.
     }
 
-    const form = this.formTarget;
-    form.action = previewUrl;
-
-    form.requestSubmit();
+    void this.submit();
   }
 
   datePickerVisible(element:HTMLElement) {
-    const nextElement = element.nextElementSibling;
-    return nextElement
-           && nextElement.classList.contains('flatpickr-calendar')
-           && nextElement.classList.contains('open');
+    return element.classList.contains('active');
   }
 }

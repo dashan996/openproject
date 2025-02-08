@@ -13,7 +13,7 @@
             end
           end
           section_header_container.with_column(flex_layout: true, justify_content: :flex_end) do |actions_container|
-            actions_container.with_column(data: { 'projects--settings--border-box-filter-target': 'bulkActionContainer' }) do
+            actions_container.with_column(data: { 'projects--settings--border-box-filter-target': 'hideWhenFiltering' }) do
               render(Primer::Beta::Button.new(
                 tag: :a,
                 href: enable_all_of_section_project_settings_project_custom_fields_path(
@@ -32,7 +32,7 @@
                 t('projects.settings.actions.label_enable_all')
               end
             end
-            actions_container.with_column(data: { 'projects--settings--border-box-filter-target': 'bulkActionContainer' }) do
+            actions_container.with_column(data: { 'projects--settings--border-box-filter-target': 'hideWhenFiltering' }) do
               render(Primer::Beta::Button.new(
                 tag: :a,
                 href: disable_all_of_section_project_settings_project_custom_fields_path(

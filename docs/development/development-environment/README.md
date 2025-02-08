@@ -15,20 +15,20 @@ keywords: development setup
 | [MacOS](macos)                     | Develop setup on MacOS                                                            |
 
 
-### Start Coding
+## Start Coding
 
 Please have a look at [our development guidelines](../code-review-guidelines/) for tips and guides on how to start
 coding. We have advice on how to get your changes back into the OpenProject core as smooth as possible.
 Also, take a look at the `doc` directory in our sources, especially
 the [how to run tests](../running-tests) documentation (we like to have automated tests for every new developed feature).
 
-### Troubleshooting
+## Troubleshooting
 
 The OpenProject logfile can be found in `log/development.log`.
 
 If an error occurs, it should be logged there (as well as in the output to STDOUT/STDERR of the rails server process).
 
-### Questions, Comments, and Feedback
+## Questions, Comments, and Feedback
 
 If you have any further questions, comments, feedback, or an idea to enhance this guide, please tell us at the
 appropriate [forum](https://community.openproject.org/projects/openproject/boards/9).

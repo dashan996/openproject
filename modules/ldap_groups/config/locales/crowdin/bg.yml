@@ -6,10 +6,12 @@ bg:
     attributes:
       ldap_groups/synchronized_group:
         dn: 'DN'
+        auth_source: 'Auth source'
         ldap_auth_source: 'LDAP връзка'
         sync_users: 'Синхронизиране на потребителите'
       ldap_groups/synchronized_filter:
         filter_string: 'LDAP филтър'
+        auth_source: 'Auth source'
         ldap_auth_source: 'LDAP връзка'
         group_name_attribute: "Атрибут за гуповото име"
         sync_users: 'Синхронизиране на потребителите'

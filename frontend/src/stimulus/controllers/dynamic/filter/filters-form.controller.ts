@@ -88,9 +88,11 @@ export default class FiltersFormController extends Controller {
   declare performTurboRequestsValue:boolean;
   declare readonly clearButtonIdValue:string;
 
+  private boundListener = this.sendForm.bind(this);
+
   initialize() {
     // Initialize runs anytime an element with a controller connected to the DOM for the first time
-    this.sendForm = debounce(this.sendForm.bind(this), 300);
+    this.sendForm = debounce(this.boundListener, 300);
     this.autoReloadTargets = [
       ...this.simpleValueTargets,
       ...this.operatorTargets,
@@ -113,9 +115,9 @@ export default class FiltersFormController extends Controller {
     if (this.performTurboRequestsValue) {
       this.autoReloadTargets.forEach((target) => {
         if (target instanceof HTMLInputElement) {
-          target.addEventListener('input', this.sendForm.bind(this));
+          target.addEventListener('input', this.boundListener);
         } else {
-          target.addEventListener('change', this.sendForm.bind(this));
+          target.addEventListener('change', this.boundListener);
         }
       });
     }
@@ -130,9 +132,9 @@ export default class FiltersFormController extends Controller {
     if (this.performTurboRequestsValue) {
       this.autoReloadTargets.forEach((target) => {
         if (target instanceof HTMLInputElement) {
-          target.removeEventListener('input', this.sendForm.bind(this));
+          target.removeEventListener('input', this.boundListener);
         } else {
-          target.removeEventListener('change', this.sendForm.bind(this));
+          target.removeEventListener('change', this.boundListener);
         }
       });
     }

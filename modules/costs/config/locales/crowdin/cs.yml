@@ -33,6 +33,7 @@ cs:
       cost_type:
         unit: "Název jednotky"
         unit_plural: "Název Pluralizované jednotky"
+        default: "Typ nákladů ve výchozím nastavení"
       work_package:
         costs_by_type: "Strávené jednotky"
         labor_costs: "Náklady práce"
@@ -44,6 +45,16 @@ cs:
         rate: "Kurz"
       user:
         default_rates: "Výchozí sazby"
+      time_entry:
+        project: Projekt
+        user: Uživatel
+        work_package: Pracovní balíček
+        hours: Hodiny
+        comments: Komentář
+        activity: Aktivita
+        spent_on: Datum
+        start_time: Čas zahájení
+        end_time: Čas dokončení
     models:
       cost_type:
         one: "Druh nákladů"
@@ -53,6 +64,8 @@ cs:
       rate: "Sazba"
     errors:
       models:
+        time_entry:
+          invalid_time: "musí být mezi 00:00 a 23:59."
         work_package:
           is_not_a_valid_target_for_cost_entries: "Pracovní balíček #%{id} není platný cíl pro přeřazení nákladových položek."
           nullify_is_not_valid_for_cost_entries: "K projektu nelze přiřadit položky nákladů."
@@ -67,6 +80,7 @@ cs:
     fixed_date: "Pevné datum"
   button_add_rate: "Přidat kurz"
   button_log_costs: "Logovat jednotkové náklady"
+  button_log_time: "Log"
   caption_booked_on_project: "Rezervováno v projektu"
   caption_default: "Výchozí"
   caption_default_rate_history_for: "Výchozí historie sazeb  pro %{user}"
@@ -78,6 +92,7 @@ cs:
   caption_save_rate: "Uložit kurz"
   caption_set_rate: "Nastavit aktuální sazbu."
   caption_show_locked: "Zobrazit uzamčené typy"
+  caption_log_time_dialog: "Čas logu"
   description_date_for_new_rate: "Datum pro nový kurz"
   group_by_others: "není v žádné skupině"
   label_between: "mezi"
@@ -117,10 +132,12 @@ cs:
   label_until: "do"
   label_valid_from: "Platné od"
   label_yes: "Ano"
+  placeholder_activity_select_work_package_first: Nejprve je nutné vybrat pracovní balíček
   notice_something_wrong: "Něco se pokazilo. Zkuste to prosím znovu."
   notice_successful_restore: "Úspěšně obnoveno."
   notice_successful_lock: "Úspěšně uzamčeno."
   notice_cost_logged_successfully: "Jednotková cena byla úspěšně zaznamenána."
+  notice_different_time_zones: "Tento uživatel má jiné časové pásmo (%{tz}). Čas bude zaznamenán pomocí svého časového pásma."
   permission_edit_cost_entries: "Upravit rezervované jednotkové náklady"
   permission_edit_own_cost_entries: "Upravit vlastní rezervované jednotkové náklady"
   permission_edit_hourly_rates: "Upravit hodinové sazby"
@@ -135,10 +152,10 @@ cs:
   permission_view_own_hourly_rate: "Zobrazit vlastní hodinovou sazbu"
   permission_view_own_time_entries: "Zobrazit vlastní strávený čas"
   project_module_costs: "Čas a náklady"
-  setting_allow_tracking_start_and_end_times: "Allow users to track start and end time on time records"
+  setting_allow_tracking_start_and_end_times: "Povolit uživatelům sledovat počáteční a koncový čas v časových záznamech"
   setting_costs_currency: "Měna"
   setting_costs_currency_format: "Formát měny"
-  setting_enforce_tracking_start_and_end_times: "Force users to set start and end time on time records"
+  setting_enforce_tracking_start_and_end_times: "Vynucení nastavení počátečního a koncového času u časových záznamů uživateli"
   text_assign_time_and_cost_entries_to_project: "Přiřadit nahlášené hodiny a náklady projektu"
   text_destroy_cost_entries_question: "%{cost_entries} byl nahlášen k pracovním balíčkům, které se chystáte odstranit. Co chcete udělat?"
   text_destroy_time_and_cost_entries: "Odstranit nahlášené hodiny a náklady"
@@ -148,3 +165,7 @@ cs:
   week: "týden"
   js:
     text_are_you_sure: "Jste si jisti?"
+  api_v3:
+    errors:
+      validation:
+        start_time_different_date: "Date part of startTime (%{start_time}) must be the same as the spentOn (%{spent_on}) date."

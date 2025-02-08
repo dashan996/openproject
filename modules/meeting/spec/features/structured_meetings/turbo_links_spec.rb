@@ -32,8 +32,7 @@ require_relative "../../support/pages/meetings/new"
 require_relative "../../support/pages/structured_meeting/show"
 
 RSpec.describe "Structured meetings links caught by turbo",
-               :js,
-               :with_cuprite do
+               :js do
   include Rails.application.routes.url_helpers
 
   shared_let(:project) { create(:project, enabled_module_names: %w[meetings]) }

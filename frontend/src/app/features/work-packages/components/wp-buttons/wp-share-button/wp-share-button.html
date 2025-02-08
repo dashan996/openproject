@@ -1,6 +1,7 @@
 <button
   class="button toolbar-icon"
   data-test-selector="op-wp-share-button"
+  [title]="text.share"
   (click)="openModal()"
 >
   <svg
@@ -8,10 +9,8 @@
     class="button--icon"
     size="small"
   ></svg>
-  <span class="button--text">
-    {{ text.share }}
-    <span *ngIf="(shareCount$ | async) as shareCount"
-          class="badge -secondary"
+  <span class="button--text" *ngIf="(shareCount$ | async) as shareCount">
+    <span class="badge -secondary"
           [textContent]="shareCount"></span>
   </span>
 

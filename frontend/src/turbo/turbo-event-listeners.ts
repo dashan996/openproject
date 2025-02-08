@@ -1,3 +1,5 @@
+import { TurboHelpers } from './helpers';
+
 export function addTurboEventListeners() {
   // Close the primer dialog when the form inside has been submitted with a success response.
   //
@@ -6,14 +8,20 @@ export function addTurboEventListeners() {
   //
   // It is necessary to close the primer dialog using the `close()` method, otherwise
   // it will leave an overflow:hidden attribute on the body, which prevents scrolling on the page.
+  //
+  // Also, we will dispatch a custom `dialog:close` event when the dialog is closed.
   document.addEventListener('turbo:submit-end', (event:CustomEvent) => {
-    const { detail: { success }, target } = event as { detail:{ success:boolean }, target:EventTarget };
+    const { detail: { success }, target } = event as { detail:{ success:boolean }; target:EventTarget };
 
     if (success && target instanceof HTMLFormElement) {
       const dialog = target.closest('dialog') as HTMLDialogElement;
 
-      if (dialog && dialog.dataset.keepOpenOnSubmit !== 'true') {
-        dialog.close();
+      if (dialog) {
+        if (dialog.dataset.keepOpenOnSubmit !== 'true') {
+          dialog.close('close-event-already-dispatched');
+        }
+
+        document.dispatchEvent(new CustomEvent('dialog:close', { detail: { dialog, submitted: true } }));
       }
     }
   });
@@ -25,4 +33,29 @@ export function addTurboEventListeners() {
     headers['Turbo-Referrer'] = window.location.href;
     headers['X-Turbo-Nonce'] = document.getElementsByName('csp-nonce')[0]?.getAttribute('content') || '';
   });
+
+  // Turbo adds nonces to all scripts, even though we want to explicitly pass nonces
+  // https://github.com/hotwired/turbo/issues/294#issuecomment-2633216052
+  // We remove them manually as a workaround
+  // in Handle Turbo Drive page loads (full reloads)
+  document.addEventListener('turbo:before-render', (event) => {
+    TurboHelpers.scrubScriptElements(event.detail.newBody);
+  }, { capture: true });
+
+  // in Turbo Streams (partial updates)
+  document.addEventListener('turbo:before-stream-render', (event) => {
+    const fallbackToDefaultActions = event.detail.render;
+
+    event.detail.render = (streamElement) => {
+      const content = streamElement.templateElement.content;
+      TurboHelpers.scrubScriptElements(content);
+
+      return fallbackToDefaultActions(streamElement);
+    };
+  });
+
+  // in Turbo Frames (when they load new content)
+  document.addEventListener('turbo:before-frame-render', (event) => {
+    TurboHelpers.scrubScriptElements(event.detail.newFrame);
+  }, { capture: true });
 }

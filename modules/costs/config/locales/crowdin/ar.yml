@@ -33,6 +33,7 @@ ar:
       cost_type:
         unit: "اسم الوحدة"
         unit_plural: "اسم الوحدة متعددة الأقطاب"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "الوحدات المستهلكة"
         labor_costs: "تكاليف العمل"
@@ -44,6 +45,16 @@ ar:
         rate: "المعدل"
       user:
         default_rates: "المعدلات المفترضة"
+      time_entry:
+        project: Project
+        user: User
+        work_package: Work package
+        hours: الساعات
+        comments: Comment
+        activity: النشاط
+        spent_on: التاريخ
+        start_time: Start time
+        end_time: Finish time
     models:
       cost_type:
         zero: "أنواع التكلفة"
@@ -55,6 +66,8 @@ ar:
       rate: "المعدل"
     errors:
       models:
+        time_entry:
+          invalid_time: "must be between 00:00 and 23:59."
         work_package:
           is_not_a_valid_target_for_cost_entries: "مجموعة العمل #%{id} ليست هدفًا صالحًا لإعادة تعيين إدخالات التكلفة."
           nullify_is_not_valid_for_cost_entries: "لا يمكن تعيين إدخالات التكلفة للمشروع."
@@ -69,6 +82,7 @@ ar:
     fixed_date: "تاريخ ثابت"
   button_add_rate: "أضِف المعدل"
   button_log_costs: "سجل تكاليف الوحدة"
+  button_log_time: "Log"
   caption_booked_on_project: "حُجِِز على المشروع"
   caption_default: "الافتراضي"
   caption_default_rate_history_for: "تاريخ المعدل الافتراضي ل %{user}"
@@ -80,6 +94,7 @@ ar:
   caption_save_rate: "معدل التوفير"
   caption_set_rate: "ضبط المعدل الحالي"
   caption_show_locked: "إظهار الأنواع المغلقة"
+  caption_log_time_dialog: "Log time"
   description_date_for_new_rate: "تاريخ المعدل الجديد"
   group_by_others: "ليس في أي مجموعة"
   label_between: "بين"
@@ -119,10 +134,12 @@ ar:
   label_until: "حتى"
   label_valid_from: "صالح من"
   label_yes: "نعم"
+  placeholder_activity_select_work_package_first: Work package selection is required first
   notice_something_wrong: "حصل خطأ ما. من فضلك حاول مرة أخرى."
   notice_successful_restore: "استعادة ناجحة."
   notice_successful_lock: "أغلِقت بنجاح."
   notice_cost_logged_successfully: "تمّ تسجيل تكلفة الوحدة بنجاح."
+  notice_different_time_zones: "This user has a different time zone (%{tz}). Time will be logged using their time zone."
   permission_edit_cost_entries: "تحرير تكاليف الوحدة المحجوزة"
   permission_edit_own_cost_entries: "تحرير تكاليف الوحدة المحجوزة الخاصة"
   permission_edit_hourly_rates: "تحرير الأجور الساعيّة"
@@ -150,3 +167,7 @@ ar:
   week: "الأسبوع"
   js:
     text_are_you_sure: "هل أنت متأكد؟"
+  api_v3:
+    errors:
+      validation:
+        start_time_different_date: "Date part of startTime (%{start_time}) must be the same as the spentOn (%{spent_on}) date."

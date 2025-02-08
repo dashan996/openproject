@@ -2,6 +2,7 @@ import { fakeAsync, flush } from '@angular/core/testing';
 import { createDynamicInputFixture } from 'core-app/shared/components/dynamic-forms/spec/helpers';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
+import { IOPFormlyFieldSettings } from 'core-app/shared/components/dynamic-forms/typings';
 
 describe('SelectInputComponent', () => {
   it('should load the field', fakeAsync(() => {
@@ -15,9 +16,9 @@ describe('SelectInputComponent', () => {
         value: 2,
       },
     ];
-    const fieldsConfig = [
+    const fieldsConfig:IOPFormlyFieldSettings[] = [
       {
-        type: 'selectInput' as const,
+        type: 'selectInput',
         key: 'testControl',
         templateOptions: {
           required: true,
@@ -31,7 +32,7 @@ describe('SelectInputComponent', () => {
         },
       },
     ];
-    const formModel = {
+    const formModel:IOPFormModel = {
       testControl: selectOptions[0],
     };
     const testModel = {

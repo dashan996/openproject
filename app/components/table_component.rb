@@ -146,7 +146,7 @@ class TableComponent < ApplicationComponent
   end
 
   def test_selector
-    self.class.name.dasherize
+    options.fetch(:test_selector) { self.class.name.dasherize }
   end
 
   def rows

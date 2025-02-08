@@ -56,7 +56,7 @@ module WorkPackages
           test_selector: "op-wp-activity-tab",
           controller: stimulus_controller,
           "application-target": "dynamic",
-          "#{stimulus_controller}-update-streams-url-value": update_streams_work_package_activities_url(work_package),
+          "#{stimulus_controller}-update-streams-path-value": update_streams_work_package_activities_path(work_package),
           "#{stimulus_controller}-sorting-value": journal_sorting,
           "#{stimulus_controller}-filter-value": filter,
           "#{stimulus_controller}-user-id-value": User.current.id,

@@ -27,6 +27,6 @@ tr:
       properties:
         overallCosts: "Tüm maliyetler"
         spentUnits: "Harcanan birimler"
-    button_log_costs: "Günlük birim maliyetleri"
+    button_log_costs: "Birim maliyet kaydet"
     label_hour: "saat"
     label_hours: "saatler"

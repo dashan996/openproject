@@ -33,16 +33,17 @@ require_module_spec_helper
 
 RSpec.describe Storages::Storages::NextcloudContract, :storage_server_helpers, :webmock do
   let(:current_user) { create(:admin) }
-  let(:storage_host) { "https://host1.example.com" }
-  let(:storage) { build(:nextcloud_storage, host: storage_host) }
+  let(:storage) { build(:nextcloud_storage) }
+  let(:mocked_host) { storage.host }
+
+  let!(:capabilities_request) { mock_server_capabilities_response(mocked_host) }
+  let!(:host_request) { mock_server_config_check_response(mocked_host) }
 
   # As the NextcloudContract is selected by the BaseContract to make writable attributes available,
   # the BaseContract needs to be instantiated here.
   subject { Storages::Storages::BaseContract.new(storage, current_user) }
 
   it "checks the storage url only when changed" do
-    capabilities_request = mock_server_capabilities_response(storage_host)
-    host_request = mock_server_config_check_response(storage_host)
     subject.validate
     expect(capabilities_request).to have_been_made.once
     expect(host_request).to have_been_made.once
@@ -57,11 +58,6 @@ RSpec.describe Storages::Storages::NextcloudContract, :storage_server_helpers, :
   describe "Nextcloud application credentials validation" do
     context "with valid credentials" do
       let(:storage) { build(:nextcloud_storage, :as_automatically_managed) }
-
-      before do
-        mock_server_capabilities_response(storage.host)
-        mock_server_config_check_response(storage.host)
-      end
 
       it "passes validation" do
         credentials_request = mock_nextcloud_application_credentials_validation(storage.host)
@@ -137,6 +133,7 @@ RSpec.describe Storages::Storages::NextcloudContract, :storage_server_helpers, :
 
     context "when the storage host is nil" do
       let(:storage) { build(:nextcloud_storage, :as_automatically_managed, host: nil) }
+      let(:mocked_host) { "https://example.com/unrelated" }
 
       before do
         allow(NextcloudApplicationCredentialsValidator).to receive(:new).and_call_original
@@ -146,6 +143,69 @@ RSpec.describe Storages::Storages::NextcloudContract, :storage_server_helpers, :
         expect(subject).not_to be_valid
         expect(subject.errors.to_hash).to eq({ host: ["is not a valid URL."] })
         expect(NextcloudApplicationCredentialsValidator).not_to have_received(:new)
+      end
+    end
+  end
+
+  describe "authentication_method validation" do
+    let(:storage) { build(:nextcloud_storage, :as_not_automatically_managed, authentication_method:) }
+    let(:authentication_method) { "two_way_oauth2" }
+
+    it { is_expected.to be_valid }
+
+    context "when the authentication method is oauth2_sso" do
+      let(:authentication_method) { "oauth2_sso" }
+
+      it { is_expected.to be_valid }
+    end
+
+    context "when the authentication method is unknown" do
+      let(:authentication_method) { "magic_unicorns" }
+
+      it { is_expected.not_to be_valid }
+    end
+
+    context "when the authentication method is missing" do
+      let(:authentication_method) { nil }
+
+      it { is_expected.not_to be_valid }
+    end
+  end
+
+  describe "nextcloud_audience validation" do
+    let(:storage) do
+      build(:nextcloud_storage, :as_not_automatically_managed, authentication_method:, nextcloud_audience:)
+    end
+
+    context "when authentication happens through bidirectional OAuth 2.0" do
+      let(:authentication_method) { "two_way_oauth2" }
+
+      context "and there is no nextcloud_audience" do
+        let(:nextcloud_audience) { nil }
+
+        it { is_expected.to be_valid }
+      end
+
+      context "and there is a nextcloud_audience" do
+        let(:nextcloud_audience) { "nextcloud" }
+
+        it { is_expected.to be_valid }
+      end
+    end
+
+    context "when authentication happens through a common IDP" do
+      let(:authentication_method) { "oauth2_sso" }
+
+      context "and there is no nextcloud_audience" do
+        let(:nextcloud_audience) { nil }
+
+        it { is_expected.not_to be_valid }
+      end
+
+      context "and there is a nextcloud_audience" do
+        let(:nextcloud_audience) { "nextcloud" }
+
+        it { is_expected.to be_valid }
       end
     end
   end

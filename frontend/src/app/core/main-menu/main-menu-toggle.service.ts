@@ -55,8 +55,6 @@ export class MainMenuToggleService {
 
   private mainMenu = jQuery('#main-menu')[0]; // main menu, containing sidebar and resizer
 
-  private hideElements = jQuery('.can-hide-navigation');
-
   // Title needs to be sync in main-menu-toggle.component.ts and main-menu-resizer.component.ts
   private titleData = new BehaviorSubject<string>('');
 
@@ -203,6 +201,7 @@ export class MainMenuToggleService {
 
   private toggleClassHidden():void {
     const isHidden = this.elementWidth < this.elementMinWidth;
-    this.hideElements.toggleClass('hidden-navigation', isHidden);
+    const hideElements = jQuery('.can-hide-navigation');
+    hideElements.toggleClass('hidden-navigation', isHidden);
   }
 }

@@ -109,6 +109,14 @@ RSpec.describe TimeEntries::CreateContract do
       end
     end
 
+    context "if the user is set to a user that the user has no access to" do
+      let(:user_visible) { false }
+
+      it "is invalid" do
+        expect_valid(false, user_id: %i(invalid))
+      end
+    end
+
     context "if time_entry user was not set by system" do
       let(:other_user) { build_stubbed(:user) }
       let(:time_entry_user) { other_user }

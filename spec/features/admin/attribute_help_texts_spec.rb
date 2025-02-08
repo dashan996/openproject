@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Attribute help texts", :js, :with_cuprite do
+RSpec.describe "Attribute help texts", :js do
   shared_let(:user_with_permission) { create(:user, global_permissions: [:edit_attribute_help_texts]) }
 
   let(:instance) { AttributeHelpText.last }
@@ -44,7 +44,9 @@ RSpec.describe "Attribute help texts", :js, :with_cuprite do
     end
 
     # TODO: Migrate to cuprite when the `better_cuprite_billy` driver is added
-    context "with direct uploads (Regression #34285)", :with_direct_uploads, with_cuprite: false do
+    context "with direct uploads (Regression #34285)",
+            :selenium,
+            :with_direct_uploads do
       before do
         allow_any_instance_of(Attachment).to receive(:diskfile).and_return image_fixture
       end

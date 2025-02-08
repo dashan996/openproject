@@ -8,6 +8,7 @@ sl:
         url: 'URL obremenitve'
         secret: 'Podpis skrivnost'
         events: 'Dogodki'
+        enabled: 'Enabled'
         projects: 'Omogočeni projekti'
       webhooks/log:
         event_name: 'Ime dogodka'

@@ -32,4 +32,4 @@ linters:
       Lint/UselessAssignment:
         Enabled: false
       Rails/OutputSafety:
-        Enabled: false
+        Enabled: true

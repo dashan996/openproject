@@ -52,12 +52,11 @@ import { ResourceChangeset } from '../../changeset/resource-changeset';
 import { IFieldSchema } from '../../field.base';
 import { EditFieldHandler } from '../editing-portal/edit-field-handler';
 import { HalResourceService } from 'core-app/features/hal/services/hal-resource.service';
-import {
-  take,
-  tap,
-} from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 import isNewResource from 'core-app/features/hal/helpers/is-new-resource';
 import idFromLink from 'core-app/features/hal/helpers/id-from-link';
+import { IAPIFilter } from 'core-app/shared/components/autocompleter/op-autocompleter/typings';
+import { FilterOperator } from 'core-app/shared/helpers/api-v3/api-v3-filter-builder';
 
 @Component({
   templateUrl: './project-edit-field.component.html',
@@ -117,12 +116,12 @@ export class ProjectEditFieldComponent extends EditFieldComponent implements OnI
 
   public get APIFilters():IAPIFilter[] {
     const filters = [
-        { name: 'active', operator: '=', values: ['t'] },
+        { name: 'active', operator: '=' as FilterOperator, values: ['t'] },
     ];
 
     if (isNewResource(this.resource) && this.change.value('type')) {
       const typeId = idFromLink((this.change.value('type') as HalResource).href);
-      filters.push({ name: 'type_id', operator: '=', values: [typeId] });
+      filters.push({ name: 'type_id', operator: '=' as FilterOperator, values: [typeId] });
     }
 
     return filters;

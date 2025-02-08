@@ -97,7 +97,7 @@ module RecurringMeetings
       elsif instantiated?
         meeting.state
       else
-        "scheduled"
+        "planned"
       end
     end
 
@@ -163,7 +163,7 @@ module RecurringMeetings
       return unless instantiated? && !cancelled?
 
       menu.with_item(label: I18n.t(:label_icalendar_download),
-                     href: download_ics_meeting_path(meeting),
+                     href: download_ics_recurring_meeting_path(model.recurring_meeting, occurrence_id: model.id),
                      content_arguments: {
                        data: { turbo: false }
                      }) do |item|
@@ -177,9 +177,10 @@ module RecurringMeetings
       menu.with_item(
         label: past? ? I18n.t(:label_recurring_meeting_delete) : I18n.t(:label_recurring_meeting_cancel),
         scheme: :danger,
-        href: current_project_meeting_path(meeting),
-        form_arguments: {
-          method: :delete, data: { confirm: I18n.t(:label_recurring_occurrence_delete_confirmation), turbo: false }
+        href: polymorphic_path([:delete_dialog, current_project, meeting.becomes(Meeting)]),
+        tag: :a,
+        content_arguments: {
+          data: { controller: "async-dialog" }
         }
       ) do |item|
         item.with_leading_visual_icon(icon: :trash)
@@ -192,9 +193,11 @@ module RecurringMeetings
       menu.with_item(
         label: I18n.t(:label_recurring_meeting_cancel),
         scheme: :danger,
-        href: delete_scheduled_recurring_meeting_path(model.recurring_meeting.id, start_time: model.start_time.iso8601),
-        form_arguments: {
-          method: :post, data: { confirm: I18n.t("text_are_you_sure"), turbo: false }
+        href: polymorphic_path([:delete_scheduled_dialog, current_project, model.recurring_meeting],
+                               start_time: model.start_time.iso8601),
+        tag: :a,
+        content_arguments: {
+          data: { controller: "async-dialog" }
         }
       ) do |item|
         item.with_leading_visual_icon(icon: :trash)

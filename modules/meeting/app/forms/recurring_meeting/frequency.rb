@@ -30,6 +30,7 @@ class RecurringMeeting::Frequency < ApplicationForm
   form do |meeting_form|
     meeting_form.select_list(
       name: "frequency",
+      required: true,
       label: I18n.t("activerecord.attributes.recurring_meeting.frequency"),
       data: {
         target_name: "frequency",

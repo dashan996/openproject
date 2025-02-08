@@ -44,15 +44,15 @@ RSpec.describe "Work package details toolbar", :js, :selenium do
 
     it "toggles the watch state" do
       expect(work_package.watcher_users).not_to include(user)
-      expect(page).to have_css(".work-packages--details-toolbar button", text: "Watch")
+      expect(page).to have_css(".work-packages--details-toolbar button[title='Watch work package']")
       within ".work-packages--details-toolbar" do
         click_button "Watch"
       end
 
-      expect(page).to have_css(".work-packages--details-toolbar button", text: "Unwatch")
+      expect(page).to have_css(".work-packages--details-toolbar button[title='Unwatch work package']")
 
       expect(work_package.reload.watcher_users).to include(user)
-      expect(page).to have_css(".work-packages--details-toolbar button", text: "Unwatch")
+      expect(page).to have_css(".work-packages--details-toolbar button[title='Unwatch work package']")
     end
   end
 end

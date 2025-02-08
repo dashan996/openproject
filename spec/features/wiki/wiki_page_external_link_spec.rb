@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Wiki page external link", :js do
+RSpec.describe "Wiki page external link", :js, :selenium do
   shared_let(:admin) { create(:admin) }
   current_user { admin }
 

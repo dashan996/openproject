@@ -44,6 +44,16 @@ module WatchersHelper
     link_to_watcher_button(watched, path, html_options)
   end
 
+  def watcher_action_button(container, object)
+    watcher_button_args = watcher_button_arguments(object, User.current)
+    return if watcher_button_args.nil?
+
+    container.with_action_button(**watcher_button_args) do |button|
+      button.with_leading_visual_icon(icon: watcher_button_args[:mobile_icon])
+      watcher_button_args[:mobile_label]
+    end
+  end
+
   def watcher_button_arguments(object, user)
     return nil unless user&.logged? && object.respond_to?(:watched_by?)
 

@@ -239,6 +239,10 @@ RSpec.describe Storages::ProjectStorages::BulkCreateService do
         expect(result).to be_failure
         expect(result.errors.messages).to eq({ project_folder_id: ["Please select a folder."] })
       end
+
+      aggregate_failures "returns the built unsaved project storages" do
+        expect(result.result.first).to be_a(Storages::ProjectStorage) & be_new_record
+      end
     end
   end
 end

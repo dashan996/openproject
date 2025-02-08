@@ -8,6 +8,7 @@ rw:
         url: 'Payload URL'
         secret: 'Signature secret'
         events: 'Events'
+        enabled: 'Enabled'
         projects: 'Enabled projects'
       webhooks/log:
         event_name: 'Event name'

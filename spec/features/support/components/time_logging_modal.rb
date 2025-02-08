@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -31,64 +33,112 @@ module Components
     include Capybara::DSL
     include Capybara::RSpecMatchers
     include RSpec::Matchers
-
-    attr_reader :activity_field,
-                :comment_field,
-                :hours_field,
-                :spent_on_field,
-                :work_package_field,
-                :user_field
-
-    def initialize
-      @activity_field = EditField.new(page, "activity")
-      @comment_field = EditField.new(page, "comment")
-      @hours_field = EditField.new(page, "hours")
-      @spent_on_field = EditField.new(page, "spentOn")
-      @work_package_field = EditField.new(page, "workPackage")
-      @user_field = EditField.new(page, "user")
-    end
+    include ::Components::Autocompleter::AutocompleteHelpers
 
     def is_visible(visible)
       if visible
         within modal_container do
-          expect(page)
-            .to have_text(I18n.t("js.button_log_time"))
+          expect(page).to have_button(I18n.t("button_log_time"))
         end
       else
-        expect(page).to have_no_css ".spot-modal"
+        expect(page).to have_no_css "dialog#time-entry-dialog"
+      end
+    end
+
+    def change_hours(value)
+      within modal_container do
+        fill_in "time_entry_hours", with: value
+      end
+    end
+
+    def submit
+      within modal_container do
+        click_on I18n.t("button_log_time")
+      end
+    end
+
+    def cancel
+      within modal_container do
+        click_on I18n.t("button_cancel")
+      end
+    end
+
+    def delete
+      within modal_container do
+        click_on I18n.t("button_delete")
       end
     end
 
     def has_field_with_value(field, value)
       within modal_container do
-        expect(page).to have_field field_identifier(field), with: value, visible: :all
+        expect(page).to have_field "time_entry_#{field}", with: value, visible: :all
       end
     end
 
-    def expect_work_package(subject)
+    def expect_work_package(work_package)
+      title = "#{work_package.type.name} ##{work_package.id} #{work_package.subject}"
       within modal_container do
-        expect(page).to have_css(".ng-value", text: subject, wait: 10)
+        expect(page).to have_css("opce-time-entries-work-package-autocompleter .ng-value", text: title, wait: 10)
       end
+    end
+
+    def expect_user(user)
+      within modal_container do
+        expect(page).to have_css("opce-user-autocompleter .ng-value", text: user.name, wait: 10)
+      end
+    end
+
+    def shows_caption(caption)
+      within modal_container do
+        expect(page).to have_css(".FormControl-caption", text: caption)
+      end
+    end
+
+    def requires_field(field, required: true)
+      within modal_container do
+        if required
+          expect(page).to have_css "#time_entry_#{field}[aria-required=true]"
+        else
+          expect(page).to have_no_css "#time_entry_#{field}[aria-required=true]"
+        end
+      end
+    end
+
+    def trigger_field_change_event(field)
+      modal_container.find("#time_entry_#{field}").trigger("change")
     end
 
     def shows_field(field, visible)
       within modal_container do
         if visible
-          expect(page).to have_css "##{field_identifier(field)}"
+          expect(page).to have_field "time_entry_#{field}"
         else
-          expect(page).to have_no_css "##{field_identifier(field)}"
+          expect(page).to have_no_field "time_entry_#{field}"
         end
       end
     end
 
+    def field_has_error(field, error)
+      within modal_container do
+        expect(page).to have_css(".FormControl:has(label[for=time_entry_#{field}]) > .FormControl-inlineValidation", text: error)
+      end
+    end
+
+    def update_time_field(field_name, hour:, minute:)
+      built_time = browser_timezone.local(2025, 1, 1, hour, minute, 0)
+      page.fill_in "time_entry_#{field_name}", with: built_time.iso8601
+    end
+
     def update_field(field_name, value)
-      field = field_object field_name
-      if field_name == "user"
-        field.unset_value
-        field.autocomplete value
+      if field_name.in?(%w[work_package_id user_id activity_id])
+        select_autocomplete modal_container.find("#time_entry_#{field_name}"),
+                            query: value,
+                            select_text: value,
+                            results_selector: "#time-entry-dialog"
       else
-        field.input_element.click
-        field.set_value value
+        within modal_container do
+          fill_in "time_entry_#{field_name}", with: value
+        end
       end
     end
 
@@ -110,35 +160,37 @@ module Components
       end
     end
 
-    def work_package_is_missing(missing)
+    def activity_input_disabled_because_work_package_missing?(missing)
       if missing
-        expect(page)
-          .to have_content(I18n.t("js.time_entry.work_package_required"))
+        expect(modal_container).to have_field "time_entry_activity_id",
+                                              visible: :all,
+                                              disabled: true
+
+        expect(modal_container).to have_css(".ng-placeholder", text: I18n.t("placeholder_activity_select_work_package_first"))
       else
-        expect(page)
-          .to have_no_content(I18n.t("js.time_entry.work_package_required"))
+        expect(modal_container).to have_field "time_entry_activity_id",
+                                              visible: :all,
+                                              disabled: false
       end
     end
 
-    def field_identifier(field_name)
-      case field_name
-      when "spent_on"
-        "wp-new-inline-edit--field-spentOn"
-      when "work_package"
-        "wp-new-inline-edit--field-workPackage"
-      when "user"
-        "wp-new-inline-edit--field-user"
-      end
+    def has_hidden_work_package_field_for(work_package)
+      expect(modal_container).to have_field "input#time_entry_work_package_id",
+                                            with: work_package.id,
+                                            type: :hidden
     end
 
     private
 
-    def field_object(field_name)
-      send(:"#{field_name}_field")
+    def browser_timezone
+      return @browser_timezone if defined?(@browser_timezone)
+
+      browser_tz_name = page.evaluate_script("Intl.DateTimeFormat().resolvedOptions().timeZone")
+      @browser_timezone = ActiveSupport::TimeZone[browser_tz_name]
     end
 
     def modal_container
-      page.find(".spot-modal")
+      page.find("dialog#time-entry-dialog", visible: :all)
     end
   end
 end

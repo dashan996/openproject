@@ -8,6 +8,7 @@ si:
         url: 'Payload URL'
         secret: 'Signature secret'
         events: 'Events'
+        enabled: 'Enabled'
         projects: 'සබල කළ ව්‍යාපෘති'
       webhooks/log:
         event_name: 'Event name'

@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "wiki child pages", :js do
+RSpec.describe "wiki child pages", :js, :selenium do
   let(:project) do
     create(:project)
   end

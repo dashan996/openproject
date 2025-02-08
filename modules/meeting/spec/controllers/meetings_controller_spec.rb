@@ -44,26 +44,6 @@ RSpec.describe MeetingsController do
           create(:meeting, author: user, project: other_project)
         ]
       end
-
-      describe "html" do
-        context "when requesting meetings globally" do
-          before do
-            get "index"
-          end
-
-          it { expect(response).to be_successful }
-          it { expect(assigns(:meetings)).to match_array meetings[1..2] }
-        end
-
-        context "when requesting meetings scoped to a project ID" do
-          before do
-            get "index", params: { project_id: project.id }
-          end
-
-          it { expect(response).to be_successful }
-          it { expect(assigns(:meetings)).to match_array meetings[1] }
-        end
-      end
     end
 
     describe "show" do

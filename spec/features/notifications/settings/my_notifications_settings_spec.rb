@@ -3,8 +3,7 @@ require_relative "../../users/notifications/shared_examples"
 require "support/pages/my/notifications"
 
 RSpec.describe "My notifications settings",
-               :js,
-               :with_cuprite do
+               :js do
   shared_let(:user) { create(:user) }
 
   let(:settings_page) { Pages::My::Notifications.new(user) }

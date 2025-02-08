@@ -30,8 +30,7 @@ require "spec_helper"
 require_module_spec_helper
 
 RSpec.describe "OIDC administration CRUD",
-               :js,
-               :with_cuprite do
+               :js do
   shared_let(:user) { create(:admin) }
   let(:danger_zone) { DangerZone.new(page) }
 

@@ -50,10 +50,12 @@ module Components
         end
 
         def set_date_for(step, value:)
+          dialog_selector = "##{::ProjectLifeCycles::Sections::EditDialogComponent::DIALOG_ID}"
+
           datepicker = if value.is_a?(Array)
-                         Components::RangeDatepicker.new
+                         Components::RangeDatepicker.new(dialog_selector)
                        else
-                         Components::BasicDatepicker.new
+                         Components::BasicDatepicker.new(dialog_selector)
                        end
 
           datepicker.open(

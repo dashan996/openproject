@@ -29,11 +29,14 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { UserResource } from 'core-app/features/hal/resources/user-resource';
 import { I18nService } from 'core-app/core/i18n/i18n.service';
+import { PathHelperService } from 'core-app/core/path-helper/path-helper.service';
 
 @Component({
   selector: 'op-user-link',
   template: `
     <a *ngIf="href"
+       data-hover-card-trigger-target="trigger"
+       [attr.data-hover-card-url]="hoverCardUrl"
        [attr.href]="href"
        [attr.title]="label"
        [textContent]="name">
@@ -47,7 +50,7 @@ import { I18nService } from 'core-app/core/i18n/i18n.service';
 export class UserLinkComponent {
   @Input() user:UserResource;
 
-  constructor(readonly I18n:I18nService) {
+  constructor(readonly I18n:I18nService, readonly pathHelperService:PathHelperService) {
   }
 
   public get href() {
@@ -60,5 +63,9 @@ export class UserLinkComponent {
 
   public get label() {
     return this.I18n.t('js.label_author', { user: this.name });
+  }
+
+  public get hoverCardUrl() {
+    return this.user && this.user.id && this.pathHelperService.userHoverCardPath(this.user.id);
   }
 }

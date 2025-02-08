@@ -28,6 +28,10 @@ See COPYRIGHT and LICENSE files for more details.
 ++#%>
 
 <%=
+  render(EnterpriseEdition::BannerComponent.new(:automatic_subject_generation, mb: 3))
+%>
+
+<%=
   primer_form_with(**form_options) do |f|
     render(WorkPackages::Types::SubjectConfigurationForm.new(f))
   end

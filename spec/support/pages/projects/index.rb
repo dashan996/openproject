@@ -265,8 +265,7 @@ module Pages
       end
 
       def set_advanced_filter(name, human_name, human_operator = nil, values = [], send_keys: false)
-        select human_name, from: "add_filter_select"
-        selected_filter = page.find("li[data-filter-name='#{name}']")
+        selected_filter = select_filter(name, human_name)
         select(human_operator, from: "operator") unless boolean_filter?(name)
 
         within(selected_filter) do
@@ -282,6 +281,20 @@ module Pages
             set_custom_field_filter(selected_filter, human_operator, values)
           end
         end
+      end
+
+      def autocomplete_options_for(custom_field)
+        selected_filter = select_filter(custom_field.column_name, custom_field.name)
+
+        within(selected_filter) do
+          find('[data-filter-autocomplete="true"]').click
+          visible_user_auto_completer_options
+        end
+      end
+
+      def select_filter(name, human_name)
+        select human_name, from: "add_filter_select"
+        page.find("li[data-filter-name='#{name}']")
       end
 
       def remove_filter(name)
@@ -335,19 +348,33 @@ module Pages
       end
 
       def set_custom_field_filter(selected_filter, human_operator, values, send_keys: false)
-        if selected_filter[:"data-filter-type"] == "list_optional"
-          if values.size == 1
-            value_select = find('.single-select select[name="value"]')
-            value_select.select values.first
-          end
-        elsif selected_filter[:"data-filter-type"] == "date"
-          if human_operator == "on"
-            if send_keys
-              find_field("value").send_keys values.first
-            else
-              fill_in "value", with: values.first
-            end
-          end
+        if selected_filter.has_css?('[data-filter-autocomplete="true"]', wait: 0)
+          set_autocomplete_filter(values)
+        elsif selected_filter[:"data-filter-type"] == "list_optional" && values.size == 1
+          set_list_filter(values)
+        elsif selected_filter[:"data-filter-type"] == "date" && human_operator == "on"
+          set_date_filter(values, send_keys)
+        end
+      end
+
+      def set_autocomplete_filter(values)
+        values.each do |query|
+          select_autocomplete find('[data-filter-autocomplete="true"]'),
+                              query:,
+                              results_selector: "body"
+        end
+      end
+
+      def set_list_filter(values)
+        value_select = find('.single-select select[name="value"]')
+        value_select.select values.first
+      end
+
+      def set_date_filter(values, send_keys)
+        if send_keys
+          find_field("value").send_keys values.first
+        else
+          fill_in "value", with: values.first
         end
       end
 

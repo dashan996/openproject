@@ -29,7 +29,7 @@
 require "spec_helper"
 require "features/page_objects/notification"
 
-RSpec.describe "Upload attachment to work package", :js, :with_cuprite do
+RSpec.describe "Upload attachment to work package", :js, :selenium do
   let(:role) do
     create(:project_role,
            permissions: %i[view_work_packages add_work_packages edit_work_packages add_work_package_notes])
@@ -43,6 +43,7 @@ RSpec.describe "Upload attachment to work package", :js, :with_cuprite do
   let(:project) { create(:project) }
   let(:work_package) { create(:work_package, project:, description: "Initial description") }
   let(:wp_page) { Pages::FullWorkPackage.new(work_package, project) }
+  let(:activity_tab) { Components::WorkPackages::Activities.new(work_package) }
   let(:attachments) { Components::Attachments.new }
   let(:field) { TextEditorField.new wp_page, "description" }
   let(:image_fixture) { UploadedFile.load_from("spec/fixtures/files/image.png") }
@@ -59,6 +60,8 @@ RSpec.describe "Upload attachment to work package", :js, :with_cuprite do
       before do
         wp_page.visit!
         wp_page.ensure_page_loaded
+        wp_page.switch_to_tab(tab: "Activity")
+        wp_page.wait_for_activity_tab
       end
 
       it "can upload an image via drag & drop" do
@@ -76,14 +79,6 @@ RSpec.describe "Upload attachment to work package", :js, :with_cuprite do
       end
 
       context "when editing comment" do
-        let(:selector) { ".work-packages--activity--add-comment" }
-        let(:comment_field) do
-          TextEditorField.new wp_page,
-                              "comment",
-                              selector:
-        end
-        let(:editor) { Components::WysiwygEditor.new ".work-packages--activity--add-comment" }
-
         context "with a user that is not allowed to add images (Regression #28541)" do
           let(:role) do
             create(:project_role,
@@ -92,15 +87,15 @@ RSpec.describe "Upload attachment to work package", :js, :with_cuprite do
 
           it "can open the editor to add an image, but image upload is not shown" do
             # Add comment
-            comment_field.activate!
+            activity_tab.open_new_comment_editor
 
             # Button should be hidden
-            editor.expect_no_button "Upload image from computer"
+            activity_tab.ckeditor.expect_no_button "Upload image from computer"
 
-            editor.click_and_type_slowly "this is a comment!1"
-            comment_field.submit_by_click
+            activity_tab.ckeditor.click_and_type_slowly "this is a comment!1"
+            activity_tab.submit_comment
 
-            wp_page.expect_comment text: "this is a comment!1"
+            activity_tab.expect_journal_notes text: "this is a comment!1"
           end
         end
 
@@ -111,15 +106,15 @@ RSpec.describe "Upload attachment to work package", :js, :with_cuprite do
           end
 
           it "can open the editor and image upload is shown" do
-            comment_field.activate!
+            activity_tab.open_new_comment_editor
 
-            editor.expect_button "Upload image from computer"
+            activity_tab.ckeditor.expect_button "Upload image from computer"
 
-            editor.click_and_type_slowly "this is a comment!2"
-            editor.drag_attachment image_fixture.path, "Some image caption"
-            comment_field.submit_by_click
+            activity_tab.ckeditor.click_and_type_slowly "this is a comment!2"
+            activity_tab.ckeditor.drag_attachment image_fixture.path, "Some image caption"
+            activity_tab.submit_comment
 
-            wp_page.expect_comment text: "this is a comment!2"
+            activity_tab.expect_journal_notes text: "this is a comment!2"
           end
         end
       end
@@ -134,7 +129,7 @@ RSpec.describe "Upload attachment to work package", :js, :with_cuprite do
       end
       let!(:table) { Pages::WorkPackagesTable.new project }
 
-      it "can add two work packages in a row when uploading (Regression #42933)" do |example|
+      it "can add two work packages in a row when uploading (Regression #42933)" do |_example|
         table.visit!
         new_page = table.create_wp_by_button type
         subject = new_page.edit_field :subject
@@ -143,7 +138,7 @@ RSpec.describe "Upload attachment to work package", :js, :with_cuprite do
         target = find(".ck-content")
         attachments.drag_and_drop_file(target, image_fixture.path)
 
-        sleep 2 unless example.metadata[:with_cuprite]
+        sleep 2 unless using_cuprite? # rubocop:disable OpenProject/NoSleepInFeatureSpecs
         editor.wait_until_upload_progress_toaster_cleared
 
         editor.in_editor do |_container, editable|
@@ -151,7 +146,7 @@ RSpec.describe "Upload attachment to work package", :js, :with_cuprite do
           expect(editable).to have_no_css(".ck-upload-placeholder-loader")
         end
 
-        sleep 2 unless example.metadata[:with_cuprite]
+        sleep 2 unless using_cuprite? # rubocop:disable OpenProject/NoSleepInFeatureSpecs
 
         scroll_to_and_click find_by_id("work-packages--edit-actions-save")
 
@@ -204,14 +199,14 @@ RSpec.describe "Upload attachment to work package", :js, :with_cuprite do
           visit new_project_work_packages_path(project.identifier, type: type.id)
         end
 
-        it "can upload an image via drag & drop (Regression #28189)" do |example|
+        it "can upload an image via drag & drop (Regression #28189)" do |_example|
           subject = new_page.edit_field :subject
           subject.set_value "My subject"
 
           target = find(".ck-content")
           attachments.drag_and_drop_file(target, image_fixture.path)
 
-          sleep 2 unless example.metadata[:with_cuprite]
+          sleep 2 unless using_cuprite? # rubocop:disable OpenProject/NoSleepInFeatureSpecs
           editor.wait_until_upload_progress_toaster_cleared
 
           editor.in_editor do |_container, editable|
@@ -219,7 +214,7 @@ RSpec.describe "Upload attachment to work package", :js, :with_cuprite do
             expect(editable).to have_no_css(".ck-upload-placeholder-loader")
           end
 
-          sleep 2 unless example.metadata[:with_cuprite]
+          sleep 2 unless using_cuprite? # rubocop:disable OpenProject/NoSleepInFeatureSpecs
 
           scroll_to_and_click find_by_id("work-packages--edit-actions-save")
 
@@ -247,7 +242,7 @@ RSpec.describe "Upload attachment to work package", :js, :with_cuprite do
       # everywhere so if this works it should work everywhere else too.
       # TODO: Add better_cuprite_billy. I'm not sure what needs to be set up so the request to AWS passes.
       # Need help
-      context "with direct uploads", :with_direct_uploads, with_cuprite: false do
+      context "with direct uploads", :js, :with_direct_uploads do
         before do
           allow_any_instance_of(Attachment).to receive(:diskfile).and_return Struct.new(:path).new(image_fixture.path.to_s)
         end
@@ -270,6 +265,9 @@ RSpec.describe "Upload attachment to work package", :js, :with_cuprite do
   describe "attachment dropzone" do
     shared_examples "attachment dropzone common" do
       it "can drag something to the files tab and have it open" do
+        wp_page.switch_to_tab(tab: "Activity")
+        wp_page.wait_for_activity_tab
+
         wp_page.expect_tab "Activity"
         attachments.drag_and_drop_file test_selector("op-attachments--drop-box"),
                                        image_fixture.path,

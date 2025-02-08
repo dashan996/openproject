@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -34,6 +36,7 @@ module Components
     include Capybara::RSpecMatchers
     include RSpec::Matchers
     include Flash::Expectations
+    include Redmine::I18n
 
     attr_reader :time_logging_modal
 
@@ -57,26 +60,43 @@ module Components
       expect(page).to have_css("#{row_selector(row)} .units", text: value)
     end
 
-    def edit_time_entry(new_value, row)
+    def expect_cell_text(value, row, column)
+      expect(page).to have_css(cell_selector(row, column), text: value)
+    end
+
+    def expect_sort_header_column(text, present: true)
+      if present
+        expect(page).to have_css("#result-table .generic-table--sort-header", text:)
+      else
+        expect(page).to have_no_css("#result-table .generic-table--sort-header", text:)
+      end
+    end
+
+    def edit_time_entry(row, hours:)
       SeleniumHubWaiter.wait
       page.find("#{row_selector(row)} .icon-edit").click
 
       time_logging_modal.is_visible true
-      time_logging_modal.update_field "hours", new_value
-      time_logging_modal.work_package_is_missing false
+      time_logging_modal.change_hours(hours)
+      time_logging_modal.activity_input_disabled_because_work_package_missing? false
 
-      time_logging_modal.perform_action "Save"
-      SeleniumHubWaiter.wait
+      time_logging_modal.submit
+
+      if using_cuprite?
+        wait_for_reload
+      else
+        sleep 1
+      end
 
       expect_action_icon "edit", row
-      expect_value new_value, row
+      expect_value l_hours(hours), row
     end
 
     def edit_cost_entry(new_value, row, cost_entry_id)
       SeleniumHubWaiter.wait
       page.find("#{row_selector(row)} .icon-edit").click
 
-      expect(page).to have_current_path("/cost_entries/" + cost_entry_id + "/edit")
+      expect(page).to have_current_path("/cost_entries/#{cost_entry_id}/edit")
 
       SeleniumHubWaiter.wait
       fill_in("cost_entry_units", with: new_value)
@@ -86,15 +106,23 @@ module Components
 
     def delete_entry(row)
       SeleniumHubWaiter.wait
-      page.find("#{row_selector(row)} .icon-delete").click
 
-      page.driver.browser.switch_to.alert.accept
+      if using_cuprite?
+        accept_confirm { page.find("#{row_selector(row)} .icon-delete").click }
+      else
+        page.find("#{row_selector(row)} .icon-delete").click
+        page.driver.browser.switch_to.alert.accept
+      end
     end
 
     private
 
     def row_selector(row)
       "#result-table tbody tr:nth-of-type(#{row})"
+    end
+
+    def cell_selector(row, column)
+      "#{row_selector(row)} td:nth-of-type(#{column})"
     end
   end
 end

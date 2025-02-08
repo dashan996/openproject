@@ -18,6 +18,13 @@ FactoryBot.define do
         "authorization_endpoint" => "https://keycloak.local/realms/master/protocol/openid-connect/auth"
       }
     end
+
+    trait :token_exchange_capable do
+      callback(:after_build) do |provider|
+        provider.options["grant_types_supported"] ||= []
+        provider.options["grant_types_supported"] << "urn:ietf:params:oauth:grant-type:token-exchange"
+      end
+    end
   end
 
   factory :oidc_provider_google, class: "OpenIDConnect::Provider" do

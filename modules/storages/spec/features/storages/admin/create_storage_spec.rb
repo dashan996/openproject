@@ -33,6 +33,7 @@ require_module_spec_helper
 
 RSpec.describe "Admin Create a new file storage",
                :js,
+               :selenium,
                :storage_server_helpers do
   shared_let(:admin) { create(:admin, preferences: { time_zone: "Etc/UTC" }) }
 

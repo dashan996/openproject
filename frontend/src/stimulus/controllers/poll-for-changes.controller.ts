@@ -36,19 +36,16 @@ export default class PollForChangesController extends ApplicationController {
     url: String,
     interval: Number,
     reference: String,
-    autoscrollEnabled: Boolean,
   };
 
-  static targets = ['reloadButton', 'reference'];
+  static targets = ['reference'];
 
-  declare reloadButtonTarget:HTMLLinkElement;
   declare referenceTarget:HTMLElement;
   declare readonly hasReferenceTarget:boolean;
 
   declare referenceValue:string;
   declare urlValue:string;
   declare intervalValue:number;
-  declare autoscrollEnabledValue:boolean;
 
   private interval:number;
 
@@ -56,13 +53,9 @@ export default class PollForChangesController extends ApplicationController {
     super.connect();
 
     if (this.intervalValue !== 0) {
-      this.interval = setInterval(() => {
+      this.interval = window.setInterval(() => {
         void this.triggerTurboStream();
       }, this.intervalValue || 10_000);
-    }
-
-    if (this.autoscrollEnabledValue) {
-      window.addEventListener('DOMContentLoaded', this.autoscrollToLastKnownPosition.bind(this));
     }
   }
 
@@ -79,10 +72,6 @@ export default class PollForChangesController extends ApplicationController {
     return this.referenceValue;
   }
 
-  reloadButtonTargetConnected() {
-    this.reloadButtonTarget.addEventListener('click', this.rememberCurrentScrollPosition.bind(this));
-  }
-
   triggerTurboStream() {
     void fetch(`${this.urlValue}?reference=${this.buildReference()}`, {
       headers: {
@@ -96,30 +85,5 @@ export default class PollForChangesController extends ApplicationController {
         renderStreamMessage(html);
       }
     });
-  }
-
-  rememberCurrentScrollPosition() {
-    const currentPosition = document.getElementById('content-body')?.scrollTop;
-
-    if (currentPosition !== undefined) {
-      sessionStorage.setItem(this.scrollPositionKey(), currentPosition.toString());
-    }
-  }
-
-  autoscrollToLastKnownPosition() {
-    const lastKnownPos = sessionStorage.getItem(this.scrollPositionKey());
-    if (lastKnownPos) {
-      const content = document.getElementById('content-body');
-
-      if (content) {
-        content.scrollTop = parseInt(lastKnownPos, 10);
-      }
-    }
-
-    sessionStorage.removeItem(this.scrollPositionKey());
-  }
-
-  private scrollPositionKey():string {
-    return `${this.urlValue}/scrollPosition`;
   }
 }

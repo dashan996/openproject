@@ -8,6 +8,7 @@ ar:
         url: 'Payload URL'
         secret: 'Signature secret'
         events: 'الأحداث'
+        enabled: 'Enabled'
         projects: 'المشاريع الممكنة'
       webhooks/log:
         event_name: 'اسم الحدث'

@@ -31,7 +31,7 @@ tr:
           title: 'Proje Durumu'
           not_started: 'Başlatılmadı'
           on_track: 'Takipte'
-          off_track: 'Kapalı parça'
+          off_track: 'Hedeften uzaklaşmış'
           at_risk: 'Riskli'
           not_set: 'Ayarlanmadı'
           finished: 'Bitti'

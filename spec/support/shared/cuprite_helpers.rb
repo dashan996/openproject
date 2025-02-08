@@ -70,7 +70,10 @@ def clear_input_field_contents(input_element)
 
   return unless input_element.value.length.positive?
 
+  # Move to the end of the input field and then backspace to clear the field.
+  rights = Array.new(input_element.value.length, :right)
   backspaces = Array.new(input_element.value.length, :backspace)
+  input_element.native.node.type(*rights)
   input_element.native.node.type(*backspaces)
 end
 

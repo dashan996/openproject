@@ -21,8 +21,8 @@
 #++
 ja:
   plugin_openproject_backlogs:
-    name: "OpenProject Backlogs"
-    description: "This module adds features enabling agile teams to work with OpenProject in Scrum projects."
+    name: "OpenProjectのバックログ"
+    description: "このモジュールには、アジャイルチームがスクラムプロジェクトでOpenProjectを使用できるようにする機能が追加されています。"
   activerecord:
     attributes:
       work_package:

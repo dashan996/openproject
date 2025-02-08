@@ -356,10 +356,10 @@ ru:
           learn_about: "Подробнее о новых функциях"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_1":
+          "15_2":
             standard:
               new_features_html: >
-                Этот релиз предлагает Вам различные возможности и улучшения, например, <br>. <ul class="%{list_styling_class}"> <li>Пользовательские поля типа иерархии (Enterprise версия).</li> <li>Редизайн вкладки "Связи" в пакетах работ.</li> <li>Редизайн главной страницы "Совещания".</li> <li>Ручные разрывы страниц при экспорте рабочих пакетов в формате PDF.</li> <li>Режим Zen для списков проектов.</li> </ul>
+                Этот выпуск содержит различные функции и улучшения, например, <br> <ul class="%{list_styling_class}"> <li>Установка напоминания для пакетов работ для создания оповещений о дате.</li> <li>Создание новых папок непосредственно из выбора местоположения для хранения файлов.</li> <li>Выбор необходимого интервала между преемниками и предшественниками пакетов работ.</li> <li>Сортировка и группировка пакетов работ по значениям иерархии пользовательских полей.</li> <li>Экспорт записей о времени в виде временных таблиц в формате PDF.</li> <li>Добавлено всплывающее окно, отображающее информацию о пользователе при наведении курсора.</li> </ul>
     ical_sharing_modal:
       title: "Подписаться на календарь"
       inital_setup_error_message: "Произошла ошибка при получении данных."
@@ -624,11 +624,11 @@ ru:
       date_alerts:
         milestone_date: "Дата вехи"
         overdue: "Просрочено"
-        overdue_since: "на %{difference_in_days}"
-        property_today: "сегодня"
-        property_is: "находится в %{difference_in_days}"
-        property_was: "была %{difference_in_days} назад"
-        property_is_deleted: "удалено"
+        overdue_since: "с %{difference_in_days}."
+        property_today: "сегодня."
+        property_is: "в %{difference_in_days}."
+        property_was: "было %{difference_in_days} назад."
+        property_is_deleted: "удалено."
         upsale:
           title: "Дата оповещения"
           description: "С датой оповещения вы будете получать уведомления о предстоящих датах начала или окончания, чтобы никогда не пропустить или не забыть важный сроки."
@@ -744,7 +744,7 @@ ru:
         immediate:
           title: "Отправить мне напоминание по электронной почте"
           mentioned: "Сразу же когда кто-то @упоминает меня"
-          personal_reminder: "Immediately when I receive a personal reminder"
+          personal_reminder: "Немедленно, когда я получаю персональное напоминание"
         alerts:
           title: "Уведомления по электронной почте для других элементов (которые не являются пакетами работ)"
           explanation: >

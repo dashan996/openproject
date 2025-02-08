@@ -94,7 +94,7 @@ RSpec.describe "search/index" do
   describe "#highlight_tokens_in_event" do
     let(:journal_notes) { "Journals notes" }
     let(:event_description) { "The description of the event" }
-    let(:attachment_fulltext) { "The fulltext of the attachment" }
+    let(:attachment_fulltext) { ["The fulltext of the attachment"] }
     let(:attachment_filename) { "attachment_filename.txt" }
     let(:journal) { build_stubbed(:work_package_journal, notes: journal_notes) }
     let(:event) do
@@ -114,7 +114,7 @@ RSpec.describe "search/index" do
         allow(scope)
           .to receive(:pluck)
                 .with(:fulltext)
-                .and_return [attachment_fulltext]
+                .and_return attachment_fulltext
       end
     end
 
@@ -147,6 +147,18 @@ RSpec.describe "search/index" do
     end
 
     context "with the token in the attachment text" do
+      let(:tokens) { %w(fulltext) }
+
+      it "shows the text in the fulltext" do
+        expect(helper.highlight_tokens_in_event(event, tokens))
+          .to eql 'The <span class="search-highlight token-0">fulltext</span> of the attachment'
+      end
+    end
+
+    context "with the token in the second attachment's text with the first one being nil" do
+      # Bug happening if [nil, "The fulltext of the attachment"].join leads to a US-ASCII encoding.
+      # https://community.openproject.org/wp/61110
+      let(:attachment_fulltext) { [nil, "The fulltext of the attachment"] }
       let(:tokens) { %w(fulltext) }
 
       it "shows the text in the fulltext" do

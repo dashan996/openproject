@@ -32,29 +32,29 @@ module Pages::RecurringMeeting
   class Show < ::Pages::Meetings::Base
     attr_accessor :meeting
 
-    def initialize(meeting)
-      super
+    def initialize(meeting, project: nil)
+      super(project)
 
       self.meeting = meeting
     end
 
     def path
-      recurring_meeting_path(meeting)
-    end
-
-    def project_path
-      project_recurring_meeting_path(meeting.project, meeting)
-    end
-
-    def expect_scheduled_meeting(date:)
-      within("li", text: date) do
-        expect(page).to have_css(".status", text: "Scheduled")
+      if project
+        project_recurring_meeting_path(project, meeting)
+      else
+        recurring_meeting_path(meeting)
       end
     end
 
-    def expect_no_scheduled_meeting(date:)
+    def expect_planned_meeting(date:)
       within("li", text: date) do
-        expect(page).to have_no_css(".status", text: "Scheduled")
+        expect(page).to have_css(".status", text: "Planned")
+      end
+    end
+
+    def expect_no_planned_meeting(date:)
+      within("li", text: date) do
+        expect(page).to have_no_css(".status", text: "Planned")
       end
     end
 
@@ -89,9 +89,9 @@ module Pages::RecurringMeeting
       end
     end
 
-    def create_from_template(date:)
+    def open(date:)
       within("li", text: date) do
-        click_on "Create from template"
+        click_on "Open"
       end
     end
 
@@ -100,6 +100,17 @@ module Pages::RecurringMeeting
         click_on "more-button"
         click_on "Cancel this occurrence"
       end
+
+      expect_modal("Delete meeting occurrence")
+    end
+
+    def cancel_planned_occurrence(date:)
+      within("li", text: date) do
+        click_on "more-button"
+        click_on "Cancel this occurrence"
+      end
+
+      expect_modal("Cancel meeting occurrence")
     end
 
     def expect_subtitle(text:)
@@ -110,11 +121,25 @@ module Pages::RecurringMeeting
       page.find_test_selector("recurring-meeting-action-menu").click
       click_on "Edit meeting series"
 
-      expect(page).to have_css("#new-meeting-dialog")
+      expect_modal("Edit Meeting")
     end
 
-    def in_edit_dialog(&)
-      page.within("#new-meeting-dialog", &)
+    def delete_meeting_series
+      page.find_test_selector("recurring-meeting-action-menu").click
+      click_on "Delete meeting series"
+
+      expect_modal("Delete meeting series")
+    end
+
+    def end_meeting_series
+      page.find_test_selector("recurring-meeting-action-menu").click
+      click_on "End meeting series"
+
+      expect_modal("End meeting series")
+    end
+
+    def expect_modal(...)
+      expect(page).to have_modal(...)
     end
 
     def expect_no_meeting(date:)
@@ -140,7 +165,7 @@ module Pages::RecurringMeeting
       end
     end
 
-    def expect_scheduled_actions(date:)
+    def expect_planned_actions(date:)
       within("li", text: date) do
         click_on "more-button"
 

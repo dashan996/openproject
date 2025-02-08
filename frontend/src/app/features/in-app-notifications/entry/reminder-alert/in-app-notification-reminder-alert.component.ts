@@ -23,6 +23,8 @@ export class InAppNotificationReminderAlertComponent implements OnInit {
 
   reminderNote:string;
   reminderAlert:INotification;
+  hasDateAlert = false;
+  dateAlerts:INotification[] = [];
 
   constructor(
     private I18n:I18nService,
@@ -31,6 +33,8 @@ export class InAppNotificationReminderAlertComponent implements OnInit {
   ngOnInit():void {
     this.reminderAlert = this.deriveMostRecentReminder(this.aggregatedNotifications);
     this.reminderNote = this.extractReminderNoteValue(this.reminderAlert._embedded.details);
+    this.dateAlerts = this.aggregatedNotifications.filter((notification) => notification.reason === 'dateAlert');
+    this.hasDateAlert = this.dateAlerts.length > 0;
   }
 
   private deriveMostRecentReminder(aggregatedNotifications:INotification[]):INotification {

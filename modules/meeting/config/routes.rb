@@ -28,12 +28,21 @@
 
 Rails.application.routes.draw do
   resources :projects, only: %i[] do
-    resources :meetings, only: %i[index new create show] do
+    resources :meetings, only: %i[index new create show destroy] do
       collection do
         get "menu" => "meetings/menus#show"
       end
+      member do
+        get :delete_dialog
+      end
     end
-    resources :recurring_meetings, only: %i[index new create show destroy]
+    resources :recurring_meetings, only: %i[index new create show destroy] do
+      member do
+        get :delete_dialog
+        get :delete_scheduled_dialog
+        delete :destroy_scheduled
+      end
+    end
   end
 
   resources :work_packages, only: %i[] do
@@ -60,9 +69,14 @@ Rails.application.routes.draw do
     member do
       get :details_dialog
       get :download_ics
+      get :delete_dialog
+      get :delete_scheduled_dialog
       post :init
-      post :delete_scheduled
+      delete :destroy_scheduled
       post :template_completed
+      post :notify
+      post :end_series
+      get :end_series_dialog
     end
     collection do
       get :humanize_schedule, controller: "recurring_meetings/schedule", action: :humanize_schedule
@@ -83,6 +97,7 @@ Rails.application.routes.draw do
       put :change_state
       post :notify
       get :history
+      get :delete_dialog
     end
     resources :agenda_items, controller: "meeting_agenda_items" do
       collection do

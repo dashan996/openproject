@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -39,8 +41,8 @@ RSpec.describe TypesController do
            is_for_all: true)
   end
   let(:custom_field_2) { create(:work_package_custom_field) }
-  let(:status_0) { create(:status) }
-  let(:status_1) { create(:status) }
+  let(:status_old) { create(:status) }
+  let(:status_new) { create(:status) }
 
   context "with an unauthorized account" do
     let(:current_user) { create(:user) }
@@ -172,16 +174,20 @@ RSpec.describe TypesController do
         let!(:existing_type) { create(:type, name: "Existing type") }
         let!(:workflow) do
           create(:workflow,
-                 old_status: status_0,
-                 new_status: status_1,
+                 old_status: status_old,
+                 new_status: status_new,
                  type_id: existing_type.id)
         end
 
         let(:params) do
-          { "type" => { name: "New type",
-                        project_ids: { "1" => project.id },
-                        custom_field_ids: { "1" => custom_field_1.id, "2" => custom_field_2.id } },
-            "copy_workflow_from" => existing_type.id }
+          {
+            "type" => {
+              name: "New type",
+              project_ids: { "1" => project.id },
+              custom_field_ids: { "1" => custom_field_1.id, "2" => custom_field_2.id },
+              copy_workflow_from: existing_type.id
+            }
+          }
         end
 
         before do
@@ -216,7 +222,6 @@ RSpec.describe TypesController do
 
       it { expect(response).to have_http_status(:ok) }
       it { expect(response).to render_template "edit" }
-      it { expect(response).to render_template "types/form/_settings" }
       it { expect(response.body).to have_css "input[@name='type[name]'][@value='My type']" }
       it { expect(response.body).to have_css "input[@name='type[is_milestone]'][@value='1'][@checked='checked']" }
     end
@@ -265,7 +270,7 @@ RSpec.describe TypesController do
 
         it do
           expect(response).to(
-            redirect_to(edit_type_tab_path(id: type.id, tab: "settings"))
+            redirect_to(edit_tab_type_path(id: type.id, tab: "settings"))
           )
         end
 
@@ -304,7 +309,7 @@ RSpec.describe TypesController do
 
         it do
           expect(response).to(
-            redirect_to(edit_type_tab_path(id: type.id, tab: :projects))
+            redirect_to(edit_tab_type_path(id: type.id, tab: :projects))
           )
         end
 

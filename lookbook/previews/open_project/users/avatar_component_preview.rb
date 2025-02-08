@@ -3,17 +3,17 @@
 module OpenProject::Users
   # @logical_path OpenProject/Users
   class AvatarComponentPreview < Lookbook::Preview
-    # Renders a user avatar using the OpenProject opce-principal web component. Note that the hover card options
-    # have no effect in this lookbook.
+    # Renders a user avatar using the OpenProject opce-principal web component.
+    # Please note that hover cards will not be displayed in the preview, since the necessary Javascript controller
+    # is not loaded.
     # @param size select { choices: [default, medium, mini] }
     # @param link toggle
     # @param show_name toggle
     # @param hover_card toggle
-    # @param hover_card_target select { choices: [default, custom] }
-    def default(size: :default, link: true, show_name: true, hover_card: true, hover_card_target: :default)
+    def default(size: :default, link: true, show_name: true, hover_card: true)
       user = FactoryBot.build_stubbed(:user)
       render(Users::AvatarComponent.new(user:, size:, link:, show_name:,
-                                        hover_card: { active: hover_card, target: hover_card_target }))
+                                        hover_card: { active: hover_card }))
     end
 
     def sizes

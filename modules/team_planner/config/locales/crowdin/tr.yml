@@ -2,7 +2,7 @@
 tr:
   plugin_openproject_team_planner:
     name: "OpenProject Takım Planlayıcı"
-    description: "Provides team planner views."
+    description: "Takım planlayıcı görünümleri sağlar."
   permission_view_team_planner: "Takım planlayıcıyı görüntüle"
   permission_manage_team_planner: "Takım planlayıcıyı yönet"
   project_module_team_planner_view: "Takım planlayıcıları"

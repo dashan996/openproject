@@ -30,7 +30,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Home", :js, with_settings: { login_required: false } do
+RSpec.describe "Home", :js, :selenium, with_settings: { login_required: false } do
   context "for #content" do
     it "passes axe-core accessibility tests" do
       visit "/"

@@ -9,7 +9,7 @@
       }
     ) do |f| %>
     <%# Form fields section %>
-    <%= flex_layout(my: 2) do |flex|
+    <%= flex_layout(mb: 3) do |flex|
         flex.with_row do
           if @base_errors&.any?
             render(Primer::Alpha::Banner.new(mb: 3, icon: :stop, scheme: :danger)) { @base_errors.join("\n") }
@@ -65,9 +65,10 @@
                 name: :lag,
                 type: :number,
                 min: 0,
-                label: I18n.t("work_package_relations_tab.lag.title"),
+                label: I18n.t("work_package_relations_tab.lag.subject"),
                 caption: I18n.t("work_package_relations_tab.lag.caption"),
                 input_width: :small,
+                trailing_visual: { text: { text: I18n.t("datetime.units.day.other") } }
               )
             end
           end

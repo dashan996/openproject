@@ -43,7 +43,7 @@ ca:
           Les carpetes gestionades automàticament no s'ha trobat encara. Si us plau, espera una mica i recarrega la pàgina per obtenir les dades més recents i prova-ho de nou.
         managed_project_folder_no_access: >
           Encara no tens access a la carpeta de projecte gestionada. Si us plau, espera un moment i prova-ho de nou.
-        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols.
+        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols and make sure the folder does not exist already.
         upload_keep_both: "Conserva els dos"
         upload_replace: "Substitueix"
       file_links:

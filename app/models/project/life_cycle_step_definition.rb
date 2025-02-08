@@ -27,6 +27,8 @@
 #++
 
 class Project::LifeCycleStepDefinition < ApplicationRecord
+  include ::Scopes::Scoped
+
   has_many :life_cycle_steps,
            class_name: "Project::LifeCycleStep",
            foreign_key: :definition_id,
@@ -42,6 +44,10 @@ class Project::LifeCycleStepDefinition < ApplicationRecord
   attr_readonly :type
 
   acts_as_list
+
+  default_scope { order(:position) }
+
+  scopes :with_project_count
 
   def step_class
     raise NotImplementedError

@@ -108,6 +108,53 @@ RSpec.describe API::V3::TimeEntries::Schemas::TimeEntrySchemaRepresenter do
       end
     end
 
+    describe "startTime" do
+      let(:path) { "startTime" }
+
+      before do
+        allow(TimeEntry).to receive_messages(
+          can_track_start_and_end_time?: can_track_times,
+          must_track_start_and_end_time?: must_track_times
+        )
+      end
+
+      context "when start- and end-time tracking is disabled" do
+        let(:can_track_times) { false }
+        let(:must_track_times) { false }
+
+        it_behaves_like "has basic schema properties" do
+          let(:type) { "DateTime" }
+          let(:name) { TimeEntry.human_attribute_name("start_time") }
+          let(:required) { false }
+          let(:writable) { false }
+        end
+      end
+
+      context "when start- and end-time tracking is enabled" do
+        let(:can_track_times) { true }
+        let(:must_track_times) { false }
+
+        it_behaves_like "has basic schema properties" do
+          let(:type) { "DateTime" }
+          let(:name) { TimeEntry.human_attribute_name("start_time") }
+          let(:required) { false }
+          let(:writable) { true }
+        end
+      end
+
+      context "when start- and end-time tracking is enforced" do
+        let(:can_track_times) { true }
+        let(:must_track_times) { true }
+
+        it_behaves_like "has basic schema properties" do
+          let(:type) { "DateTime" }
+          let(:name) { TimeEntry.human_attribute_name("start_time") }
+          let(:required) { true }
+          let(:writable) { true }
+        end
+      end
+    end
+
     describe "hours" do
       let(:path) { "hours" }
 

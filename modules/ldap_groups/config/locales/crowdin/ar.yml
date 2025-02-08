@@ -6,10 +6,12 @@ ar:
     attributes:
       ldap_groups/synchronized_group:
         dn: 'DN'
+        auth_source: 'Auth source'
         ldap_auth_source: 'اتصال LDAP'
         sync_users: 'مزامنة المستخدمين'
       ldap_groups/synchronized_filter:
         filter_string: 'مرشّح LDAP'
+        auth_source: 'Auth source'
         ldap_auth_source: 'اتصال LDAP'
         group_name_attribute: "Group name attribute"
         sync_users: 'مزامنة المستخدمين'

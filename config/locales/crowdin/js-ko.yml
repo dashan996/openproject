@@ -357,10 +357,10 @@ ko:
           learn_about: "새로운 기능에 대해 자세히 알아보기"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_1":
+          "15_2":
             standard:
               new_features_html: >
-                이 릴리스에서는 다음과 같은 다양한 기능과 개선 사항이 제공됩니다. <br> <ul class="%{list_styling_class}"> <li>유형 계층의 사용자 지정 필드(Enterprise 추가 기능).</li> <li>작업 패키지의 관계 탭에 대한 새로운 디자인.</li> <li>미팅 색인 페이지의 새로운 디자인.</li> <li>PDF 작업 패키지 내보내기에서 수동 페이지 나누기.</li> <li>프로젝트 목록의 젠 모드.</li> </ul>
+                이 릴리스에는 사용자를 위한 다양한 기능과 개선 사항이 포함되어 있습니다. 예: <br> <ul class="%{list_styling_class}"> <li>작업 패키지에 대한 미리 알림을 설정하여 날짜 경보 알림을 생성합니다.</li> <li>파일 저장소의 위치 선택기에서 새 폴더를 바로 만듭니다.</li> <li>작업 패키지 후행 단계 및 선행 단계 간에 필요한 지연 시간을 지정합니다.</li> <li>사용자 지정 필드 유형 계층 값에 대한 작업 패키지의 순서 지정 및 그룹화를 활성화합니다.</li> <li>시간 항목을 PDF 타임시트로 내보냅니다.</li> <li>마우스를 올리면 사용자 정보가 표시되는 팝오버를 추가합니다.</li> </ul>
     ical_sharing_modal:
       title: "캘린더 구독"
       inital_setup_error_message: "데이터를 가져오는 중에 오류가 발생했습니다."
@@ -621,15 +621,15 @@ ko:
         prioritized: "우선 순위 지정됨"
         dateAlert: "날짜 경보"
         shared: "공유됨"
-        reminder: "Reminder"
+        reminder: "미리 알림"
       date_alerts:
         milestone_date: "마일스톤 날짜"
         overdue: "기한 지남"
-        overdue_since: "%{difference_in_days} 이후"
-        property_today: "- 오늘입니다"
-        property_is: "- %{difference_in_days} 이내입니다"
-        property_was: "- %{difference_in_days} 전이었습니다"
-        property_is_deleted: "- 삭제되었습니다"
+        overdue_since: "since %{difference_in_days}."
+        property_today: "is today."
+        property_is: "is in %{difference_in_days}."
+        property_was: "was %{difference_in_days} ago."
+        property_is_deleted: "is deleted."
         upsale:
           title: "날짜 경보"
           description: "날짜 경보를 사용하면, 중요 마감일을 놓치거나 잊지 않도록 향후 시작 날짜 또는 종료 날짜에 대한 알림을 받게 됩니다."
@@ -654,7 +654,7 @@ ko:
           message: "새 알림이 있습니다."
           link_text: "로드하려면 여기를 클릭하세요."
       reminders:
-        note: "Note: “%{note}”"
+        note: "참고: \"%{note}\""
       settings:
         change_notification_settings: '중요 업데이트를 놓치지 않도록 <a target="_blank" href="%{url}">알림 설정</a>을 수정할 수 있습니다.'
         title: "알림 설정"
@@ -742,7 +742,7 @@ ko:
         immediate:
           title: "내게 이메일 미리 알림 보내기"
           mentioned: "누군가 나를 @멘션할 때 즉시"
-          personal_reminder: "Immediately when I receive a personal reminder"
+          personal_reminder: "개인 미리 알림을 받는 즉시"
         alerts:
           title: "기타 항목에 대한 이메일 알림(작업 패키지 외)"
           explanation: >
@@ -1043,11 +1043,11 @@ ko:
           duplicate_query_title: "이 보기의 이름이 이미 존재합니다. 그래도 변경하시겠습니까?"
         text_no_results: "일치하는 보기가 없습니다."
       reminders:
-        button_label: "Set reminder"
+        button_label: "미리 알림 설정"
         title:
-          new: "Set reminder"
-          edit: "Edit reminder"
-        subtitle: "You will receive a notification for this work package at the chosen time."
+          new: "미리 알림 설정"
+          edit: "미리 알림 편집"
+        subtitle: "선택한 시간에 이 작업 패키지에 대한 알림을 받게 됩니다."
       scheduling:
         is_parent: "이 작업 패키지의 날짜는 자식으로부터 자동으로 추정됩니다. '수동 스케줄링'을 활성화하여 날짜를 설정할 수 있습니다."
         is_switched_from_manual_to_automatic: "다른 작업 패키지와의 관계로 인해 수동 스케줄링에서 자동 스케줄링으로 전환한 후 이 작업 패키지의 날짜를 다시 계산해야 할 수 있습니다."

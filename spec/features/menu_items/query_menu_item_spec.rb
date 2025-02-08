@@ -31,7 +31,7 @@ require "features/page_objects/notification"
 require "features/work_packages/shared_contexts"
 require "features/work_packages/work_packages_page"
 
-RSpec.describe "Query menu items", :js, :with_cuprite do
+RSpec.describe "Query menu items", :js do
   let(:user) { create(:admin) }
   let(:project) { create(:project) }
   let(:work_packages_page) { WorkPackagesPage.new(project) }

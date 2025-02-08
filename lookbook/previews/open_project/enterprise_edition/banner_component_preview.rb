@@ -57,7 +57,7 @@ module OpenProject
       def default
         render(
           ::EnterpriseEdition::BannerComponent
-            .new(:form_configuration,
+            .new(:customize_life_cycle,
                  skip_render: false)
         )
       end

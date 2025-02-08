@@ -7,9 +7,9 @@ cs:
     standard:
       projects:
         demo-project:
-          meetings:
+          meeting_series:
             item_0:
-              title: Týdenní
+              title: Týdně
           meeting_agenda_items:
             item_0:
               title: Dobré zprávy

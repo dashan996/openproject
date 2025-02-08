@@ -2,7 +2,7 @@ require "spec_helper"
 require "features/page_objects/notification"
 require "support/components/autocompleter/ng_select_autocomplete_helpers"
 
-RSpec.describe "Copy work packages through Rails view", :js, :with_cuprite do
+RSpec.describe "Copy work packages through Rails view", :js do
   include Components::Autocompleter::NgSelectAutocompleteHelpers
 
   shared_let(:type) { create(:type, name: "Bug") }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -33,9 +35,7 @@ module ProjectLifeCycles
       include OpTurbo::Streamable
       include OpPrimer::ComponentHelpers
 
-      def dialog_id
-        "edit-project-life-cycles-dialog"
-      end
+      DIALOG_ID = "edit-project-life-cycles-dialog"
     end
   end
 end

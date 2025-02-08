@@ -3,7 +3,7 @@
     [context]="context"
     [content]="initialContent"
     (initializeDone)="setup($event)"
-    (contentChanged)="markEdited()"
+    (contentChanged)="syncToTextarea()"
     (saveRequested)="saveForm()"
     (editorKeyup)="editorKeyup.emit()"
     (editorBlur)="editorBlur.emit()"
@@ -12,7 +12,7 @@
 </div>
 
 <fieldset
-  class="form--fieldset"
+  class="form--fieldset op-ckeditor--attachments"
   *ngIf="showAttachments && halResource?.attachments"
 >
   <legend class="form--fieldset-legend">

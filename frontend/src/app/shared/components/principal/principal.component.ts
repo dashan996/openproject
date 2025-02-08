@@ -45,7 +45,6 @@ import { PrincipalLike } from './principal-types';
 import { populateInputsFromDataset } from 'core-app/shared/components/dataset-inputs';
 import { PrincipalType } from 'core-app/shared/components/principal/principal-helper';
 import { PrincipalsResourceService } from 'core-app/core/state/principals/principals.service';
-import { PortalOutletTarget } from 'core-app/shared/components/modal/portal-outlet-target.enum';
 
 export const principalSelector = 'op-principal';
 
@@ -78,7 +77,6 @@ export class OpPrincipalComponent implements OnInit {
 
   @Input() hoverCard= true;
   @Input() hoverCardUrl= '';
-  @Input() hoverCardModalTarget:'default'|'custom' = 'default';
 
   @Input() title = '';
 
@@ -105,8 +103,6 @@ export class OpPrincipalComponent implements OnInit {
       if (this.hoverCard) {
         avatarOptions.hoverCard = {
           url: this.hoverCardUrl,
-          modalTarget: this.hoverCardModalTarget === 'custom'
-            ? PortalOutletTarget.Custom : PortalOutletTarget.Default,
         };
       }
 

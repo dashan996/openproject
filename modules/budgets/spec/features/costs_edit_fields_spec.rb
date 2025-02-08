@@ -28,7 +28,9 @@
 
 require File.expand_path(File.dirname(__FILE__) + "/../spec_helper.rb")
 
-RSpec.describe "Work Package budget fields", :js do
+RSpec.describe "Work Package budget fields",
+               :js,
+               :selenium do
   let(:type_task) { create(:type_task) }
   let!(:status) { create(:status, is_default: true) }
   let!(:priority) { create(:priority, is_default: true) }

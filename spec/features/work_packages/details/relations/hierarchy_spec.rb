@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.shared_examples "work package relations tab", :js, :selenium do
+RSpec.shared_examples "work package relations tab", :js, :with_cuprite do
   include_context "ng-select-autocomplete helpers"
 
   let(:user) { create(:admin) }

@@ -1,9 +1,9 @@
 #English strings go here for Rails i18n
 ja:
   plugin_openproject_two_factor_authentication:
-    name: "OpenProject Two-factor authentication"
+    name: "OpenProject の2要素認証"
     description: >-
-      This OpenProject plugin authenticates your users using two-factor authentication by means of one-time password through the TOTP standard (Google Authenticator) or sent to the user's cell phone via SMS or voice call.
+      このOpenProjectプラグインは、TOTP標準(Google Authenticator)を介したワンタイムパスワード、またはSMSや音声通話を介したユーザーの携帯電話への送信により、二要素認証を使用してユーザーを認証します。
   activerecord:
     attributes:
       two_factor_authentication/device:
@@ -77,7 +77,7 @@ ja:
       button_register_mobile_phone_for_user: "携帯電話番号で登録する"
       text_2fa_enabled: "ログインごとに、このユーザはデフォルトの2FAデバイスからOTPトークンを入力するよう要求されます。"
       text_2fa_disabled: "ユーザーは2FAデバイスを「マイアカウントページ」から設定していません"
-      only_sms_allowed: "Only SMS delivery can be set up for other users."
+      only_sms_allowed: "他のユーザーにはSMS配信のみ設定可能です。"
     upsale:
       title: "2要素認証"
       description: "すべてのプロジェクトメンバーに2要素認証を提供(または強制)することで、OpenProjectインスタンスのセキュリティを強化します。"
@@ -115,12 +115,12 @@ ja:
       failed_to_delete: "2FAデバイスの削除に失敗しました。"
       is_default_cannot_delete: "デバイスは規定になっているため、アクティブなセキュリティポリシーのため削除できません。削除する前に別のデバイスを規定にしてください。"
       not_existing: "アカウントに2FAデバイスが登録されていません。"
-      2fa_from_input: Please enter the code from your <strong>%{device_name}</strong> to verify your identity.
-      2fa_from_webauthn: Please provide the WebAuthn device <strong>%{device_name}</strong>. If it is USB based make sure to plug it in and touch it. Then click the sign in button.
+      2fa_from_input: 確認するには、 <strong>%{device_name}</strong> のコードを入力してください。
+      2fa_from_webauthn: WebAuthn デバイス <strong>%{device_name}</strong>を挿入してください。 それがUSBベースの場合は、それを接続し、それをタッチしてください。
       webauthn:
         title: "WebAuthn"
         description: Register a FIDO2 device (like YubiKey) or the secure encalve of your mobile device.
-        further_steps: After you have chosen a name, you can click the Continue button. Your browser will prompt you to present your WebAuthn device. When you have done so, you are done registering the device.
+        further_steps: 名前を選択したら、[続行] ボタンをクリックします。ブラウザが WebAuthn デバイスの提示を促します。そうしたら、デバイスの登録は完了です。
       totp:
         title: "App-based authenticator"
         provisioning_uri: "プロビジョニングURI"

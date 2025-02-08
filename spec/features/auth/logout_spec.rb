@@ -29,8 +29,7 @@
 require "spec_helper"
 
 RSpec.describe "Logout",
-               :js,
-               :with_cuprite do
+               :js do
   let(:user_password) { "b0B" * 4 }
   let(:user) do
     create(:user,

@@ -30,7 +30,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Update ancestors", :js, :with_cuprite do
+RSpec.describe "Update ancestors", :js do
   shared_let(:user) { create(:admin) }
   shared_let(:priority) { create(:default_priority) }
   shared_let(:new_status) { create(:default_status, name: "New") }

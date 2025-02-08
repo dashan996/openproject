@@ -32,8 +32,7 @@ require "features/work_packages/shared_contexts"
 require "features/work_packages/work_packages_page"
 
 RSpec.describe "Wiki menu items",
-               :js,
-               :with_cuprite do
+               :js do
   let(:user) do
     create(:user,
            member_with_permissions: { project => %i[view_wiki_pages
@@ -86,7 +85,7 @@ RSpec.describe "Wiki menu items",
     end
   end
 
-  it "allows managing the menu item of a wiki page", :js, :with_cuprite do
+  it "allows managing the menu item of a wiki page", :js do
     other_wiki_page
     another_wiki_page
 

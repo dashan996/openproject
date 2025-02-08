@@ -10,9 +10,12 @@ jobs:
     name: rubocop
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
-      - uses: reviewdog/action-rubocop@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+      - name: Run Rubocop
+        uses: reviewdog/action-rubocop@v2
         with:
           github_token: ${{ secrets.github_token }}
           rubocop_version: gemfile
@@ -26,3 +29,11 @@ jobs:
             rubocop-rspec_rails:gemfile
           reporter: github-pr-check
           only_changed: true
+      - name: Install erb_lint
+        run: gem install -N erb_lint erblint-github
+      - name: Run erb-lint
+        uses: tk0miya/action-erblint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-check
+          fail_on_error: true

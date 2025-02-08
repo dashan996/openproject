@@ -31,8 +31,17 @@ See COPYRIGHT and LICENSE files for more details.
 <%= render(Meetings::IndexPageHeaderComponent.new(project: @project)) %>
 <%= render(Meetings::IndexSubHeaderComponent.new(query: @query, project: @project, params:)) %>
 
-<% if @meetings.empty? -%>
-  <%= no_results_box %>
-<% else -%>
-  <%= render Meetings::TableComponent.new(rows: @meetings, current_project: @project) %>
+<% if @grouped_meetings -%>
+  <%= render partial: "grouped_meetings" %>
+<% elsif @meetings.empty? -%>
+  <%= render Meetings::TableComponent.new(
+        rows: [],
+        current_project: @project
+      ) %>
+<% else %>
+  <%= render Meetings::TableComponent.new(
+        rows: @meetings,
+        current_project: @project,
+        upcoming: params[:upcoming]
+      ) %>
 <% end -%>

@@ -32,8 +32,7 @@ require "spec_helper"
 
 RSpec.describe "Work package filtering",
                "by shared with user",
-               :js,
-               :with_cuprite do
+               :js do
   shared_let(:visible_project) do
     create(:project_with_types)
   end

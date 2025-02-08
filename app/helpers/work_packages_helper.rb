@@ -157,6 +157,23 @@ module WorkPackagesHelper
     end
   end
 
+  def work_package_dates_icon(work_package)
+    work_package.schedule_manually ? :pin : :calendar
+  end
+
+  def work_package_formatted_dates(work_package)
+    start_date = work_package.start_date ? format_date(work_package.start_date) : nil
+    due_date = work_package.due_date ? format_date(work_package.due_date) : nil
+
+    # If both dates are missing, return just one dash
+    return "-" if start_date.nil? && due_date.nil?
+
+    return start_date if start_date == due_date
+
+    # Return the formatted date range (start_date - due_date)
+    "#{start_date} - #{due_date}"
+  end
+
   def send_notification_option(checked = false)
     content_tag(:label, for: "send_notification", class: "form--label-with-check-box") do
       (content_tag "span", class: "form--check-box-container" do

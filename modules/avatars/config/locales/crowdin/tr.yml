@@ -3,7 +3,7 @@ tr:
   plugin_openproject_avatars:
     name: "Avatarlar"
     description: >-
-      This plugin allows OpenProject users to upload a picture to be used as an avatar or use registered images from Gravatar.
+      Bu eklenti, OpenProject kullanıcılarının avatar olarak kullanılmak üzere bir resim yüklemelerine veya Gravatar'dan kayıtlı görüntüleri kullanmalarına olanak tanır.
   label_avatar: "Avatar"
   label_avatar_plural: "Avatarlar"
   label_current_avatar: "Mevcut Avatar"

@@ -31,33 +31,8 @@ require "active_job"
 class ApplicationJob < ActiveJob::Base
   include ::JobStatus::ApplicationJobWithStatus
   include SharedJobSetup
+  include JobPriority
 
-  ##
-  # Return a priority number on the given payload
-  def self.priority_number(prio = :default)
-    case prio
-    when :high
-      0
-    when :notification
-      5
-    when :above_normal
-      7
-    when :below_normal
-      13
-    when :low
-      20
-    else
-      10
-    end
-  end
-
-  def self.queue_with_priority(value = :default)
-    if value.is_a?(Symbol)
-      super(priority_number(value))
-    else
-      super
-    end
-  end
 
   def job_scheduled_at
     GoodJob::Job.where(id: job_id).pick(:scheduled_at)

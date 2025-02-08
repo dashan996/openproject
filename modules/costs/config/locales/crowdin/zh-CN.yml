@@ -33,6 +33,7 @@ zh-CN:
       cost_type:
         unit: "单位名称"
         unit_plural: "单位名称（复数）"
+        default: "默认成本类型"
       work_package:
         costs_by_type: "支出单位"
         labor_costs: "人工成本"
@@ -44,12 +45,24 @@ zh-CN:
         rate: "费率"
       user:
         default_rates: "基本费率"
+      time_entry:
+        project: 项目
+        user: 用户
+        work_package: 工作包
+        hours: 小时
+        comments: 评论
+        activity: 活动
+        spent_on: 日期
+        start_time: 开始时间
+        end_time: 结束时间
     models:
       cost_type:
         other: "成本类型"
       rate: "费率"
     errors:
       models:
+        time_entry:
+          invalid_time: "必须在 00:00-23:59之间。"
         work_package:
           is_not_a_valid_target_for_cost_entries: "工作包 #%{id} 不是重新分配成本条目的有效目标。"
           nullify_is_not_valid_for_cost_entries: "无法将成本条目分配到项目。"
@@ -64,6 +77,7 @@ zh-CN:
     fixed_date: "固定日期"
   button_add_rate: "添加费率"
   button_log_costs: "记录单位成本"
+  button_log_time: "日志"
   caption_booked_on_project: "已记录在项目上"
   caption_default: "基本"
   caption_default_rate_history_for: "%{user} 的基本费率历史记录"
@@ -75,6 +89,7 @@ zh-CN:
   caption_save_rate: "保存费率"
   caption_set_rate: "设置当前费率"
   caption_show_locked: "显示锁定类型"
+  caption_log_time_dialog: "日志时间"
   description_date_for_new_rate: "新费率的日期"
   group_by_others: "不在任何组中"
   label_between: "介于"
@@ -114,10 +129,12 @@ zh-CN:
   label_until: "到"
   label_valid_from: "有效起始日期"
   label_yes: "是"
+  placeholder_activity_select_work_package_first: 首先需要选择工作包
   notice_something_wrong: "出错了。请重试。"
   notice_successful_restore: "成功恢复。"
   notice_successful_lock: "锁定成功。"
   notice_cost_logged_successfully: "单位成本记录成功。"
+  notice_different_time_zones: "该用户使用不同的时区 (%{tz})。将使用其时区记录时间。"
   permission_edit_cost_entries: "编辑记录的单位成本"
   permission_edit_own_cost_entries: "编辑自己记录的单位成本"
   permission_edit_hourly_rates: "编辑小时费率"
@@ -145,3 +162,7 @@ zh-CN:
   week: "周"
   js:
     text_are_you_sure: "是否确定？"
+  api_v3:
+    errors:
+      validation:
+        start_time_different_date: "开始时间 (%{start_time}) 的日期部分必须与 支出日期(%{spent_on})相同。"

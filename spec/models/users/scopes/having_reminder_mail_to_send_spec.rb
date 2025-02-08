@@ -380,7 +380,7 @@ RSpec.describe User, ".having_reminder_mail_to_send" do
       )
     end
     let(:scope_upper_boundary_time) { ActiveSupport::TimeZone["Europe/Paris"].parse("2021-09-30T08:09").utc }
-    let(:scope_lower_boundary_time) { ActiveSupport::TimeZone["Europe/Paris"].parse("2021-09-30T08:00") }
+    let(:scope_lower_boundary_time) { ActiveSupport::TimeZone["Europe/Paris"].parse("2021-09-30T08:00").utc }
 
     it "contains the user" do
       expect(scope)
@@ -399,7 +399,7 @@ RSpec.describe User, ".having_reminder_mail_to_send" do
       )
     end
     let(:scope_upper_boundary_time) { ActiveSupport::TimeZone["Europe/Paris"].parse("2021-09-30T10:00").utc }
-    let(:scope_lower_boundary_time) { ActiveSupport::TimeZone["Europe/Paris"].parse("2021-09-30T10:00") }
+    let(:scope_lower_boundary_time) { ActiveSupport::TimeZone["Europe/Paris"].parse("2021-09-30T10:00").utc }
 
     it "is empty" do
       expect(scope)

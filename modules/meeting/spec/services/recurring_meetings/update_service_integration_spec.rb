@@ -108,7 +108,7 @@ RSpec.describe RecurringMeetings::UpdateService, "integration", type: :model do
           .perform_later(series)
       end
 
-      it "reschedules" do
+      it "reschedules and enqueues the next job" do
         job = GoodJob::Job.find_by(job_class: "RecurringMeetings::InitNextOccurrenceJob")
         expect(job.scheduled_at).to eq Time.zone.today + 1.day + 10.hours
         expect(service_result).to be_success
@@ -116,6 +116,8 @@ RSpec.describe RecurringMeetings::UpdateService, "integration", type: :model do
 
         new_job = GoodJob::Job.find_by(job_class: "RecurringMeetings::InitNextOccurrenceJob")
         expect(new_job.scheduled_at).to eq Time.zone.today + 2.days + 11.hours
+
+        expect(series.upcoming_instantiated_meetings.count).to eq 1
       end
     end
   end

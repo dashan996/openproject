@@ -29,7 +29,7 @@
 require "spec_helper"
 require_relative "shared_context"
 
-RSpec.describe "Show project custom fields on project overview page", :js, :with_cuprite do
+RSpec.describe "Show project custom fields on project overview page", :js do
   include_context "with seeded projects, members and project custom fields"
 
   let(:overview_page) { Pages::Projects::Show.new(project) }

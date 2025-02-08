@@ -30,6 +30,7 @@ class RecurringMeeting::Interval < ApplicationForm
   form do |meeting_form|
     meeting_form.text_field(
       name: :interval,
+      required: true,
       type: :number,
       step: 1,
       max: RecurringMeeting::MAX_INTERVAL,

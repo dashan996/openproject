@@ -1,35 +1,31 @@
 import { Injector } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, combineLatest, from, Subject } from 'rxjs';
+import { switchMap, startWith } from 'rxjs/operators';
 import { WorkPackageResource } from 'core-app/features/hal/resources/work-package-resource';
-import { ApiV3Service } from 'core-app/core/apiv3/api-v3.service';
+import { PathHelperService } from 'core-app/core/path-helper/path-helper.service';
 import { WorkPackageRelationsService } from 'core-app/features/work-packages/components/wp-relations/wp-relations.service';
 
 export function workPackageRelationsCount(
   workPackage:WorkPackageResource,
   injector:Injector,
 ):Observable<number> {
+  const pathHelper = injector.get(PathHelperService);
   const wpRelations = injector.get(WorkPackageRelationsService);
-  const apiV3Service = injector.get(ApiV3Service);
   const wpId = workPackage.id!.toString();
+  // It is an intermediate solution, until the API can return all relations
+  // in the long term, the tabs are going to be the same as in the notifications
+  const url = pathHelper.workPackageGetRelationsCounterPath(wpId.toString());
+  const updateTrigger$ = new Subject<void>();
 
-  wpRelations.require(wpId);
+  // Listen for relation state changes
+  const relationsState$ = wpRelations.state(wpId).values$().pipe(startWith(null));
 
-  return combineLatest([
-    wpRelations
-      .state(wpId.toString())
-      .values$(),
-    apiV3Service
-      .work_packages
-      .id(wpId)
-      .requireAndStream(),
-  ])
-    .pipe(
-      map(([relations, workPackage]) => {
-        const relationCount = _.size(relations);
-        const childrenCount = _.size(workPackage.children);
-
-        return relationCount + childrenCount;
-      }),
-    );
+  return combineLatest([relationsState$, updateTrigger$.pipe(startWith(null))]).pipe(
+    switchMap(() =>
+      from(
+        fetch(url)
+          .then((res):Promise<{ count:number }> => res.json())
+          .then((data) => data.count),
+      )),
+  );
 }

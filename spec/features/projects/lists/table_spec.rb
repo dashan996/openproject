@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Projects lists table display and actions", :js, :with_cuprite, with_settings: { login_required?: false } do
+RSpec.describe "Projects lists table display and actions", :js, with_settings: { login_required?: false } do
   shared_let(:admin) { create(:admin) }
 
   shared_let(:manager)   { create(:project_role, name: "Manager") }

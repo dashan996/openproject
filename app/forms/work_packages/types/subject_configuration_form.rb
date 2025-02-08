@@ -34,38 +34,53 @@ module WorkPackages
       form do |subject_form|
         subject_form.radio_button_group(name: :subject_configuration) do |group|
           group.radio_button(
-            value: "manual",
-            checked: !has_pattern?,
+            value: :manual,
+            checked: subject_configuration_manual?,
             label: I18n.t("types.edit.subject_configuration.manually_editable_subjects.label"),
             caption: I18n.t("types.edit.subject_configuration.manually_editable_subjects.caption"),
             data: { action: "admin--subject-configuration#hidePatternInput" }
           )
           group.radio_button(
-            value: "auto",
-            checked: has_pattern?,
+            value: :generated,
+            checked: !subject_configuration_manual?,
             label: I18n.t("types.edit.subject_configuration.automatically_generated_subjects.label"),
             caption: I18n.t("types.edit.subject_configuration.automatically_generated_subjects.caption"),
+            disabled: !enterprise? && subject_configuration_manual?,
             data: { action: "admin--subject-configuration#showPatternInput" }
           )
         end
 
         subject_form.group(data: { "admin--subject-configuration-target": "patternInput" }) do |toggleable_group|
-          toggleable_group.text_field(
+          toggleable_group.pattern_input(
             name: :pattern,
+            value: model.pattern,
+            suggestions: model.suggestions,
             label: I18n.t("types.edit.subject_configuration.pattern.label"),
             caption: I18n.t("types.edit.subject_configuration.pattern.caption"),
             required: true,
-            input_width: :large
+            validation_message: validation_message_for(:patterns)
           )
         end
 
-        subject_form.submit(name: :submit, label: I18n.t(:button_save), scheme: :primary)
+        subject_form.submit(
+          name: :submit,
+          label: I18n.t(:button_save),
+          scheme: :primary
+        )
       end
 
       private
 
-      def has_pattern?
-        false
+      def subject_configuration_manual?
+        model.subject_configuration == :manual
+      end
+
+      def enterprise?
+        EnterpriseToken.allows_to?(:work_package_subject_generation)
+      end
+
+      def validation_message_for(attribute)
+        model.validation_errors.messages_for(attribute).to_sentence.presence
       end
     end
   end

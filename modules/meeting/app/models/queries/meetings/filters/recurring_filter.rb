@@ -37,10 +37,6 @@ class Queries::Meetings::Filters::RecurringFilter < Queries::Meetings::Filters::
     I18n.t("label_recurring_meeting_part_of")
   end
 
-  def available?
-    OpenProject::FeatureDecisions.recurring_meetings_active?
-  end
-
   def apply_to(query_scope)
     if allowed_values.first.intersect?(values)
       query_scope.recurring

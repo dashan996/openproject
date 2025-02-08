@@ -29,8 +29,7 @@
 require "spec_helper"
 
 RSpec.describe "Wysiwyg work package mentions",
-               :js,
-               :with_cuprite do
+               :js do
   let!(:user) do
     create(:admin, firstname: "MeMyself", lastname: "AndI",
                    member_with_permissions: { project => %i[view_work_packages edit_work_packages] })
@@ -73,27 +72,19 @@ RSpec.describe "Wysiwyg work package mentions",
 
   let(:wp_page) { Pages::FullWorkPackage.new work_package, project }
   let(:editor) { Components::WysiwygEditor.new }
-
-  let(:selector) { ".work-packages--activity--add-comment" }
-  let(:comment_field) do
-    TextEditorField.new wp_page,
-                        "comment",
-                        selector:
-  end
+  let(:activity_tab) { Components::WorkPackages::Activities.new(work_package) }
 
   before do
     login_as(user)
     wp_page.visit!
     wait_for_reload
     expect_angular_frontend_initialized
+    wp_page.wait_for_activity_tab
   end
 
   it "can autocomplete users, groups and emojis" do
     # Mentioning a user works
-    comment_field.activate!
-
-    comment_field.clear with_backspace: true
-    comment_field.input_element.send_keys("@Foo")
+    activity_tab.type_comment("@Foo")
     expect(page).to have_css(".mention-list-item", text: user2.name)
     expect(page).to have_css(".mention-list-item", text: group.name)
 
@@ -102,18 +93,11 @@ RSpec.describe "Wysiwyg work package mentions",
     expect(page)
       .to have_css("a.mention", text: "@Foo Bar")
 
-    comment_field.submit_by_click if comment_field.active?
-
-    wp_page.expect_and_dismiss_toaster message: "The comment was successfully added."
-
-    expect(page)
-      .to have_css("a.user-mention", text: "Foo Bar")
+    activity_tab.submit_comment
+    activity_tab.expect_journal_mention(text: "Foo Bar")
 
     # Mentioning myself works
-    comment_field.activate!
-
-    comment_field.clear with_backspace: true
-    comment_field.input_element.send_keys("@MeMyself")
+    activity_tab.type_comment("@MeMyself")
     expect(page).to have_css(".mention-list-item", text: user.name)
 
     page.find(".mention-list-item", text: user.name).click
@@ -121,56 +105,41 @@ RSpec.describe "Wysiwyg work package mentions",
     expect(page)
       .to have_css("a.mention", text: "@MeMyself AndI")
 
-    comment_field.submit_by_click if comment_field.active?
-
-    wp_page.expect_and_dismiss_toaster message: "The comment was successfully added."
-
-    expect(page)
-      .to have_css("a.user-mention", text: "MeMyself AndI")
+    activity_tab.submit_comment
+    activity_tab.expect_journal_mention(text: "MeMyself AndI")
 
     # Mentioning a work package editor or commenter works
     #
     # Editor
     #
-    comment_field.activate!
-    comment_field.clear(with_backspace: true)
-    comment_field.input_element.send_keys("@Bertram Gilfoyle")
+    activity_tab.type_comment("@Bertram Gilfoyle")
     page.find(".mention-list-item", text: work_package_editor.name).click
     expect(page)
       .to have_css("a.mention", text: "@Bertram Gilfoyle")
-    comment_field.submit_by_click if comment_field.active?
-    wp_page.expect_and_dismiss_toaster message: "The comment was successfully added."
+    activity_tab.submit_comment
+    activity_tab.expect_journal_mention(text: "Bertram Gilfoyle")
 
-    expect(page)
-      .to have_css("a.user-mention", text: "Bertram Gilfoyle")
     #
     # Commenter
     #
-    comment_field.activate!
-    comment_field.clear(with_backspace: true)
-    comment_field.input_element.send_keys("@Dinesh Chugtai")
+    activity_tab.type_comment("@Dinesh Chugtai")
     page.find(".mention-list-item", text: work_package_commenter.name).click
     expect(page)
       .to have_css("a.mention", text: "@Dinesh Chugtai")
-    comment_field.submit_by_click if comment_field.active?
-    wp_page.expect_and_dismiss_toaster message: "The comment was successfully added."
-
-    expect(page)
-      .to have_css("a.user-mention", text: "Dinesh Chugtai")
+    activity_tab.submit_comment
+    activity_tab.expect_journal_mention(text: "Dinesh Chugtai")
 
     # Work Package viewers aren't mentionable
-    comment_field.activate!
-    comment_field.clear(with_backspace: true)
-    comment_field.input_element.send_keys("@Richard Hendricks")
+    activity_tab.type_comment("@Richard Hendricks")
     page.driver.wait_for_reload
     expect(page)
         .to have_no_css(".mention-list-item", text: work_package_viewer.name)
-    comment_field.cancel_by_click
+
+    # clear input
+    activity_tab.clear_comment(blur: true)
 
     # Mentioning a group works
-    comment_field.activate!
-    comment_field.clear with_backspace: true
-    comment_field.input_element.send_keys(" @Foo")
+    activity_tab.type_comment("@Foo")
     expect(page).to have_css(".mention-list-item", text: user2.name)
     expect(page).to have_css(".mention-list-item", text: group.name)
 
@@ -179,28 +148,24 @@ RSpec.describe "Wysiwyg work package mentions",
     expect(page)
       .to have_css("a.mention", text: "@Foogroup")
 
-    comment_field.submit_by_click if comment_field.active?
-
-    wp_page.expect_and_dismiss_toaster message: "The comment was successfully added."
-
-    expect(page)
-      .to have_css("a.user-mention", text: "Foogroup")
+    activity_tab.submit_comment
+    activity_tab.expect_journal_mention(text: "Foogroup")
 
     # The mention is still displayed as such when reentering the comment field
-    find("#activity-1 .op-user-activity")
-      .hover
+    activity_tab.type_comment_in_edit(work_package.journals.last, " @Foo Bar")
+    expect(page).to have_css(".mention-list-item", text: user2.name)
 
-    within("#activity-1") do
-      click_button("Edit this comment")
-    end
+    page.find(".mention-list-item", text: user2.name).click
 
+    expect(page)
+      .to have_css("a.mention", text: "@Foogroup")
     expect(page)
       .to have_css("a.mention", text: "@Foo Bar")
 
+    activity_tab.submit_comment
+
     # Mentioning an emoji works
-    comment_field.activate!
-    comment_field.clear with_backspace: true
-    comment_field.input_element.send_keys(":thumbs")
+    activity_tab.type_comment(":thumbs")
     expect(page).to have_css(".mention-list-item", text: "👍 thumbs_up")
     expect(page).to have_css(".mention-list-item", text: "👎 thumbs_down")
 

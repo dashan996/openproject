@@ -130,9 +130,12 @@ module OpenProject
         @global_permissions ||= permissions.select(&:global?)
       end
 
-      def available_project_modules
-        project_modules
-          .reject { |name| disabled_project_modules.include? name }
+      def available_project_modules(sorted: false)
+        modules = project_modules - disabled_project_modules
+
+        modules.sort_by! { |name| I18n.t(:"project_module_#{name}") } if sorted
+
+        modules
       end
 
       def disabled_project_modules

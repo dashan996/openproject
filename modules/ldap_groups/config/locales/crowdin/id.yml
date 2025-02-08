@@ -6,10 +6,12 @@ id:
     attributes:
       ldap_groups/synchronized_group:
         dn: 'DN'
+        auth_source: 'Auth source'
         ldap_auth_source: 'koneksi LDAP'
         sync_users: 'Sinkronkan pengguna'
       ldap_groups/synchronized_filter:
         filter_string: 'penyaring LDAP'
+        auth_source: 'Auth source'
         ldap_auth_source: 'koneksi LDAP'
         group_name_attribute: "Atribut nama grup"
         sync_users: 'Sinkronkan pengguna'

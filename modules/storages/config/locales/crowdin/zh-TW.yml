@@ -3,6 +3,8 @@ zh-TW:
     attributes:
       storages/file_link:
         origin_id: 來源 ID
+      storages/project_storage:
+        storage: 儲存空間
       storages/storage:
         creator: 建立者
         drive: Drive ID
@@ -72,6 +74,7 @@ zh-TW:
         confirmation_text: 請確認您瞭解並希望從本專案中移除此檔案儲存空間
         heading_text: 從 %{storage} 移除專案
         text: 此動作是不可逆轉的，並會移除此專案的工作項目到該儲存的檔案和資料夾的所有連結。
+        title: 從儲存庫中移除專案
       label: 移除專案
   services:
     attributes:
@@ -344,7 +347,7 @@ zh-TW:
         title: 整合設定完成
       timeout:
         link_text: 檔案儲存之健康狀態
-        subtitle: OpenProject 無法讓您在預期時間內存取專案資料夾。請再試一次。<br><br> 如果問題仍然存在，請聯絡您的 OpenProject 管理員以檢查 %{storages_health_link}。
+        subtitle: OpenProject 無法讓您在預期時間內存取專案資料夾。請再試一次。<br><br> 如果問題仍然存在，請聯絡您的 OpenProject 管理員檢查 %{storages_health_link}。
       waiting:
         subtitle: 請稍候，這可能需要一些時間...
         title: 我們正在設定您在專案資料夾上的權限。

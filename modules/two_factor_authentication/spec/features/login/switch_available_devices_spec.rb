@@ -3,7 +3,6 @@ require_relative "../shared_two_factor_examples"
 
 RSpec.describe "Login by switching 2FA device",
                :js,
-               :with_cuprite,
                with_settings: {
                  plugin_openproject_two_factor_authentication: { "active_strategies" => %i[developer totp] }
                } do

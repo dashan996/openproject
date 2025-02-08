@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe "Work Package group by progress", :js do
+RSpec.describe "Work Package group by progress", :js, :selenium do
   shared_let(:user) { create(:admin) }
 
   shared_let(:project) { create(:project) }

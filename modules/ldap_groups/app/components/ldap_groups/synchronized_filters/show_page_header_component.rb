@@ -38,12 +38,13 @@ class LdapGroups::SynchronizedFilters::ShowPageHeaderComponent < ApplicationComp
   end
 
   def breadcrumb_items
-    [{ href: admin_index_path, text: t(:label_administration) },
-     { href: admin_settings_authentication_path, text: t(:label_authentication) },
-     { href: ldap_groups_synchronized_groups_path, text: I18n.t("ldap_groups.label_menu_item") },
-     I18n.t("menus.breadcrumb.nested_element",
-            section_header: t("ldap_groups.synchronized_filters.singular"),
-            title: h(@filter.name)).html_safe]
+    [
+      { href: admin_index_path, text: t(:label_administration) },
+      { href: admin_settings_authentication_path, text: t(:label_authentication) },
+      { href: ldap_groups_synchronized_groups_path, text: I18n.t("ldap_groups.label_menu_item") },
+      helpers.nested_breadcrumb_element(t("ldap_groups.synchronized_filters.singular"),
+                                        h(@filter.name))
+    ]
   end
 
   def blocked?

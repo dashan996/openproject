@@ -28,30 +28,36 @@
 
 require "spec_helper"
 
-RSpec.describe "work package hierarchies for milestones", :js, :selenium do
+RSpec.describe "work package hierarchies for milestones", :js do
   let(:user) { create(:admin) }
-  let(:type) { create(:type, is_milestone: true) }
-  let(:project) { create(:project, types: [type]) }
-  let(:work_package) { create(:work_package, project:, type:) }
-  let(:relations) { Components::WorkPackages::Relations.new(work_package) }
-  let(:tabs) { Components::WorkPackages::Tabs.new(work_package) }
-  let(:wp_page) { Pages::FullWorkPackage.new(work_package) }
-
-  let(:relations_tab) { find(".op-tab-row--link_selected", text: "RELATIONS") }
-  let(:visit) { true }
+  let(:task_type) { create(:type_task) }
+  let(:milestone_type) { create(:type_milestone) }
+  let(:project) { create(:project, types: [task_type, milestone_type]) }
+  let!(:milestone_work_package) { create(:work_package, subject: "milestone_work_package", project:, type: milestone_type) }
+  let!(:task_work_package) { create(:work_package, subject: "task_work_package", project:, type: task_type) }
+  let(:relations) { Components::WorkPackages::Relations.new }
 
   before do
     login_as user
+  end
+
+  def visit_relations_tab_for(work_package)
+    wp_page = Pages::FullWorkPackage.new(work_package)
     wp_page.visit_tab!("relations")
     expect_angular_frontend_initialized
     wp_page.expect_subject
     loading_indicator_saveguard
   end
 
-  it "does not provide links to add children or existing children (Regression #28745)" do
-    expect(page).to have_no_text("Add existing child")
-    expect(page).to have_no_text("Create new child")
-    expect(page).to have_no_css("wp-inline-create--add-link")
-    expect(page).to have_no_text("Children")
+  it "does not provide links to add children or existing children (Regression #28745 and #60512)" do
+    # A work package has a menu entry to link or create a child
+    visit_relations_tab_for(task_work_package)
+    relations.expect_new_relation_type("New child")
+    relations.expect_new_relation_type("Existing child")
+
+    # A milestone work package does NOT have a menu entry to link or create a child
+    visit_relations_tab_for(milestone_work_package)
+    relations.expect_no_new_relation_type("New child")
+    relations.expect_no_new_relation_type("Existing child")
   end
 end

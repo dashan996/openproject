@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -30,7 +32,7 @@ module TimeEntries
   class SetAttributesService < ::BaseServices::SetAttributes
     private
 
-    def set_attributes(_attributes)
+    def set_attributes(_attributes) # rubocop:disable Metrics/AbcSize
       model.attributes = params
 
       ##
@@ -41,6 +43,14 @@ module TimeEntries
 
       set_default_attributes(params) if model.new_record?
 
+      # move the timezone from the user
+      model.change_by_system do
+        model.time_zone = model.user.time_zone.name
+      end
+
+      # Set start time for ongoing time entries
+      ensure_start_time_for_onging_entries
+
       # Always set the logging user as logged_by
       set_logged_by
     end
@@ -48,7 +58,6 @@ module TimeEntries
     def set_default_attributes(*)
       set_default_user
       set_default_hours
-      set_default_activity if model.activity.nil?
     end
 
     def set_logged_by
@@ -63,28 +72,6 @@ module TimeEntries
       end
     end
 
-    def set_default_activity
-      return unless TimeEntryActivity.default
-
-      if model.project
-        assign_default_project_activity
-      else
-        assign_default_activity
-      end
-    end
-
-    def assign_default_project_activity
-      if TimeEntryActivity.active_in_project(model.project).exists?(id: TimeEntryActivity.default.id)
-        assign_default_activity
-      end
-    end
-
-    def assign_default_activity
-      model.change_by_system do
-        model.activity = TimeEntryActivity.default
-      end
-    end
-
     def set_default_hours
       model.hours = nil if model.hours&.zero?
     end
@@ -92,6 +79,16 @@ module TimeEntries
     def no_project_or_context_changed?
       !model.project ||
         (model.work_package && model.work_package_id_changed? && !model.project_id_changed?)
+    end
+
+    def ensure_start_time_for_onging_entries
+      return unless model.new_record?
+      return unless model.ongoing?
+      return unless TimeEntry.can_track_start_and_end_time?
+
+      Time.use_zone(model.user.time_zone) do
+        model.start_time ||= Time.zone.now.strftime("%H:%M")
+      end
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -35,6 +37,7 @@ class Authorization::EnterpriseService
     conditional_highlighting
     custom_actions
     custom_field_hierarchies
+    customize_life_cycle
     date_alerts
     define_custom_style
     edit_attribute_groups
@@ -51,6 +54,7 @@ class Authorization::EnterpriseService
     virus_scanning
     work_package_query_relation_columns
     work_package_sharing
+    work_package_subject_generation
   ].freeze
 
   def initialize(token)

@@ -26,9 +26,7 @@ Yes. The protection of personal data is for OpenProject more than just a legal r
 
 ## Is the Enterprise cloud certified?
 
-The data center (AWS) we use for Enterprise cloud edition is ISO27001 certified.
-
-For more information please visit the [information regarding security measures](https://www.openproject.org/legal/data-processing-agreement/technical-and-organizational-data-security-measures) on our website.
+Yes, both data centers AWS and Netways are ISO 27001 certified. For more information please visit the [information regarding security measures](https://www.openproject.org/legal/data-processing-agreement/technical-and-organizational-data-security-measures) on our website.
 
 ## How to change the OpenProject Enterprise cloud creators account?
 
@@ -44,13 +42,9 @@ Please note: For the OpenProject Enterprise cloud we currently have two SaaS inf
 
 This infrastructure is hosted at AWS in Dublin. For sending transactional emails we use the service Postmark which is based in the US.
 
-**OpenProject.eu (beta)**
+**OpenProject.eu**
 
-Starting from April 2022, we will also offer hosting of the OpenProject Enterprise cloud in our new SaaS infrastructure *OpenProject.eu*. In this new environment there is no transfer to sub-processors outside the EU. If you want to join the beta program please contact privacy@openproject.com (GPG Key: [BDCFE01EDE84EA199AE172CE7D669C6D47533958](https://keys.openpgp.org/vks/v1/by-fingerprint/BDCFE01EDE84EA199AE172CE7D669C6D47533958)).
-
-**Migration after the beta phase in April 2022**
-
-After the end of the beta phase we plan to migrate <u>all</u> customers to the new infrastructure *OpenProject.eu*. Before this migration we (Processor) notified in March 2022 all clients (Controller) about the new sub-processors by email.  After the expiry of the objection period of two weeks, the modification shall be deemed approved within the meaning of Article 28  (2) GDPR. If the the Controller objects by email to privacy@openproject.com within two weeks we will <u>not</u> migrate their data. For more information please have a look at [Use of sub-processors](https://www.openproject.org/legal/data-processing-agreement/#77-use-of-sub-processors) in your DPA.
+This hosting infrastructure all sub-processors are located in the EU. There is no transfer to sub-processors outside the EU (e.g. AWS). We send transactional emails with Rapidmail. 
 
 ## Can I get a custom domain name instead of example.openproject.com?
 

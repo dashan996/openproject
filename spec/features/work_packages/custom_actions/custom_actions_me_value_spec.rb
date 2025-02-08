@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Custom actions me value", :js, :with_cuprite, with_ee: %i[custom_actions] do
+RSpec.describe "Custom actions me value", :js, with_ee: %i[custom_actions] do
   shared_let(:admin) { create(:admin) }
 
   let(:permissions) { %i(view_work_packages edit_work_packages) }

@@ -138,6 +138,16 @@ work_package:
       spacing: 1
     ordered_list_point:
       spacing: 4
+      spanning: true
+      list_style_type: decimal
+    ordered_list_point_2:
+      list_style_type: lower-latin
+    ordered_list_point_3:
+      list_style_type: lower-roman
+    ordered_list_point_4:
+      list_style_type: upper-latin
+    ordered_list_point_5:
+      list_style_type: upper-roman
     task_list:
       spacing: 1
     task_list_point:
@@ -188,6 +198,17 @@ work_package:
         size: 9
         styles: [ "bold" ]
         background_color: "F0F0F0"
+      cell:
+        size: 8
+        border_width: 0.25
+        padding: 5
+    html_table:
+      auto_width: true
+      margin_top: 4
+      margin_bottom: 4
+      header:
+        size: 9
+        styles: [ "bold" ]
       cell:
         size: 8
         border_width: 0.25

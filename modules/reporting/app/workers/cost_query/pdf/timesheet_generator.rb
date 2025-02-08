@@ -1,9 +1,11 @@
 class CostQuery::PDF::TimesheetGenerator
   include WorkPackage::PDFExport::Common::Common
-  include WorkPackage::PDFExport::Export::Cover
+  include WorkPackage::PDFExport::Common::Attachments
   include WorkPackage::PDFExport::Common::Logo
+  include WorkPackage::PDFExport::Export::Cover
   include WorkPackage::PDFExport::Export::Page
   include WorkPackage::PDFExport::Export::Style
+  include ReportingHelper
 
   H1_FONT_SIZE = 26
   H1_MARGIN_BOTTOM = 2
@@ -89,6 +91,7 @@ class CostQuery::PDF::TimesheetGenerator
 
   def render_doc
     write_cover_page! if with_cover?
+    write_overview!
     write_heading!
     write_hr!
     write_entries!
@@ -97,19 +100,25 @@ class CostQuery::PDF::TimesheetGenerator
   end
 
   def write_entries!
-    all_entries
-      .group_by(&:user)
-      .each do |user, result|
+    grouped_by_user_entries.each do |user, result|
       write_table(user, result)
     end
   end
 
+  def grouped_by_user_entries
+    all_entries
+      .group_by(&:user)
+  end
+
   def all_entries
-    @all_entries ||= query
-                       .each_direct_result
-                       .map(&:itself)
-                       .filter { |r| r.fields["type"] == "TimeEntry" }
-                       .map { |r| TimeEntry.find(r.fields["id"]) }
+    @all_entries ||= begin
+      ids = query
+              .each_direct_result
+              .filter { |r| r.fields["type"] == "TimeEntry" }
+              .flat_map { |r| r.fields["id"] }
+
+      TimeEntry.where(id: ids).includes(%i[user activity work_package project])
+    end
   end
 
   def build_table_rows(entries)
@@ -120,6 +129,7 @@ class CostQuery::PDF::TimesheetGenerator
       .each do |spent_on, lines|
       rows.concat(build_table_day_rows(spent_on, lines))
     end
+    rows.push(build_table_row_sum(entries))
     rows
   end
 
@@ -142,6 +152,24 @@ class CostQuery::PDF::TimesheetGenerator
       format_hours(entry.hours),
       entry.activity&.name || ""
     ].compact
+  end
+
+  def build_table_row_sum(entries)
+    [
+      { content: "", rowspan: 1 },
+      "",
+      with_times_column? ? "" : nil,
+      { content: format_sum_time_entries(entries), font_style: :bold },
+      ""
+    ].compact
+  end
+
+  def format_sum_time_entries(entries)
+    format_hours(sum_time_entries(entries))
+  end
+
+  def sum_time_entries(entries)
+    entries.sum(&:hours)
   end
 
   def build_table_row_comment(entry)
@@ -173,7 +201,7 @@ class CostQuery::PDF::TimesheetGenerator
                               end
   end
 
-  def build_table(rows)
+  def build_table(rows, has_sum_row)
     pdf.make_table(
       rows,
       header: true,
@@ -191,6 +219,7 @@ class CostQuery::PDF::TimesheetGenerator
       adjust_borders_last_column(table)
       adjust_borders_spanned_column(table)
       adjust_border_header_row(table)
+      adjust_border_sum_row(table) if has_sum_row
     end
   end
 
@@ -225,8 +254,14 @@ class CostQuery::PDF::TimesheetGenerator
     end
   end
 
+  def adjust_border_sum_row(table)
+    table.rows(-1).columns(0).style do |c|
+      c.borders = c.borders - [:right]
+    end
+  end
+
   def split_group_rows(table_rows)
-    measure_table = build_table(table_rows)
+    measure_table = build_table(table_rows, true)
     groups = []
     index = 0
     while index < table_rows.length
@@ -267,7 +302,7 @@ class CostQuery::PDF::TimesheetGenerator
     grouped_rows.each do |grouped_row|
       grouped_row_height = grouped_row[:height]
       if current_table_height + grouped_row_height >= available_space_from_bottom
-        write_grouped_row_table(current_table)
+        write_grouped_row_table(current_table, false)
         pdf.start_new_page
         current_table = [header_row]
         current_table_height = header_row[:height]
@@ -275,15 +310,15 @@ class CostQuery::PDF::TimesheetGenerator
       current_table.push(grouped_row)
       current_table_height += grouped_row_height
     end
-    write_grouped_row_table(current_table)
+    write_grouped_row_table(current_table, true)
     pdf.move_down(28)
   end
 
-  def write_grouped_row_table(grouped_rows)
+  def write_grouped_row_table(grouped_rows, has_sum_row)
     current_table = []
     merge_first_columns(grouped_rows)
     grouped_rows.map! { |row| current_table.concat(row[:rows]) }
-    build_table(current_table).draw
+    build_table(current_table, has_sum_row).draw
   end
 
   def merge_first_columns(grouped_rows)
@@ -318,6 +353,56 @@ class CostQuery::PDF::TimesheetGenerator
     pdf.move_down(HR_MARGIN_BOTTOM)
   end
 
+  def write_overview!
+    groups = grouped_by_user_entries
+    return if groups.size <= 1
+
+    write_heading!
+    write_hr!
+    write_overview_table!(overview_table_rows(groups))
+
+    start_new_page_if_needed
+  end
+
+  def write_overview_table!(rows)
+    pdf.make_table(
+      rows,
+      header: true,
+      width: pdf.bounds.width,
+      cell_style: {
+        size: TABLE_CELL_FONT_SIZE,
+        border_color: TABLE_CELL_BORDER_COLOR,
+        border_width: 0.5,
+        borders: %i[top bottom left right],
+        padding: [TABLE_CELL_PADDING, TABLE_CELL_PADDING, TABLE_CELL_PADDING + 2, TABLE_CELL_PADDING]
+      }
+    ) do |table|
+      adjust_overview_border_sum_row(table)
+    end.draw
+  end
+
+  def adjust_overview_border_sum_row(table)
+    row = table.rows(-1)
+    row.columns(0).style { |c| c.borders = c.borders - [:right] }
+    row.columns(-1).style { |c| c.borders = c.borders - [:left] }
+  end
+
+  def overview_table_rows(groups)
+    rows = [
+      [
+        { content: TimeEntry.human_attribute_name(:user), font_style: :bold },
+        { content: I18n.t("export.timesheet.sum_hours"), font_style: :bold }
+      ]
+    ]
+    groups.each do |user, entries|
+      rows.push([user.name, format_sum_time_entries(entries)])
+    end
+
+    total = groups.sum { |_user, entries| entries.sum(&:hours) }
+    rows.push(["", { content: format_hours(total), font_style: :bold }])
+    rows
+  end
+
   def write_heading!
     pdf.formatted_text([{ text: heading, size: H1_FONT_SIZE, style: :bold }])
     pdf.move_down(H1_MARGIN_BOTTOM)
@@ -347,26 +432,7 @@ class CostQuery::PDF::TimesheetGenerator
   end
 
   def format_spent_on_time(entry)
-    start_timestamp = entry.start_timestamp
-    return "" if start_timestamp.nil?
-
-    result = format_time(start_timestamp, include_date: false)
-    end_timestamp = entry.end_timestamp
-    return result if end_timestamp.nil?
-
-    days_between_suffix = format_days_between(start_timestamp, end_timestamp)
-    "#{result} - #{format_time(end_timestamp, include_date: false)}#{days_between_suffix}"
-  end
-
-  def format_days_between(start_timestamp, end_timestamp)
-    days_between = (end_timestamp.to_date - start_timestamp.to_date).to_i
-    if days_between.positive?
-      " (+#{days_formatter.format_value(days_between, nil).delete(' ')})"
-    end
-  end
-
-  def days_formatter
-    @days_formatter ||= WorkPackage::Exports::Formatters::Days.new(nil)
+    spent_on_time_representation(entry.start_timestamp, entry.hours)
   end
 
   def with_times_column?

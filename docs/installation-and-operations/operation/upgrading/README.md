@@ -12,7 +12,8 @@ sidebar_navigation:
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [Package-based installation](#package-based-installation-debrpm) | How to upgrade a package-based installation of OpenProject.  |
 | [Docker-based installation](#compose-based-installation)     | How to upgrade a Docker-based installation of OpenProject.   |
-| [Upgrade notes from 9.x](#upgrade-notes-from-9x)             | How to upgrade from OpenProject 9.x or greater to OpenProject 13.x and higher |
+| [Upgrade notes from 10.5.x](#upgrade-notes-from-105x)        | How to upgrade from OpenProject 10.5.x or greater to OpenProject 13.x and higher |
+| [Upgrade notes from 9.x to 10.4.x](#upgrade-notes-from-9x-to-104x)             | How to upgrade from OpenProject 9.x or to OpenProject 10.4.x|
 | [Upgrade notes for 8.x to 9.x](#upgrade-notes-for-8x-to-9x)  | How to upgrade from OpenProject 8.x to OpenProject 9.x.      |
 | [Upgrade notes for 7.x to 8.x](#upgrade-notes-for-openproject-7x-to-8x) | How to upgrade from OpenProject 7.x to OpenProject 8.x.      |
 
@@ -161,11 +162,16 @@ sudo chown -R 102 /volume1/openproject/*
 After that it's simply a matter of launching the new container mounted with the copied `pgdata` and `assets` folders
 as described in the [installation section](../../installation/docker/).
 
-## Upgrade notes from 9.x
+## Upgrade notes from 10.5.x
 
-Generally, there are no special steps or caveats when upgrading to OpenProject 13.x or higher from any version greater than 9.x. Simply follow the upgrade steps outlined above for your type of installation.
+Generally, there are no special steps or caveats when upgrading to OpenProject 13.x or higher from any version greater than 10.5.x. Simply follow the upgrade steps outlined above for your type of installation.
 
 If you are using Docker, you should mount your OpenProject volume at `/var/openproject/assets` instead of `/var/db/openproject`
+
+## Upgrade notes from 9.x to 10.4.x
+
+When upgrading from OpenProject <= 10.4.x to a newer version, you might need to remove the old cron jobs from ```/etc/cron.d/```.  
+You can list all OpenProject related cronjobs by using the ```sudo ls  /etc/cron.d/openproject-*``` command.
 
 ## Upgrade notes for 8.x to 9.x
 

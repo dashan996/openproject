@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Project attributes activity", :js, :with_cuprite do
+RSpec.describe "Project attributes activity", :js do
   let(:user) do
     create(:user, member_with_permissions: {
              project => %i[view_work_packages edit_work_packages],

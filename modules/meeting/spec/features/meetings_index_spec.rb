@@ -30,7 +30,7 @@ require "spec_helper"
 
 require_relative "../support/pages/meetings/index"
 
-RSpec.describe "Meetings", "Index", :js, :with_cuprite do
+RSpec.describe "Meetings", "Index", :js do
   # The order the Projects are created in is important. By naming `project` alphanumerically
   # after `other_project`, we can ensure that subsequent specs that assert sorting is
   # correct for the right reasons (sorting by Project name and not id)
@@ -96,7 +96,8 @@ RSpec.describe "Meetings", "Index", :js, :with_cuprite do
   def setup_meeting_involvement
     invite_to_meeting(tomorrows_meeting)
     invite_to_meeting(yesterdays_meeting)
-    create(:meeting_participant, :attendee, user:, meeting:)
+    create(:meeting_participant, :attendee, user:, meeting: yesterdays_meeting)
+    create(:meeting_participant, :attendee, user:, meeting: tomorrows_meeting)
     meeting.update!(author: user)
   end
 
@@ -112,7 +113,8 @@ RSpec.describe "Meetings", "Index", :js, :with_cuprite do
     context "when showing all meetings without invitations" do
       it "does not show under My meetings, but in All meetings" do
         meetings_page.visit!
-        expect(page).to have_content "There is currently nothing to display."
+        # expect(page).to have_content "No meetings to display"
+        meetings_page.expect_no_meetings_listed
 
         meetings_page.set_sidebar_filter "All meetings"
 
@@ -159,8 +161,8 @@ RSpec.describe "Meetings", "Index", :js, :with_cuprite do
         end
 
         it "show all past meetings" do
-          meetings_page.expect_meetings_listed(yesterdays_meeting)
-          meetings_page.expect_meetings_not_listed(meeting, tomorrows_meeting)
+          meetings_page.expect_meetings_listed_in_table(yesterdays_meeting, meeting, ongoing_meeting)
+          meetings_page.expect_meetings_not_listed(tomorrows_meeting)
         end
       end
 
@@ -170,14 +172,14 @@ RSpec.describe "Meetings", "Index", :js, :with_cuprite do
         end
 
         it "shows all meetings I've been marked as invited to with a quick filter" do
-          meetings_page.expect_meetings_listed(tomorrows_meeting)
+          meetings_page.expect_meeting_listed_in_group(tomorrows_meeting, key: :tomorrow)
           meetings_page.expect_meetings_not_listed(yesterdays_meeting,
                                                    meeting,
                                                    ongoing_meeting)
 
           meetings_page.set_quick_filter upcoming: false
 
-          meetings_page.expect_meetings_listed(yesterdays_meeting)
+          meetings_page.expect_meetings_listed_in_table(yesterdays_meeting)
 
           meetings_page.expect_meetings_not_listed(meeting, tomorrows_meeting)
         end
@@ -188,11 +190,19 @@ RSpec.describe "Meetings", "Index", :js, :with_cuprite do
           meetings_page.set_sidebar_filter "Attended"
         end
 
-        it "shows all meetings I've been marked as attending to" do
-          meetings_page.expect_meetings_listed(meeting)
-          meetings_page.expect_meetings_not_listed(yesterdays_meeting,
+        it "shows all past meetings I've been marked as attending to" do
+          meetings_page.expect_meetings_listed(yesterdays_meeting)
+          meetings_page.expect_meetings_not_listed(meeting,
                                                    ongoing_meeting,
                                                    tomorrows_meeting)
+
+          # Switch to upcoming
+          meetings_page.set_quick_filter upcoming: true
+
+          meetings_page.expect_meetings_listed(tomorrows_meeting)
+          meetings_page.expect_meetings_not_listed(yesterdays_meeting,
+                                                   meeting,
+                                                   ongoing_meeting)
         end
       end
 
@@ -220,7 +230,8 @@ RSpec.describe "Meetings", "Index", :js, :with_cuprite do
       invite_to_meeting(other_project_meeting)
 
       meetings_page.visit!
-      meetings_page.expect_meetings_listed(meeting, other_project_meeting)
+      meetings_page.expect_meeting_listed_in_group(meeting, key: :today)
+      meetings_page.expect_meeting_listed_in_group(other_project_meeting)
       meetings_page.expect_meetings_not_listed(yesterdays_meeting)
     end
 
@@ -280,7 +291,7 @@ RSpec.describe "Meetings", "Index", :js, :with_cuprite do
         meetings_page.expect_create_new_button
       end
 
-      it "allows creation of both types of meetings", with_flag: { recurring_meetings: true } do
+      it "allows creation of both types of meetings" do
         meetings_page.visit!
 
         meetings_page.expect_create_new_types

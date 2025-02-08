@@ -4,7 +4,7 @@
                               data:)
 ) do |dialog| %>
     <% dialog.with_header(display: :none) %>
-    <% dialog.with_body(id: self.class.dialog_body_id, p: 2) do %>
+    <% dialog.with_body(id: self.class.dialog_body_id) do %>
         <%= render(self.class::Body.new(@state)) %>
     <% end %>
     <% dialog.with_footer do %>

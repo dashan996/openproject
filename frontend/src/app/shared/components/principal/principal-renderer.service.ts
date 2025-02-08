@@ -118,6 +118,7 @@ export class PrincipalRendererService {
 
     if (!name.hide) {
       const el = this.renderName(principal, type, name.link, title || principal.name, name.classes);
+      this.setHoverCardAttributes(el, avatar, principal);
       container.appendChild(el);
     }
   }
@@ -267,9 +268,7 @@ export class PrincipalRendererService {
       }
     }
 
-    element.classList.add('op-hover-card--preview-trigger');
-
+    element.setAttribute('data-hover-card-trigger-target', 'trigger');
     element.setAttribute('data-hover-card-url', hoverCard.url);
-    element.setAttribute('data-hover-card-target', String(hoverCard.modalTarget || PortalOutletTarget.Default));
   }
 }

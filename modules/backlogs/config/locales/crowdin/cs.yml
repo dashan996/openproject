@@ -54,7 +54,7 @@ cs:
     generating_chart: "Generování grafu..."
     hours: "Hodiny"
     impediment: "Impediment"
-    label_versions_default_fold_state: "Zobrazit skládané verze"
+    label_versions_default_fold_state: " Verze zobrazit srolovaně"
     work_package_is_closed: "Pracovní balíček je hotov, když"
     label_is_done_status: "Stav %{status_name} znamená hotovo"
     no_burndown_data: "Nejsou k dispozici žádná data o vypálení. Je nutné mít nastavena data zahájení a ukončení sprintu."

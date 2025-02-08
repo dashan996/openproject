@@ -69,9 +69,8 @@ module RecurringMeetings
       # Delete all scheduled jobs for this meeting
       GoodJob::Job.where(finished_at: nil, concurrency_key:).delete_all
 
-      InitNextOccurrenceJob
-        .set(wait_until: recurring_meeting.next_occurrence.to_time)
-        .perform_later(recurring_meeting)
+      # Ensure we init the next meeting directly
+      InitNextOccurrenceJob.perform_now(recurring_meeting, recurring_meeting.next_occurrence.to_time)
     end
 
     def should_reschedule?(recurring_meeting)

@@ -10,8 +10,8 @@ class SchemaValidator
 
   def validate
     root = File.expand_path("../../", __dir__)
-    schema = JSON::load_file(File.join(root, "app", "models", "work_package", "pdf_export", "schema.json"))
-    styles_file = File.join(root, "app", "models", "work_package", "pdf_export", "standard.yml")
+    schema = JSON::load_file(File.join(root, "app", "models", "work_package", "pdf_export", "export", "schema.json"))
+    styles_file = File.join(root, "app", "models", "work_package", "pdf_export", "export", "standard.yml")
     styles = YAML.load_file(styles_file)
     validate_schema!(styles, schema)
     puts "Valid: #{styles_file}"

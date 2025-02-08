@@ -55,11 +55,8 @@ RSpec.describe WorkPackageRelationsTabController do
 
     it "renders the relations tab" do
       get("index", params: { work_package_id: work_package.id }, as: :turbo_stream)
-      expect(WorkPackageRelationsTab::IndexComponent).to have_received(:new).with(
-        work_package:,
-        relations:,
-        children:
-      )
+      expect(WorkPackageRelationsTab::IndexComponent)
+        .to have_received(:new).with(work_package:)
 
       expect(response).to be_successful
     end

@@ -355,10 +355,10 @@ zh-TW:
           learn_about: "瞭解更多新功能的資訊"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_1":
+          "15_2":
             standard:
               new_features_html: >
-                該版本為您帶來了各種功能和改進，例如<br> <ul class="%{list_styling_class}"> <li>階層類型的自訂欄位 (企業附加元件)。</li> <li>重新設計工作套件中的「關係」標籤。</li> <li>重新設計會議索引頁。</li> <li>PDF 工作套件匯出中的手動分頁。</li> <li>專案清單的 Zen 模式。</li> </ul>
+                該版本為您帶來了各種功能和改進，例如<br> <ul class="%{list_styling_class}"> <li>為工作項目設定提醒，產生日期提示通知。</li> <li>直接從選擇位置建立新資料夾，以儲存檔案。</li> <li>指定工作項目與前後項之間所需的間隔時間。</li> <li>根據自訂欄位類型層級的值，啟用工作項目的排序和群組。</li> <li>匯出時間項目為 PDF 工時表。</li> <li>新增在滑鼠懸停時會顯示使用者資訊的彈出視窗。</li> </ul>
     ical_sharing_modal:
       title: "訂閱日曆"
       inital_setup_error_message: "更新資料時發生錯誤"
@@ -623,9 +623,9 @@ zh-TW:
       date_alerts:
         milestone_date: "里程碑日期"
         overdue: "逾期"
-        overdue_since: " %{difference_in_days}天前"
+        overdue_since: "自 %{difference_in_days} 天."
         property_today: "今天"
-        property_is: " %{difference_in_days}內"
+        property_is: "在 %{difference_in_days}中。"
         property_was: " %{difference_in_days}天前"
         property_is_deleted: "已刪除"
         upsale:
@@ -784,7 +784,7 @@ zh-TW:
       tracking_time: "跟蹤時間"
       button_stop: "停止當前計時器"
     two_factor_authentication:
-      label_two_factor_authentication: "兩階段驗證"
+      label_two_factor_authentication: "雙因素驗證"
     watchers:
       label_loading: 正在載入監看者...
       label_error_loading: 載入監看者時發生錯誤

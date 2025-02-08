@@ -45,6 +45,12 @@ class CustomActions::Conditions::Base
       .map { |value, label| { value:, label: } }
   end
 
+  def value_objects
+    values.map do |value|
+      allowed_values.find { |v| v[:value] == value }
+    end
+  end
+
   def human_name
     WorkPackage.human_attribute_name(self.class.key)
   end

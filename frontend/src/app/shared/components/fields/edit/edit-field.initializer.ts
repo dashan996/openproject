@@ -62,9 +62,6 @@ import {
   PlainFormattableEditFieldComponent,
 } from 'core-app/shared/components/fields/edit/field-types/plain-formattable-edit-field.component';
 import {
-  TimeEntryWorkPackageEditFieldComponent,
-} from 'core-app/shared/components/fields/edit/field-types/te-work-package-edit-field.component';
-import {
   CombinedDateEditFieldComponent,
 } from 'core-app/shared/components/fields/edit/field-types/combined-date-edit-field.component';
 import {
@@ -73,9 +70,6 @@ import {
 import {
   WorkPackageAutocompleterComponent,
 } from 'core-app/shared/components/autocompleter/work-package-autocompleter/wp-autocompleter.component';
-import {
-  WorkPackageCommentFieldComponent,
-} from 'core-app/features/work-packages/components/work-package-comment/wp-comment-field.component';
 import { ProjectEditFieldComponent } from './field-types/project-edit-field.component';
 import {
   HoursDurationEditFieldComponent,
@@ -117,8 +111,7 @@ export function initializeCoreEditFields(editFieldService:EditFieldService, sele
       .addFieldType(WorkPackageEditFieldComponent, 'workPackage', ['WorkPackage'])
       .addFieldType(BooleanEditFieldComponent, 'boolean', ['Boolean'])
       .addFieldType(DateEditFieldComponent, 'date', ['Date'])
-      .addFieldType(FormattableEditFieldComponent, 'wiki-textarea', ['Formattable'])
-      .addFieldType(WorkPackageCommentFieldComponent, '_comment', ['comment']);
+      .addFieldType(FormattableEditFieldComponent, 'wiki-textarea', ['Formattable']);
 
     editFieldService
       .addSpecificFieldType(
@@ -141,7 +134,6 @@ export function initializeCoreEditFields(editFieldService:EditFieldService, sele
       )
       .addSpecificFieldType('Project', ProjectStatusEditFieldComponent, 'status', ['status'])
       .addSpecificFieldType('TimeEntry', PlainFormattableEditFieldComponent, 'comment', ['comment'])
-      .addSpecificFieldType('TimeEntry', TimeEntryWorkPackageEditFieldComponent, 'workPackage', ['WorkPackage'])
       .addSpecificFieldType('TimeEntry', HoursDurationEditFieldComponent, 'hours', ['hours']);
 
     selectAutocompleterRegisterService.register(VersionAutocompleterComponent, 'Version');

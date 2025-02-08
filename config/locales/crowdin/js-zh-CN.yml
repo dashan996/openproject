@@ -356,10 +356,10 @@ zh-CN:
           learn_about: "详细了解新功能"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_1":
+          "15_2":
             standard:
               new_features_html: >
-                该版本为您带来了多种新功能和改进，例如<br> <ul class="%{list_styling_class}"> <li>分层类型的自定义字段(企业附加组件)。</li> <li>重新设计工作包中的关系选项卡。</li> <li>重新设计会议索引页。</li> <li>在导出 PDF 工作包时手动分页。</li> <li>项目列表的禅模式。</li> </ul>
+                该版本为您带来了各种功能和改进，例如<br> <ul class="%{list_styling_class}"> <li>为工作包设置提醒，生成日期提醒通知。</li> <li>直接从文件存储位置选择器创建新文件夹。</li> <li>在前置工作包和后置工作包之间指定所需的间隔。</li> <li>根据自定义字段类型层次结构的值对工作包进行排序和分组。</li> <li>将时间条目导出为 PDF时间表。</li> <li>添加弹出窗，在鼠标悬停时显示用户信息。</li> </ul>
     ical_sharing_modal:
       title: "订阅日历"
       inital_setup_error_message: "获取数据时发生错误。"
@@ -624,11 +624,11 @@ zh-CN:
       date_alerts:
         milestone_date: "里程碑日期"
         overdue: "逾期"
-        overdue_since: "自 %{difference_in_days}"
-        property_today: "今天"
-        property_is: "%{difference_in_days}后"
-        property_was: "%{difference_in_days}前"
-        property_is_deleted: "已被删除"
+        overdue_since: "自 %{difference_in_days}起。"
+        property_today: "今天。"
+        property_is: "%{difference_in_days}后。"
+        property_was: "%{difference_in_days}前。"
+        property_is_deleted: "已删除。"
         upsale:
           title: "日期提醒"
           description: "借助日期提醒，您将收到即将到来的开始或结束日期的通知，以免错过或忘记重要截止日期。"

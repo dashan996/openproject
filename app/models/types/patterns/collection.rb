@@ -31,10 +31,17 @@
 module Types
   module Patterns
     Collection = Data.define(:patterns) do
+      extend Dry::Monads[:result]
       private_class_method :new
+
+      def self.empty
+        new(patterns: {})
+      end
 
       def self.build(patterns:, contract: CollectionContract.new)
         contract.call(patterns).to_monad.fmap { |success| new(success.to_h) }
+      rescue ArgumentError => e
+        Failure(e)
       end
 
       def initialize(patterns:)
@@ -43,12 +50,12 @@ module Types
         super(patterns: transformed)
       end
 
-      def all_enabled
-        patterns.select { |_, pattern| pattern.enabled? }
+      def subject
+        patterns[:subject]
       end
 
-      def [](value)
-        patterns.fetch(value)
+      def all_enabled
+        patterns.select { |_, pattern| pattern.enabled? }
       end
 
       def to_h

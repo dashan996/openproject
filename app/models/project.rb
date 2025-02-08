@@ -100,8 +100,28 @@ class Project < ApplicationRecord
 
   acts_as_favorable
 
-  acts_as_customizable # extended in Projects::CustomFields in order to support sections
+  acts_as_customizable validate_on: :saving_custom_fields
+  # extended in Projects::CustomFields in order to support sections
   # and project-level activation of custom fields
+
+  # Override the `validation_context` getter to include the `default_validation_context` when the
+  # context is `:saving_custom_fields`. This is required, because the `acts_as_url` plugin from
+  # `stringex` defines a callback on the `:create` context for initialising the `identifier` field.
+  # Providing a custom context while creating the project, will not execute the callbacks on the
+  # `:create` or `:update` contexts, meaning the identifier will not get initialised.
+  # In order to initialise the identifier, the `default_validation_context` (`:create`, or `:update`)
+  # should be included when validating via the `:saving_custom_fields`. This way every create
+  # or update callback will also be executed alongside the `:saving_custom_fields` callbacks.
+  # This problem does not affect the contextless callbacks, they are always executed.
+
+  def validation_context
+    case Array(@validation_context)
+    in [*, :saving_custom_fields, *] => context
+      context << default_validation_context
+    else
+      @validation_context
+    end
+  end
 
   acts_as_searchable columns: %W(#{table_name}.name #{table_name}.identifier #{table_name}.description),
                      date_column: "#{table_name}.created_at",

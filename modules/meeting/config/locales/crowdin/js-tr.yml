@@ -24,4 +24,4 @@ tr:
     label_meetings: 'Toplantılar'
     work_packages:
       tabs:
-        meetings: 'Meetings'
+        meetings: 'Toplantı'

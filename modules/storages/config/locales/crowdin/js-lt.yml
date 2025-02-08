@@ -43,7 +43,7 @@ lt:
           Automatiškai tvarkomas projekto aplankas dar nerastas. Prašome truputį palaukti, iš naujo įkelti puslapį, kad atsisiųstumėte naujausius duomenis, ir pabandyti dar kartą.
         managed_project_folder_no_access: >
           Jūs dar neturite prieigos prie tvarkomo projekto aplanko. Prašome truputį palaukti ir bandyti dar kartą.
-        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols.
+        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols and make sure the folder does not exist already.
         upload_keep_both: "Pasilikti abu"
         upload_replace: "Pakeisti"
       file_links:

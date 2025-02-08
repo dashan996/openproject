@@ -85,8 +85,9 @@ RSpec.describe RootSeeder,
       expect(default_modules).to include("reporting_module")
     end
 
-    it "creates a structured meeting of 1h duration" do
-      expect(StructuredMeeting.count).to eq 1
+    it "creates a weekly recurring meeting with one instance" do
+      expect(RecurringMeeting.count).to eq 1
+      expect(StructuredMeeting.count).to eq 2
       expect(StructuredMeeting.last.duration).to eq 1.0
       expect(MeetingAgendaItem.count).to eq 9
       expect(MeetingAgendaItem.sum(:duration_in_minutes)).to eq 60
@@ -136,7 +137,7 @@ RSpec.describe RootSeeder,
     include_examples "it creates records", model: Status, expected_count: 14
     include_examples "it creates records", model: TimeEntryActivity, expected_count: 6
     include_examples "it creates records", model: Workflow, expected_count: 1758
-    include_examples "it creates records", model: Meeting, expected_count: 1
+    include_examples "it creates records", model: RecurringMeeting, expected_count: 1
   end
 
   describe "demo data" do

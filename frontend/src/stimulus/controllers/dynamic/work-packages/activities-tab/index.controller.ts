@@ -5,15 +5,21 @@ import {
 import { TurboRequestsService } from 'core-app/core/turbo/turbo-requests.service';
 import { ApiV3Service } from 'core-app/core/apiv3/api-v3.service';
 
+enum AnchorType {
+  Comment = 'comment',
+  Activity = 'activity',
+}
+
 interface CustomEventWithIdParam extends Event {
   params:{
     id:string;
+    anchorName:AnchorType;
   };
 }
 
 export default class IndexController extends Controller {
   static values = {
-    updateStreamsUrl: String,
+    updateStreamsPath: String,
     sorting: String,
     pollingIntervalInMs: Number,
     filter: String,
@@ -24,15 +30,18 @@ export default class IndexController extends Controller {
     showConflictFlashMessageUrl: String,
   };
 
-  static targets = ['journalsContainer', 'buttonRow', 'formRow', 'form', 'reactionButton'];
+  static targets = ['journalsContainer', 'buttonRow', 'formRow', 'form', 'formSubmitButton', 'reactionButton'];
 
   declare readonly journalsContainerTarget:HTMLElement;
   declare readonly buttonRowTarget:HTMLInputElement;
   declare readonly formRowTarget:HTMLElement;
   declare readonly formTarget:HTMLFormElement;
+  declare readonly formSubmitButtonTarget:HTMLButtonElement;
   declare readonly reactionButtonTargets:HTMLElement[];
 
-  declare updateStreamsUrlValue:string;
+  declare readonly hasFormSubmitButtonTarget:boolean;
+
+  declare updateStreamsPathValue:string;
   declare sortingValue:string;
   declare lastServerTimestampValue:string;
   declare intervallId:number;
@@ -74,6 +83,7 @@ export default class IndexController extends Controller {
 
     this.setLatestKnownChangesetUpdatedAt();
     this.startPolling();
+    this.setCssClasses();
   }
 
   disconnect() {
@@ -194,7 +204,8 @@ export default class IndexController extends Controller {
   }
 
   private prepareUpdateStreamsUrl():string {
-    const url = new URL(this.updateStreamsUrlValue);
+    const baseUrl = window.location.origin;
+    const url = new URL(this.updateStreamsPathValue, baseUrl);
     url.searchParams.set('sortBy', this.sortingValue);
     url.searchParams.set('filter', this.filterValue);
     url.searchParams.set('last_update_timestamp', this.lastServerTimestampValue);
@@ -347,17 +358,19 @@ export default class IndexController extends Controller {
   }
 
   private handleInitialScroll() {
-    if (window.location.hash.includes('#activity-')) {
-      const activityId = window.location.hash.replace('#activity-', '');
-      this.scrollToActivity(activityId);
-    } else if (this.sortingValue === 'asc') {
+    const anchorTypeRegex = new RegExp(`#(${AnchorType.Comment}|${AnchorType.Activity})-(\\d+)`, 'i');
+    const activityIdMatch = window.location.hash.match(anchorTypeRegex); // Ex. [ "#comment-80", "comment", "80" ]
+
+    if (activityIdMatch && activityIdMatch.length === 3) {
+      this.scrollToActivity(activityIdMatch[1] as AnchorType, activityIdMatch[2]);
+    } else if (this.sortingValue === 'asc' && (!this.isMobile() || this.isWithinNotificationCenter())) {
       this.scrollToBottom();
     }
   }
 
-  private tryScroll(activityId:string, attempts:number, maxAttempts:number) {
+  private tryScroll(activityAnchorName:AnchorType, activityId:string, attempts:number, maxAttempts:number) {
     const scrollableContainer = this.getScrollableContainer();
-    const activityElement = document.getElementById(`activity-anchor-${activityId}`);
+    const activityElement = this.getActivityAnchorElement(activityAnchorName, activityId);
     const topPadding = 70;
 
     if (activityElement && scrollableContainer) {
@@ -371,16 +384,16 @@ export default class IndexController extends Controller {
         scrollableContainer.scrollTop = relativeTop - topPadding;
       }, 50);
     } else if (attempts < maxAttempts) {
-      setTimeout(() => this.tryScroll(activityId, attempts + 1, maxAttempts), 1000);
+      setTimeout(() => this.tryScroll(activityAnchorName, activityId, attempts + 1, maxAttempts), 1000);
     }
   }
 
-  private scrollToActivity(activityId:string) {
+  private scrollToActivity(activityAnchorName:AnchorType, activityId:string) {
     const maxAttempts = 20; // wait max 20 seconds for the activity to be rendered
-    this.tryScroll(activityId, 0, maxAttempts);
+    this.tryScroll(activityAnchorName, activityId, 0, maxAttempts);
   }
 
-  private tryScrollToBottom(attempts:number = 0, maxAttempts:number = 20) {
+  private tryScrollToBottom(attempts:number = 0, maxAttempts:number = 20, behavior:ScrollBehavior = 'smooth') {
     const scrollableContainer = this.getScrollableContainer();
 
     if (!scrollableContainer) {
@@ -402,7 +415,7 @@ export default class IndexController extends Controller {
         observer.disconnect();
         scrollableContainer.scrollTo({
           top: scrollableContainer.scrollHeight,
-          behavior: 'smooth',
+          behavior,
         });
       }, 100);
     });
@@ -415,7 +428,7 @@ export default class IndexController extends Controller {
   }
 
   private scrollToBottom() {
-    this.tryScrollToBottom();
+    this.tryScrollToBottom(0, 20, 'auto');
   }
 
   setFilterToOnlyComments() { this.filterValue = 'only_comments'; }
@@ -425,10 +438,23 @@ export default class IndexController extends Controller {
   setAnchor(event:CustomEventWithIdParam) {
     // native anchor scroll is causing positioning issues
     event.preventDefault();
-    const activityId = event.params.id;
 
-    this.scrollToActivity(activityId);
-    window.location.hash = `#activity-${activityId}`;
+    const activityId = event.params.id;
+    const anchorName = event.params.anchorName;
+
+    // not using the scrollToActivity method here as it is causing flickering issues
+    // in case of a setAnchor click, we can go for a direct scroll approach
+    const scrollableContainer = this.getScrollableContainer();
+    const activityElement = this.getActivityAnchorElement(anchorName, activityId);
+
+    if (scrollableContainer && activityElement) {
+      scrollableContainer.scrollTo({
+        top: activityElement.offsetTop - 90,
+        behavior: 'smooth',
+      });
+    }
+
+    window.location.hash = `#${anchorName}-${activityId}`;
   }
 
   private getCkEditorElement():HTMLElement | null {
@@ -457,8 +483,15 @@ export default class IndexController extends Controller {
     return document.querySelector('.tabcontent') as HTMLElement;
   }
 
+  private getActivityAnchorElement(activityAnchorName:AnchorType, activityId:string):HTMLElement | null {
+    return document.querySelector(`[data-anchor-${activityAnchorName}-id="${activityId}"]`);
+  }
+
   // Code Maintenance: Get rid of this JS based view port checks when activities are rendered in fully primierized activity tab in all contexts
   private isMobile():boolean {
+    if (this.isWithinNotificationCenter() || this.isWithinSplitScreen()) {
+      return window.innerWidth < 1013;
+    }
     return window.innerWidth < 1279;
   }
 
@@ -468,6 +501,15 @@ export default class IndexController extends Controller {
 
   private isWithinSplitScreen():boolean {
     return window.location.pathname.includes('work_packages/details');
+  }
+
+  private setCssClasses() {
+    if (this.isWithinNotificationCenter()) {
+      this.element.classList.add('work-packages-activities-tab-index-component--within-notification-center');
+    }
+    if (this.isWithinSplitScreen()) {
+      this.element.classList.add('work-packages-activities-tab-index-component--within-split-screen');
+    }
   }
 
   private addEventListenersToCkEditorInstance() {
@@ -648,7 +690,7 @@ export default class IndexController extends Controller {
   async onSubmit(event:Event | null = null) {
     if (this.saveInProgress === true) return;
 
-    this.saveInProgress = true;
+    this.setFormSubmitInProgress(true);
 
     event?.preventDefault();
 
@@ -661,8 +703,31 @@ export default class IndexController extends Controller {
         console.error('Error saving activity:', error);
       })
       .finally(() => {
-        this.saveInProgress = false;
+        this.setFormSubmitInProgress(false);
       });
+  }
+
+  private setFormSubmitInProgress(inProgress:boolean) {
+    this.saveInProgress = inProgress;
+
+    if (this.hasFormSubmitButtonTarget) {
+      this.formSubmitButtonTarget.disabled = inProgress;
+    }
+
+    this.setCKEditorReadonlyMode(inProgress);
+  }
+
+  private setCKEditorReadonlyMode(disabled:boolean) {
+    const ckEditorInstance = this.getCkEditorInstance();
+    const editorLockID = 'work-packages-activities-tab-index-component';
+
+    if (ckEditorInstance) {
+      if (disabled) {
+        ckEditorInstance.enableReadOnlyMode(editorLockID);
+      } else {
+        ckEditorInstance.disableReadOnlyMode(editorLockID);
+      }
+    }
   }
 
   private prepareFormData():FormData {
@@ -711,7 +776,7 @@ export default class IndexController extends Controller {
       this.handleStemVisibility();
     }, 10);
 
-    this.saveInProgress = false;
+    this.setFormSubmitInProgress(false);
   }
 
   private resetJournalsContainerMargins():void {

@@ -2,16 +2,16 @@ ja:
   activemodel:
     attributes:
       saml/provider:
-        display_name: Name
-        identifier: Identifier
-        secret: Secret
-        scope: Scope
-        assertion_consumer_service_url: ACS (Assertion consumer service) URL
-        limit_self_registration: Limit self registration
-        sp_entity_id: Service entity ID
-        metadata_url: Identity provider metadata URL
-        name_identifier_format: Name identifier format
-        idp_sso_service_url: Identity provider login endpoint
+        display_name: 名称
+        identifier: 識別子
+        secret: シークレット
+        scope: スコープ
+        assertion_consumer_service_url: ACS(アサーション・コンシューマ・サービス)URL
+        limit_self_registration: 自己登録を制限
+        sp_entity_id: サービス・エンティティID
+        metadata_url: ID プロバイダのメタデータ URL
+        name_identifier_format: 名前識別子の形式
+        idp_sso_service_url: アイデンティティ・プロバイダのログイン・エンドポイント
         idp_slo_service_url: Identity provider logout endpoint
         idp_cert: Public certificate of identity provider
         authn_requests_signed: Sign SAML AuthnRequests
@@ -32,8 +32,8 @@ ja:
           certificate_expired: "is expired and can no longer be used."
           unmatched_private_key: "does not belong to the given certificate"
   saml:
-    menu_title: SAML providers
-    delete_title: Delete SAML provider
+    menu_title: SAML プロバイダ
+    delete_title: SAML プロバイダの削除
     info:
       title: "SAML Protocol Configuration Parameters"
       description: >
@@ -45,15 +45,15 @@ ja:
     providers:
       label_empty_title: "No SAML providers configured yet."
       label_empty_description: "Add a provider to see them here."
-      label_automatic_configuration: Automatic configuration
-      label_metadata: Metadata
+      label_automatic_configuration: 自動設定
+      label_metadata: メタデータ
       label_metadata_endpoint: OpenProject metadata endpoint
       label_openproject_information: OpenProject information
       label_configuration_details: "Identity provider endpoints and certificates"
       label_configuration_encryption: "Signatures and Encryption"
       label_add_new: New SAML identity provider
       label_edit: Edit SAML identity provider %{name}
-      label_uid: Internal user id
+      label_uid: 内部ユーザーID
       label_mapping: Mapping
       label_requested_attribute_for: "Requested attribute for: %{attribute}"
       no_results_table: No SAML identity providers have been defined yet.

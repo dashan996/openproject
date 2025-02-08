@@ -48,7 +48,6 @@ import {
 } from 'core-app/features/work-packages/services/notifications/work-package-notification.service';
 import { BackRoutingService } from 'core-app/features/work-packages/components/back-routing/back-routing.service';
 import { WpSingleViewService } from 'core-app/features/work-packages/routing/wp-view-base/state/wp-single-view.service';
-import { CommentService } from 'core-app/features/work-packages/components/wp-activity/comment-service';
 import { RecentItemsService } from 'core-app/core/recent-items.service';
 import { UrlParamsService } from 'core-app/core/navigation/url-params.service';
 import {
@@ -62,7 +61,6 @@ import { TabComponent } from 'core-app/features/work-packages/components/wp-tabs
   selector: 'op-wp-split-view',
   providers: [
     WpSingleViewService,
-    CommentService,
     { provide: HalResourceNotificationService, useClass: WorkPackageNotificationService },
   ],
 })

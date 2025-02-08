@@ -40,6 +40,7 @@ class CustomFields::Inputs::Base::Autocomplete::SingleValueInput < CustomFields:
     {
       multiple: false,
       decorated: decorated?,
+      focusDirectly: false,
       append_to:
     }
   end

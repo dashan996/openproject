@@ -11,7 +11,6 @@ export const SHOW_USER_HOVER_CARD = new InjectionToken('SHOW_USER_HOVER_CARD');
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     HalResourceEditingService,
-    { provide: SHOW_USER_HOVER_CARD, useValue: false },
   ],
 })
 export class TimeEntryCreateModalComponent extends TimeEntryBaseModal {

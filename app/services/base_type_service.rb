@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -71,13 +73,14 @@ class BaseTypeService
   def set_params_and_validate(params)
     # Only set attribute groups when it exists
     # (Regression #28400)
-    set_attribute_groups(params) unless params[:attribute_groups].nil?
+    set_attribute_groups(params) if params[:attribute_groups]
 
     # This should go before `set_scalar_params` call to get the
     # project_ids, custom_field_ids diffs from the type and the params.
     # For determining the active custom fields for the type, it is necessary
     # to know whether the type is a milestone or not.
     set_milestone_param(params) unless params[:is_milestone].nil?
+
     set_active_custom_fields
 
     set_active_custom_fields_for_project_ids(params[:project_ids]) if params[:project_ids].present?
@@ -92,7 +95,7 @@ class BaseTypeService
   end
 
   def set_scalar_params(params)
-    type.attributes = params.except(:attribute_groups)
+    type.attributes = params.except(:attribute_groups, :subject_configuration, :subject_pattern)
   end
 
   def set_attribute_groups(params)

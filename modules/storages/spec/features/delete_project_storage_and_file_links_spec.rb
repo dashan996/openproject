@@ -33,7 +33,7 @@ require_module_spec_helper
 
 # Test if the deletion of a ProjectStorage actually deletes related FileLink
 # objects.
-RSpec.describe "Delete ProjectStorage with FileLinks", :js, :webmock, :with_cuprite do
+RSpec.describe "Delete ProjectStorage with FileLinks", :js, :webmock do
   let(:user) { create(:user) }
   let(:role) { create(:project_role, permissions: [:manage_files_in_project]) }
   let(:project) do

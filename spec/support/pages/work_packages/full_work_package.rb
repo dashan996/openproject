@@ -87,10 +87,11 @@ module Pages
       end
     end
 
-    def wait_for_activity_tab
-      expect(page).to have_test_selector("op-wp-activity-tab", wait: 10)
-      # wait for stimulus js component to be mounted
-      expect(page).to have_css('[data-test-selector="op-wp-activity-tab"][data-stimulus-controller-connected="true"]')
+    def select_log_unit_costs_action
+      SeleniumHubWaiter.wait
+      click_button(I18n.t("js.button_more"))
+      find(:menuitem, text: I18n.t(:button_log_costs)).click
+      Pages::WorkPackages::CostEntries.new.wait_for_spent_on_date_field_to_be_loaded
     end
 
     private

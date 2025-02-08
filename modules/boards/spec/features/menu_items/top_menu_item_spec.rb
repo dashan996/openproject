@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Top menu item for boards", :js, :with_cuprite do
+RSpec.describe "Top menu item for boards", :js do
   shared_let(:admin) { create(:admin) }
   shared_let(:user) { create(:user) }
   shared_let(:project) { create(:project) }

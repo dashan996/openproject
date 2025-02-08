@@ -29,7 +29,9 @@
 require "spec_helper"
 require_relative "shared_context"
 
-RSpec.describe "Calendar drag&dop and resizing", :js do
+RSpec.describe "Calendar drag&dop and resizing",
+               :js,
+               :selenium do
   include_context "with calendar full access"
 
   let!(:other_user) do

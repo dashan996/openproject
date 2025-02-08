@@ -140,7 +140,7 @@ See COPYRIGHT and LICENSE files for more details.
                     <%= t(:label_x_projects, count: custom_field.projects.count) %></td>
                   <% end %>
                 <td>
-                  <% type_links = custom_field.types.map { |t| link_to(t.name, edit_type_tab_path(id: t.id, tab: 'form_configuration')) } %>
+                  <% type_links = custom_field.types.map { |t| link_to(t.name, edit_tab_type_path(id: t.id, tab: "form_configuration")) } %>
                   <% if type_links.empty? %>
                     <span class="icon-context icon-warning">
                       <%= link_to t(:label_custom_field_add_no_type), types_path %>

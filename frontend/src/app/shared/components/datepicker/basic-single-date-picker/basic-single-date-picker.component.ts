@@ -95,7 +95,7 @@ export class OpBasicSingleDatePickerComponent implements ControlValueAccessor, O
 
   @Input() remoteFieldKey = null;
 
-  @Input() inDialog = false;
+  @Input() inDialog:string;
 
   @Input() dataAction = '';
 
@@ -146,7 +146,10 @@ export class OpBasicSingleDatePickerComponent implements ControlValueAccessor, O
   }
 
   showDatePicker():void {
-    this.datePickerInstance?.show();
+    if (!this.datePickerInstance?.isOpen) {
+      this.datePickerInstance?.show();
+      this.sentCalendarToTopLayer();
+    }
   }
 
   private initializeDatePicker() {
@@ -174,6 +177,9 @@ export class OpBasicSingleDatePickerComponent implements ControlValueAccessor, O
 
           this.cdRef.detectChanges();
         },
+        onOpen: () => {
+          this.sentCalendarToTopLayer();
+        },
         onDayCreate: async (_dObj:Date[], _dStr:string, _fp:flatpickr.Instance, dayElem:DayElement) => {
           onDayCreate(
             dayElem,
@@ -182,7 +188,8 @@ export class OpBasicSingleDatePickerComponent implements ControlValueAccessor, O
             !!this.minimalDate && dayElem.dateObj <= this.minimalDate,
           );
         },
-        static: this.inDialog,
+        static: false,
+        appendTo: this.appendToBodyOrDialog(),
       },
       this.input.nativeElement as HTMLInputElement,
     );
@@ -203,5 +210,32 @@ export class OpBasicSingleDatePickerComponent implements ControlValueAccessor, O
 
   registerOnTouched(fn:(_:string) => void):void {
     this.onTouched = fn;
+  }
+
+  // In case the date picker is opened in a dialog, it needs to be in the top layer
+  // since the dialog is also there. This method is called in two cases:
+  // 1. When the date picker is opened
+  // 2. When the date picker is already opened and the user clicks on the input
+  // The later is necessary as otherwise the date picker would be removed from the top layer
+  // when the user clicks on the input. That is because the input is not part of the date picker
+  // so clicking on it would be considered a click on the backdrop which removes an item from
+  // the top layer again.
+  public sentCalendarToTopLayer() {
+    if (!this.datePickerInstance.isOpen || !this.inDialog) {
+      return;
+    }
+
+    const calendarContainer = this.datePickerInstance.datepickerInstance.calendarContainer;
+    calendarContainer.setAttribute('popover', '');
+    calendarContainer.showPopover();
+    calendarContainer.style.marginTop = '0';
+  }
+
+  private appendToBodyOrDialog():HTMLElement|undefined {
+    if (this.inDialog) {
+      return document.querySelector(`#${this.inDialog}`) as HTMLElement;
+    }
+
+    return undefined;
   }
 }

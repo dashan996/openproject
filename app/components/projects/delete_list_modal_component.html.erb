@@ -2,7 +2,7 @@
                                      size: :large,
                                      id: MODAL_ID,
                                      data: { 'test-selector': MODAL_ID })) do |d| %>
-  <% d.with_header(variant: :large, mb: 2) %>
+  <% d.with_header(variant: :large) %>
   <% d.with_body { t(:'projects.lists.delete_modal.text') } %>
   <% d.with_footer do %>
     <%= render(Primer::Beta::Button.new(data: { "close-dialog-id": MODAL_ID })) { I18n.t(:button_cancel) } %>

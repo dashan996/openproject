@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe "Work Package table parent column", :js do
+RSpec.describe "Work Package table parent column", :js, :selenium do
   let(:user) { create(:admin) }
   let!(:parent) { create(:work_package, project:) }
   let!(:child) { create(:work_package, project:, parent:) }

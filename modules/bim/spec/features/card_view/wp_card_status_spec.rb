@@ -29,7 +29,7 @@
 require "spec_helper"
 require_relative "../../support/pages/ifc_models/show_default"
 
-RSpec.describe "Update status from WP card", :js, :with_cuprite, with_config: { edition: "bim" } do
+RSpec.describe "Update status from WP card", :js, with_config: { edition: "bim" } do
   let(:manager_role) do
     create(:project_role, permissions: %i[view_work_packages edit_work_packages view_ifc_models view_linked_issues])
   end

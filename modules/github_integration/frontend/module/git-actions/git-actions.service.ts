@@ -38,8 +38,8 @@ export class GitActionsService {
     return str
       .replace(/&/g, 'and ') // & becomes and
       .replace(/ +/g, '-') // Spaces become dashes
-      .replace(/[\000-\039]/g, '') // ASCII control characters are out
-      .replace(/\177/g, '') // DEL is out
+      .replace(/[\x00-\x1F]/g, '') // ASCII control characters are out
+      .replace(/\x7F/g, '') // DEL is out
       .replace(/[#\\\/\?\*\~\^\:\{\}@\.\[\]'"]/g, '') // Some other characters with special rules are out
       .replace(/^[-]+/g, '') // Dashes at the start are removed
       .replace(/[-]+$/g, '') // Dashes at the end are removed

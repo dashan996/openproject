@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "group memberships through project members page", :js, :with_cuprite do
+RSpec.describe "group memberships through project members page", :js do
   shared_let(:admin) { create(:admin) }
   let(:project) { create(:project, name: "Project 1", identifier: "project1", members: project_member) }
 

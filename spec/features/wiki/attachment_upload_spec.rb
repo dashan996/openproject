@@ -29,7 +29,7 @@
 require "spec_helper"
 require "features/page_objects/notification"
 
-RSpec.describe "Upload attachment to wiki page", :js do
+RSpec.describe "Upload attachment to wiki page", :js, :selenium do
   let(:user) do
     create(:user,
            member_with_permissions: { project => %i[view_wiki_pages edit_wiki_pages] })

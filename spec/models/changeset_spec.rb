@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -80,7 +82,7 @@ RSpec.describe Changeset do
   end
 
   describe "stripping commit" do
-    let(:comment) { "This is a looooooooooooooong comment" + (((" " * 80) + "\n") * 5) }
+    let(:comment) { "This is a looooooooooooooong comment#{"#{' ' * 80}\n" * 5}" }
 
     with_virtual_subversion_repository do
       let(:changeset) do
@@ -219,9 +221,11 @@ RSpec.describe Changeset do
         repository.project.save!
       end
 
-      it "refs keywords any with timelog" do
-        allow(Setting).to receive(:commit_ref_keywords).and_return "*"
-        allow(Setting).to receive(:commit_logtime_enabled?).and_return true
+      it "refs keywords any with timelog" do # rubocop:disable RSpec/ExampleLength
+        allow(Setting).to receive_messages(
+          commit_ref_keywords: "*",
+          commit_logtime_enabled?: true
+        )
 
         {
           "2" => 2.0,
@@ -259,7 +263,7 @@ RSpec.describe Changeset do
           expect(time.hours).to eq expected_hours
           expect(time.spent_on).to eq Date.yesterday
 
-          expect(time.activity.is_default).to be true
+          expect(time.activity).to be_nil
           expect(time.comments).to include "r520"
         end
       end
@@ -268,10 +272,12 @@ RSpec.describe Changeset do
         let!(:work_package2) { create(:work_package, project: repository.project, status: open_status) }
 
         it "refs keywords closing with timelog" do
-          allow(Setting).to receive(:commit_fix_status_id).and_return closed_status.id
-          allow(Setting).to receive(:commit_ref_keywords).and_return "*"
-          allow(Setting).to receive(:commit_fix_keywords).and_return "fixes , closes"
-          allow(Setting).to receive(:commit_logtime_enabled?).and_return true
+          allow(Setting).to receive_messages(
+            commit_fix_status_id: closed_status.id,
+            commit_ref_keywords: "*",
+            commit_fix_keywords: "fixes , closes",
+            commit_logtime_enabled?: true
+          )
 
           c = build(:changeset,
                     repository:,

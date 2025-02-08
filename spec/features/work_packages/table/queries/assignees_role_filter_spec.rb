@@ -30,7 +30,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Work package filtering by assignee's role", :js, :with_cuprite do
+RSpec.describe "Work package filtering by assignee's role", :js do
   shared_let(:project) { create(:project) }
 
   shared_let(:manager_role) { create(:project_role, permissions: %i[view_members view_work_packages save_queries]) }

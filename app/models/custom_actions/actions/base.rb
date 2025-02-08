@@ -43,6 +43,12 @@ class CustomActions::Actions::Base
     raise NotImplementedError
   end
 
+  def value_objects
+    values.map do |value|
+      allowed_values.find { |v| v[:value] == value }
+    end
+  end
+
   def type
     raise NotImplementedError
   end

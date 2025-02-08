@@ -296,7 +296,7 @@ class CustomField < ApplicationRecord
   end
 
   def multi_value_possible?
-    version? || user? || list? || field_format_hierarchy?
+    OpenProject::CustomFieldFormat.find_by(name: field_format)&.multi_value_possible?
   end
 
   def allow_non_open_versions_possible?
@@ -333,8 +333,11 @@ class CustomField < ApplicationRecord
                   .in_visible_project_or_me(User.current)
               end
 
-      scope
-        .select(*(User::USER_FORMATS_STRUCTURE[Setting.user_format].map(&:to_s) << "id"))
+      user_format_columns = User::USER_FORMATS_STRUCTURE[Setting.user_format].map(&:to_s)
+      # Always include lastname if not already included, as Groups always need a lastname (alias for name)
+      user_format_columns << "lastname" unless user_format_columns.include?("lastname")
+
+      scope.select(*user_format_columns, "id", "type")
     end
   end
 

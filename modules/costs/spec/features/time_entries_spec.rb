@@ -28,7 +28,7 @@
 
 require_relative "../spec_helper"
 
-RSpec.describe "Work Package table cost entries", :js do
+RSpec.describe "Work Package table time entries", :js do
   shared_let(:project) { create(:project_with_types) }
   shared_let(:user) { create(:admin) }
 

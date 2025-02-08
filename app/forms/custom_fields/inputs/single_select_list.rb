@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -34,10 +36,11 @@ class CustomFields::Inputs::SingleSelectList < CustomFields::Inputs::Base::Autoc
     custom_value_form.hidden(**input_attributes.merge(value: ""))
 
     custom_value_form.autocompleter(**input_attributes) do |list|
-      @custom_value.custom_field.custom_options.each do |custom_option|
+      list_items.each do |item|
         list.option(
-          label: custom_option.value, value: custom_option.id,
-          selected: selected?(custom_option)
+          label: item.fetch(:label),
+          value: item.fetch(:value),
+          selected: item.fetch(:selected)
         )
       end
     end
@@ -47,6 +50,33 @@ class CustomFields::Inputs::SingleSelectList < CustomFields::Inputs::Base::Autoc
 
   def decorated?
     true
+  end
+
+  def list_items
+    case @custom_field.field_format
+    when "hierarchy"
+      hierarchy_items.map do |item|
+        {
+          label: item.ancestry_path,
+          value: item.id,
+          selected: item.id == @custom_value.value&.to_i
+        }
+      end
+    else
+      @custom_field.custom_options.map do |custom_option|
+        {
+          label: custom_option.value,
+          value: custom_option.id,
+          selected: selected?(custom_option)
+        }
+      end
+    end
+  end
+
+  def hierarchy_items
+    CustomFields::Hierarchy::HierarchicalItemService.new
+      .get_descendants(item: @custom_field.hierarchy_root, include_self: false)
+      .value_or([])
   end
 
   def selected?(custom_option)

@@ -6,10 +6,12 @@ ca:
     attributes:
       ldap_groups/synchronized_group:
         dn: 'DN'
+        auth_source: 'Auth source'
         ldap_auth_source: 'Connexió LDAP'
         sync_users: 'Usuaris sincronitzats'
       ldap_groups/synchronized_filter:
         filter_string: 'Filtre LDAP'
+        auth_source: 'Auth source'
         ldap_auth_source: 'Connexió LDAP'
         group_name_attribute: "Atribut de nom de grup"
         sync_users: 'Usuaris sincronitzats'

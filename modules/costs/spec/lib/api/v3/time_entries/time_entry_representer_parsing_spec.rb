@@ -81,6 +81,7 @@ RSpec.describe API::V3::TimeEntries::TimeEntryRepresenter, "parsing" do
         "raw" => "some comment"
       },
       "spentOn" => "2017-07-28",
+      "startTime" => "2017-07-28T12:30:00Z",
       text_custom_field.attribute_name(:camel_case) => {
         "raw" => "some text"
       }
@@ -129,7 +130,7 @@ RSpec.describe API::V3::TimeEntries::TimeEntryRepresenter, "parsing" do
   end
 
   describe "properties" do
-    context "spentOn" do
+    describe "spentOn" do
       it "updates spent_on" do
         time_entry = representer.from_hash(hash)
         expect(time_entry.spent_on)
@@ -137,7 +138,62 @@ RSpec.describe API::V3::TimeEntries::TimeEntryRepresenter, "parsing" do
       end
     end
 
-    context "hours" do
+    describe "startTime" do
+      context "when not tracking start and end time" do
+        before do
+          allow(TimeEntry).to receive_messages(
+            can_track_start_and_end_time?: false,
+            must_track_start_and_end_time?: false
+          )
+        end
+
+        it "does not set start_time" do
+          time_entry = representer.from_hash(hash)
+          expect(time_entry.start_time).to be_nil
+        end
+      end
+
+      context "when tracking start and end time" do
+        before do
+          allow(TimeEntry).to receive_messages(
+            can_track_start_and_end_time?: true,
+            must_track_start_and_end_time?: false
+          )
+        end
+
+        context "when spent_on != start_time date" do
+          before do
+            hash["startTime"] = "1980-12-22T12:00:00Z"
+          end
+
+          it "raises an error" do
+            expect do
+              representer.from_hash(hash)
+            end.to raise_error(API::Errors::Validation)
+          end
+        end
+
+        it "sets start_time" do
+          user.pref[:time_zone] = "Asia/Tokyo"
+
+          time_entry = representer.from_hash(hash)
+
+          # timezone on the TimeEntry would be set to the user's TimeZone via the SetAttribute service, so we need to
+          # manually set it here
+          time_entry.time_zone = "Asia/Tokyo"
+
+          # We are sending in 12:30:00 UTC as the start time, in Tokyo time (for 2017-07-28) that equals
+          # 21:30:00 in Japan Standard Time (JST), so the time should be set to 21:30
+
+          expect(time_entry.start_time).to eq((21 * 60) + 30) # 21:30
+
+          expect(time_entry.start_timestamp).to eq(DateTime.parse("2017-07-28T12:30:00Z"))
+          expect(time_entry.end_timestamp).to eq(DateTime.parse("2017-07-28T17:30:00Z"))
+        end
+      end
+    end
+
+    describe "hours" do
       it "updates hours" do
         time_entry = representer.from_hash(hash)
         expect(time_entry.hours)
@@ -159,7 +215,7 @@ RSpec.describe API::V3::TimeEntries::TimeEntryRepresenter, "parsing" do
       end
     end
 
-    context "comment" do
+    describe "comment" do
       it "updates comment" do
         time_entry = representer.from_hash(hash)
         expect(time_entry.comments)
@@ -167,7 +223,7 @@ RSpec.describe API::V3::TimeEntries::TimeEntryRepresenter, "parsing" do
       end
     end
 
-    context "property custom field" do
+    describe "property custom field" do
       it "updates the custom value" do
         time_entry = representer.from_hash(hash)
 

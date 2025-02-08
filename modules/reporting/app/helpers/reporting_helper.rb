@@ -141,6 +141,28 @@ module ReportingHelper
   end
   # rubocop:enable Metrics/AbcSize
 
+  def spent_on_time_representation(start_timestamp, hours)
+    return "" if start_timestamp.nil?
+
+    result = format_time(start_timestamp, include_date: false)
+    return result if hours.nil? || hours.zero?
+
+    end_timestamp = start_timestamp + hours.hours
+    days_between_suffix = days_between_representation(start_timestamp, end_timestamp)
+    "#{result} - #{format_time(end_timestamp, include_date: false)}#{days_between_suffix}"
+  end
+
+  def days_between_representation(start_timestamp, end_timestamp)
+    return "" if start_timestamp.nil? || end_timestamp.nil?
+
+    days_between = (end_timestamp.to_date - start_timestamp.to_date).to_i
+    if days_between.positive?
+      " (+#{WorkPackage::Exports::Formatters::Days.new(nil)
+                                                  .format_value(days_between, nil)
+                                                  .delete(' ')})"
+    end
+  end
+
   def custom_value(cf_identifier, value)
     cf_id = cf_identifier.gsub("custom_field", "").to_i
 

@@ -30,12 +30,14 @@ class RecurringMeeting::EndAfter < ApplicationForm
   form do |meeting_form|
     meeting_form.select_list(
       name: "end_after",
+      required: true,
       label: I18n.t("activerecord.attributes.recurring_meeting.end_after"),
       data: {
         target_name: "end_after",
         "show-when-value-selected-target": "cause"
       }
     ) do |list|
+      list.option(value: "never", label: I18n.t("recurring_meeting.end_after.never"))
       list.option(value: "specific_date", label: I18n.t("recurring_meeting.end_after.specific_date"))
       list.option(value: "iterations", label: I18n.t("recurring_meeting.end_after.iterations"))
     end

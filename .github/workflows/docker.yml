@@ -53,9 +53,13 @@ jobs:
 
           VERSION=${TAG_REF#v}
           echo "Version: $VERSION"
+          echo "Checkout REF: $CHECKOUT_REF"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "checkout_ref=$CHECKOUT_REF" >> "$GITHUB_OUTPUT"
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.extract_version.outputs.checkout_ref }}
       - name: Cache NPM
         uses: runs-on/cache@v4
         with:
@@ -129,16 +133,11 @@ jobs:
             bim_support: false
             target: all-in-one
             runner: runner=4cpu-linux-arm64
-          - platform: linux/ppc64le
-            digest: ppc-aio
-            bim_support: false
-            target: all-in-one
-            runner: runner=4cpu-linux-x64
     steps:
       - name: Checkout
+        uses: actions/checkout@v4
         with:
           ref: ${{ needs.setup.outputs.checkout_ref }}
-        uses: actions/checkout@v4
       - name: Prepare docker files
         run: |
           cp ./docker/prod/Dockerfile ./Dockerfile
@@ -186,6 +185,16 @@ jobs:
             type=semver,pattern={{version}},value=${{ needs.setup.outputs.version }}
           images: |
             ${{ env.REGISTRY_IMAGE }}
+      - name: Restore vendor/bundle
+        id: restore-vendor-bundle
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            vendor/bundle
+          key: ${{ matrix.platform }}-vendor-bundle-${{ github.ref }}
+      - name: Include vendor/bundle in this build (so we can use it from the cache above)
+        run: |
+          sed -i 's/vendor\/bundle//g' .dockerignore
       - name: Build image
         id: build
         uses: docker/build-push-action@v6
@@ -195,12 +204,26 @@ jobs:
           target: ${{ matrix.target }}
           build-args: |
             BIM_SUPPORT=${{ matrix.bim_support }}
+            BUILDKIT_PROGRESS=plain
           pull: true
           load: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=s3,blobs_prefix=cache/${{ github.repository }}/,manifests_prefix=cache/${{ github.repository }}/,region=${{ env.RUNS_ON_AWS_REGION }},bucket=${{ env.RUNS_ON_S3_BUCKET_CACHE }}
           cache-to: type=s3,blobs_prefix=cache/${{ github.repository }}/,manifests_prefix=cache/${{ github.repository }}/,region=${{ env.RUNS_ON_AWS_REGION }},bucket=${{ env.RUNS_ON_S3_BUCKET_CACHE }},mode=max
+      - name: Extract vendor/bundle from container
+        run: |
+          docker create --name bundle ${{ steps.build.outputs.imageid }}
+          rm -rf vendor/bundle || true
+          docker cp bundle:/app/vendor/bundle vendor/bundle
+          docker rm bundle
+      - name: Save vendor/bundle
+        id: save-vendor-bundle
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            vendor/bundle
+          key: ${{ steps.restore-vendor-bundle.outputs.cache-primary-key }}
       - name: Test
         # We only test the native container. If that fails the builds for the others
         # will be cancelled as well.

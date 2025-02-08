@@ -31,7 +31,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Cost and Reports Main Menu Item", :js, :with_cuprite do
+RSpec.describe "Cost and Reports Main Menu Item", :js do
   shared_let(:admin) { create(:admin) }
   shared_let(:project) { create(:project) }
   shared_let(:user_with_permissions) { create(:user, member_with_permissions: { project => %i[view_time_entries] }) }

@@ -3,6 +3,8 @@ ko:
     attributes:
       storages/file_link:
         origin_id: 원본 ID
+      storages/project_storage:
+        storage: 저장소
       storages/storage:
         creator: 생성자
         drive: 드라이브 ID
@@ -72,6 +74,7 @@ ko:
         confirmation_text: 해당 사항을 이해하며 이 프로젝트에서 이 파일 저장소를 제거할 것인지 확인해 주세요
         heading_text: '%{storage}에서 프로젝트 제거'
         text: 이 작업은 되돌릴 수 없으며 이 프로젝트의 작업 패키지에서 해당 저장소의 파일 및 폴더에 대한 모든 링크를 제거합니다.
+        title: Remove project from storage
       label: 프로젝트 제거
   services:
     attributes:
@@ -124,7 +127,7 @@ ko:
               not_found: "%{current_path}을(를) 찾을 수 없습니다."
             set_folders_permissions:
               permission_not_set: '- %{path}에 대한 권한을 설정할 수 없습니다.'
-          error: An unexpected error occurred. Please ensure that your Nextcloud instance is reachable and check OpenProject worker logs for more information
+          error: 예기치 않은 오류가 발생했습니다. Nextcloud 인스턴스에 연결할 수 있는지 확인하고 OpenProject 작업자 로그에서 자세한 내용을 확인하세요
           group_does_not_exist: "%{group}이(가) 없습니다. Nextcloud 인스턴스 구성을 확인하세요."
           insufficient_privileges: OpenProject에는 %{user}을(를) %{group}에 추가할 수 있는 권한이 충분하지 않습니다. Nextcloud에서 그룹 설정을 확인하세요.
           not_allowed: Nextcloud가 요청을 차단합니다.
@@ -145,7 +148,7 @@ ko:
               not_found: "%{current_path}을(를) 찾을 수 없습니다."
             set_folders_permissions:
               permission_not_set: '- %{path}에 대한 권한을 설정할 수 없습니다.'
-          error: An unexpected error occurred. Please ensure that OneDrive/SharePoint is reachable and check OpenProject worker logs for more information
+          error: 예기치 않은 오류가 발생했습니다. OneDrive/SharePoint에 연결할 수 있는지 확인하고 OpenProject 작업자 로그에서 자세한 내용을 확인하세요
           not_allowed: OpenProject가 OneDrive 드라이브에 액세스하도록 허용되지 않았습니다. Azure 애플리케이션에 설정된 권한을 확인하세요.
           unauthorized: OpenProject가 OneDrive와 동기화할 수 없습니다. 저장소 및 Azure 애플리케이션 구성을 확인하세요.
           user_does_not_exist: "%{user}이(가) Nextcloud에 없습니다."
@@ -343,8 +346,8 @@ ko:
         subtitle: 리디렉션 중입니다
         title: 통합 설정 완료됨
       timeout:
-        link_text: health status of the file storage setup
-        subtitle: OpenProject could not provide you access to the project folder within the expected period of time. Please, try once again.<br><br> If that problem persists please contact your OpenProject administrator to check the %{storages_health_link}.
+        link_text: 파일 저장소 설정 상태
+        subtitle: 예상 시간 내에 OpenProject에서 프로젝트 폴더에 대한 액세스를 제공하지 못했습니다. 다시 한번 시도해 보세요.<br><br> 문제가 지속되면 OpenProject 관리자에게 문의하여 %{storages_health_link}를 확인하세요.
       waiting:
         subtitle: 잠시 기다려 주세요. 시간이 좀 걸릴 수 있습니다.
         title: 프로젝트 폴더에 대한 권한을 설정하는 중입니다.

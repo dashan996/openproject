@@ -30,7 +30,9 @@ require "spec_helper"
 
 require_relative "../../support/pages/my/page"
 
-RSpec.describe "Custom text widget on my page", :js do
+RSpec.describe "Custom text widget on my page",
+               :js,
+               :selenium do
   let(:permissions) do
     []
   end

@@ -26,7 +26,16 @@
 // See COPYRIGHT and LICENSE files for more details.
 //++
 
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { PathHelperService } from 'core-app/core/path-helper/path-helper.service';
 import { HalResource } from 'core-app/features/hal/resources/hal-resource';
 import { HalResourceService } from 'core-app/features/hal/services/hal-resource.service';
@@ -166,10 +175,6 @@ export class CkeditorAugmentedTextareaComponent extends UntilDestroyedMixin impl
       });
   }
 
-  public markEdited() {
-    window.OpenProject.pageWasEdited = true;
-  }
-
   public async saveForm(evt?:SubmitEvent):Promise<void> {
     this.saveRequested.emit(); // Provide a hook for the parent component to do something before the form is submitted
     this.inFlight = true;
@@ -209,7 +214,9 @@ export class CkeditorAugmentedTextareaComponent extends UntilDestroyedMixin impl
     return editor;
   }
 
-  private syncToTextarea() {
+  public syncToTextarea() {
+    window.OpenProject.pageWasEdited = true;
+
     try {
       this.wrappedTextArea.value = this.ckEditorInstance.getTransformedContent(true);
     } catch (e) {

@@ -8,6 +8,7 @@ ko:
         url: '페이로드 URL'
         secret: '서명 비밀번호'
         events: '이벤트'
+        enabled: '활성화됨'
         projects: '활성화 된 프로젝트'
       webhooks/log:
         event_name: '이벤트 이름'

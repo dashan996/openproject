@@ -36,7 +36,9 @@ module Types
       end
 
       def cast(value)
-        Collection.build(patterns: value).value_or { nil }
+        return value if value.is_a?(Collection)
+
+        Collection.build(patterns: value).value_or { Collection.empty }
       end
 
       def serialize(pattern)
@@ -46,7 +48,7 @@ module Types
       end
 
       def deserialize(value)
-        return if value.blank?
+        return Collection.empty if value.blank?
 
         data = YAML.safe_load(value)
         cast(data)

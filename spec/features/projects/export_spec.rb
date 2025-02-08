@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "project export", :js, :with_cuprite do
+RSpec.describe "project export", :js do
   shared_let(:important_project) { create(:project, name: "Important schedule plan", description: "Important description") }
   shared_let(:party_project) { create(:project, name: "Christmas party", description: "Christmas description") }
   shared_let(:user) do

@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "invite user via email", :js, :with_cuprite do
+RSpec.describe "invite user via email", :js do
   let!(:project) { create(:project, name: "Project 1", identifier: "project1", members: project_members) }
   let!(:developer) { create(:project_role, name: "Developer") }
   let(:project_members) { {} }

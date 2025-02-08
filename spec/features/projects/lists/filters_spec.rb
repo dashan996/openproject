@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Projects list filters", :js, :with_cuprite, with_settings: { login_required?: false } do
+RSpec.describe "Projects list filters", :js, with_settings: { login_required?: false } do
   shared_let(:admin) { create(:admin) }
 
   shared_let(:manager)   { create(:project_role, name: "Manager") }
@@ -574,6 +574,33 @@ RSpec.describe "Projects list filters", :js, :with_cuprite, with_settings: { log
 
         projects_page.expect_projects_listed(public_project)
         projects_page.expect_projects_not_listed(project)
+      end
+    end
+
+    describe "user cf filter" do
+      let(:some_user) { create(:user, member_with_roles: { project => [developer] }) }
+      let!(:user_cf) do
+        create(:user_project_custom_field,
+               name: "A user CF",
+               projects: [project, development_project]).tap do |cf|
+          project.update(custom_field_values: { cf.id => [some_user.id] })
+        end
+      end
+
+      it "filters for the project that has the corresponding value" do
+        load_and_open_filters admin
+
+        projects_page.set_filter(user_cf.column_name, user_cf.name, "is (OR)", [some_user.name])
+
+        projects_page.expect_projects_listed(project)
+      end
+
+      it "displays the visible project members as available options" do
+        load_and_open_filters admin
+
+        autcomplete_options = projects_page.autocomplete_options_for(user_cf)
+
+        expect(autcomplete_options).to eq([{ name: some_user.name, email: some_user.mail }])
       end
     end
   end

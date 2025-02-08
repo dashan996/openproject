@@ -28,7 +28,9 @@
 
 require "spec_helper"
 
-RSpec.describe "Team planner Menu Item", :js, :with_cuprite do
+RSpec.describe "Team planner Menu Item",
+               :js,
+               :selenium do
   shared_let(:project) do
     create(:project, enabled_module_names: %w[work_package_tracking team_planner_view])
   end

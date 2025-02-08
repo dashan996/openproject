@@ -33,6 +33,7 @@ ru:
       cost_type:
         unit: "Наименование количественного показателя"
         unit_plural: "Множественное наименование количественного показателя"
+        default: "Тип затрат по умолчанию"
       work_package:
         costs_by_type: "Затраченное количество"
         labor_costs: "Трудовые расходы"
@@ -44,6 +45,16 @@ ru:
         rate: "Тариф"
       user:
         default_rates: "Тариф по умолчанию"
+      time_entry:
+        project: Проект
+        user: Пользователь
+        work_package: Пакет работ
+        hours: Часы
+        comments: Комментарий
+        activity: Деятельность
+        spent_on: Дата
+        start_time: Время начала
+        end_time: Время окончания
     models:
       cost_type:
         one: "Тип затрат"
@@ -53,6 +64,8 @@ ru:
       rate: "Ставка"
     errors:
       models:
+        time_entry:
+          invalid_time: "должно быть между 00:00 и 23:59."
         work_package:
           is_not_a_valid_target_for_cost_entries: "Пакет работ #%{id} не является допустимым объектом для назначения стимостей."
           nullify_is_not_valid_for_cost_entries: "Записи о стоимостях не могут быть присвоены проекту."
@@ -67,6 +80,7 @@ ru:
     fixed_date: "Дата исправления"
   button_add_rate: "Добавить тариф"
   button_log_costs: "Журналировать расходы на единицу"
+  button_log_time: "Журнал"
   caption_booked_on_project: "Заказано на проект"
   caption_default: "По умолчанию"
   caption_default_rate_history_for: "История тарифов по умолчанию для %{user}"
@@ -78,6 +92,7 @@ ru:
   caption_save_rate: "Сохранить тариф"
   caption_set_rate: "Установить текущий тариф"
   caption_show_locked: "Показывать Заблокированные типы"
+  caption_log_time_dialog: "Журналировать время"
   description_date_for_new_rate: "Дата для нового тарифа"
   group_by_others: "не в какой-либо группе"
   label_between: "между"
@@ -117,10 +132,12 @@ ru:
   label_until: "До"
   label_valid_from: "Действует с"
   label_yes: "Да"
+  placeholder_activity_select_work_package_first: Сначала необходимо выбрать пакет работ
   notice_something_wrong: "Произошла ошибка. Пожалуйста, попробуйте снова."
   notice_successful_restore: "Успешное восстановление."
   notice_successful_lock: "Успешно заблокировано."
   notice_cost_logged_successfully: "Стоимость единицы успешно зажурналировано "
+  notice_different_time_zones: "У этого пользователя другой часовой пояс (%{tz}). Время будет журналироваться с учетом его часового пояса."
   permission_edit_cost_entries: "Править зарегестрированные количественные затраты"
   permission_edit_own_cost_entries: "Править собственные зарегистрированные количественные затраты"
   permission_edit_hourly_rates: "Править почасовые тарифы"
@@ -148,3 +165,7 @@ ru:
   week: "неделя"
   js:
     text_are_you_sure: "Уверены?"
+  api_v3:
+    errors:
+      validation:
+        start_time_different_date: "Дата startTime (%{start_time}) должна быть такой же, как дата spentOn (%{spent_on})."

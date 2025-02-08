@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "version show graph", :js do
+RSpec.describe "version show graph", :js, :selenium do
   shared_let(:user) { create(:admin) }
   # parent
   # +- sibling

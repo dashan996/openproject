@@ -54,6 +54,7 @@ module Queries::Projects
     order Orders::LatestActivityAtOrder
     order Orders::RequiredDiskSpaceOrder
     order Orders::CustomFieldOrder
+    order Orders::LifeCycleStepOrder
     order Orders::ProjectStatusOrder
     order Orders::NameOrder
     order Orders::TypeaheadOrder

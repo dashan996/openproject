@@ -32,10 +32,10 @@ import FilterListController from '../../filter/filter-list.controller';
 
 export default class extends FilterListController {
   static targets = [
-    'bulkActionContainer',
+    'hideWhenFiltering',
   ];
 
-  declare readonly bulkActionContainerTargets:HTMLInputElement[];
+  declare readonly hideWhenFilteringTargets:HTMLInputElement[];
 
   filterLists() {
     const query = this.filterTarget.value.toLowerCase();
@@ -56,13 +56,13 @@ export default class extends FilterListController {
   }
 
   hideBulkActionContainers() {
-    this.bulkActionContainerTargets.forEach((item) => {
+    this.hideWhenFilteringTargets.forEach((item) => {
       this.setVisibility(item, false);
     });
   }
 
   showBulkActionContainers() {
-    this.bulkActionContainerTargets.forEach((item) => {
+    this.hideWhenFilteringTargets.forEach((item) => {
       this.setVisibility(item, true);
     });
   }

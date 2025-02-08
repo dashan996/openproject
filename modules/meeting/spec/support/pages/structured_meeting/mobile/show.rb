@@ -41,7 +41,7 @@ module Pages::StructuredMeeting::Mobile
       within(meeting_details_container) do
         click_link_or_button "Show all"
       end
-      expect(page).to have_css("#edit-participants-dialog")
+      expect(page).to have_modal("Participants")
     end
   end
 end

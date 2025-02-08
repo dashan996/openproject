@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -129,13 +131,18 @@ Rails.application.routes.draw do
 
   get "/roles/workflow/:id/:role_id/:type_id" => "roles#workflow"
 
-  get "/types/:id/edit/:tab" => "types#edit",
-      as: "edit_type_tab"
-  match "/types/:id/update/:tab" => "types#update",
-        as: "update_type_tab",
-        via: %i[post patch]
   resources :types do
-    post "move/:id", action: "move", on: :collection
+    member do
+      get "edit/:tab" => "types#edit", as: "edit_tab"
+      match "update/:tab" => "types#update", as: "update_tab", via: %i[post patch]
+      put :subject_configuration,
+          controller: "work_packages/types/subject_configuration",
+          action: "update_subject_configuration"
+    end
+
+    collection do
+      post "move/:id", action: "move"
+    end
   end
 
   resources :statuses, except: :show
@@ -339,12 +346,19 @@ Rails.application.routes.draw do
       end
 
       # states managed by client-side routing on work_package#index
-      get "(/*state)" => "work_packages#index", on: :collection, as: ""
+      get "(/*state)" => "work_packages#index", on: :collection, as: "", constraints: { state: /(?!(dialog)).+/ }
+
       get "/create_new" => "work_packages#index", on: :collection, as: "new_split"
       get "/new" => "work_packages#index", on: :collection, as: "new"
 
       # state for show view in project context
-      get "(/*state)" => "work_packages#show", on: :member, as: ""
+      get "(/*state)" => "work_packages#show", on: :member, as: "", constraints: { id: /\d+/, state: /(?!(dialog)).+/ }
+    end
+
+    namespace :work_packages do
+      resource :dialog, only: %i[new create] do
+        post :refresh_form
+      end
     end
 
     resources :activity, :activities, only: :index, controller: "activities" do
@@ -514,6 +528,19 @@ Rails.application.routes.draw do
       resource :progress_tracking, controller: "/admin/settings/progress_tracking", only: %i[show update]
       resource :projects, controller: "/admin/settings/projects_settings", only: %i[show update]
       resource :new_project, controller: "/admin/settings/new_project_settings", only: %i[show update]
+      resources :project_life_cycle_step_definitions,
+                path: "project_life_cycle",
+                controller: "/admin/settings/project_life_cycle_step_definitions",
+                only: %i[index create edit update destroy] do
+        collection do
+          get :new_stage
+          get :new_gate
+        end
+        member do
+          patch :move
+          put :drop # should be patch, but requires passing method to generic-drag-and-drop controller
+        end
+      end
       resources :project_custom_fields, controller: "/admin/settings/project_custom_fields" do
         member do
           delete "options/:option_id", action: "delete_option", as: :delete_option_of
@@ -527,9 +554,6 @@ Rails.application.routes.draw do
           delete :unlink
         end
       end
-      # TODO: This is for now only added to be able to create a link
-      # There is no controller behind this.
-      resources :project_life_cycle_step_definitions, path: "project_life_cycles", only: %i[index]
       resources :project_custom_field_sections, controller: "/admin/settings/project_custom_field_sections",
                                                 only: %i[create update destroy] do
         member do
@@ -610,7 +634,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :children, only: %i[new create destroy], controller: "work_package_children"
+    resources :children_relations, only: %i[new create destroy], controller: "work_package_children_relations"
 
     resource :progress, only: %i[new edit update], controller: "work_packages/progress"
     collection do
@@ -632,6 +656,9 @@ Rails.application.routes.draw do
     get :show_conflict_flash_message, on: :collection # we don't need a specific work package for this
 
     get "/split_view/update_counter" => "work_packages/split_view#update_counter",
+        on: :member
+
+    get "/split_view/get_relations_counter" => "work_packages/split_view#get_relations_counter",
         on: :member
 
     # states managed by client-side (angular) routing on work_package#show

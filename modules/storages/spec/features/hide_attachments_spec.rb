@@ -31,7 +31,7 @@
 require "spec_helper"
 require_module_spec_helper
 
-RSpec.describe "Hide attachments", :js, :with_cuprite do
+RSpec.describe "Hide attachments", :js do
   let(:permissions) do
     %i(add_work_packages
        manage_files_in_project

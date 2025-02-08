@@ -30,8 +30,8 @@ require "rack/utils"
 
 class WorkPackages::SplitViewController < ApplicationController
   # Authorization is checked in the find_work_package action
-  no_authorization_required! :update_counter
-  before_action :find_work_package, only: %i[update_counter]
+  no_authorization_required! :update_counter, :get_relations_counter
+  before_action :find_work_package
 
   def update_counter
     respond_to do |format|
@@ -43,6 +43,10 @@ class WorkPackages::SplitViewController < ApplicationController
         ]
       end
     end
+  end
+
+  def get_relations_counter
+    render json: { count: WorkPackageRelationsTab::RelationsMediator.new(work_package: @work_package).all_relations_count }
   end
 
   private

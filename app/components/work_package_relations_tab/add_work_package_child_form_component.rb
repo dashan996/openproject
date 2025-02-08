@@ -47,6 +47,6 @@ class WorkPackageRelationsTab::AddWorkPackageChildFormComponent < ApplicationCom
 
   def submit_url_options
     { method: :post,
-      url: work_package_children_path(@work_package) }
+      url: work_package_children_relations_path(@work_package) }
   end
 end

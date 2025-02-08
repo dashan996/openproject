@@ -30,6 +30,7 @@
 
 module RecurringMeetings
   class ShowPageHeaderComponent < ApplicationComponent
+    include OpTurbo::Streamable
     include OpPrimer::ComponentHelpers
     include ApplicationHelper
 
@@ -64,8 +65,17 @@ module RecurringMeetings
       I18n.t(:label_recurring_meeting)
     end
 
-    def page_title
-      @meeting.present? ? "#{@meeting.title} (Meeting series)" : I18n.t(:label_recurring_meeting_plural)
+    def page_title(breadcrumb = nil)
+      @meeting.present? ? meeting_series_title(breadcrumb).to_s : I18n.t(:label_recurring_meeting_plural)
+    end
+
+    def meeting_series_title(breadcrumb)
+      concat @meeting.title
+      if breadcrumb
+        concat render(Primer::Beta::Text.new) { " (#{I18n.t(:label_meeting_series)})" }
+      else
+        concat render(Primer::Beta::Text.new(color: :muted)) { " (#{I18n.t(:label_meeting_series)})" }
+      end
     end
 
     def page_description
@@ -76,7 +86,7 @@ module RecurringMeetings
       [parent_element,
        { href: @project.present? ? project_meetings_path(@project.id) : meetings_path,
          text: I18n.t(:label_meeting_plural) },
-       page_title]
+       page_title(true)]
     end
 
     def parent_element

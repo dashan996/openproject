@@ -229,6 +229,10 @@
           item:
             title: This item doesn't have any hierarchy level below
             description: Add items to this list to create sub-items inside another one
+        delete_dialog:
+          title: "Delete custom field item"
+          heading: "Delete custom field item?"
+          description: "This action will irreversibly remove the item and all its sub-items. Any assigned values will be permanently deleted. If this field is required, removing items may cause existing work packages to become invalid."
         placeholder:
           label: "Item label"
           short: "Short name"
@@ -249,6 +253,7 @@
     confirm_destroy_option: "Sletting av et alternativ vil slette alle forekomster (f.eks i arbeidspakker). Er du sikker på at du vil slette den?"
     reorder_alphabetical: "Omorganiser verdier alfabetisk"
     reorder_confirmation: "Advarsel: Gjeldende rekkefølge for tilgjengelige verdier vil gå tapt. Vil du fortsette?"
+    placeholder_version_select: "Work package or project selection is required first"
     instructions:
       is_required: "Marker det egendefinerte feltet som påkrevd. Dette vil gjøre det obligatorisk å fylle ut feltet når du oppretter nye eller oppdaterer eksisterende ressurser."
       is_required_for_project: "Marker for å aktivere denne attributten og gjøre den påkrevd i alle prosjekter. Det kan ikke deaktiveres for enkeltprosjekter."
@@ -287,6 +292,7 @@
       label: "Label"
       short: "Short name"
       parent: "Parent"
+      blueprint: "Pattern blueprint"
   global_search:
     placeholder: "Søk i %{app_title}"
     overwritten_tabs:
@@ -469,6 +475,7 @@
   my:
     access_token:
       create_dialog:
+        title: Token generated
         header: The %{type} token has been generated
         warning: Note that this is the only time you will see this token, make sure to copy it now.
       errors:
@@ -645,6 +652,7 @@
         title: "Arbeidsflyt mangler for deling av arbeidspakker"
         message: "Ingen arbeidsflyt er konfigurert for rollen 'Arbeidspakke redaktør'. Uten en arbeidsflyt kan ikke brukeren endre status på arbeidspakken. Arbeidsflyt kan kopieres. Velg en kildetype (f.eks. 'oppgave') og en kilderolle (f.eks. 'medlem'). Velg så måltyper. Til å begynne med, kan du velge alle typene som mål. Til slutt velger du \"Redigeringsprogrammet for arbeidspakke\" som mål og klikk \"Kopier\". Etter å ha opprettet standardinnstillingene, kan du finjustere arbeidsflytene som du gjør for enhver annen rolle."
         link_message: "Konfigurer arbeidsmetodene i administrasjonen."
+    templated_subject_hint: Automatically generated through type %{type}
     summary:
       reports:
         category:
@@ -667,14 +675,15 @@
       no_results_title_text: There are currently no relations available.
       blankslate_heading: "No relations"
       blankslate_description: "This work package does not have any relations yet."
+    label_add_child_button: "Child"
     label_add_x: "Add %{x}"
     label_edit_x: "Edit %{x}"
     label_add_description: "Add description"
     lag:
       subject: "Lag"
-      title: "Lag (in days)"
-      caption: "The gap in number of working days in between the two work packages"
+      caption: "The minimum number of working days to keep in between the two work packages."
     relations:
+      label_new_child_created: "New work package created and added as a child"
       label_relates_singular: "related to"
       label_relates_plural: "related to"
       label_relates_to_singular: "related to"
@@ -689,6 +698,9 @@
       follows_description: "The related work package necessarily needs to finish before this one can start"
       label_child_singular: "child"
       label_child_plural: "children"
+      new_child: "New child"
+      new_child_text: "Creates a related work package as a sub-item of the current (parent) work package"
+      existing_child: "Existing child"
       child_description: "Makes the related work package a sub-item of the current (parent) work package"
       label_blocks_singular: "blocks"
       label_blocks_plural: "blocks"
@@ -725,6 +737,8 @@
       required_description: "Marks this work package as being a requirement to the related one"
       label_parent_singular: "parent"
       label_parent_plural: "parent"
+      ghost_relation_title: "Related work package"
+      ghost_relation_description: "This is not visible to you due to permissions."
   label_invitation: Invitasjon
   account:
     delete: "Slett konto"
@@ -789,6 +803,7 @@
         is_required: "Obligatorisk"
         max_length: "Maksimal lengde"
         min_length: "Minimumslengde"
+        content_right_to_left: "Right-to-Left content"
         multi_value: "Tillat multivalg"
         possible_values: "Mulige verdier"
         regexp: "Regulære uttrykk"
@@ -824,6 +839,8 @@
         attr_lastname: "Etternavn-attributt"
         attr_login: "Brukernavn egenskap"
         attr_mail: "E-postattributt"
+        filter_string: "Filter string"
+        admin: "Administrator"
         base_dn: "Base DN"
         host: "Vert"
         onthefly: "Automatisk brukeropprettelse"
@@ -867,6 +884,9 @@
       project_custom_field:
         is_required: "Påkrevd for alle prosjekter"
         custom_field_section: Seksjon
+      project/life_cycle_step_definition:
+        name: "Name"
+        color: "Color"
       query:
         column_names: "Kolonner"
         relations_to_type_column: "Forbindelser til %{type}"
@@ -1206,6 +1226,10 @@
             from:
               error_not_found: "arbeidspakke i \"fra\"-posisjonen er ikke funnet eller ikke synlig"
               error_readonly: "en eksisterende relasjon `fra`-lenke er uforanderlig"
+            lag:
+              greater_than_or_equal_to:
+                zero: "cannot be negative."
+              less_than_or_equal_to: "is too high."
         repository:
           not_available: "SCM leverandør er ikke tilgjengelig"
           not_whitelisted: "er ikke tillatt av konfigurasjonen."
@@ -1560,8 +1584,9 @@
   button_copy_and_follow: "Kopier og følg"
   button_create: "Opprett"
   button_create_and_continue: "Opprett og fortsett"
-  button_delete: "Slett"
   button_decline: "Avslå"
+  button_delete: "Slett"
+  button_delete_permanently: "Delete permanently"
   button_delete_watcher: "Slett overvåker %{name}"
   button_download: "Last ned"
   button_duplicate: "Kopier"
@@ -1764,6 +1789,9 @@
       hour:
         one: "time"
         other: " timer"
+      day:
+        one: "day"
+        other: "days"
   description_active: "Aktiv?"
   description_attachment_toggle: "Vis/Skjul vedlegg"
   description_autocomplete: >
@@ -1799,6 +1827,10 @@
     upsale:
       title: "Enterprise add-on"
       link_title: "More information"
+      automatic_subject_generation:
+        description: "Create automatically generated subjects using referenced attributes and text."
+      customize_life_cycle:
+        description: "Create and organize different project stages and gates than the ones provided by PM2 project cycle planning."
       form_configuration:
         description: "Tilpass skjemakonfigurasjonen med disse ekstra utvidelsene:"
         add_groups: "Legg til nye attributtgrupper"
@@ -2081,8 +2113,6 @@
       api_and_webhooks: "API og webhooks"
     quick_add:
       label: "Åpne Legg til hurtigmeny"
-    breadcrumb:
-      nested_element: "%{section_header}: <b>%{title}</b>"
   my_account:
     access_tokens:
       no_results:
@@ -2163,6 +2193,7 @@
   label_add_subtask: "Legg til underoppgave"
   label_added: "lagt til"
   label_added_by: "Lagt til av %{author}"
+  label_added_by_on: "Added by %{author} on %{date}"
   label_added_time_by: "Lagt inn av %{author} for %{age} siden"
   label_additional_workflow_transitions_for_assignee: "Ytterligere overganger tillatt når brukeren er deltaker"
   label_additional_workflow_transitions_for_author: "Flere overganger er tillatt når brukeren er forfatter"
@@ -2583,6 +2614,7 @@
   label_project_new: "Nytt prosjekt"
   label_project_plural: "Prosjekter"
   label_project_list_plural: "Prosjektlister"
+  label_project_lifecycle: "Project lifecycle"
   label_project_attributes_plural: "Prosjektegenskaper"
   label_project_custom_field_plural: "Prosjektegenskaper"
   label_project_settings: "Prosjektinnstillinger"
@@ -2609,6 +2641,7 @@
   label_relation: "Relation"
   label_relation_actions: "Relation actions"
   label_relation_delete: "Slett relasjon"
+  label_relation_edit: "Edit relation"
   label_relation_new: "Ny relasjon"
   label_release_notes: "Utgivelsesnotater"
   label_remaining_work: "Gjenstående arbeid"
@@ -3025,6 +3058,7 @@
   notice_bad_request: "Ugyldig forespørsel."
   notice_not_authorized: "Du har ikke tilgang til å åpne denne siden."
   notice_not_authorized_archived_project: "Prosjektet du forsøker å åpne er arkivert."
+  notice_requires_enterprise_token: "Enterprise token missing or doesn't allow access to this page."
   notice_password_confirmation_failed: "Passordet er ikke riktig. Kan ikke fortsette."
   notice_principals_found_multiple: "Det finnes %{number} resultater. \n bruk tab for å fokusere det første resultatet."
   notice_principals_found_single: "Det er ett resultat. \n Bruk tab for å fokusere det."
@@ -3073,7 +3107,7 @@
     text_getting_started_description: "Få en rask oversikt over prosjektledelse og teamsamarbeid med OpenProject. Du kan starte denne videoen på nytt fra hjelp-menyen."
     welcome: "Velkommen til %{app_title}"
     select_language: "Vennligst velg språk"
-  permission_add_work_package_notes: "Legg til notater"
+  permission_add_work_package_notes: "Add comments"
   permission_add_work_packages: "Legg til arbeidspakker"
   permission_add_messages: "Skriv meldinger"
   permission_add_project: "Opprett prosjekt"
@@ -3103,10 +3137,11 @@
   permission_delete_timelines: "Slett tidslinjer"
   permission_delete_wiki_pages: "Slett wiki-sider"
   permission_delete_wiki_pages_attachments: "Slett vedlegg"
-  permission_edit_work_package_notes: "Rediger notater"
+  permission_edit_work_package_notes: "Moderate comments"
+  permission_edit_work_package_notes_explanation: "Caution: Users with this permission are able to edit anyone's comment."
   permission_edit_work_packages: "Rediger arbeidspakker"
   permission_edit_messages: "Rediger meldinger"
-  permission_edit_own_work_package_notes: "Rediger egne notater"
+  permission_edit_own_work_package_notes: "Edit own comments"
   permission_edit_own_messages: "Rediger egne meldinger"
   permission_edit_own_time_entries: "Rediger egne tidsrapporter"
   permission_edit_project: "Rediger prosjekt"
@@ -3199,9 +3234,9 @@
       are_you_sure: "Er du sikker på at du vil arkivere prosjektet%{name}'?"
       archived: "Arkivert"
     count:
-      zero: "0 prosjekter"
-      one: "1 prosjekt"
-      other: "%{count} prosjekter"
+      zero: "0 projects"
+      one: "1 project"
+      other: "%{count} projects"
   project_module_activity: "Aktivitet"
   project_module_forums: "Forum"
   project_module_work_package_tracking: "Arbeidspakker"
@@ -3335,6 +3370,7 @@
     activated: "aktivert"
     deactivated: "deaktivert"
   search_input_placeholder: "Søk..."
+  setting_apiv3_cors_title: "Cross-Origin Resource Sharing (CORS)"
   setting_apiv3_cors_enabled: "Aktiver CORS"
   setting_apiv3_cors_origins: "API V3 Cross-Origin Resource Sharing (CORS) tillatte opprinnelser"
   setting_apiv3_cors_origins_text_html: >
@@ -3560,6 +3596,27 @@
       new:
         heading: "Ny egenskap"
         description: "Endringer i denne prosjektegenskapen gjenspeiles i alle prosjekter der det er aktivert. Påkrevde egenskaper kan ikke deaktiveres per prosjekt."
+    project_life_cycle_step_definitions:
+      heading: "Project lifecycle"
+      heading_description: "The project lifecycle consists of stages and gates that structure your projects. They will appear in the overview page of a project and be available in the projects list. Individual stages and gates can be selected to customize a project but reordering is not possible on a project level."
+      label_add: "Add"
+      label_add_description: "Add lifecycle definition"
+      label_add_stage: "Stage"
+      label_add_gate: "Gate"
+      filter:
+        label: "Search project stage or gate"
+      section_header: "Stages and gates"
+      non_defined: "Neither stages nor gates are currently defined."
+      new:
+        description: "Changes to this project step will be reflected in all projects where it is enabled."
+      new_stage:
+        heading: "New stage"
+      new_gate:
+        heading: "New gate"
+      edit_stage:
+        heading: "Edit stage"
+      edit_gate:
+        heading: "Edit gate"
     projects:
       missing_dependencies: "Prosjektmodul %{module} ble valgt, og denne avhenger av %{dependencies}. Du må også sjekke disse avhengighetene."
       section_new_projects: "Innstillinger for nye prosjekter"
@@ -3593,6 +3650,7 @@
   text_are_you_sure_continue: "Er du sikker på at du vil fortsette?"
   text_are_you_sure_with_children: "Slette arbeidspakken og alle underordnede arbeidspakker?"
   text_are_you_sure_with_project_custom_fields: "Hvis du sletter dette attributtet, slettes også dets verdier i alle prosjekter. Er du sikker på at du vil gjøre dette?"
+  text_are_you_sure_with_project_life_cycle_step: "Deleting this step will also delete its usages in all projects. Are you sure you want to do this?"
   text_assign_to_project: "Tildel til prosjektet"
   text_form_configuration: >
     Du kan tilpasse hvilke felt som vises i skjemaer for arbeidspakker. Du kan fritt gruppere feltene for å reflektere behovene for ditt domene.
@@ -3672,6 +3730,7 @@
   text_notice_security_badge_displayed_html: >
     Merk: Hvis aktivert, vil dette vise et merke med din installasjonsstatus i <a href="%{information_panel_path}">%{information_panel_label}</a> administrasjonspanel, og på hjemmesiden. Det er kun vist til administratorer. <br/> Merket sjekker din nåværende OpenProject versjon mot den offisielle OpenProject utgivelsesdatabasen for å varsle deg om oppdateringer og kjente sårbarheter. For mer informasjon om hva som finnes av kontrollen, hvilke data som er nødvendig for å framskaffe tilgjengelige oppdateringer, og hvordan denne sjekken kan deaktiveres, besøk <a href="%{more_info_url}">konfigurasjonsdokumentasjonen</a>.
   text_own_membership_delete_confirmation: "Du er i ferd med å fjerne noen eller alle dine egne rettigheter og du vil kanskje ikke kunne redigere dette prosjektet etterpå.\nEr du sikker på at du vil fortsette?"
+  text_permanent_delete_confirmation_checkbox_label: "I understand that this deletion cannot be reversed"
   text_plugin_assets_writable: "Mappen for programtillegg er skrivbar"
   text_powered_by: "Driftes med %{link}"
   text_project_identifier_info: "Kun små bokstaver (a-z), tall, bindestrek og understrek er tillatt. Første tegn må være liten bokstav."
@@ -4040,6 +4099,8 @@
       builtin: Innebygd installasjonsprogram
       confidential: Konfidensiell
       singular: "OAuth program"
+      scopes: "Scopes"
+      client_credentials: "Client credentials"
       plural: "OAuth programmer"
       named: "OAuth program '%{name}'"
       new: "Ny OAuth-app"

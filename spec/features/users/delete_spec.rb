@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "user deletion:", :js, :with_cuprite do
+RSpec.describe "user deletion:", :js do
   let(:dialog) { Components::PasswordConfirmationDialog.new }
 
   include Flash::Expectations

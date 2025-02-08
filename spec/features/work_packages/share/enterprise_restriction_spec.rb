@@ -30,7 +30,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Work Package Sharing Enterprise Restriction", :js, :with_cuprite do
+RSpec.describe "Work Package Sharing Enterprise Restriction", :js do
   shared_let(:view_work_package_role)    { create(:view_work_package_role)    }
   shared_let(:comment_work_package_role) { create(:comment_work_package_role) }
   shared_let(:edit_work_package_role)    { create(:edit_work_package_role)    }

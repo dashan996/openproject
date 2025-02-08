@@ -77,7 +77,7 @@ RSpec.describe "Upload attachment to budget", :js do
     attachments_list.expect_attached("image.png", count: 2)
   end
 
-  it "can upload an image to new and existing budgets via drag & drop on attachment list" do
+  it "can upload an image to new and existing budgets via drag & drop on attachment list", :selenium do
     visit projects_budgets_path(project)
 
     page.find_test_selector("budget-create-button").click

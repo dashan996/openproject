@@ -60,7 +60,7 @@ RSpec.describe "Recurring meetings complete template",
   end
 
   context "when first occurrence is not existing" do
-    it "instantiates the first occurrence from template" do
+    it "instantiates the first occurrence from template and schedules the init job" do
       expect { subject }.to change(recurring_meeting.scheduled_meetings, :count).by(1)
       expect(response).to be_redirect
 
@@ -72,6 +72,10 @@ RSpec.describe "Recurring meetings complete template",
       meeting = first.meeting
       expect(meeting.agenda_items.count).to eq(1)
       expect(meeting.agenda_items.first.title).to eq("My template item")
+
+      expect(RecurringMeetings::InitNextOccurrenceJob)
+        .to have_been_enqueued.with(recurring_meeting, DateTime.parse("2024-12-06T10:00:00Z"))
+                              .at(DateTime.parse("2024-12-05T10:00:00Z"))
     end
   end
 

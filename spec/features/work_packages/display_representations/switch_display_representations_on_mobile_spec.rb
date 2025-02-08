@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Switching work package view on mobile", :js do
+RSpec.describe "Switching work package view on mobile", :js, :selenium do
   let(:user) { create(:admin) }
   let(:project) { create(:project) }
   let(:wp_table) { Pages::WorkPackagesTable.new(project) }

@@ -29,6 +29,8 @@
           )) do
           if @meeting.persisted?
             I18n.t(:button_save)
+          elsif @meeting.is_a?(RecurringMeeting)
+            I18n.t(:label_recurring_meeting_series_create)
           else
             I18n.t(:label_meeting_create)
           end

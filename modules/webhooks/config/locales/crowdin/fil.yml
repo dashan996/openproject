@@ -8,6 +8,7 @@ fil:
         url: 'Payload URL'
         secret: 'Signature secret'
         events: 'Events'
+        enabled: 'Enabled'
         projects: 'Paganahin ang mga proyekto'
       webhooks/log:
         event_name: 'Event name'

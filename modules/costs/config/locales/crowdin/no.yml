@@ -33,6 +33,7 @@
       cost_type:
         unit: "Enhetsnavn"
         unit_plural: "Flertallsnavn på enhet"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Brukte enheter"
         labor_costs: "Arbeidskostnad"
@@ -44,6 +45,16 @@
         rate: "Sats"
       user:
         default_rates: "Standard satser"
+      time_entry:
+        project: Project
+        user: User
+        work_package: Work package
+        hours: Timer
+        comments: Comment
+        activity: Aktivitet
+        spent_on: Dato
+        start_time: Start time
+        end_time: Finish time
     models:
       cost_type:
         one: "Kostnadstype"
@@ -51,6 +62,8 @@
       rate: "Sats"
     errors:
       models:
+        time_entry:
+          invalid_time: "must be between 00:00 and 23:59."
         work_package:
           is_not_a_valid_target_for_cost_entries: "Arbeidspakke #%{id} er ikke et gyldig mål for nytildeling av kostnadsoppføringer."
           nullify_is_not_valid_for_cost_entries: "Kostnadsoppføringer kan ikke tilordnes et prosjekt."
@@ -65,6 +78,7 @@
     fixed_date: "Fast dato"
   button_add_rate: "Legg til sats"
   button_log_costs: "Loggfør enhetskostnader"
+  button_log_time: "Log"
   caption_booked_on_project: "Bestilt i prosjektet"
   caption_default: "Standard"
   caption_default_rate_history_for: "Standardratehistorikk for %{user}"
@@ -76,6 +90,7 @@
   caption_save_rate: "Lagre sats"
   caption_set_rate: "Angi gjeldende sats"
   caption_show_locked: "Vis låste typer"
+  caption_log_time_dialog: "Log time"
   description_date_for_new_rate: "Dato for ny sats"
   group_by_others: "ikke i noen grupper"
   label_between: "mellom"
@@ -115,10 +130,12 @@
   label_until: "fram til"
   label_valid_from: "Gyldig fra"
   label_yes: "Ja"
+  placeholder_activity_select_work_package_first: Work package selection is required first
   notice_something_wrong: "Noe gikk galt. Prøv på nytt."
   notice_successful_restore: "Vellykket gjenoppretting."
   notice_successful_lock: "Låst vellykket."
   notice_cost_logged_successfully: "Enhetskostnaden er logget."
+  notice_different_time_zones: "This user has a different time zone (%{tz}). Time will be logged using their time zone."
   permission_edit_cost_entries: "Rediger bokførte enhetskostnader"
   permission_edit_own_cost_entries: "Rediger egne bokførte enhetskostnader"
   permission_edit_hourly_rates: "Rediger timesatser"
@@ -146,3 +163,7 @@
   week: "uke"
   js:
     text_are_you_sure: "Er du sikker?"
+  api_v3:
+    errors:
+      validation:
+        start_time_different_date: "Date part of startTime (%{start_time}) must be the same as the spentOn (%{spent_on}) date."

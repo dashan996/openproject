@@ -21,9 +21,9 @@
 #++
 ja:
   plugin_openproject_reporting:
-    name: "OpenProject Reporting"
-    description: "This plugin allows creating custom cost reports with filtering and grouping created by the OpenProject Time and costs plugin."
-  button_save_report_as: "Save report as..."
+    name: "OpenProject レポート"
+    description: "このプラグインは、OpenProject の時間とコストプラグインによって作成されたフィルタリングとグループ化でカスタムコストレポートを作成することができます。"
+  button_save_report_as: "名前を付けてレポートを保存"
   comments: "コメント"
   cost_reports_title: "時間とコスト"
   label_cost_report: "コストレポート"
@@ -45,9 +45,11 @@ ja:
   label_greater: ">"
   label_is_not_project_with_subprojects: "ではない (子プロジェクトを含む)"
   label_is_project_with_subprojects: "は(サブプロジェクトを含む)"
+  label_is_work_package_with_descendants: "is (includes descendants)"
+  label_is_not_work_package_with_descendants: "is not (includes descendants)"
   label_work_package_attributes: "作業項目の属性"
   label_less: "<"
-  label_logged_by_reporting: "Logged by"
+  label_logged_by_reporting: "によって記録"
   label_money: "金額"
   label_month_reporting: "月 (経過)"
   label_new_report: "新しいコストレポート"
@@ -87,12 +89,15 @@ ja:
   validation_failure_integer: "は有効な整数ではありません。"
   export:
     timesheet:
-      title: "Your PDF timesheet export"
-      button: "Export PDF timesheet"
-      timesheet: "Timesheet"
-      time: "Time"
+      title: "PDFタイムシートのエクスポート"
+      button: "PDFタイムシートをエクスポート"
+      timesheet: "タイムシート"
+      time: "時間"
+      sum_hours: Sum
     cost_reports:
       title: "あなたのコストレポートXLSのエクスポート"
+      start_time: "開始時間"
+      end_time: "終了時間"
   reporting:
     group_by:
       selected_columns: "選択された列"

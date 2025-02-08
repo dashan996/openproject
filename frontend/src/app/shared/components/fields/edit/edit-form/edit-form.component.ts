@@ -36,6 +36,7 @@ import {
   OnInit,
   Optional,
   Output,
+  ApplicationRef,
 } from '@angular/core';
 import { StateService, Transition, TransitionService } from '@uirouter/core';
 import { ConfigurationService } from 'core-app/core/config/configuration.service';
@@ -78,6 +79,7 @@ export class EditFormComponent extends EditForm<HalResource> implements OnInit, 
 
   constructor(public readonly injector:Injector,
     protected readonly elementRef:ElementRef,
+    private appRef:ApplicationRef,
     protected readonly $transitions:TransitionService,
     protected readonly ConfigurationService:ConfigurationService,
     protected readonly editingPortalService:EditingPortalService,
@@ -86,11 +88,11 @@ export class EditFormComponent extends EditForm<HalResource> implements OnInit, 
     @Optional() protected readonly editFormRouting:EditFormRoutingService,
     private globalEditFormChangesTrackerService:GlobalEditFormChangesTrackerService) {
     super(injector);
-
     const confirmText = I18n.t('js.work_packages.confirm_edit_cancel');
     const requiresConfirmation = ConfigurationService.warnOnLeavingUnsaved();
 
     this.unregisterListener = $transitions.onBefore({}, (transition:Transition) => {
+      this.removeIdleComponents();
       if (!this.editing) {
         return undefined;
       }
@@ -121,6 +123,16 @@ export class EditFormComponent extends EditForm<HalResource> implements OnInit, 
   ngOnDestroy() {
     this.unregisterListener();
     this.globalEditFormChangesTrackerService.removeFromActiveForms(this);
+  }
+
+  // Hacky fix: remove inactive rendered components which aren't in DOM any more
+  removeIdleComponents() {
+    this.appRef.components.forEach((component) => {
+      const element = ((component.hostView as unknown) as { rootNodes:unknown[] }).rootNodes[0] as HTMLElement;
+      if (!document.body.contains(element)) {
+        this.appRef.detachView(component.hostView);
+      }
+    });
   }
 
   public async activateField(form:EditForm, schema:IFieldSchema, fieldName:string, errors:string[]):Promise<EditFieldHandler> {

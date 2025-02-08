@@ -27,7 +27,9 @@
 #++
 
 class Widget::Table::EntryTable < Widget::Table
-  FIELDS = %i[spent_on user_id activity_id work_package_id comments logged_by_id project_id].freeze
+  include ReportingHelper
+
+  FIELDS = %i[user_id activity_id work_package_id comments logged_by_id project_id].freeze
 
   def render
     content = content_tag :div, class: "generic-table--container -with-footer" do
@@ -47,6 +49,7 @@ class Widget::Table::EntryTable < Widget::Table
 
   def colgroup
     content_tag :colgroup do
+      concat content_tag(:col, "")
       FIELDS.each do
         concat content_tag(:col, "")
       end
@@ -56,33 +59,31 @@ class Widget::Table::EntryTable < Widget::Table
     end
   end
 
+  def head_column_field(field)
+    head_column(label_for(field))
+  end
+
+  def head_column(label)
+    content_tag(:th) do
+      content_tag(:div, class: "generic-table--sort-header-outer") do
+        content_tag(:div, class: "generic-table--sort-header") do
+          content_tag(:span, label)
+        end
+      end
+    end
+  end
+
   # rubocop:disable Metrics/AbcSize
   def head
     content_tag :thead do
       content_tag :tr do
+        concat head_column_field(:spent_on)
+        concat head_column(I18n.t("label_time")) if with_times_column?
         FIELDS.map do |field|
-          concat content_tag(:th) {
-            content_tag(:div, class: "generic-table--sort-header-outer") do
-              content_tag(:div, class: "generic-table--sort-header") do
-                content_tag(:span, label_for(field))
-              end
-            end
-          }
+          concat head_column_field(field)
         end
-        concat content_tag(:th) {
-          content_tag(:div, class: "generic-table--sort-header-outer") do
-            content_tag(:div, class: "generic-table--sort-header") do
-              content_tag(:span, cost_type.try(:unit_plural) || I18n.t(:units))
-            end
-          end
-        }
-        concat content_tag(:th) {
-          content_tag(:div, class: "generic-table--sort-header-outer") do
-            content_tag(:div, class: "generic-table--sort-header") do
-              content_tag(:span, CostEntry.human_attribute_name(:costs))
-            end
-          end
-        }
+        concat head_column(cost_type.try(:unit_plural) || I18n.t(:units))
+        concat head_column(CostEntry.human_attribute_name(:costs))
         hit = false
         @subject.each_direct_result do |result|
           next if hit
@@ -101,15 +102,16 @@ class Widget::Table::EntryTable < Widget::Table
   def foot
     content_tag :tfoot do
       content_tag :tr do
+        main_columns = with_times_column? ? 2 : 1
         if show_result(@subject, 0) == show_result(@subject)
-          concat content_tag(:td, "", colspan: FIELDS.size + 1)
+          concat content_tag(:td, "", colspan: FIELDS.size + main_columns + 1)
           concat content_tag(:td) {
             concat content_tag(:div,
                                show_result(@subject),
                                class: "result generic-table--footer-outer")
           }
         else
-          concat content_tag(:td, "", colspan: FIELDS.size)
+          concat content_tag(:td, "", colspan: FIELDS.size + main_columns)
           concat content_tag(:td) {
             concat content_tag(:div,
                                show_result(@subject),
@@ -126,15 +128,25 @@ class Widget::Table::EntryTable < Widget::Table
     end
   end
 
+  def body_column_field(field, result)
+    content_tag(:td, show_field(field, result.fields[field.to_s]),
+                "raw-data": raw_field(field, result.fields[field.to_s]),
+                class: "left")
+  end
+
   def body
     content_tag :tbody do
       rows = "".html_safe
       @subject.each_direct_result do |result|
         rows << (content_tag(:tr) do
+          concat body_column_field(:spent_on, result)
+          if with_times_column?
+            concat content_tag :td, spent_on_time_representation(result.start_timestamp, result["units"].to_f),
+                               class: "start_time right",
+                               "raw-data": result.start_timestamp.to_s
+          end
           FIELDS.each do |field|
-            concat content_tag(:td, show_field(field, result.fields[field.to_s]),
-                               "raw-data": raw_field(field, result.fields[field.to_s]),
-                               class: "left")
+            concat body_column_field(field, result)
           end
           concat content_tag :td, show_result(result, result.fields["cost_type_id"].to_i),
                              class: "units right",
@@ -177,4 +189,13 @@ class Widget::Table::EntryTable < Widget::Table
   end
 
   # rubocop:enable Metrics/AbcSize
+
+  def labour_query?
+    cost_type_filter = @subject.filters.detect { |f| f.is_a?(CostQuery::Filter::CostTypeId) }
+    cost_type_filter&.values&.first.to_i == -1
+  end
+
+  def with_times_column?
+    Setting.allow_tracking_start_and_end_times && labour_query?
+  end
 end

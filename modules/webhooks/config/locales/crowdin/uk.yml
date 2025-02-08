@@ -8,6 +8,7 @@ uk:
         url: 'URL корисних даних'
         secret: 'Секретний ключ підпису'
         events: 'Події'
+        enabled: 'Увімкнено'
         projects: 'Включені проекти'
       webhooks/log:
         event_name: 'Назва події'

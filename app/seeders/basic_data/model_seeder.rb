@@ -39,11 +39,19 @@ module BasicData
 
     def seed_data!
       model_class.transaction do
+        prepare!
         models_data.each do |model_data|
-          model = model_class.create!(model_attributes(model_data))
-          seed_data.store_reference(model_data["reference"], model)
+          create_model!(model_data)
         end
       end
+    end
+
+    def prepare!; end
+
+    def create_model!(model_data)
+      model_class
+        .create!(model_attributes(model_data))
+        .tap { |model| seed_data.store_reference(model_data["reference"], model) }
     end
 
     def mapped_models_data

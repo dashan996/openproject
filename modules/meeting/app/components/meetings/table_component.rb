@@ -44,6 +44,23 @@ module Meetings
       false
     end
 
+    def paginated?
+      false
+    end
+
+    def has_footer?
+      model.is_a?(ActiveRecord::Relation) &&
+        (model.total_entries > model.size)
+    end
+
+    def footer
+      render Meetings::TableFooterComponent.new(
+        upcoming: options[:upcoming],
+        total: model.total_entries,
+        count: model.size
+      )
+    end
+
     def has_actions?
       true
     end
@@ -70,6 +87,14 @@ module Meetings
 
     def recurring?
       model.first.is_a?(RecurringMeeting)
+    end
+
+    def blank_title
+      I18n.t("meeting.blankslate.title")
+    end
+
+    def blank_description
+      I18n.t("meeting.blankslate.desc")
     end
   end
 end

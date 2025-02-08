@@ -82,7 +82,7 @@ module Pages
           end
         end
 
-        expect(page).to have_css("[data-test-selector='async-dialog-content']", wait: 5)
+        wait_for_size_animation_completion("[data-test-selector='async-dialog-content']")
       end
 
       def open_edit_dialog_for_life_cycles

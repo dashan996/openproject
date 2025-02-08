@@ -31,15 +31,31 @@
 module WorkPackages
   module ActivitiesTab
     module SharedHelpers
-      def truncated_user_name(user)
+      def truncated_user_name(user, hover_card: false)
+        helpers.primer_link_to_user(user, scheme: :primary, font_weight: :bold, hover_card:)
+      end
+
+      def activity_anchor_link(journal)
         render(Primer::Beta::Link.new(
-                 href: user_url(user),
-                 target: "_blank",
-                 scheme: :primary,
+                 href: activity_url(journal),
+                 scheme: :secondary,
                  underline: false,
-                 font_weight: :bold
+                 font_size: :small,
+                 data: {
+                   test_selector: "activity-anchor-link",
+                   turbo: false,
+                   action: "click->work-packages--activities-tab--index#setAnchor:prevent",
+                   "work-packages--activities-tab--index-id-param": journal_activity_id(journal),
+                   "work-packages--activities-tab--index-anchor-name-param": activity_anchor_name
+                 }
                )) do
-          user.name
+          block_given? ? yield : "##{journal_activity_id(journal)}"
+        end
+      end
+
+      def journal_updated_at_formatted_time(journal)
+        render(Primer::Beta::Text.new(font_size: :small, color: :subtle, mt: 1)) do
+          format_time(journal.updated_at)
         end
       end
 
@@ -52,7 +68,19 @@ module WorkPackages
       end
 
       def activity_anchor(journal)
-        "#activity-#{journal.sequence_version}"
+        "##{activity_anchor_name}-#{journal_activity_id(journal)}"
+      end
+
+      def activity_anchor_name
+        OpenProject::FeatureDecisions.work_package_comment_id_url_active? ? "comment" : "activity"
+      end
+
+      def journal_activity_id(journal)
+        if OpenProject::FeatureDecisions.work_package_comment_id_url_active?
+          journal.id
+        else
+          journal.sequence_version
+        end
       end
     end
   end

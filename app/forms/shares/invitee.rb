@@ -53,15 +53,14 @@ module Shares
           appendToComponent: true,
           disabled: @disabled,
           isOpenedInModal: true,
-          hoverCards: @allow_hover_cards
+          hoverCards: true
         }
       )
     end
 
-    def initialize(disabled: false, allow_hover_cards: false)
+    def initialize(disabled: false)
       super()
       @disabled = disabled
-      @allow_hover_cards = allow_hover_cards
     end
   end
 end

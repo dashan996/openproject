@@ -104,3 +104,7 @@ The **Activated for new projects by default** setting in the Types will only act
 This can be also configured in the [project settings](../../../user-guide/projects/project-settings).
 
 ![activate projects for work package types](image-20200116150513323.png)
+
+## Work package subject configuration (Enterprise add-on)
+
+Under **Administration -> Work packages -> Types** on the tab **Subject configuration** you can choose whether work package subjects should be defined automatically.

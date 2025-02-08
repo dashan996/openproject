@@ -356,10 +356,10 @@ pt-BR:
           learn_about: "Saiba mais sobre os novos recursos"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_1":
+          "15_2":
             standard:
               new_features_html: >
-                A nova versão traz diversas melhorias e recursos, como: <br> <ul class="%{list_styling_class}"> <li>Campos personalizados em hierarquia (complemento Enterprise).</li> <li>Redesign da aba de Relações nos pacotes de trabalho.</li> <li>Redesign da página de índice das Reuniões.</li> <li>Quebras de página manuais nas exportações de pacotes de trabalho em PDF.</li> <li>Modo Zen para listas de projetos.</li> </ul>
+                A versão traz vários recursos e melhorias para você, como: <br> <ul class="%{list_styling_class}"> <li>Definir lembretes para pacotes de trabalho para gerar notificações de alerta com base em datas.</li> <li>Criar novas pastas diretamente no seletor de local para armazenamento de arquivos.</li> <li>Especificar um intervalo necessário entre sucessores e predecessores de pacotes de trabalho.</li> <li>Habilitar a ordenação e o agrupamento de pacotes de trabalho com base nos valores de campos personalizados do tipo hierarquia.</li> <li>Exportar entradas de tempo como planilhas de horas em PDF.</li> <li>Adicionar um popover exibindo informações do usuário ao passar o mouse.</li> </ul>
     ical_sharing_modal:
       title: "Assinar calendário"
       inital_setup_error_message: "Ocorreu um erro ao buscar dados."
@@ -620,15 +620,15 @@ pt-BR:
         prioritized: "Priorizado"
         dateAlert: "Alerta de data"
         shared: "Compartilhado"
-        reminder: "Reminder"
+        reminder: "Lembrete"
       date_alerts:
         milestone_date: "Data de marco"
         overdue: "Atrasado"
-        overdue_since: "desde %{difference_in_days}"
-        property_today: "é hoje"
-        property_is: "está em %{difference_in_days}"
-        property_was: "há %{difference_in_days}"
-        property_is_deleted: "foi excluído"
+        overdue_since: "since %{difference_in_days}."
+        property_today: "is today."
+        property_is: "is in %{difference_in_days}."
+        property_was: "was %{difference_in_days} ago."
+        property_is_deleted: "is deleted."
         upsale:
           title: "Alertas de data"
           description: "Com os alertas de data, você receberá uma notificação das futuras datas de início e conclusão, assim você nunca perderá ou esquecerá prazos importante. "
@@ -654,7 +654,7 @@ pt-BR:
           message: "Há novas notificações."
           link_text: "Clique aqui para carregá-las."
       reminders:
-        note: "Note: “%{note}”"
+        note: "Nota: \"%{note}\""
       settings:
         change_notification_settings: 'Você pode modificar suas <a target="_blank" href="%{url}">configurações de notificação</a> para se certificar de nunca perder nenhuma atualização importante.'
         title: "Configurações de notificação"
@@ -742,7 +742,7 @@ pt-BR:
         immediate:
           title: "Envie-me um lembrete por e-mail"
           mentioned: "Imediatamente quando alguém me @mencionar"
-          personal_reminder: "Immediately when I receive a personal reminder"
+          personal_reminder: "Imediatamente quando eu receber um lembrete pessoal"
         alerts:
           title: "Alertas por e-mail para outros itens (qua não sejam pacotes de trabalho)"
           explanation: >
@@ -1043,11 +1043,11 @@ pt-BR:
           duplicate_query_title: "O nome desta visão já existe. Modificar assim mesmo?"
         text_no_results: "Nenhuma visão correspondente foi encontrada."
       reminders:
-        button_label: "Set reminder"
+        button_label: "Definir lembrete"
         title:
-          new: "Set reminder"
-          edit: "Edit reminder"
-        subtitle: "You will receive a notification for this work package at the chosen time."
+          new: "Definir lembrete"
+          edit: "Editar lembrete"
+        subtitle: "Você receberá uma notificação para este pacote de trabalho no horário selecionado."
       scheduling:
         is_parent: "As datas deste pacote de trabalho são deduzidas automaticamente de seus filhos. Ative o 'Planejamento manual' para definir as datas."
         is_switched_from_manual_to_automatic: "As datas deste pacote de trabalho podem precisar ser recalculadas após a alteração de planejamento manual para automático devido a relações com outros pacotes de trabalho."

@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "User custom fields edit", :js, :with_cuprite do
+RSpec.describe "User custom fields edit", :js do
   shared_let(:admin) { create(:admin) }
   let(:cf_page) { Pages::CustomFields::IndexPage.new }
   let(:new_cf_page) { Pages::CustomFields::NewPage.new }

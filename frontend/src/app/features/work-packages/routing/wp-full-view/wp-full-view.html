@@ -38,8 +38,7 @@
           </op-wp-timer-button>
         </li>
         <li class="toolbar-item" *ngIf="displayWatchButton">
-          <wp-watcher-button [workPackage]="workPackage"
-                             [showText]="false">
+          <wp-watcher-button [workPackage]="workPackage">
           </wp-watcher-button>
         </li>
         <li class="toolbar-item" *ngIf="displayReminderButton$ | async">

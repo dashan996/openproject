@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -372,6 +374,20 @@ RSpec.describe OpenProject::AccessControl do
           if_state[:available] = false
           expect(described_class.available_project_modules).not_to include(:dynamic_module)
         end
+      end
+    end
+
+    describe "sorting by label" do
+      before do
+        allow(I18n).to receive(:t, &:to_s)
+      end
+
+      it "is not sorted by default" do
+        expect(described_class.available_project_modules).to eq(%i[project_module mixed_module dependent_module])
+      end
+
+      it "is sorted when requested" do
+        expect(described_class.available_project_modules(sorted: true)).to eq(%i[dependent_module mixed_module project_module])
       end
     end
   end

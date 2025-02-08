@@ -6,13 +6,15 @@ export default class OpProjectsZenModeController extends ApplicationController {
 
   declare readonly buttonTarget:HTMLElement;
 
+  private boundHandler = this.fullscreenChangeEventHandler.bind(this);
+
   connect() {
-    document.addEventListener('fullscreenchange', this.fullscreenChangeEventHandler.bind(this));
+    document.addEventListener('fullscreenchange', this.boundHandler);
   }
 
   disconnect() {
     super.disconnect();
-    document.removeEventListener('fullscreenchange', this.fullscreenChangeEventHandler.bind(this));
+    document.removeEventListener('fullscreenchange', this.boundHandler);
   }
 
   fullscreenChangeEventHandler() {

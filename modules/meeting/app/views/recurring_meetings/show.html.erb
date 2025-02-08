@@ -35,5 +35,15 @@ See COPYRIGHT and LICENSE files for more details.
 <% if @recurring_meeting.nil? -%>
   <%= no_results_box %>
 <% else -%>
-  <%= render RecurringMeetings::TableComponent.new(rows: @meetings, current_project: @project, count: @count, direction: @direction, max_count: @max_count) %>
+  <% if @direction == "past" -%>
+    <%= render RecurringMeetings::TableComponent.new(
+      rows: @meetings,
+      current_project: @project,
+      count: @count,
+      direction: @direction,
+      max_count: @max_count
+    ) %>
+  <% else -%>
+    <%= render partial: "show_upcoming" %>
+  <% end -%>
 <% end -%>

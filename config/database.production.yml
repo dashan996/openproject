@@ -34,6 +34,7 @@ DATABASE_OPTIONS = %w[
   pool
   username
   password
+  passfile
   sslmode
   sslcompression
   sslcert
@@ -41,8 +42,18 @@ DATABASE_OPTIONS = %w[
   sslpassword
   sslrootcert
   sslcrl
+  ssl_min_protocol_version
   application_name
   statement_timeout
+  channel_binding
+  connect_timeout
+  client_encoding
+  keepalives
+  keepalives_idle
+  keepalives_interval
+  keepalives_count
+  gssencmode
+  replication
 ].freeze
 
 DATABASE_VARIABLES = %w[

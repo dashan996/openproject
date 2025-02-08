@@ -5,7 +5,7 @@
                                      # enough height to display all options.
                                      # This is necessary as long as ng-select does not support popovers.
                                      style: "min-height: 480px")) do |d| %>
-  <% d.with_header(variant: :large, mb: 3) %>
+  <% d.with_header(variant: :large) %>
   <%= render(Primer::Alpha::Dialog::Body.new) do %>
     <%= primer_form_with(
           url: projects_path,

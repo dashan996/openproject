@@ -8,6 +8,7 @@ et:
         url: 'Payload URL'
         secret: 'Signature secret'
         events: 'Events'
+        enabled: 'Enabled'
         projects: 'Lubatud projektid'
       webhooks/log:
         event_name: 'Event name'

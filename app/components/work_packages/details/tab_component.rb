@@ -26,8 +26,8 @@ class WorkPackages::Details::TabComponent < ApplicationComponent
         .root
         .children
         .select do |node|
-        allowed_node?(node, User.current, project) && visible_node?(menu, node)
-      end
+          allowed_node?(node, User.current, project) && visible_node?(menu, node)
+        end
   end
 
   def full_screen_tab

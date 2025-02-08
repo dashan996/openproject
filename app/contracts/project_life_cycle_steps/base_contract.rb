@@ -31,9 +31,7 @@ module ProjectLifeCycleSteps
     validate :select_custom_fields_permission
     validate :consecutive_steps_have_increasing_dates
 
-    def valid?(context = :saving_life_cycle_steps)
-      super
-    end
+    def valid?(context = :saving_life_cycle_steps) = super
 
     def select_custom_fields_permission
       return if user.allowed_in_project?(:edit_project_stages_and_gates, model)

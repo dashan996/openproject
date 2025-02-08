@@ -216,10 +216,17 @@ RSpec.describe WorkPackage::PDFExport::WorkPackageToPdf do
     content = export_pdf.content
     # If you want to actually see the PDF for debugging, uncomment the following line
     # File.binwrite('WorkPackageToPdf-test-preview.pdf', content)
+    page_xobjects = PDF::Inspector::XObject.analyze(content).page_xobjects
+    images = page_xobjects.flat_map { |o| o.values.select { |v| v.hash[:Subtype] == :Image } }
+    logos = page_xobjects.flat_map do |o|
+      o.values.flat_map do |v|
+        form_object = v.hash[:Subtype] == :Form ? v.hash.dig(:Resources, :XObject, :I1) : nil
+        form_object if form_object&.hash && form_object.hash[:Subtype] == :Image
+      end
+    end
     { strings: PDF::Inspector::Text.analyze(content).strings,
-      images: PDF::Inspector::XObject.analyze(content).page_xobjects.flat_map do |o|
-        o.values.select { |v| v.hash[:Subtype] == :Image }
-      end }
+      logos:,
+      images: }
   end
 
   describe "with a request for a PDF" do
@@ -436,6 +443,34 @@ RSpec.describe WorkPackage::PDFExport::WorkPackageToPdf do
           "2", export_time_formatted, project.name
         ].flatten
         expect(result.join(" ")).to eq(expected_result.join(" "))
+      end
+    end
+
+    describe "with a logo image" do
+      let(:description) { "" }
+
+      describe "default" do
+        it "contains the default specified logo image" do
+          expect(pdf[:logos].length).to eq(1)
+          # Rails.root.join("app/assets/images/logo_openproject.png")
+          expect(pdf[:logos].first.hash[:Height]).to eq(150)
+          expect(pdf[:logos].first.hash[:Width]).to eq(700)
+        end
+      end
+
+      describe "custom specified" do
+        let(:custom_style) { build(:custom_style_with_export_logo) } # custom style factory
+
+        before do
+          allow(CustomStyle).to receive(:current).and_return(custom_style)
+        end
+
+        it "contains the custom specified logo image" do
+          expect(pdf[:logos].length).to eq(1)
+          # Rails.root.join("spec/support/custom_styles/export_logos/export_logo_image.png")
+          expect(pdf[:logos].first.hash[:Height]).to eq(30)
+          expect(pdf[:logos].first.hash[:Width]).to eq(149)
+        end
       end
     end
   end

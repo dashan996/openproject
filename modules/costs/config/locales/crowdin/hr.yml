@@ -33,6 +33,7 @@ hr:
       cost_type:
         unit: "Naziv jedinice"
         unit_plural: "Višestruki nazivi jedinica"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Potrošene jedinice"
         labor_costs: "Troškovi rada"
@@ -44,6 +45,16 @@ hr:
         rate: "Stopa"
       user:
         default_rates: "Zadane satnice"
+      time_entry:
+        project: Project
+        user: User
+        work_package: Work package
+        hours: Sati
+        comments: Comment
+        activity: Aktivnost
+        spent_on: Datum
+        start_time: Start time
+        end_time: Finish time
     models:
       cost_type:
         one: "Vrsta troška"
@@ -52,6 +63,8 @@ hr:
       rate: "Stopa"
     errors:
       models:
+        time_entry:
+          invalid_time: "must be between 00:00 and 23:59."
         work_package:
           is_not_a_valid_target_for_cost_entries: "Radni paket #%{id} nije ispravano odredište za ponovljeno dodjeljivanje ulaznih troškova."
           nullify_is_not_valid_for_cost_entries: "Ulazni troškovi ne mogu biti dodani projektu."
@@ -66,6 +79,7 @@ hr:
     fixed_date: "Utvrđeni datum"
   button_add_rate: "Dodaj satnicu"
   button_log_costs: "Evidentiraj jedinice troškova"
+  button_log_time: "Log"
   caption_booked_on_project: "Na projektu"
   caption_default: "Zadana vrijednost"
   caption_default_rate_history_for: "Povijest uobičajene satnice za %{user}"
@@ -77,6 +91,7 @@ hr:
   caption_save_rate: "Spremi stopu"
   caption_set_rate: "Postavite trenutnu stopu"
   caption_show_locked: "Pokaži zaključane tipove"
+  caption_log_time_dialog: "Log time"
   description_date_for_new_rate: "Datum za nove satnice"
   group_by_others: "nije u niti jednoj grupi"
   label_between: "između"
@@ -116,10 +131,12 @@ hr:
   label_until: "do"
   label_valid_from: "Vrijedi od"
   label_yes: "Da"
+  placeholder_activity_select_work_package_first: Work package selection is required first
   notice_something_wrong: "Nešto je pošlo po zlu. Molimo pokušajte ponovno."
   notice_successful_restore: "Uspješno vraćanje."
   notice_successful_lock: "Locked successfully."
   notice_cost_logged_successfully: "Jedinični trošak uspješno zabilježen."
+  notice_different_time_zones: "This user has a different time zone (%{tz}). Time will be logged using their time zone."
   permission_edit_cost_entries: "Uredite zabilježene jedinične troškove"
   permission_edit_own_cost_entries: "Uredite vlastite zabilježene jedinične troškove"
   permission_edit_hourly_rates: "Uredite satnice"
@@ -147,3 +164,7 @@ hr:
   week: "tjedan"
   js:
     text_are_you_sure: "Da li ste sigurni?"
+  api_v3:
+    errors:
+      validation:
+        start_time_different_date: "Date part of startTime (%{start_time}) must be the same as the spentOn (%{spent_on}) date."

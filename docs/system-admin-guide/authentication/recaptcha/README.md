@@ -3,7 +3,7 @@ sidebar_navigation:
   title: reCAPTCHA
   priority: 600
 description: configure reCAPTCHA for OpenProject.
-keywords: reCAPTCHA
+keywords: reCAPTCHA, turnstile
 ---
 # reCAPTCHA configuration
 
@@ -21,8 +21,7 @@ You can configure the following options:
 
 ![reCAPTCHA authentication settings in OpenProject administration](openproject_system_admin_guide_recaptcha.png)
 
-
-# Cloudflare Turnstile configuration
+## Cloudflare Turnstile configuration
 
 To use Cloudflare Turnstile with OpenProject, you need to configure the reCAPTCHA settings in the Cloudflare dashboard. Please see the following link for more details on Cloudflare Turnstile and how to configure it: [https://developers.cloudflare.com/turnstile/](https://developers.cloudflare.com/turnstile/).
 

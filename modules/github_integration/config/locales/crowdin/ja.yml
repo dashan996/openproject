@@ -20,16 +20,16 @@
 #See COPYRIGHT and LICENSE files for more details.
 #++
 ja:
-  button_add_deploy_target: Add deploy target
-  label_deploy_target: Deploy target
-  label_deploy_target_new: New deploy target
-  label_deploy_target_plural: Deploy targets
-  label_github_integration: GitHub Integration
-  notice_deploy_target_created: Deploy target created
-  notice_deploy_target_destroyed: Deploy target deleted
+  button_add_deploy_target: デプロイターゲットを追加
+  label_deploy_target: デプロイターゲット
+  label_deploy_target_new: 新しいデプロイターゲット
+  label_deploy_target_plural: デプロイターゲット
+  label_github_integration: GitHubとの連携
+  notice_deploy_target_created: デプロイターゲットが作成されました
+  notice_deploy_target_destroyed: デプロイターゲットが削除されました
   plugin_openproject_github_integration:
-    name: "OpenProject GitHub Integration"
-    description: "Integrates OpenProject and GitHub for a better workflow"
+    name: "OpenProject GitHub 統合"
+    description: "OpenProjectとGitHubを統合してワークフローを改善"
   project_module_github: "GitHub"
   permission_show_github_content: "GitHub コンテンツを表示する"
   permission_introspection: Read running OpenProject core version and build SHA
@@ -37,4 +37,4 @@ ja:
     So far we only support OpenProject itself.
   text_deploy_target_api_key_info: >
     An OpenProject [API key](docs_url) belonging to a user who has the global introspection permission.
-  text_pull_request_deployed_to: "%{pr_link} deployed to %{deploy_target_link}"
+  text_pull_request_deployed_to: "%{pr_link} は %{deploy_target_link} にデプロイされました"

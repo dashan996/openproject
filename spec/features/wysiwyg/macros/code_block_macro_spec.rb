@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Wysiwyg code block macro", :js do
+RSpec.describe "Wysiwyg code block macro", :js, :selenium do
   shared_let(:admin) { create(:admin) }
   let(:user) { admin }
   let(:project) { create(:project, enabled_module_names: %w[wiki]) }

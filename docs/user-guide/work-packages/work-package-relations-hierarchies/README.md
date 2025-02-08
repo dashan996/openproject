@@ -52,6 +52,10 @@ You can select one of the following relations:
 > [!TIP]
 > Prior to 15.1, *Predecessor (before)* was called *Precedes*, and *Successor (after)* was called *Follows*.
 
+For the relations of type Predecessor/Successor, you can also define **Lag**, which is the minimum number of working days to keep in between the two work packages. The default setting for lag is 0 working days. You can always edit the *Description* and *Lag* fields at a later time.
+
+![Add a successor work package in OpenProject](openproject_user_guide_relations_tab_edit_lag.png)
+
 - **Includes / Part of** - Defines if work package A includes or is part of work package B. This relation type can be used for example when you have a roll-out work package and work packages which should be shown as included without using hierarchical relationships. There is no additional effect.
 
 - **Requires / Required by** - Defines if work package A requires or is required by work package B. There is no additional effect.

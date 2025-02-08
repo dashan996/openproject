@@ -122,7 +122,7 @@ class Projects::IndexPageHeaderComponent < ApplicationComponent
     return page_title if query.name.blank?
 
     if current_section && current_section.header.present?
-      I18n.t("menus.breadcrumb.nested_element", section_header: current_section.header, title: query.name).html_safe
+      helpers.nested_breadcrumb_element(current_section.header, query.name)
     else
       page_title
     end

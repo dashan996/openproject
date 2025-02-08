@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -37,8 +39,10 @@ module TabsHelper
     end
   end
 
-  def selected_tab(tabs)
-    tabs.detect { |t| t[:name] == params[:tab] } || tabs.first
+  def selected_tab(tabs, default_tab = nil)
+    tabs.detect { |t| t[:name] == params[:tab] } ||
+      tabs.detect { |t| t[:name] == default_tab } ||
+      tabs.first
   end
 
   def tabs_for_key(key, params = {})

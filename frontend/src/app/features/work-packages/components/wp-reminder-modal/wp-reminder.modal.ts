@@ -43,6 +43,8 @@ export class WorkPackageReminderModalComponent extends OpModalComponent implemen
 
   public title$:Observable<string>;
 
+  private boundListener = this.turboSubmitEndListener.bind(this);
+
   constructor(
     @Inject(OpModalLocalsToken) public locals:OpModalLocalsMap,
     readonly cdRef:ChangeDetectorRef,
@@ -69,13 +71,13 @@ export class WorkPackageReminderModalComponent extends OpModalComponent implemen
 
   ngAfterViewInit() {
     // Use event delegation on a parent element that won't be re-rendered
-    this.elementRef.nativeElement.addEventListener('turbo:submit-end', this.turboSubmitEndListener.bind(this));
+    this.elementRef.nativeElement.addEventListener('turbo:submit-end', this.boundListener);
   }
 
   ngOnDestroy() {
     super.ngOnDestroy();
 
-    this.elementRef.nativeElement.removeEventListener('turbo:submit-end', this.turboSubmitEndListener.bind(this));
+    this.elementRef.nativeElement.removeEventListener('turbo:submit-end', this.boundListener);
   }
 
   onClose():boolean {

@@ -14,7 +14,7 @@ pl:
         client_secret: Hasło klienta
         secret: Tajny klucz
         scope: Zakres
-        grant_types_supported: Supported grant types
+        grant_types_supported: Obsługiwane typy udzielania
         limit_self_registration: Ogranicz samodzielną rejestrację
         authorization_endpoint: Punkt końcowy autoryzacji
         userinfo_endpoint: Punkt końcowy informacji o użytkowniku

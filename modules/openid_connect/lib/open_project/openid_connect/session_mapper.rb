@@ -8,11 +8,9 @@ module OpenProject::OpenIDConnect
       raise e
     end
 
-    def self.handle_login(oidc_session, session)
-      if oidc_session.blank?
-        Rails.logger.info { "No OIDC session returned from provider. Cannot map session for later logouts." }
-        return
-      end
+    def self.handle_login(session)
+      oidc_session = session["omniauth.oidc_sid"]
+      return if oidc_session.blank?
 
       link = ::OpenIDConnect::UserSessionLink.new(oidc_session:)
       new(link).link_to_internal!(session)

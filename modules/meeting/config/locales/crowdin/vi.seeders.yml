@@ -7,9 +7,9 @@ vi:
     standard:
       projects:
         demo-project:
-          meetings:
+          meeting_series:
             item_0:
-              title: Hàng tuần
+              title: Weekly
           meeting_agenda_items:
             item_0:
               title: Tin tốt

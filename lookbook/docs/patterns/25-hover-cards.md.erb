@@ -2,9 +2,9 @@ The HoverCard is a pattern related to the `Primer::Beta::Popover` and is used to
 
 ## Overview
 
-![Exemplary work package hover card](<%= image_path('lookbook/hover_card.png') %>)
+![Exemplary work package hover card](<%= image_path("lookbook/hover_card.png") %>)
 
-![Exemplary user hover card](<%= image_path('lookbook/user_hover_card.png') %>)
+![Exemplary user hover card](<%= image_path("lookbook/user_hover_card.png") %>)
 
 ## Anatomy
 
@@ -13,7 +13,6 @@ The HoverCard always consists of two basic parts:
 1. A trigger: That can be anything that is hoverable, like a link or a chip
 2. The actual card: A small popover that is opened directly next to the trigger. The actual content of the card depends on the type of resource it is calling.
 
-
 ## Best practices
 
 **Do**
@@ -21,56 +20,51 @@ The HoverCard always consists of two basic parts:
 - Put in a slight delay between hovering and displaying the card to avoid accidental triggering, which can be annoying.
 - Keep the content of the card simple. Only the essentials.
 
-**Don't**
-
-- Don't put additional interactive elements inside of the card. Since the popover closes as soon as you move the mouse out, users will find it frustrating if they try further interacting with it and have it keep disappearing
-- Don't put too many triggers on one page, as it can otherwise become annoying to have too many items trigger a card that blocks part of the screen
-
 ## Used in
 
 - WorkPackage preview when linking via `#ID`
-- User preview when hovering the avatar
+- User preview on usernames and avatars
 
 ## Technical notes
 
-Unfortunately, we could not easily use the `Primer::Beta::Popover` component.
-That is why, the `HoverCard` is technically an Angular modal which renders inside a `turboFrame`.
-This modal is triggered by a class called `op-hover-card--preview-trigger` which can be set in any element.
-A global event listener is registered on all elements with this class and triggers the modal when being hovered.
+In the past, we could not easily use the `Primer::Beta::Popover` component. With recent changes, this is now possible.
+But it would require us to adjust the DOM of the hover card contents and the styling of the popover, so that it maintains its looks.
+
+Essentially the `HoverCard` is just a div which renders inside a `turboFrame`.
+
+We have a `HoverCardTriggerController` that listens for hover events on elements with the attribute `data-hover-card-trigger-target="trigger"`
+and renders a hover card for that element when the mouse enters the trigger.
 Additionally, the trigger element needs to pass the URL for the `turboFrame` as a data attribute called `data-hover-card-url`.
+
+When the hovering event is received, the `HoverCardTriggerController` will retrieve the data for the turbo frame from
+the URL and sanitize it. Then it will construct a div, create a turbo frame with the sanitized URL within it and
+append it to either the body or an existing dialog element. The final placement depends on the position of the trigger
+in the DOM.
+
+The hover card will close automatically when the mouse leaves the trigger or the card itself.
 
 ### Code structure
 
-**Angular modal**:
-```html
- <!-- frontend/src/app/shared/components/modals/preview-modal/hover-card-modal/hover-card.modal.html -->
-<div
-  class="op-hover-card"
->
-  <turbo-frame
-    loading="lazy"
-    id="op-hover-card-body"
-    [src]="turboFrameSrc">
-  </turbo-frame>
-</div>
-```
-
 **Trigger**:
 ```html
-  <!-- app/views/module_a/index.html.erb -->
-  <a href="work_packages/14/activity"
-     data-hover-card-url="work_packages/14/hover_card"
-     class="op-hover-card--preview-trigger">
-    #14
-  </a>
+  <!-- important: make sure the controller is attached somewhere, preferably the body tag -->
+  <body data-controller="hover-card-trigger">
 
-  <!-- This is how it would look like to provide a hover card trigger to a picture of a user. In reality, you would
-       probably apply the trigger to an <op-principal> tag. -->
-  <a href="users/14"
-     data-hover-card-url="users/14/hover_card"
-     class="op-hover-card--preview-trigger">
-    <img src="user_avatar.png" alt="">
-  </a>
+    <!-- app/views/module_a/index.html.erb -->
+    <a href="work_packages/14/activity"
+       data-hover-card-url="work_packages/14/hover_card"
+       data-hover-card-trigger-target="trigger">
+      #14
+    </a>
+
+    <!-- This is how it would look like to provide a hover card trigger to a picture of a user. In reality, you would
+         probably apply the trigger to an <op-principal> tag. -->
+    <a href="users/14"
+       data-hover-card-url="users/14/hover_card"
+       data-hover-card-trigger-target="trigger">
+      <img src="user_avatar.png" alt="">
+    </a>
+  </body>
 ```
 
 Note that the user example is simplified. For actual use in the application, it is recommended to use the `AvatarComponent`, which offers an option for hover cards.

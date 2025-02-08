@@ -29,8 +29,7 @@
 require "spec_helper"
 
 RSpec.describe "Global role: Global Create project",
-               :js,
-               :with_cuprite do
+               :js do
   shared_let(:admin) { create(:admin) }
   shared_let(:user) { create(:user) }
   shared_let(:project) { create(:project) }

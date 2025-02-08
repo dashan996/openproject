@@ -3,7 +3,7 @@
     flex_layout(my: 2, data: { test_selector: "op-work-package-journal-form" }) do |new_form_container|
       new_form_container.with_row(
         display: button_row_display_value,
-        data: { 
+        data: {
           "work-packages--activities-tab--index-target": "buttonRow"
         }) do
         flex_layout(justify_content: :space_between) do |button_row|
@@ -39,10 +39,10 @@
           id: "work-package-journal-form-element", # required for specs
           model: journal,
           method: :post,
-          data: { 
-            turbo: true, 
-            turbo_stream: true, 
-            "work-packages--activities-tab--index-target": "form", 
+          data: {
+            turbo: true,
+            turbo_stream: true,
+            "work-packages--activities-tab--index-target": "form",
             action: "submit->work-packages--activities-tab--index#onSubmit",
             "test_selector": "op-work-package-journal-form-element"
           },
@@ -61,7 +61,10 @@
                 icon: :"paper-airplane",
                 "aria-label": t("activities.work_packages.activity_tab.label_submit_comment"),
                 type: :submit,
-                data: { "test_selector": "op-submit-work-package-journal-form" }
+                data: {
+                  "test_selector": "op-submit-work-package-journal-form",
+                  "work-packages--activities-tab--index-target": "formSubmitButton"
+                }
               ))
             end
           end

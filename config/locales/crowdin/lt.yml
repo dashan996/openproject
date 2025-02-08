@@ -226,6 +226,10 @@ lt:
           item:
             title: This item doesn't have any hierarchy level below
             description: Add items to this list to create sub-items inside another one
+        delete_dialog:
+          title: "Delete custom field item"
+          heading: "Delete custom field item?"
+          description: "This action will irreversibly remove the item and all its sub-items. Any assigned values will be permanently deleted. If this field is required, removing items may cause existing work packages to become invalid."
         placeholder:
           label: "Item label"
           short: "Short name"
@@ -246,6 +250,7 @@ lt:
     confirm_destroy_option: "Ištrinant savybę, visi jos panaudojimai (pvz., darbų paketuose) taip pat bus ištrinti. Ar Jūs tikrai norite ištrinti?"
     reorder_alphabetical: "Perrikiuoti reikšmes alfabeto tvarka"
     reorder_confirmation: "Dėmesio: Dabartinė galimų reikšmių tvarka bus prarasta. Tęsti?"
+    placeholder_version_select: "Work package or project selection is required first"
     instructions:
       is_required: "Pažymėti savo lauką kaip privalomą. Taip bus privaloma jį užpildyti kuriant ar atnaujinant esamus resursus."
       is_required_for_project: "Check to enable this attribute and make it required in all projects. It cannot be deactived for individual projects."
@@ -284,6 +289,7 @@ lt:
       label: "Label"
       short: "Short name"
       parent: "Parent"
+      blueprint: "Pattern blueprint"
   global_search:
     placeholder: "Ieškoti %{app_title}"
     overwritten_tabs:
@@ -480,6 +486,7 @@ lt:
   my:
     access_token:
       create_dialog:
+        title: Token generated
         header: The %{type} token has been generated
         warning: Note that this is the only time you will see this token, make sure to copy it now.
       errors:
@@ -661,6 +668,7 @@ lt:
         title: "Darbo paketo dalinimuisi trūksta darbo proceso"
         message: "Vaidmeniui „Darbo paketo redaktorius“ nesukonfigūruotas procesas. Be proceso naudotojas negali pakeisti darbo paketo būsenos. Procesą galima nukopijuoti. Parinkite šaltinio tipą („pvz. „Užduotis“) ir šaltinio vaidmenį (pvz. „Narys“). Tada parinkite paskirties tipus. Pradžiai galėtumėte kaip paskirtį parinkti visus tipus. Galų gale parinkite vaidmenį „Darbo paketų redaktorius“ kaip paskirtį ir spauskite „Kopijuoti“. Taip sukūrę numatytąjį variantą, patikslinkite procesus kaip tai darote su kitais vaidmenimis."
         link_message: "Konfigūruokite procesus administravime."
+    templated_subject_hint: Automatically generated through type %{type}
     summary:
       reports:
         category:
@@ -683,14 +691,15 @@ lt:
       no_results_title_text: There are currently no relations available.
       blankslate_heading: "No relations"
       blankslate_description: "This work package does not have any relations yet."
+    label_add_child_button: "Child"
     label_add_x: "Add %{x}"
     label_edit_x: "Edit %{x}"
     label_add_description: "Add description"
     lag:
       subject: "Lag"
-      title: "Lag (in days)"
-      caption: "The gap in number of working days in between the two work packages"
+      caption: "The minimum number of working days to keep in between the two work packages."
     relations:
+      label_new_child_created: "New work package created and added as a child"
       label_relates_singular: "related to"
       label_relates_plural: "related to"
       label_relates_to_singular: "related to"
@@ -705,6 +714,9 @@ lt:
       follows_description: "The related work package necessarily needs to finish before this one can start"
       label_child_singular: "child"
       label_child_plural: "children"
+      new_child: "New child"
+      new_child_text: "Creates a related work package as a sub-item of the current (parent) work package"
+      existing_child: "Existing child"
       child_description: "Makes the related work package a sub-item of the current (parent) work package"
       label_blocks_singular: "blocks"
       label_blocks_plural: "blocks"
@@ -741,6 +753,8 @@ lt:
       required_description: "Marks this work package as being a requirement to the related one"
       label_parent_singular: "parent"
       label_parent_plural: "parent"
+      ghost_relation_title: "Related work package"
+      ghost_relation_description: "This is not visible to you due to permissions."
   label_invitation: Pakvietimas
   account:
     delete: "Pašaslinti paskyrą"
@@ -805,6 +819,7 @@ lt:
         is_required: "Būtinas"
         max_length: "Maksimalus ilgis"
         min_length: "Minimalus ilgis"
+        content_right_to_left: "Right-to-Left content"
         multi_value: "Leisti daugybinio žymėjimo galimybę"
         possible_values: "Galimos reikšmės"
         regexp: "Reguliari išraiška"
@@ -840,6 +855,8 @@ lt:
         attr_lastname: "Pavardės atributas"
         attr_login: "Naudotojo atributas"
         attr_mail: "El. paštos atributas"
+        filter_string: "Filter string"
+        admin: "Administrator"
         base_dn: "Bazinis DN"
         host: "Serveris"
         onthefly: "Automatinis naudotojų kūrimas"
@@ -883,6 +900,9 @@ lt:
       project_custom_field:
         is_required: "Required for all projects"
         custom_field_section: Skiltis
+      project/life_cycle_step_definition:
+        name: "Name"
+        color: "Color"
       query:
         column_names: "Stulpeliai"
         relations_to_type_column: "Ryšiai su %{type}"
@@ -1222,6 +1242,10 @@ lt:
             from:
               error_not_found: "„nuo“ pozicijos darbų paketas nerastas arba nematomas"
               error_readonly: "esamo ryšio sąsaja „iš“ yra nekintama"
+            lag:
+              greater_than_or_equal_to:
+                zero: "cannot be negative."
+              less_than_or_equal_to: "is too high."
         repository:
           not_available: "SCM tiekėjas neprieinamas"
           not_whitelisted: "neleidžiama pagal konfigūraciją."
@@ -1596,8 +1620,9 @@ lt:
   button_copy_and_follow: "Kopijuoti ir sekti"
   button_create: "Sukurti"
   button_create_and_continue: "Sukurti ir tęsti"
-  button_delete: "Ištrinti"
   button_decline: "Atmesti"
+  button_delete: "Ištrinti"
+  button_delete_permanently: "Delete permanently"
   button_delete_watcher: "Pašalinti stebėtoją vardu %{name}"
   button_download: "Atsiųsti"
   button_duplicate: "Dublikuoti"
@@ -1836,6 +1861,11 @@ lt:
         few: "valandos (-a, -ų)"
         many: "valandos (-a, -ų)"
         other: "valandos (-a, -ų)"
+      day:
+        one: "day"
+        few: "days"
+        many: "days"
+        other: "days"
   description_active: "Aktyvus?"
   description_attachment_toggle: "Rodyti/slėpti priedus"
   description_autocomplete: >
@@ -1871,6 +1901,10 @@ lt:
     upsale:
       title: "Enterprise add-on"
       link_title: "More information"
+      automatic_subject_generation:
+        description: "Create automatically generated subjects using referenced attributes and text."
+      customize_life_cycle:
+        description: "Create and organize different project stages and gates than the ones provided by PM2 project cycle planning."
       form_configuration:
         description: "Pritaikyti sau formos konfigūraciją su šiais naujais priedais:"
         add_groups: "Pridėti naujas atributų grupes"
@@ -2153,8 +2187,6 @@ lt:
       api_and_webhooks: "API ir tinklo jungtys"
     quick_add:
       label: "Atidaryti greitą pridėjimo meniu"
-    breadcrumb:
-      nested_element: "%{section_header}: <b>%{title}</b>"
   my_account:
     access_tokens:
       no_results:
@@ -2235,6 +2267,7 @@ lt:
   label_add_subtask: "Pridėti antrinę užduotį"
   label_added: "pridėtas"
   label_added_by: "Pridėjo %{author}"
+  label_added_by_on: "Added by %{author} on %{date}"
   label_added_time_by: "%{author} pridėjo prieš %{age}"
   label_additional_workflow_transitions_for_assignee: "Papildomi darbų eigos variantai leistini, kai darbas paskirtas vartotojui"
   label_additional_workflow_transitions_for_author: "Papildomi darbų eigos variantai leistini, kai vartotojas yra autorius"
@@ -2655,6 +2688,7 @@ lt:
   label_project_new: "Naujas projektas"
   label_project_plural: "Projektai"
   label_project_list_plural: "Projektų sąrašai"
+  label_project_lifecycle: "Project lifecycle"
   label_project_attributes_plural: "Projekto atributai"
   label_project_custom_field_plural: "Projekto atributai"
   label_project_settings: "Projekto nustatymai"
@@ -2681,6 +2715,7 @@ lt:
   label_relation: "Relation"
   label_relation_actions: "Relation actions"
   label_relation_delete: "Pašalinti ryšį"
+  label_relation_edit: "Edit relation"
   label_relation_new: "Naujas ryšys"
   label_release_notes: "Išleidimo informacija"
   label_remaining_work: "Liko darbo"
@@ -3099,6 +3134,7 @@ lt:
   notice_bad_request: "Netinkama užklausa."
   notice_not_authorized: "Jūs neturite prieigos teisių prie šio puslapio."
   notice_not_authorized_archived_project: "Projektas, kurį bandote atidaryti, buvo suarchyvuotas."
+  notice_requires_enterprise_token: "Enterprise token missing or doesn't allow access to this page."
   notice_password_confirmation_failed: "Jūsų slaptažodis yra neteisingas. Negalima tęsti."
   notice_principals_found_multiple: "Rasta %{number} rezultatai (-as, -ų).\nPaspauskite 'Tab', kad susikoncentruotumėte į pirmą rezultatą."
   notice_principals_found_single: "Yra vienas rezultatas.\nPaspauskite 'Tab', kad susikoncentruotumėte į jį."
@@ -3148,7 +3184,7 @@ lt:
     text_getting_started_description: "Gaukite greitą apžvalgą apie projektų valdymą ir komandos bendradarbiavimą naudojant OpenProject. Šį video galite paleisti iš naujo per pagalbos meniu."
     welcome: "Jus sveikina %{app_title}"
     select_language: "Pasirinkite kalbą"
-  permission_add_work_package_notes: "Pridėti pastabų"
+  permission_add_work_package_notes: "Add comments"
   permission_add_work_packages: "Pridėti darbų paketų"
   permission_add_messages: "Skelbti pranešimus"
   permission_add_project: "Kurti projektus"
@@ -3178,10 +3214,11 @@ lt:
   permission_delete_timelines: "Šalinti laiko juostas"
   permission_delete_wiki_pages: "Pašalinti wiki puslapius"
   permission_delete_wiki_pages_attachments: "Pašalinti priedus"
-  permission_edit_work_package_notes: "Redaguoti pastabas"
+  permission_edit_work_package_notes: "Moderate comments"
+  permission_edit_work_package_notes_explanation: "Caution: Users with this permission are able to edit anyone's comment."
   permission_edit_work_packages: "Redaguoti darbų paketus"
   permission_edit_messages: "Redaguoti pranešimus"
-  permission_edit_own_work_package_notes: "Redaguoti savo pastabas"
+  permission_edit_own_work_package_notes: "Edit own comments"
   permission_edit_own_messages: "Redaguoti savo pranešimus"
   permission_edit_own_time_entries: "Redaguoti savo laiko įrašus"
   permission_edit_project: "Redaguoti projektą"
@@ -3274,9 +3311,9 @@ lt:
       are_you_sure: "Ar Jūs tikrai norite suarchyvuoti projektą '%{name}'?"
       archived: "Suarchyvuotas"
     count:
-      zero: "0 projektų"
-      one: "1 projektas"
-      other: "%{count} projektai"
+      zero: "0 projects"
+      one: "1 project"
+      other: "%{count} projects"
   project_module_activity: "Veikla"
   project_module_forums: "Forumai"
   project_module_work_package_tracking: "Darbų paketai"
@@ -3408,6 +3445,7 @@ lt:
     activated: "aktyvus"
     deactivated: "neaktyvus"
   search_input_placeholder: "Paieška..."
+  setting_apiv3_cors_title: "Cross-Origin Resource Sharing (CORS)"
   setting_apiv3_cors_enabled: "Įgalinti CORS"
   setting_apiv3_cors_origins: "API V3 Cross-Origin Resource Sharing (CORS) leidžiami kilmės domenai"
   setting_apiv3_cors_origins_text_html: >
@@ -3633,6 +3671,27 @@ lt:
       new:
         heading: "Naujas atributas"
         description: "Šio projekto atributo pakeitimas matysis visuose projektuose, kur jis įjungtas. Privalomų atributų negalima išjungti konkrečiame projekte."
+    project_life_cycle_step_definitions:
+      heading: "Project lifecycle"
+      heading_description: "The project lifecycle consists of stages and gates that structure your projects. They will appear in the overview page of a project and be available in the projects list. Individual stages and gates can be selected to customize a project but reordering is not possible on a project level."
+      label_add: "Add"
+      label_add_description: "Add lifecycle definition"
+      label_add_stage: "Stage"
+      label_add_gate: "Gate"
+      filter:
+        label: "Search project stage or gate"
+      section_header: "Stages and gates"
+      non_defined: "Neither stages nor gates are currently defined."
+      new:
+        description: "Changes to this project step will be reflected in all projects where it is enabled."
+      new_stage:
+        heading: "New stage"
+      new_gate:
+        heading: "New gate"
+      edit_stage:
+        heading: "Edit stage"
+      edit_gate:
+        heading: "Edit gate"
     projects:
       missing_dependencies: "Parinktas projekto modulis %{module}, kuris priklauso nuo %{dependencies}. Jums reikia pažymėti ir šias priklausomybes."
       section_new_projects: "Naujų projektų nustatymai"
@@ -3666,6 +3725,7 @@ lt:
   text_are_you_sure_continue: "Ar tikrai norite tęsti?"
   text_are_you_sure_with_children: "Ištrinti darbų paketą ir visus jo vaikų paketus?"
   text_are_you_sure_with_project_custom_fields: "Ištrynus šį atributą taipogi bus ištrintos ir jo reikšmės visuose projektuose. Ar tikrai norite tai padaryti?"
+  text_are_you_sure_with_project_life_cycle_step: "Deleting this step will also delete its usages in all projects. Are you sure you want to do this?"
   text_assign_to_project: "Priskirti projektui"
   text_form_configuration: >
     Jūs galite nustatyti, kurie laukeliai bus rodomi darbų paketų formoje. Jūs galite laisvai grupuoti laukelius pagal savo poreikius.
@@ -3745,6 +3805,7 @@ lt:
   text_notice_security_badge_displayed_html: >
     Pastaba: įjungus bus rodomas ženkliukas su jūsų diegimo būsena <a href="%{information_panel_path}">%{information_panel_label}</a> administravimo skydelyje. Rodoma tik administratoriams. <br/> Ženkliukas palygins jūsų OpenProject versiją su oficialia OpenProject laidų duomenų baze ir praneš, jei yra atnaujinimų dėl žinomų saugumo problemų. Daugiau informacijos, ką daro šis tikrinimas, kokią reikia pateikti informaciją ir kaip šį tikrinimą išjungti, rasite <a href="%{more_info_url}">konfigūravimo dokumentacijoje</a>.
   text_own_membership_delete_confirmation: "Jūs ketinate pašalinti keletą ar visus leidimus ir gali būti, kad nebegalėsite redaguoti šio projekto po to.\nAr jūs tikrai norite tęsti?"
+  text_permanent_delete_confirmation_checkbox_label: "I understand that this deletion cannot be reversed"
   text_plugin_assets_writable: "Į papildinių katalogą galima rašyti"
   text_powered_by: "Parengta pagal %{link}"
   text_project_identifier_info: "Leidžiamos tik mažosios raidės (a-z), skaitmenys, paprasti (-) ir žemi brūkšneliai (_). Taip pat privalo prasidėti mažąja raide."
@@ -4114,6 +4175,8 @@ lt:
       builtin: Built-in instance application
       confidential: Confidential
       singular: "OAuth aplikacija"
+      scopes: "Scopes"
+      client_credentials: "Client credentials"
       plural: "OAuth aplikacijos"
       named: "OAuth aplikacija „%{name}“"
       new: "Nauja OAuth aplikacija"

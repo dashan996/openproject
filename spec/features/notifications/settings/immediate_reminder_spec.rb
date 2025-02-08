@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe "Immediate reminder settings", :js, :with_cuprite do
+RSpec.describe "Immediate reminder settings", :js do
   shared_examples "immediate reminder settings" do
     it "allows to configure the reminder settings" do
       # Save prefs so we can reload them later
@@ -58,7 +58,7 @@ RSpec.describe "Immediate reminder settings", :js, :with_cuprite do
     it_behaves_like "immediate reminder settings"
   end
 
-  describe "email sending", js: false, with_cuprite: false do
+  describe "email sending" do
     let(:project) { create(:project) }
     let(:work_package) { create(:work_package, project:) }
     let(:receiver) do

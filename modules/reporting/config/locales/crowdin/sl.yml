@@ -45,6 +45,8 @@ sl:
   label_greater: ">"
   label_is_not_project_with_subprojects: "ni (s podprojekti) "
   label_is_project_with_subprojects: "je (s podprojekti) "
+  label_is_work_package_with_descendants: "is (includes descendants)"
+  label_is_not_work_package_with_descendants: "is not (includes descendants)"
   label_work_package_attributes: "Atributi delovnega paketa"
   label_less: "<"
   label_logged_by_reporting: "Logged by"
@@ -91,8 +93,11 @@ sl:
       button: "Export PDF timesheet"
       timesheet: "Timesheet"
       time: "Time"
+      sum_hours: Sum
     cost_reports:
       title: "Your Cost Reports XLS export"
+      start_time: "Start time"
+      end_time: "End time"
   reporting:
     group_by:
       selected_columns: "Izbrani stolpci"

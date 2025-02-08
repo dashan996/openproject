@@ -27,12 +27,13 @@
 #++
 
 class MeetingsController < ApplicationController
-  before_action :load_and_authorize_in_optional_project, only: %i[index new new_dialog show create history]
+  before_action :load_and_authorize_in_optional_project, only: %i[index new new_dialog show create delete_dialog destroy]
   before_action :verify_activities_module_activated, only: %i[history]
   before_action :determine_date_range, only: %i[history]
   before_action :determine_author, only: %i[history]
   before_action :build_meeting, only: %i[new new_dialog]
   before_action :find_meeting, except: %i[index new create new_dialog]
+  before_action :set_project, only: %i[copy history update update_participants]
   before_action :set_activity, only: %i[history]
   before_action :find_copy_from_meeting, only: %i[create]
   before_action :convert_params, only: %i[create update update_participants]
@@ -58,8 +59,7 @@ class MeetingsController < ApplicationController
   menu_item :new_meeting, only: %i[new create]
 
   def index
-    @query = load_query
-    @meetings = load_meetings(@query)
+    load_meetings
 
     render "index",
            locals: { menu_name: project_or_global_menu }
@@ -79,8 +79,9 @@ class MeetingsController < ApplicationController
           else
             render(Meetings::ShowComponent.new(meeting: @meeting, project: @project), layout: true)
           end
-        elsif @meeting.agenda.present? && @meeting.agenda.locked?
-          params[:tab] ||= "minutes"
+        else
+          @project = @meeting.project
+          params[:tab] ||= "minutes" if @meeting.agenda.present? && @meeting.agenda.locked?
         end
       end
     end
@@ -178,6 +179,13 @@ class MeetingsController < ApplicationController
     end
   end
 
+  def delete_dialog
+    respond_with_dialog Meetings::DeleteDialogComponent.new(
+      meeting: @meeting,
+      project: @project
+    )
+  end
+
   def destroy # rubocop:disable Metrics/AbcSize
     recurring = @meeting.recurring_meeting
 
@@ -204,6 +212,7 @@ class MeetingsController < ApplicationController
         render turbo_stream: @turbo_streams
       end
       format.html do
+        @project = @meeting.project
         render :edit
       end
     end
@@ -353,10 +362,43 @@ class MeetingsController < ApplicationController
     query.where("invited_user_id", "=", [User.current.id.to_s])
   end
 
-  def load_meetings(query)
-    query
-      .results
-      .paginate(page: page_param, per_page: per_page_param)
+  def load_meetings
+    @query = load_query
+
+    # We group meetings into individual groups, but only for upcoming meetings
+    if params[:upcoming] == "false"
+      @meetings = show_more_pagination(@query.results)
+    else
+      @grouped_meetings = group_meetings(@query.results)
+    end
+  end
+
+  def group_meetings(all_meetings) # rubocop:disable Metrics/AbcSize
+    next_week = Time.current.next_occurring(Redmine::I18n.start_of_week)
+    groups = Hash.new { |h, k| h[k] = [] }
+    groups[:later] = show_more_pagination(all_meetings
+                                            .where(start_time: next_week..)
+                                            .order(start_time: :asc))
+
+    all_meetings
+      .where(start_time: ...next_week)
+      .order(start_time: :asc)
+      .each do |meeting|
+      start_date = meeting.start_time.to_date
+
+      group_key =
+        if start_date == Time.zone.today
+          :today
+        elsif start_date == Time.zone.tomorrow
+          :tomorrow
+        else
+          :this_week
+        end
+
+      groups[group_key] << meeting
+    end
+
+    groups
   end
 
   def build_meeting
@@ -386,9 +428,12 @@ class MeetingsController < ApplicationController
     @meeting = Meeting
       .includes([:project, :author, { participants: :user }, :agenda, :minutes])
       .find(params[:id])
-    @project = @meeting.project
   rescue ActiveRecord::RecordNotFound
     render_404
+  end
+
+  def set_project
+    @project = @meeting.project
   end
 
   def convert_params # rubocop:disable Metrics/AbcSize

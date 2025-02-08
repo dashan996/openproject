@@ -42,6 +42,7 @@ module Types
     attribute :project_ids
     attribute :description
     attribute :attribute_groups
+    attribute :patterns
 
     validate :validate_current_user_is_admin
     validate :validate_attribute_group_names

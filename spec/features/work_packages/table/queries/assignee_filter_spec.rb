@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Work package filtering by assignee", :js, :with_cuprite do
+RSpec.describe "Work package filtering by assignee", :js do
   include Components::Autocompleter::NgSelectAutocompleteHelpers
 
   let(:project) { create(:project) }

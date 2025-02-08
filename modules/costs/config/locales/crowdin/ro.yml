@@ -33,6 +33,7 @@ ro:
       cost_type:
         unit: "Denumirea unității"
         unit_plural: "Numele unității pluralizate"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Unități consumate"
         labor_costs: "Costurile cu forța de muncă"
@@ -44,6 +45,16 @@ ro:
         rate: "Tarif"
       user:
         default_rates: "Tarife"
+      time_entry:
+        project: Project
+        user: User
+        work_package: Work package
+        hours: Ore
+        comments: Comment
+        activity: Activitate
+        spent_on: Dată
+        start_time: Start time
+        end_time: Finish time
     models:
       cost_type:
         one: "Tipul de cost"
@@ -52,6 +63,8 @@ ro:
       rate: "Evaluează"
     errors:
       models:
+        time_entry:
+          invalid_time: "must be between 00:00 and 23:59."
         work_package:
           is_not_a_valid_target_for_cost_entries: "Pachetul de lucru #%{id} nu este o ţintă validă pentru reasocierea timpilor de lucru."
           nullify_is_not_valid_for_cost_entries: "Înregistrările de costuri nu pot fi atribuite unui proiect."
@@ -66,6 +79,7 @@ ro:
     fixed_date: "Dată fixă"
   button_add_rate: "Adaugă preț"
   button_log_costs: "Costurile unitare ale buștenilor"
+  button_log_time: "Log"
   caption_booked_on_project: "Rezervat pe proiect"
   caption_default: "Implicit"
   caption_default_rate_history_for: "Istoricul ratei de neplată pentru %{user}"
@@ -77,6 +91,7 @@ ro:
   caption_save_rate: "Salvează tarif"
   caption_set_rate: "Setează tarif curent"
   caption_show_locked: "Afișați tipurile blocate"
+  caption_log_time_dialog: "Log time"
   description_date_for_new_rate: "Dată pentru noul tarif"
   group_by_others: "nici într-un grup"
   label_between: "între"
@@ -116,10 +131,12 @@ ro:
   label_until: "până la"
   label_valid_from: "Valabil de la"
   label_yes: "Da"
+  placeholder_activity_select_work_package_first: Work package selection is required first
   notice_something_wrong: "Ceva n-a mers bine. Vă rugăm să încercați din nou."
   notice_successful_restore: "Restaurare reușită."
   notice_successful_lock: "Blocat cu succes."
   notice_cost_logged_successfully: "Costul unitar a fost înregistrat cu succes."
+  notice_different_time_zones: "This user has a different time zone (%{tz}). Time will be logged using their time zone."
   permission_edit_cost_entries: "Editarea costurilor unitare înregistrate"
   permission_edit_own_cost_entries: "Editați propriile costuri unitare contabilizate"
   permission_edit_hourly_rates: "Editați tarifele orare"
@@ -147,3 +164,7 @@ ro:
   week: "săptămână"
   js:
     text_are_you_sure: "Ești sigur?"
+  api_v3:
+    errors:
+      validation:
+        start_time_different_date: "Date part of startTime (%{start_time}) must be the same as the spentOn (%{spent_on}) date."

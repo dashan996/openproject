@@ -2,12 +2,12 @@ tr:
   activemodel:
     attributes:
       saml/provider:
-        display_name: Name
-        identifier: Identifier
-        secret: Secret
-        scope: Scope
+        display_name: İsim
+        identifier: Tanımlayıcı
+        secret: Gizli Anahtar
+        scope: Kapsam
         assertion_consumer_service_url: ACS (Assertion consumer service) URL
-        limit_self_registration: Limit self registration
+        limit_self_registration: Kendi kendine kaydı sınırlayın
         sp_entity_id: Service entity ID
         metadata_url: Identity provider metadata URL
         name_identifier_format: Name identifier format
@@ -22,7 +22,7 @@ tr:
         signature_method: Signature algorithm
         digest_method: Digest algorithm
         format: "Format"
-        icon: "Custom icon"
+        icon: "Özel simge"
   activerecord:
     errors:
       models:
@@ -30,22 +30,22 @@ tr:
           invalid_certificate: "is not a valid PEM-formatted certificate: %{additional_message}"
           invalid_private_key: "is not a valid PEM-formatted private key: %{additional_message}"
           certificate_expired: "is expired and can no longer be used."
-          unmatched_private_key: "does not belong to the given certificate"
+          unmatched_private_key: "verilen sertifikaya ait değil"
   saml:
-    menu_title: SAML providers
-    delete_title: Delete SAML provider
+    menu_title: SAML sağlayıcıları
+    delete_title: SAML sağlayıcısını sil
     info:
-      title: "SAML Protocol Configuration Parameters"
+      title: "SAML Protokolü Yapılandırma Parametreleri"
       description: >
-        Use these parameters to configure your identity provider connection to OpenProject.
+        OpenProject ile kimlik sağlayıcı bağlantınızı yapılandırmak için bu parametreleri kullanın.
     metadata_parser:
-      success: "Successfully updated the configuration using the identity provider metadata."
+      success: "Kimlik sağlayıcı meta verilerini kullanarak yapılandırma başarıyla güncelledi."
       invalid_url: "Provided metadata URL is invalid. Provide a HTTP(s) URL."
       error: "Failed to retrieve the identity provider metadata: %{error}"
     providers:
       label_empty_title: "No SAML providers configured yet."
       label_empty_description: "Add a provider to see them here."
-      label_automatic_configuration: Automatic configuration
+      label_automatic_configuration: Otomatik yapılandırma
       label_metadata: Metadata
       label_metadata_endpoint: OpenProject metadata endpoint
       label_openproject_information: OpenProject information
@@ -142,7 +142,7 @@ tr:
       want_assertions_encrypted: >
         If enabled, require the identity provider to encrypt the assertion response using the certificate pair that you provide.
       certificate: >
-        Enter the X509 PEM-formatted certificate used by OpenProject for signing SAML requests.
+        OpenProject tarafından SAML isteklerini imzalamak için kullanılacak X509 PEM biçimli sertifikayı girin.
       private_key: >
         Enter the X509 PEM-formatted private key for the above certificate. This needs to be an RSA private key.
       signature_method: >

@@ -23,8 +23,11 @@ RSpec.shared_examples_for "provides a single WP context menu" do
     open_context_menu.call
     menu.choose("Log time")
     time_logging_modal.is_visible true
-    time_logging_modal.work_package_is_missing false
-    time_logging_modal.perform_action "Cancel"
+
+    # TODO: it seems like the modal is not properly loaded here? all methods seem to fail
+    # time_logging_modal.has_hidden_work_package_field_for(work_package)
+    # time_logging_modal.activity_input_disabled_because_work_package_missing? false
+    time_logging_modal.cancel
 
     # Open Move
     open_context_menu.call

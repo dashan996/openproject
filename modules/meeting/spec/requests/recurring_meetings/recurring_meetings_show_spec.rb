@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -46,6 +48,7 @@ RSpec.describe "Recurring meetings show",
 
   let(:current_user) { user }
   let(:show_page) { Pages::RecurringMeeting::Show.new(recurring_meeting).with_capybara_page(page) }
+  let(:request) { get recurring_meeting_path(recurring_meeting) }
 
   before do
     login_as(current_user)
@@ -60,6 +63,32 @@ RSpec.describe "Recurring meetings show",
     it "shows project recurring meetings" do
       get project_recurring_meeting_path(project, recurring_meeting)
       expect(response).to have_http_status(:ok)
+    end
+
+    context "when the meeting has and end_date < today" do
+      before do
+        recurring_meeting.update_columns(end_date: Time.zone.yesterday)
+      end
+
+      it "shows the appropriate blankslate and text" do
+        request
+        expect(page).to have_text "Meeting series ended"
+        expect(page).to have_text "ended on #{format_date(Time.zone.yesterday)}"
+      end
+    end
+
+    context "when the meeting has no end_date, but iterations" do
+      before do
+        recurring_meeting.update_columns(end_after: "iterations",
+                                         iterations: 2,
+                                         start_time: Time.zone.today - 3.days + 10.hours)
+      end
+
+      it "shows the blankslate for two days ago" do
+        request
+        expect(page).to have_text "Meeting series ended"
+        expect(page).to have_text "ended on #{format_date(Time.zone.today - 2.days)}"
+      end
     end
   end
 
@@ -85,6 +114,55 @@ RSpec.describe "Recurring meetings show",
       expect(page).to have_text format_time(past_instance.start_time)
       expect(page).to have_no_text format_time(past_schedule_cancelled.start_time)
       expect(page).to have_no_css("li", text: "Cancelled")
+    end
+
+    context "when meeting has ended and no upcoming meetings remain" do
+      before do
+        recurring_meeting.update_columns(end_date: Time.zone.yesterday)
+      end
+
+      it "still shows the one past meeting (Regression #61280)" do
+        get recurring_meeting_path(recurring_meeting, direction: "past")
+        expect(page).to have_text format_time(past_instance.start_time)
+      end
+    end
+  end
+
+  describe "upcoming tab" do
+    let!(:upcoming_open_meeting) do
+      create(:structured_meeting, recurring_meeting:, start_time: Time.zone.today + 1.day + 10.hours, state: :open)
+    end
+    let!(:open_meeting) do
+      create :scheduled_meeting,
+             meeting: upcoming_open_meeting,
+             recurring_meeting:,
+             start_time: Time.zone.today + 1.day + 10.hours
+    end
+
+    let!(:cancelled_meeting) do
+      create :scheduled_meeting,
+             recurring_meeting:,
+             start_time: Time.zone.today + 2.days + 10.hours,
+             cancelled: true
+    end
+
+    it "sorts meetings into two tables based on state" do
+      get recurring_meeting_path(recurring_meeting)
+
+      content = page.find_by_id("content")
+      expect(content).to have_text "Open"
+      expect(content).to have_text "Planned"
+
+      open_meeting_date = format_time(open_meeting.start_time)
+      cancelled_meeting_date = format_time(cancelled_meeting.start_time)
+      scheduled_meeting_date = format_time(Time.zone.today + 2.days + 10.hours)
+
+      agenda_opened = page.find("[data-test-selector='agenda-opened-table']")
+      expect(agenda_opened).to have_text open_meeting_date
+
+      planned = page.find("[data-test-selector='planned-table']")
+      expect(planned).to have_text cancelled_meeting_date
+      expect(planned).to have_text scheduled_meeting_date
     end
   end
 
@@ -180,6 +258,23 @@ RSpec.describe "Recurring meetings show",
         get recurring_meeting_path(recurring_meeting)
 
         expect(page).to have_no_css("#recurring-meetings-footer-component")
+      end
+    end
+
+    context "when the meeting has no end date" do
+      let(:recurring_meeting) do
+        create :recurring_meeting,
+               project:,
+               author: user,
+               start_time: Time.zone.today + 1.day,
+               frequency: "daily",
+               end_after: "never"
+      end
+
+      it "shows footer, but no counts" do
+        get recurring_meeting_path(recurring_meeting)
+
+        expect(page).to have_text "There are more scheduled meetings"
       end
     end
   end

@@ -11,6 +11,7 @@ import { GridResizeService } from 'core-app/shared/components/grids/grid/resize.
 import { GridMoveService } from 'core-app/shared/components/grids/grid/move.service';
 import { GridGap } from 'core-app/shared/components/grids/areas/grid-gap';
 import { I18nService } from 'core-app/core/i18n/i18n.service';
+import { GridResource } from 'core-app/features/hal/resources/grid-resource';
 
 @Injectable()
 export class GridAddWidgetService {
@@ -38,7 +39,7 @@ export class GridAddWidgetService {
   public widget(area:GridArea):Promise<GridWidgetResource|null> {
     return this
       .select(area)
-      .then((widgetResource) => {
+      .then(async (widgetResource) => {
         if (this.layout.isGap(area)) {
           this.addLine(area as GridGap);
         }
@@ -47,7 +48,7 @@ export class GridAddWidgetService {
 
         this.setMaxWidth(newArea);
 
-        this.persist(newArea);
+        await this.persist(newArea);
         return widgetResource;
       })
       .catch(() => null);
@@ -114,11 +115,12 @@ export class GridAddWidgetService {
     });
   }
 
-  private persist(area:GridWidgetArea) {
+  private async persist(area:GridWidgetArea):Promise<GridResource> {
     area.writeAreaChangeToWidget();
     this.layout.widgetAreas.push(area);
     this.layout.widgetResources.push(area.widget);
-    this.layout.rebuildAndPersist();
+
+    return this.layout.rebuildAndPersist();
   }
 
   public get isAllowed() {

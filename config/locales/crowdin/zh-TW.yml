@@ -30,7 +30,7 @@ zh-TW:
         no_results_description_text: "選擇「顯示所有內容」以顯示所有活動和留言"
         label_activity_show_all: "全部顯示"
         label_activity_show_only_comments: "僅顯示留言"
-        label_activity_show_only_changes: "僅顯示差異"
+        label_activity_show_only_changes: "僅顯示檔案異動"
         label_sort_asc: "最新的在最下面"
         label_sort_desc: "最新的在最上面"
         label_type_to_comment: "留言。輸入 @ 來通知他人。"
@@ -228,6 +228,10 @@ zh-TW:
           item:
             title: 此項目下方沒有任何階層
             description: 將項目加入此清單以在另一個清單中建立子項目
+        delete_dialog:
+          title: "刪除自訂欄位"
+          heading: "刪除自訂欄位？"
+          description: "此動作將不可逆轉地移除項目及其所有子項目。任何指定的值都會被永久刪除。如果此欄位是必填欄位，移除項目可能會導致現有工作套件失效。"
         placeholder:
           label: "項目標籤"
           short: "簡稱"
@@ -248,6 +252,7 @@ zh-TW:
     confirm_destroy_option: "刪除一個項目將會一併刪除所有出現這個項目的地方 (例如：在工作項目中)。你確定要刪除它嗎？"
     reorder_alphabetical: "按字母順序重新排列"
     reorder_confirmation: "警告：目前可用值的順序將會遺失。繼續嗎？"
+    placeholder_version_select: "需要先選擇工作項目或專案"
     instructions:
       is_required: "將此欄位定義成必填。\n"
       is_required_for_project: "勾選以啟用此屬性，並使其成為所有專案的必要屬性。個別專案無法停用。"
@@ -286,6 +291,7 @@ zh-TW:
       label: "標籤"
       short: "簡稱"
       parent: "上層"
+      blueprint: "樣式藍圖"
   global_search:
     placeholder: "在 %{app_title} 搜尋"
     overwritten_tabs:
@@ -461,6 +467,7 @@ zh-TW:
   my:
     access_token:
       create_dialog:
+        title: 權杖(Token)已產生
         header: '%{type} 權杖已生成'
         warning: '注意: 這是您唯一可以看到此權杖的時候, 請務必立即複製它。'
       errors:
@@ -635,6 +642,7 @@ zh-TW:
         title: "共用工作項目缺少工作流"
         message: "沒有為\"工作項目編輯者\"角色配置工作流程。沒有工作流參與，參與用戶就無法更改工作項目的狀態。工作流程可以複製。選擇一個類型(例如\"任務\")和角色(例如\"成員\")。然後選擇目標類型。一開始，您可以將所有類型都選擇為目標類型。最後，選擇\"工作項目編輯者\"角色作為目標，然後點擊\"複製\"。在建立預設設定之後，像對其他角色一樣進行微調，以其對工作流程進行詳細調整。"
         link_message: "在管理中配置工作流。"
+    templated_subject_hint: 透過類型 %{type}自動產生
     summary:
       reports:
         category:
@@ -657,14 +665,15 @@ zh-TW:
       no_results_title_text: 目前沒有相關工作項目
       blankslate_heading: "沒有關聯"
       blankslate_description: "此工作項目尚未建立任何關係。"
+    label_add_child_button: "子項目"
     label_add_x: "新增 %{x}"
     label_edit_x: "編輯：%{x}"
     label_add_description: "新增說明"
     lag:
       subject: "延遲"
-      title: "延遲（天數）"
-      caption: "兩個工作項目之間的工作天數差距"
+      caption: "兩個工作項目之間最少要相隔多少個工作天。"
     relations:
+      label_new_child_created: "建立新的工作項目，並以子項目新增"
       label_relates_singular: "相關於"
       label_relates_plural: "相關於"
       label_relates_to_singular: "相關於"
@@ -679,6 +688,9 @@ zh-TW:
       follows_description: "在這個工作項目開始之前，相關的工作必須先完成"
       label_child_singular: "子項目"
       label_child_plural: "子項目"
+      new_child: "新增子項目"
+      new_child_text: "使相關工作成為目前（上層）工作項目的子項目"
+      existing_child: "現有子項目"
       child_description: "使相關工作成為目前（父）工作項目的子項目"
       label_blocks_singular: "區塊"
       label_blocks_plural: "區塊"
@@ -715,6 +727,8 @@ zh-TW:
       required_description: "將此工作項目標示為相關工作的需求"
       label_parent_singular: "上層"
       label_parent_plural: "上層"
+      ghost_relation_title: "相關的工作項目"
+      ghost_relation_description: "由於權限的緣故，您無法看到。"
   label_invitation: 邀請
   account:
     delete: "刪除帳號"
@@ -779,6 +793,7 @@ zh-TW:
         is_required: "必填"
         max_length: "最大長度"
         min_length: "最小長度"
+        content_right_to_left: "從右至左的內容"
         multi_value: "允許多選"
         possible_values: "可選擇內容"
         regexp: "正規表示式"
@@ -814,6 +829,8 @@ zh-TW:
         attr_lastname: "姓"
         attr_login: "使用者名稱屬性。"
         attr_mail: "Email"
+        filter_string: "過濾字串"
+        admin: "管理員"
         base_dn: "Base DN"
         host: "主機"
         onthefly: "自動新增用戶"
@@ -857,6 +874,9 @@ zh-TW:
       project_custom_field:
         is_required: "所有專案都需要"
         custom_field_section: 區段
+      project/life_cycle_step_definition:
+        name: "名稱"
+        color: "顏色"
       query:
         column_names: "欄"
         relations_to_type_column: "與 %{type} 的關連"
@@ -1196,6 +1216,10 @@ zh-TW:
             from:
               error_not_found: "“開始”的工作項目不存在或無法顯示"
               error_readonly: "您無法更改現有關係的“開始”連結"
+            lag:
+              greater_than_or_equal_to:
+                zero: "cannot be negative."
+              less_than_or_equal_to: "is too high."
         repository:
           not_available: "版本控制無法使用"
           not_whitelisted: "不被設定所允許"
@@ -1540,8 +1564,9 @@ zh-TW:
   button_copy_and_follow: "複製並跟隨"
   button_create: "建立"
   button_create_and_continue: "建立並繼續"
-  button_delete: "删除"
   button_decline: "拒絕"
+  button_delete: "删除"
+  button_delete_permanently: "永久刪除"
   button_delete_watcher: "刪除監看者 %{name}"
   button_download: "下載"
   button_duplicate: "複本"
@@ -1726,6 +1751,8 @@ zh-TW:
     units:
       hour:
         other: "小時"
+      day:
+        other: "天"
   description_active: "啟用？"
   description_attachment_toggle: "顯示/隱藏附件"
   description_autocomplete: >
@@ -1761,6 +1788,10 @@ zh-TW:
     upsale:
       title: "企業版附加元件"
       link_title: "更多資訊"
+      automatic_subject_generation:
+        description: "使用參考的屬性和文字建立自動產生的主題。"
+      customize_life_cycle:
+        description: "建立和組織不同於 PM2 專案週期規劃所提供的專案階段和關卡。"
       form_configuration:
         description: "使用以下附加組件自定義表單配置："
         add_groups: "增加新的屬性群組"
@@ -2043,8 +2074,6 @@ zh-TW:
       api_and_webhooks: "API 和 Webhook"
     quick_add:
       label: "打開快速添加菜單"
-    breadcrumb:
-      nested_element: "%{section_header}: <b>%{title}</b>"
   my_account:
     access_tokens:
       no_results:
@@ -2125,6 +2154,7 @@ zh-TW:
   label_add_subtask: "新增子任務"
   label_added: "已新增"
   label_added_by: "由 %{author} 新增"
+  label_added_by_on: "由 %{author} 於%{date} 新增"
   label_added_time_by: "由%{author}於%{age}前新增"
   label_additional_workflow_transitions_for_assignee: "使用者是執行者時，可用狀態"
   label_additional_workflow_transitions_for_author: "使用者是作者，可用狀態"
@@ -2545,6 +2575,7 @@ zh-TW:
   label_project_new: "新增專案"
   label_project_plural: "專案"
   label_project_list_plural: "專案列表"
+  label_project_lifecycle: "專案生命週期"
   label_project_attributes_plural: "專案屬性"
   label_project_custom_field_plural: "專案屬性"
   label_project_settings: "專案設定"
@@ -2571,6 +2602,7 @@ zh-TW:
   label_relation: "關聯"
   label_relation_actions: "關聯動作"
   label_relation_delete: "刪除關聯"
+  label_relation_edit: "編輯關聯"
   label_relation_new: "新增關聯"
   label_release_notes: "發行說明"
   label_remaining_work: "剩餘工作"
@@ -2985,6 +3017,7 @@ zh-TW:
   notice_bad_request: "錯誤的請求"
   notice_not_authorized: "你沒有存取此頁面的權限"
   notice_not_authorized_archived_project: "你欲存取的專案已被封存"
+  notice_requires_enterprise_token: "企業識別碼遺失或不允許存取此頁面。"
   notice_password_confirmation_failed: "您的密碼不正確。無法繼續。"
   notice_principals_found_multiple: "找到 %{number} 條結果。\n Tab鍵以轉到第一條結果。"
   notice_principals_found_single: "有一個結果。 \n Tab鍵轉到該結果。"
@@ -3031,7 +3064,7 @@ zh-TW:
     text_getting_started_description: "快速瞭解 OpenProject 的項目管理和團隊協作。您可以從幫助菜單重新啓動此視頻。"
     welcome: "歡迎使用 %{app_title}"
     select_language: "請選擇您的語言"
-  permission_add_work_package_notes: "增加註釋"
+  permission_add_work_package_notes: "增加留言"
   permission_add_work_packages: "新增工作項目"
   permission_add_messages: "張貼訊息"
   permission_add_project: "建立專案"
@@ -3061,10 +3094,11 @@ zh-TW:
   permission_delete_timelines: "刪除時間軸"
   permission_delete_wiki_pages: "刪除維基頁面"
   permission_delete_wiki_pages_attachments: "刪除附件"
-  permission_edit_work_package_notes: "編輯註釋"
+  permission_edit_work_package_notes: "審閱留言"
+  permission_edit_work_package_notes_explanation: "注意：擁有此權限的使用者可以編輯任何人的註解。"
   permission_edit_work_packages: "編輯工作項目"
   permission_edit_messages: "編輯訊息"
-  permission_edit_own_work_package_notes: "編輯自己的註釋"
+  permission_edit_own_work_package_notes: "編輯自己的留言"
   permission_edit_own_messages: "編輯自己張貼的訊息"
   permission_edit_own_time_entries: "編輯自己的時間日誌"
   permission_edit_project: "編輯專案"
@@ -3159,7 +3193,7 @@ zh-TW:
     count:
       zero: "0 個專案"
       one: "1 個專案"
-      other: "%{count} 專案"
+      other: "%{count} 個專案"
   project_module_activity: "活動"
   project_module_forums: "討論區"
   project_module_work_package_tracking: "工作項目"
@@ -3293,6 +3327,7 @@ zh-TW:
     activated: "已啟用"
     deactivated: "已停用"
   search_input_placeholder: "搜尋 ..."
+  setting_apiv3_cors_title: "跨原始來源資源共用 (CORS, Cross-Origin Resource Sharing)"
   setting_apiv3_cors_enabled: "啟用 CORS"
   setting_apiv3_cors_origins: "CROSS-ORIGIN RESOURCE SHARING (CORS)"
   setting_apiv3_cors_origins_text_html: >
@@ -3518,6 +3553,27 @@ zh-TW:
       new:
         heading: "新屬性"
         description: "專案屬性的變更將套用在已啟用該屬性專案中。 若為必要屬性，無法個別專案停用。"
+    project_life_cycle_step_definitions:
+      heading: "專案生命週期"
+      heading_description: "專案生命週期由結構專案的階段和關卡組成。它們會出現在專案的總覽頁面中，並可在專案清單中找到。可以選擇個別階段和關卡來自訂專案，但無法在專案層級上重新排序。"
+      label_add: "增加"
+      label_add_description: "新增生命週期定義"
+      label_add_stage: "階段"
+      label_add_gate: "關卡"
+      filter:
+        label: "搜尋專案階段或關卡"
+      section_header: "階段與關卡"
+      non_defined: "目前階段和關卡都未定義。"
+      new:
+        description: "此專案步驟的變更會反映在啟用此步驟的所有專案中。"
+      new_stage:
+        heading: "新增階段"
+      new_gate:
+        heading: "增加關卡"
+      edit_stage:
+        heading: "編輯階段"
+      edit_gate:
+        heading: "編輯關卡"
     projects:
       missing_dependencies: "已檢查依賴於 %{dependencies} 的項目模塊 %{module}。您也需要檢查這些依賴項。"
       section_new_projects: "新專案的設置"
@@ -3551,6 +3607,7 @@ zh-TW:
   text_are_you_sure_continue: "你要繼續嗎?"
   text_are_you_sure_with_children: "刪除工作項目以及所有子工作項目?"
   text_are_you_sure_with_project_custom_fields: "刪除該屬性也會刪除其在所有項目中的值。您確定要這樣做嗎？"
+  text_are_you_sure_with_project_life_cycle_step: "刪除此步驟也會刪除其在所有專案中的使用。您確定要這麼做？"
   text_assign_to_project: "分配給專案"
   text_form_configuration: >
     您可以自訂哪些欄位將會顯示在工作項目表單中。您可以自由的群組化這些欄位來符合您的需求。
@@ -3630,6 +3687,7 @@ zh-TW:
   text_notice_security_badge_displayed_html: >
     注：如果啓用，這會在 <a href="%{information_panel_path}">%{information_panel_label}</a> 管理面板中和首頁上顯示一個包含您的安裝狀態的徽章。徽章僅向管理員顯示。<br/>徽章將根據官方的 OpenProject 版本數據庫檢查您當前的 OpenProject 版本，提醒您是否存在任何更新或已知漏洞。如需詳細瞭解檢查可以提供哪些信息，需要哪些數據來提供可用更新，以及如何禁用此檢查，請訪問<a href="%{more_info_url}">配置文檔</a>。
   text_own_membership_delete_confirmation: "您將要刪除部分或全部權限, 之後可能無法再編輯此專案。\n是否要繼續？"
+  text_permanent_delete_confirmation_checkbox_label: "我了解此刪除無法逆轉"
   text_plugin_assets_writable: "Plugin 資產目錄可寫"
   text_powered_by: "由 %{link} 提供"
   text_project_identifier_info: "僅允許小寫字母(a-z)、數字、破折號(-) 及底線(_)，且必須以小寫字母開頭。"
@@ -3997,6 +4055,8 @@ zh-TW:
       builtin: 內建範例
       confidential: 機密
       singular: "Oauth 應用程式"
+      scopes: "範圍"
+      client_credentials: "客戶憑證"
       plural: "Oauth 應用程式"
       named: "OAuth 應用程式 '%{name}'"
       new: "新增 OAuth 應用程式"
