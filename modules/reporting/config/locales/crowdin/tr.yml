@@ -23,7 +23,7 @@ tr:
   plugin_openproject_reporting:
     name: "OpenProject Raporlama"
     description: "Bu eklenti, OpenProject Zaman ve maliyetler eklentisi tarafından oluşturulan filtreleme ve gruplama ile özel maliyet raporları oluşturmaya izin verir."
-  button_save_report_as: "Farklı kaydet..."
+  button_save_report_as: "Raporu farklı kaydet..."
   comments: "Yorum"
   cost_reports_title: "Zaman ve maliyetler"
   label_cost_report: "Maliyet raporu"
@@ -45,8 +45,8 @@ tr:
   label_greater: ">"
   label_is_not_project_with_subprojects: "değil (alt projeler dahil)"
   label_is_project_with_subprojects: "(alt projeler dahil)"
-  label_is_work_package_with_descendants: "is (includes descendants)"
-  label_is_not_work_package_with_descendants: "is not (includes descendants)"
+  label_is_work_package_with_descendants: "(torunları içerir)"
+  label_is_not_work_package_with_descendants: "değildir (torunları içerir)"
   label_work_package_attributes: "Çalışma paketi nitelikleri"
   label_less: "<"
   label_logged_by_reporting: "Giriş yapan:"
@@ -93,10 +93,10 @@ tr:
       button: "PDF zaman çizelgesini dışa aktar"
       timesheet: "Zaman Çizelgesi"
       time: "Zaman"
-      sum_hours: Sum
+      sum_hours: Toplam
     cost_reports:
       title: "Maliyet Raporlarınızın XLS çıktısı"
-      start_time: "Başlangıç zamanı"
+      start_time: "Başlangıç tarihi"
       end_time: "Bitiş zamanı"
   reporting:
     group_by:

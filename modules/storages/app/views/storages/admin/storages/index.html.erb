@@ -32,7 +32,7 @@ end %>
 
           menu.with_item(
             label: I18n.t("storages.provider_types.#{short_provider_type}.name"),
-            href: url_helpers.select_provider_admin_settings_storages_path(provider: short_provider_type)
+            href: url_helpers.new_admin_settings_storage_path(provider: short_provider_type)
           ) do |item|
             item.with_trailing_visual_icon(
               icon: "op-enterprise-addons",

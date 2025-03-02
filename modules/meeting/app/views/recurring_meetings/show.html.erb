@@ -29,20 +29,20 @@ See COPYRIGHT and LICENSE files for more details.
 
 <% html_title t(:label_recurring_meeting_plural) %>
 
-<%= render(RecurringMeetings::ShowPageHeaderComponent.new(project: @project, meeting: @recurring_meeting)) %>
-<%= render(RecurringMeetings::ShowPageSubHeaderComponent.new(project: @project, meeting: @recurring_meeting, params:)) %>
+<%= render(RecurringMeetings::ShowPageHeaderComponent.new(meeting: @recurring_meeting)) %>
+<%= render(RecurringMeetings::ShowPageSubHeaderComponent.new(meeting: @recurring_meeting, params:)) %>
 
 <% if @recurring_meeting.nil? -%>
   <%= no_results_box %>
 <% else -%>
   <% if @direction == "past" -%>
     <%= render RecurringMeetings::TableComponent.new(
-      rows: @meetings,
-      current_project: @project,
-      count: @count,
-      direction: @direction,
-      max_count: @max_count
-    ) %>
+          rows: @meetings,
+          current_project: @project,
+          count: @count,
+          direction: @direction,
+          max_count: @max_count
+        ) %>
   <% else -%>
     <%= render partial: "show_upcoming" %>
   <% end -%>

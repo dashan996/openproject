@@ -122,7 +122,7 @@ Thanks to our great Community we can continuously offer more languages for OpenP
 - Bugfix: Automatic download of exports do not start. Download link also shows up late. \[[#40163](https://community.openproject.org/wp/40163)\]
 - Bugfix: Number of displayed assignees in team planner wrongly restricted by "objects per page" \[[#46490](https://community.openproject.org/wp/46490)\]
 - Bugfix: Baseline change columns display grey color dot for priority but not for status \[[#51379](https://community.openproject.org/wp/51379)\]
-- Bugfix: Search bar doesn't stretches back if blank, has it's inside text matching the bar color (white)  \[[#51682](https://community.openproject.org/wp/51682)\]
+- Bugfix: Search bar doesn't stretches back if blank, has its inside text matching the bar color (white)  \[[#51682](https://community.openproject.org/wp/51682)\]
 - Bugfix: Add to meeting button on Meetings tab overflows \[[#51747](https://community.openproject.org/wp/51747)\]
 - Bugfix: Announcement box and create new account button are not responsive \[[#51949](https://community.openproject.org/wp/51949)\]
 - Bugfix: Can't specify project key for incoming email \[[#52524](https://community.openproject.org/wp/52524)\]

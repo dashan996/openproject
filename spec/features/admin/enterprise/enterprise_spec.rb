@@ -81,9 +81,17 @@ RSpec.describe "Enterprise token", :js do
         expect(page).to have_test_selector("op-enterprise--active-token")
 
         expect(page.all(".attributes-key-value--key").map(&:text))
-          .to eq ["Subscriber", "Email", "Domain", "Maximum active users", "Starts at", "Expires at"]
+          .to eq ["Subscriber", "Email", "Domain", "Maximum active users", "Starts at", "Expires at", "Plan"]
         expect(page.all(".attributes-key-value--value").map(&:text))
-          .to eq ["Foobar", "foo@example.org", Setting.host_name, "Unlimited", format_date(Time.zone.today), "Unlimited"]
+          .to eq [
+            "Foobar",
+            "foo@example.org",
+            Setting.host_name,
+            "Unlimited",
+            format_date(Time.zone.today),
+            "Unlimited",
+            "Enterprise Plan (Token Version #{token_object.version})"
+          ]
 
         expect(page).to have_css(".button.icon-delete", text: I18n.t(:button_delete))
 

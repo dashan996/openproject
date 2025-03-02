@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -253,7 +255,7 @@ class Notifications::CreateFromModelService
   # * only lines added
   # * excluding quoted lines
   def text_for_mentions
-    potential_text = ""
+    potential_text = +""
     potential_text << journal.notes if journal.try(:notes)
 
     %i[description subject].each do |field|

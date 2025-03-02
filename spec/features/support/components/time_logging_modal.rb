@@ -134,7 +134,8 @@ module Components
         select_autocomplete modal_container.find("#time_entry_#{field_name}"),
                             query: value,
                             select_text: value,
-                            results_selector: "#time-entry-dialog"
+                            results_selector: "#time-entry-dialog",
+                            expected_value: value
       else
         within modal_container do
           fill_in "time_entry_#{field_name}", with: value

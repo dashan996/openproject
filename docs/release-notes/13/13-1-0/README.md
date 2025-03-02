@@ -28,7 +28,7 @@ This feature, designed with the latest Primer UI components and UX  patterns, is
 
 > Please note: The already existing classic meetings will be removed with one of the upcoming releases and only the new dynamic meetings will remain.  Migrations will be provided.
 
-See our user guide to learn more about the [updated meetings module and how to use it](../../../user-guide/meetings/dynamic-meetings/).
+See our user guide to learn more about the [updated meetings module and how to use it](../../../user-guide/meetings/).
 
 ## OneDrive/SharePoint integration (Enterprise add-on)
 

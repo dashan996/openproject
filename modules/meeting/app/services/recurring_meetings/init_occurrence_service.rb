@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -61,7 +62,8 @@ module RecurringMeetings
     def instantiate_params(start_time)
       {
         start_time:,
-        recurring_meeting:
+        recurring_meeting:,
+        template: false
       }
     end
 

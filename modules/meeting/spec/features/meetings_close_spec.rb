@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -39,7 +40,7 @@ RSpec.describe "Meetings close" do
            member_with_permissions: { project => permissions })
   end
 
-  let!(:meeting) { create(:meeting, project:, title: "Own awesome meeting!", author: user) }
+  let!(:meeting) { create(:meeting, :author_participates, project:, title: "Own awesome meeting!", author: user) }
   let!(:meeting_agenda) { create(:meeting_agenda, meeting:, text: "asdf") }
 
   before do
@@ -51,7 +52,7 @@ RSpec.describe "Meetings close" do
     let(:permissions) { %i[view_meetings close_meeting_agendas] }
 
     it "can delete own and other`s meetings" do
-      visit meetings_path(project)
+      visit project_meetings_path(project)
 
       click_on meeting.title
 
@@ -87,7 +88,7 @@ RSpec.describe "Meetings close" do
     let(:permissions) { %i[view_meetings] }
 
     it "cannot delete own and other`s meetings" do
-      visit meetings_path(project)
+      visit project_meetings_path(project)
 
       expect(page)
         .to have_no_link "Close"

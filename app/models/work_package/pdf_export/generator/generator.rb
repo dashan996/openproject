@@ -158,7 +158,7 @@ module WorkPackage::PDFExport::Generator::Generator
       pdf_footer_3: I18n.t("pdf_generator.page_nr_footer", page: "<page>", total: "<total>"),
       pdf_header_logo: logo_image_filename,
       pdf_header: heading
-    }
+    }.compact
     # rubocop:enable Naming/VariableNumber
   end
 

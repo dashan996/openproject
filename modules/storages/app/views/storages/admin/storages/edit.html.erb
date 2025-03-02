@@ -29,17 +29,15 @@ See COPYRIGHT and LICENSE files for more details.
 
 <% html_title t(:label_administration), t(:project_module_storages), t(:label_edit_x, x: @storage.name) %>
 
-<%= render(Storages::Admin::EditFormHeaderComponent.new(
-    storage: @storage,
-    selected: :edit
-  ))
-%>
+<%= content_tag("turbo-frame", id: "page-content") do %>
+  <%= render(Storages::Admin::EditFormHeaderComponent.new(storage: @storage, selected: :edit)) %>
 
-<%= render(Primer::Alpha::Layout.new(stacking_breakpoint: :lg)) do |component| %>
-  <% component.with_main do %>
-    <%= render(::Storages::Admin::StorageViewComponent.new(@storage)) %>
-  <% end %>
-  <% component.with_sidebar(col_placement: :end, row_placement: :end) do %>
-    <%= render(::Storages::Admin::SidePanelComponent.new(storage: @storage)) %>
+  <%= render(Primer::Alpha::Layout.new(stacking_breakpoint: :lg)) do |component| %>
+    <% component.with_main do %>
+      <%= render(Storages::Admin::StorageViewComponent.new(@storage, wizard: @wizard)) %>
+    <% end %>
+    <% component.with_sidebar(col_placement: :end, row_placement: :end) do %>
+      <%= render(Storages::Admin::SidePanelComponent.new(storage: @storage)) %>
+    <% end %>
   <% end %>
 <% end %>

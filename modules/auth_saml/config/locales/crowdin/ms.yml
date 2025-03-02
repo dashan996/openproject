@@ -1,29 +1,28 @@
 ms:
-  activemodel:
+  activerecord:
     attributes:
       saml/provider:
-        display_name: Nama
-        identifier: Pengenalan
-        secret: Sulit
-        scope: Skop
-        assertion_consumer_service_url: URL ACS (Perkhidmatan pengguna Penegasan).
-        limit_self_registration: Hadkan pendaftaran diri
-        sp_entity_id: ID entiti perkhidmatan
-        metadata_url: URL metadata pembekal identiti
-        name_identifier_format: Format pengecam nama
-        idp_sso_service_url: Titik akhir log masuk pembekal identiti
-        idp_slo_service_url: Titik akhir logout pembekal identiti
-        idp_cert: Sijil awam pemberi identiti
-        authn_requests_signed: Tandatangan SAML AuthnRequests
-        want_assertions_signed: Memerlukan jawapan yang ditandatangani
-        want_assertions_encrypted: Memerlukan respons yang disulitkan
-        certificate: Sijil yang digunakan oleh OpenProject untuk permintaan SAML
-        private_key: Kunci persendirian yang sepadan untuk permintaan OpenProject SAML
-        signature_method: Algoritma tandatangan
-        digest_method: Algoritma penghadaman
+        display_name: Name
+        identifier: Identifier
+        secret: Secret
+        scope: Scope
+        assertion_consumer_service_url: ACS (Assertion consumer service) URL
+        limit_self_registration: Limit self registration
+        sp_entity_id: Service entity ID
+        metadata_url: Identity provider metadata URL
+        name_identifier_format: Name identifier format
+        idp_sso_service_url: Identity provider login endpoint
+        idp_slo_service_url: Identity provider logout endpoint
+        idp_cert: Public certificate of identity provider
+        authn_requests_signed: Sign SAML AuthnRequests
+        want_assertions_signed: Require signed responses
+        want_assertions_encrypted: Require encrypted responses
+        certificate: Certificate used by OpenProject for SAML requests
+        private_key: Corresponding private key for OpenProject SAML requests
+        signature_method: Signature algorithm
+        digest_method: Digest algorithm
         format: "Format"
-        icon: "Ikon tersuai"
-  activerecord:
+        icon: "Custom icon"
     errors:
       models:
         saml/provider:
@@ -138,7 +137,7 @@ ms:
       authn_requests_signed: >
         Jika ditandakan, OpenProject akan menandatangani SAML AuthnRequest. Anda perlu memberikan sijil tandatangan dan kunci peribadi menggunakan medan di bawah.
       want_assertions_signed: >
-        Jika ditandakan, OpenProject akan memerlukan respons yang ditandatangani daripada pembekal identiti menggunakan pasangan kunci sijilnya sendiri. OpenProject akan mengesahkan tandatangan terhadap sijil dari bahagian konfigurasi asas.
+        If checked, OpenProject will required signed responses from the identity provider using its own certificate keypair. OpenProject will verify the signature against the certificate from the basic configuration section.
       want_assertions_encrypted: >
         Jika didayakan, minta pembekal identiti menyulitkan respons penegasan menggunakan pasangan sijil yang anda berikan.
       certificate: >

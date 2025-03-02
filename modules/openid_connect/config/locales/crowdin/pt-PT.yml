@@ -4,32 +4,31 @@ pt-PT:
     description: "Adiciona fornecedores da estratégia OmniAuth OpenID Connect ao OpenProject."
   logout_warning: >
     A sua sessão foi terminada. O conteúdo de qualquer formulário que enviar poderá ser perdido. Por favor [inicie a sessão].
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
-        name: Nome
-        slug: Identificador único
-        display_name: Nome a apresentar
+        name: Name
+        slug: Unique identifier
+        display_name: Display name
         client_id: Client ID
-        client_secret: Client Secret
-        secret: Segredo
-        scope: Contexto
-        grant_types_supported: Tipos de concessões suportadas
-        limit_self_registration: Limitar auto-registo
-        authorization_endpoint: Endpoint da autorização
-        userinfo_endpoint: Endpoint da informação do utilizador
-        token_endpoint: Endpoint do token
-        end_session_endpoint: Endpoint de término de sessão
-        post_logout_redirect_uri: URI de redirecionamento após o encerramento da sessão
+        client_secret: Client secret
+        secret: Secret
+        scope: Scope
+        grant_types_supported: Supported grant types
+        limit_self_registration: Limit self registration
+        authorization_endpoint: Authorization endpoint
+        userinfo_endpoint: User information endpoint
+        token_endpoint: Token endpoint
+        end_session_endpoint: End session endpoint
+        post_logout_redirect_uri: Post logout redirect URI
         jwks_uri: JWKS URI
-        issuer: Emissor
-        tenant: Inquilino
-        metadata_url: URL dos metadados
-        icon: Ícone personalizado
-        claims: Reclamações
-        acr_values: Valores ACR
-        redirect_url: URL de Redirecionamento
-  activerecord:
+        issuer: Issuer
+        tenant: Tenant
+        metadata_url: Metadata URL
+        icon: Custom icon
+        claims: Claims
+        acr_values: ACR values
+        redirect_url: Redirect URL
     errors:
       models:
         openid_connect/provider:

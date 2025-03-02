@@ -45,8 +45,8 @@ pl:
   label_greater: ">"
   label_is_not_project_with_subprojects: "nie jest (zawiera podprojekty)"
   label_is_project_with_subprojects: "jest (zawiera podprojekty)"
-  label_is_work_package_with_descendants: "is (includes descendants)"
-  label_is_not_work_package_with_descendants: "is not (includes descendants)"
+  label_is_work_package_with_descendants: "jest (zawiera elementy potomne)"
+  label_is_not_work_package_with_descendants: "nie jest (zawiera elementy potomne)"
   label_work_package_attributes: "Atrybuty zadań"
   label_less: "<"
   label_logged_by_reporting: "W dzienniku zarejestrował:"
@@ -93,11 +93,11 @@ pl:
       button: "Wyeksportuj kartę czasu pracy w formacie PDF"
       timesheet: "Karta czasu pracy"
       time: "Czas"
-      sum_hours: Sum
+      sum_hours: Suma
     cost_reports:
       title: "Twój eksport raportów kosztów w formacie XLS"
-      start_time: "Start time"
-      end_time: "End time"
+      start_time: "Czas rozpoczęcia"
+      end_time: "Czas zakończenia"
   reporting:
     group_by:
       selected_columns: "Wybrane kolumny"

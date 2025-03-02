@@ -32,4 +32,15 @@ Rails.application.routes.draw do
   end
 
   resources :documents, except: %i[create new index]
+
+  namespace :admin do
+    namespace :settings do
+      resources :document_categories, except: [:show] do
+        member do
+          put :move
+          get :reassign
+        end
+      end
+    end
+  end
 end

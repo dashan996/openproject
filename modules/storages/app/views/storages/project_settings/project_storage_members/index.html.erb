@@ -35,15 +35,18 @@ See COPYRIGHT and LICENSE files for more details.
       [{ href: project_overview_path(@project.id), text: @project.name },
        { href: project_settings_general_path(@project.id), text: I18n.t("label_project_settings") },
        { href: external_file_storages_project_settings_project_storages_path(@project), text: t("project_module_storages") },
-       nested_breadcrumb_element(@storage.name, t("storages.page_titles.project_storage_members.title"))
-      ],
-      selected_item_font_weight: :normal)
+       nested_breadcrumb_element(@storage.name, t("storages.page_titles.project_storage_members.title"))],
+      selected_item_font_weight: :normal
+    )
   end
 %>
 
-<%= content_tag(:p,
-                t("storages.page_titles.project_storage_members.subtitle",
-                  storage_name_link: link_to(@storage.name, edit_admin_settings_storage_path(@storage))).html_safe
+<%= content_tag(
+      :p,
+      t(
+        "storages.page_titles.project_storage_members.subtitle",
+        storage_name_link: link_to(@storage.name, edit_admin_settings_storage_path(@storage))
+      ).html_safe
     ) %>
 
 <%= render(::Storages::ProjectStorages::Members::TableComponent.new(rows: @project_users, storage: @storage)) %>

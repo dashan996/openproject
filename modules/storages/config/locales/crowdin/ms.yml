@@ -1,11 +1,27 @@
 ms:
   activerecord:
     attributes:
+      oauth_client:
+        client_id: Client ID
+        client_secret: Client secret
+      project:
+        project_folder_type: Project folder type
       storages/file_link:
-        origin_id: ID Asal
+        origin: Origin
+        storage: Storage
+      storages/nextcloud_storage:
+        authentication_methods:
+          oauth2_sso: Single-Sign-On through OpenID Connect Identity Provider
+          oauth2_sso_with_two_way_oauth2_fallback: Single-Sign-On with Two-Way OAuth 2.0 as fallback
+          two_way_oauth2: Two-way OAuth 2.0 authorization code flow
+        storage_audience: Storage Audience
       storages/project_storage:
+        project_folder: Project folder
+        project_folder_mode: Project folder mode
         storage: Penyimpanan
+        storage_url: Storage URL
       storages/storage:
+        authentication_method: Authentication Method
         creator: Pencipta
         drive: ID Pemacu
         host: Hos
@@ -199,15 +215,19 @@ ms:
         manual_management_description: Ciptakan dan uruskan folder mengikut projek sendiri secara manual. Anda perlu memastikan pengguna-pengguna berkaitan mempunyai akses secara manual.
         setup_incomplete: Pilih jenis pengurusan akses pengguna dan penciptaan folder.
         subtitle: Pengurusan akses
-        title: Akses dan folder projek
+      access_management_section: Access and project folders
       automatically_managed_folders: Folder yang dikendalikan secara automatik
       general_information: Maklumat umum
-      nextcloud_oauth: Nextcloud OAuth
-      oauth_applications: Aplikasi OAuth
+      oauth_configuration: OAuth configuration
       one_drive_oauth: OAuth Azure
       openproject_oauth: OAuth OpenProject
       project_folders: Folder projek
       redirect_uri: ' Pengubah hala URI'
+      storage_audience: Storage Audience
+      storage_audience_blank: No audience has been configured
+      storage_audience_description: Obtaining tokens for audience "%{audience}".
+      storage_audience_idp: Using first access token received by identity provider, regardless of audience.
+      storage_oauth: Nextcloud OAuth
       storage_provider: Penyedia storan
     health:
       checked: Terakhir disemak %{datetime}
@@ -222,6 +242,9 @@ ms:
         host_not_found: Tiada pelayan Nextcloud ditemui pada url hos yang dikonfigurasikan. Sila semak konfigurasi.
         missing_dependencies: 'Kebergantungan yang diperlukan tiada pada storan fail. Sila tambahkan kebergantungan berikut: %{dependency}.'
         not_configured: Sambungan tidak dapat disahkan. Sila selesaikan konfigurasi dahulu.
+        oidc_no_token_with_required_audience: There's no OpenID Connect token with the required %{audience} audience.
+        oidc_non_oidc_user: The current user, while provisioned, wasn't provisioned by an OpenID Connect (OIDC) Identity Provider. Please re-run the check with an OIDC provisioned user.
+        oidc_non_provisioned_user: The current user isn't provided by an OpenID Connect Identity Provider. Please re-run the check with a provided user.
         placeholder: Semak sambungan anda terhadap pelayan.
         subtitle: Pengesahan sambungan
         tenant_id_wrong: Id direktori (penyewa) yang dikonfigurasikan adalah tidak sah. Sila semak konfigurasi.
@@ -250,6 +273,7 @@ ms:
       project_folder_bulk: Folder projek ialah folder lalai untuk muat naik fail untuk semua projek yang dipilih. Anda boleh mengubah suai ini secara individu dalam setiap tetapan projek. Pengguna masih boleh memuat naik fail ke lokasi lain.
     instructions:
       all_available_storages_already_added: Semua storan yang tersedia sudah ditambah ke projek ini.
+      authentication_method: The way that requests between OpenProject and the Storage are authenticated.
       automatic_folder: Ini akan mencipta folder pangkal untuk projek ini dan kendalikan akses kebenaran kepada setiap ahli projek secara automatik.
       empty_project_folder_validation: Memilih folder ialah wajib untuk meneruskan.
       existing_manual_folder: Anda boleh menetapkan folder sedia ada sebagai folder pangkal bagi projek ini. Walau bagaimanapun, kebenarannya bukan dikendalikan secara automatik, ia perlukan pentadbir untuk pastikan pengguna yang berkaitan mempunyai akses secara manual. Folder yang dipilih boleh digunakan oleh pelbagai projek.
@@ -262,6 +286,8 @@ ms:
         integration: Pentadbiran Nextcloud / OpenProject
         oauth_configuration: Salin nilai-nilai ini daripada %{application_link_text}.
         provider_configuration: 'Sila pastikan anda mempunyai hak keistimewaan pentadbir di, contohnya, Nextcloud, dan mempunyai aplikasi berikut dipasang sebelum membuat penyediaan: %{application_link_text}'
+        storage_audience: Please enter the Client ID that the Nextcloud instance uses to communicate with the identity provider.
+        storage_audience_placeholder: e.g. nextcloud
       no_specific_folder: Secara default, setiap pengguna akan bermula di folder utama mereka apabila ingin memuat naik fail.
       no_storage_set_up: Tiada storan fail yang disediakan lagi.
       not_logged_into_storage: Untuk memilih folder projek, sila log masuk dahulu
@@ -293,6 +319,7 @@ ms:
     label_creator: Pencipta
     label_delete_storage: Padamkan storan
     label_edit_storage_access_management: Edit pengurusan akses storan
+    label_edit_storage_audience: Edit Storage Audience
     label_edit_storage_automatically_managed_folders: Edit storan folder yang dikendalikan secara automatik
     label_edit_storage_host: Edit hos storan
     label_existing_manual_folder: Folder sedia ada dengan kebenaran yang dikendalikan secara manual
@@ -383,8 +410,15 @@ ms:
         name: OneDrive/SharePoint
         name_placeholder: cth. OneDrive
     show_attachments_toggle:
-      description: 'Menyahaktifkan pilihan ini akan sorokkan senarai lampiran di tab fail pakej kerja. Fail yang dilampirkan di deskripsi pakej kerja masih akan dimuat naik di storan lampiran dalaman.'
+      description: Deactivating this option will hide the attachments list on the work packages files tab. The files attached in the description of a work package will still be uploaded in the internal attachments storage.
       label: Paparkan lampiran di tab fail pakej kerja
+    storage_audience:
+      idp:
+        helptext: OpenProject will use the first access token received by the identity provider to authenticate requests to the storage. It will not try to obtain another token.
+        label: Use first access token obtained by identity provider
+      manual:
+        helptext: Allows you to set the audience of the storage. OpenProject will try to obtain a token for the given audience from the identity provider.
+        label: Define storage audience manually
     storage_list_blank_slate:
       description: Tambah storan untuk melihatnya di sini.
       heading: Anda masih belum ada sebarang storan.

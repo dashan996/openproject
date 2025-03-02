@@ -38,7 +38,7 @@ RSpec.describe "/oauth_clients/:oauth_client_id/ensure_connection endpoint", :we
 
   before do
     Storages::Peripherals::Registry.stub(
-      "#{storage}.queries.auth_check",
+      "#{storage}.queries.user",
       ->(_) { ServiceResult.success }
     )
   end
@@ -66,7 +66,7 @@ RSpec.describe "/oauth_clients/:oauth_client_id/ensure_connection endpoint", :we
 
           before do
             Storages::Peripherals::Registry.stub(
-              "#{storage}.queries.auth_check",
+              "#{storage}.queries.user",
               ->(_) { ServiceResult.failure(errors: Storages::StorageError.new(code: :unauthorized)) }
             )
 

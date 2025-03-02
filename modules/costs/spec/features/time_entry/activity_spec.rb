@@ -36,35 +36,31 @@ RSpec.describe "Time entry activity" do
     login_as(admin)
   end
 
-  it "supports CRUD" do
-    visit enumerations_path
+  it "allows creating new activities and activating them on projects" do
+    visit admin_settings_time_entry_activities_path
 
-    page.find_test_selector("create-enumeration-time-entry-activity").click
+    page.find_test_selector("add-enumeration-button").click
 
     fill_in "Name", with: "A new activity"
-    click_on("Create")
+    click_on("Save")
 
-    expect(page.current_path)
-      .to eql enumerations_path
+    # we are redirected back to the index page
+    expect(page).to have_current_path(admin_settings_time_entry_activities_path)
 
-    expect(page)
-      .to have_content("A new activity")
+    expect(page).to have_content("A new activity")
 
     visit project_settings_general_path(project)
 
     click_on "Time tracking activities"
 
-    expect(page)
-      .to have_field("A new activity", checked: true)
+    expect(page).to have_field("A new activity", checked: true)
 
     uncheck "A new activity"
 
     click_on "Save"
 
-    expect(page)
-      .to have_content "Successful update."
+    expect(page).to have_content "Successful update."
 
-    expect(page)
-      .to have_field("A new activity", checked: false)
+    expect(page).to have_field("A new activity", checked: false)
   end
 end

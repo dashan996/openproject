@@ -47,11 +47,11 @@ RSpec.describe "work package export", :js, :selenium do
     { title: "My custom query title" }
   end
   let(:expected_params) do
-    {}
+    default_expected_params
   end
   let(:expected_mime_type) { anything }
   let(:query) { create(:query, user: current_user, project:, name: "My custom query title") }
-  let(:expected_columns) { query.displayable_columns.map { |c| c.name.to_s } - ["bcf_thumbnail"] }
+  let(:query_columns) { query.displayable_columns.map { |c| c.name.to_s } - ["bcf_thumbnail"] }
   let(:cf_text_a) do
     create(
       :work_package_custom_field,
@@ -88,7 +88,7 @@ RSpec.describe "work package export", :js, :selenium do
     wp3
     wp4
 
-    query.column_names = expected_columns
+    query.column_names = query_columns
     query.save!
 
     login_as(current_user)
@@ -107,13 +107,15 @@ RSpec.describe "work package export", :js, :selenium do
     work_packages_page.ensure_loaded
     settings_menu.open_and_choose I18n.t("js.toolbar.settings.export")
     click_on export_type
+    sleep 0.1
   end
 
   def export!
     click_on I18n.t("export.dialog.submit")
+    expect(page).to have_no_button(I18n.t("export.dialog.submit"), wait: 1)
   end
 
-  context "with Query options", :js do
+  context "with Query options" do
     let(:export_type) { I18n.t("export.dialog.format.options.pdf.label") }
     let(:expected_mime_type) { :pdf }
 
@@ -126,11 +128,14 @@ RSpec.describe "work package export", :js, :selenium do
     context "with activated options" do
       let(:query) do
         create(
-          :query, id: 1234, user: current_user, project:,
-                  display_sums: true,
-                  include_subprojects: true,
-                  show_hierarchies: true,
-                  name: "My custom query title"
+          :query,
+          id: 1234,
+          user: current_user,
+          project:,
+          display_sums: true,
+          include_subprojects: true,
+          show_hierarchies: true,
+          name: "My custom query title"
         )
       end
       let(:expected_params) do
@@ -157,14 +162,13 @@ RSpec.describe "work package export", :js, :selenium do
     end
   end
 
-  context "with CSV export", :js do
+  context "with CSV export" do
     let(:export_type) { I18n.t("export.dialog.format.options.csv.label") }
     let(:expected_mime_type) { :csv }
     let(:expected_params) { default_expected_params }
 
     before do
       open_export_dialog!
-      sleep 1
     end
 
     context "with descriptions" do
@@ -186,13 +190,12 @@ RSpec.describe "work package export", :js, :selenium do
     end
   end
 
-  context "with XLS export", :js do
+  context "with XLS export" do
     let(:export_type) { I18n.t("export.dialog.format.options.xls.label") }
     let(:expected_mime_type) { :xls }
 
     before do
       open_export_dialog!
-      sleep 1
     end
 
     context "with relations" do
@@ -232,7 +235,7 @@ RSpec.describe "work package export", :js, :selenium do
     end
   end
 
-  context "with PDF export", :js do
+  context "with PDF export" do
     let(:expected_mime_type) { :pdf }
 
     before do
@@ -246,9 +249,21 @@ RSpec.describe "work package export", :js, :selenium do
       let(:export_sub_type) { I18n.t("export.dialog.pdf.export_type.options.table.label") }
       let(:expected_params) { default_expected_params.merge({ pdf_export_type: "table" }) }
 
-      it "exports a pdf table" do
+      before do
         choose export_sub_type
+      end
+
+      it "exports a pdf table" do
         export!
+      end
+
+      it "does not export a pdf with no columns" do
+        page.within "[data-pdf-export-type='table']" do
+          all(".op-draggable-autocomplete--remove-item").each(&:click)
+        end
+        expect(page).to have_text(I18n.t("export.dialog.columns.input_caption_required"))
+        click_on I18n.t("export.dialog.submit")
+        expect(page).to have_button(I18n.t("export.dialog.submit")) # form not submitted, button is still there
       end
     end
 
@@ -257,11 +272,14 @@ RSpec.describe "work package export", :js, :selenium do
       let(:export_sub_type) { I18n.t("export.dialog.pdf.export_type.options.report.label") }
       let(:default_params_report) { default_expected_params.merge({ pdf_export_type: "report" }) }
 
+      before do
+        choose export_sub_type
+      end
+
       context "with long text fields" do
         let(:expected_params) { default_params_report.merge({ long_text_fields: "description 42 43" }) }
 
         it "exports a pdf report with all long text custom fields by default" do
-          choose export_sub_type
           export!
         end
       end
@@ -270,7 +288,6 @@ RSpec.describe "work package export", :js, :selenium do
         let(:expected_params) { default_params_report.merge({ long_text_fields: "description 43" }) }
 
         it "exports a pdf report with all remaining custom fields" do
-          choose export_sub_type
           find("span.op-draggable-autocomplete--item-text", text: "Long text custom field")
             .sibling(".op-draggable-autocomplete--remove-item").click
           export!
@@ -281,12 +298,10 @@ RSpec.describe "work package export", :js, :selenium do
         let(:expected_params) { default_params_report.merge({ show_images: "true" }) }
 
         it "exports a pdf report with image by default" do
-          choose export_sub_type
           export!
         end
 
         it "exports a pdf report with checked input" do
-          choose export_sub_type
           check I18n.t("export.dialog.pdf.include_images.label")
           export!
         end
@@ -296,8 +311,21 @@ RSpec.describe "work package export", :js, :selenium do
         let(:expected_params) { default_params_report.merge({ show_images: "false" }) }
 
         it "exports a pdf report with checked input" do
-          choose export_sub_type
           uncheck I18n.t("export.dialog.pdf.include_images.label")
+          export!
+        end
+      end
+
+      context "with no columns" do
+        let(:query_columns) { [] }
+        let(:expected_params) do
+          default_expected_params.merge({ columns: [""], pdf_export_type: "report" })
+        end
+
+        it "does export a pdf" do
+          page.within "[data-pdf-export-type='report']" do
+            all(".op-draggable-autocomplete--remove-item").each(&:click)
+          end
           export!
         end
       end
@@ -328,7 +356,7 @@ RSpec.describe "work package export", :js, :selenium do
           let(:expected_params) { default_expected_params.merge({ pdf_export_type: "gantt", gantt_mode: "week" }) }
 
           it "exports a pdf gantt chart by weeks" do
-            select I18n.t("export.dialog.pdf.gantt_zoom_levels.options.weeks"), from: "gantt_mode"
+            select I18n.t("export.dialog.pdf.gantt_zoom_levels.options.weeks"), from: "gantt_mode", wait: 2
             export!
           end
         end
@@ -337,7 +365,7 @@ RSpec.describe "work package export", :js, :selenium do
           let(:expected_params) { default_expected_params.merge({ pdf_export_type: "gantt", gantt_width: "very_wide" }) }
 
           it "exports a pdf gantt chart by column width" do
-            select I18n.t("export.dialog.pdf.column_width.options.very_wide"), from: "gantt_width"
+            select I18n.t("export.dialog.pdf.column_width.options.very_wide"), from: "gantt_width", wait: 2
             export!
           end
         end

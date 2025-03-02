@@ -30,14 +30,13 @@ See COPYRIGHT and LICENSE files for more details.
 <div class="form--field -required">
   <%= f.select :storage_id,
                @available_storages.map { |storage| ["#{storage.name} (#{storage})", storage.id] },
-               class: '-bold',
+               class: "-bold",
                selected: @available_storages.first.id.to_s,
-               container_class: '-slim'
-  %>
+               container_class: "-slim" %>
   <% if User.current.admin? %>
       <span class="form--field-instructions">
         <%= t(:"storages.instructions.setting_up_additional_storages") %>
-        <%= link_to "#{t(:label_administration)} / #{t(:project_module_storages)}", controller: '/storages/admin/storages', action: :index %>
+        <%= link_to "#{t(:label_administration)} / #{t(:project_module_storages)}", controller: "/storages/admin/storages", action: :index %>
         .
       </span>
   <% end %>
@@ -45,11 +44,11 @@ See COPYRIGHT and LICENSE files for more details.
 
 <div class="form--field">
   <%= styled_button_tag class: "-primary" do %>
-    <%= spot_icon('checkmark') %>
+    <%= spot_icon("checkmark") %>
     <%= content_tag :span, submit_button_label %>
   <% end %>
-  <%= link_to external_file_storages_project_settings_project_storages_path(@project), class: 'button' do %>
-    <%= spot_icon('cancel') %>
+  <%= link_to external_file_storages_project_settings_project_storages_path(@project), class: "button" do %>
+    <%= spot_icon("cancel") %>
     <%= content_tag :span, t(:button_cancel) %>
   <% end %>
 </div>

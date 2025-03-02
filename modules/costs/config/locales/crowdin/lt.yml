@@ -30,6 +30,7 @@ lt:
         overridden_costs: "Perrašytos išlaidos"
         spent: "Praleista"
         spent_on: "Data"
+        logged_by: "Logged by"
       cost_type:
         unit: "Vieneto pavadinimas"
         unit_plural: "Daugiaskaitinis vienetų pavadinimas"
@@ -61,11 +62,17 @@ lt:
         few: "Kaštų tipai"
         many: "Kaštų tipų"
         other: "Kaštų tipai"
+      time_entry_activity:
+        one: "Time tracking activity"
+        few: "Time tracking activities"
+        many: "Time tracking activities"
+        other: "Time tracking activities"
       rate: "Koeficientas"
     errors:
       models:
         time_entry:
           invalid_time: "must be between 00:00 and 23:59."
+          cannot_log_for_this_work_package: "Cannot log time for this work package."
         work_package:
           is_not_a_valid_target_for_cost_entries: "Darbų paketas #%{id} nėra tinkamas kaštų perskirstymo pasirinkimas."
           nullify_is_not_valid_for_cost_entries: "Kaštų įrašai negali būti priskirti šiam projektui."
@@ -81,6 +88,7 @@ lt:
   button_add_rate: "Pridėti koeficientą"
   button_log_costs: "Vesti į žurnalą vieneto kaštus"
   button_log_time: "Log"
+  button_add_activity: "Activity"
   caption_booked_on_project: "Įrašytas projektui"
   caption_default: "Numatytasis"
   caption_default_rate_history_for: "%{user} numatytojo koeficiento istorija"
@@ -94,6 +102,8 @@ lt:
   caption_show_locked: "Rodyti užrakintus tipus"
   caption_log_time_dialog: "Log time"
   description_date_for_new_rate: "Naujo koeficiento data"
+  description_costs_settings: "Define the desired format for the costs in all projects."
+  description_time_settings: "Define which fields are mandatory to fill when logging time in all projects."
   group_by_others: "nėra jokioje grupėje"
   label_between: "tarp"
   label_cost_filter_add: "Pridėti kaštų įrašo filtrą"
@@ -120,6 +130,8 @@ lt:
   label_kind: "Tipas"
   label_less_or_equal: "<="
   label_log_costs: "Vesti į žurnalą vieneto kaštus"
+  label_new_time_entry_activity: "New time entry activity"
+  label_time_entry_activity_form_description: "Changes to this time entry activity will be reflected in all projects where it is enabled."
   label_no: "Ne"
   label_option_plural: "Nustatymai"
   label_overall_costs: "Bendri kaštai"
@@ -132,6 +144,10 @@ lt:
   label_until: "iki"
   label_valid_from: "Galioja nuo"
   label_yes: "Taip"
+  label_time: "Time"
+  label_cost: "Cost"
+  label_costs: "Costs"
+  label_mandatory_fields: "Mandatory fields"
   placeholder_activity_select_work_package_first: Work package selection is required first
   notice_something_wrong: "Įvyko klaida. Bandykite dar kartą."
   notice_successful_restore: "Sėkmingas atkūrimas."

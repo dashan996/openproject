@@ -44,7 +44,7 @@ module Storages
     private
 
     def strategy(storage, user)
-      Peripherals::Registry.resolve("#{storage}.authentication.user_bound").call(user:)
+      Peripherals::Registry.resolve("#{storage}.authentication.user_bound").call(user:, storage:)
     end
   end
 end

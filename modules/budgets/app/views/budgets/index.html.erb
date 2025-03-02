@@ -31,18 +31,22 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render(Primer::OpenProject::PageHeader.new) do |header|
     header.with_title { t(:label_budget_plural) }
-    header.with_breadcrumbs([{ href: project_overview_path(@project.id), text: @project.name },
-                             t(:label_budget_plural)])
+    header.with_breadcrumbs(
+      [{ href: project_overview_path(@project.id), text: @project.name },
+       t(:label_budget_plural)]
+    )
   end
 %>
 <%=
   render(Primer::OpenProject::SubHeader.new) do |subheader|
-    subheader.with_action_button(scheme: :primary,
-                                 aria: { label: I18n.t(:button_add_budget) },
-                                 data: { test_selector: "budget-create-button" },
-                                 title: I18n.t(:button_add_budget),
-                                 tag: :a,
-                                 href: new_projects_budget_path(@project)) do |button|
+    subheader.with_action_button(
+      scheme: :primary,
+      aria: { label: I18n.t(:button_add_budget) },
+      data: { test_selector: "budget-create-button" },
+      title: I18n.t(:button_add_budget),
+      tag: :a,
+      href: new_projects_budget_path(@project)
+    ) do |button|
       button.with_leading_visual_icon(icon: :plus)
       t(:label_budget)
     end
@@ -52,17 +56,17 @@ See COPYRIGHT and LICENSE files for more details.
 <% if @budgets.empty? %>
   <%= no_results_box %>
 <% else %>
-<%= render :partial => 'list', :locals => {:budgets => @budgets} %>
+<%= render partial: "list", locals: { budgets: @budgets } %>
 <%= pagination_links_full @budgets %>
 <% end %>
 
 <p class="other-formats">
 <%= t(:label_export_to) %>
 <!--
-<span><%= link_to 'Atom', {:query_id => @query, :format => 'atom', :key => User.current.rss_key}, :class => 'feed' %></span>
+<span><%= link_to "Atom", { query_id: @query, format: "atom", key: User.current.rss_key }, class: "feed" %></span>
 -->
-<span><%= link_to 'CSV', {:format => 'csv'}, :class => 'csv' %></span>
+<span><%= link_to "CSV", { format: "csv" }, class: "csv" %></span>
 <!--
-<span><%= link_to 'PDF', {:format => 'pdf'}, :class => 'pdf' %></span>
+<span><%= link_to "PDF", { format: "pdf" }, class: "pdf" %></span>
 -->
 </p>

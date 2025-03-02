@@ -36,6 +36,10 @@ class Queries::WorkPackages::Filter::PartofFilter <
     ::Relation::TYPE_PARTOF
   end
 
+  def human_name
+    I18n.t("work_package_relations_tab.relations.label_partof_singular")
+  end
+
   private
 
   def relation_filter

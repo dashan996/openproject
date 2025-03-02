@@ -133,6 +133,11 @@ jobs:
             bim_support: false
             target: all-in-one
             runner: runner=4cpu-linux-arm64
+          - platform: linux/ppc64le
+            digest: ppc-aio
+            bim_support: false
+            target: all-in-one
+            runner: runner=4cpu-linux-x64
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -214,7 +219,9 @@ jobs:
       - name: Extract vendor/bundle from container
         run: |
           docker create --name bundle ${{ steps.build.outputs.imageid }}
-          rm -rf vendor/bundle || true
+          if [ -d vendor/bundle ]; then
+            mv vendor/bundle vendor/bundle.bak
+          fi
           docker cp bundle:/app/vendor/bundle vendor/bundle
           docker rm bundle
       - name: Save vendor/bundle
@@ -224,6 +231,13 @@ jobs:
           path: |
             vendor/bundle
           key: ${{ steps.restore-vendor-bundle.outputs.cache-primary-key }}
+      - name: Restore pre-build vendor/bundle to prevent 2nd build from scratch during push
+        run: |
+          rm -rf vendor/bundle
+
+          if [ -d vendor/bundle.bak ]; then
+            mv vendor/bundle.bak vendor/bundle
+          fi
       - name: Test
         # We only test the native container. If that fails the builds for the others
         # will be cancelled as well.

@@ -18,7 +18,7 @@
     ## MyNamespace::RowComponent
     ## and the other class will be autoloaded
     def row_class
-      @clazz ||= Class.new(OpPrimer::BorderBoxRowComponent) do
+      @row_class ||= Class.new(OpPrimer::BorderBoxRowComponent) do
         def self.name
           "MyRow"
         end
@@ -56,7 +56,7 @@
     def headers
       [
         [:foo, { caption: "Foo column" }],
-        [:bar, { caption: "Bar column" }],
+        [:bar, { caption: "Bar column" }]
       ]
     end
   end

@@ -37,15 +37,15 @@ See COPYRIGHT and LICENSE files for more details.
 # * http://stackoverflow.com/questions/13112430/find-loaded-providers-for-omniauth
 auth_provider_html = call_hook :view_account_login_auth_provider
 no_pwd = OpenProject::Configuration.disable_password_login?
-pclass = no_pwd ? 'no-pwd' : ''
-wclass = local_assigns[:wide] ? 'wide' : ''
+pclass = no_pwd ? "no-pwd" : ""
+wclass = local_assigns[:wide] ? "wide" : ""
 %>
 <% if auth_provider_html.strip != '' %>
   <div class="login-auth-providers <%= pclass %> <%= wclass %>">
     <% unless no_pwd %>
       <h3 class="login-auth-providers-title mb-3">
         <span>
-          <%= local_assigns[:omniauth_title] || I18n.t('account.login_with_auth_provider')%>
+          <%= local_assigns[:omniauth_title] || I18n.t("account.login_with_auth_provider") %>
         </span>
       </h3>
     <% end %>

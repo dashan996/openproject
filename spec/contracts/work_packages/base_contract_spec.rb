@@ -916,12 +916,20 @@ RSpec.describe WorkPackages::BaseContract do
   end
 
   describe "duration" do
-    context "when setting duration" do
+    context "when setting duration to a positive integer value" do
       before do
         work_package.duration = 5
       end
 
-      it_behaves_like "contract is valid"
+      include_examples "contract is valid"
+    end
+
+    context "when setting duration to a positive integer value using a string padded with spaces" do
+      before do
+        work_package.duration = " 5 "
+      end
+
+      include_examples "contract is valid"
     end
 
     context "when setting duration for a milestone type work package" do
@@ -931,7 +939,7 @@ RSpec.describe WorkPackages::BaseContract do
         work_package.duration = 5
       end
 
-      it_behaves_like "contract is invalid", duration: :not_available_for_milestones
+      include_examples "contract is invalid", duration: :not_available_for_milestones
     end
 
     context "when setting duration to nil for a milestone type work package" do
@@ -941,7 +949,7 @@ RSpec.describe WorkPackages::BaseContract do
         work_package.duration = nil
       end
 
-      it_behaves_like "contract is invalid"
+      include_examples "contract is invalid"
     end
 
     context "when setting duration to 1 for a milestone type work package" do
@@ -951,7 +959,7 @@ RSpec.describe WorkPackages::BaseContract do
         work_package.duration = 1
       end
 
-      it_behaves_like "contract is valid"
+      include_examples "contract is valid"
     end
 
     context "when setting duration to 0" do
@@ -959,7 +967,7 @@ RSpec.describe WorkPackages::BaseContract do
         work_package.duration = 0
       end
 
-      it_behaves_like "contract is invalid", duration: :greater_than
+      include_examples "contract is invalid", duration: :greater_than
     end
 
     context "when setting duration to a floating point" do
@@ -967,7 +975,7 @@ RSpec.describe WorkPackages::BaseContract do
         work_package.duration = 4.5
       end
 
-      it_behaves_like "contract is invalid", duration: :not_an_integer
+      include_examples "contract is invalid", duration: :not_an_integer
     end
 
     context "when setting duration to a negative value" do
@@ -975,7 +983,33 @@ RSpec.describe WorkPackages::BaseContract do
         work_package.duration = -5
       end
 
-      it_behaves_like "contract is invalid", duration: :greater_than
+      include_examples "contract is invalid", duration: :greater_than
+    end
+
+    context "when setting duration to an invalid string" do
+      before do
+        work_package.duration = "I am invalid"
+      end
+
+      include_examples "contract is invalid", duration: :not_an_integer
+
+      context "and start date is set" do
+        before do
+          work_package.start_date = Date.current
+        end
+
+        # no extra errors on start and/or due dates
+        include_examples "contract is invalid", duration: :not_an_integer, start_date: nil, due_date: nil
+      end
+
+      context "and due date is set" do
+        before do
+          work_package.due_date = Date.current
+        end
+
+        # no extra errors on start and/or due dates
+        include_examples "contract is invalid", duration: :not_an_integer, start_date: nil, due_date: nil
+      end
     end
 
     context "when setting duration and dates" do
@@ -986,7 +1020,7 @@ RSpec.describe WorkPackages::BaseContract do
         work_package.due_date = Time.zone.today + 1.day
       end
 
-      it_behaves_like "contract is valid"
+      include_examples "contract is valid"
     end
 
     context "when setting duration and dates while covering non-working days" do
@@ -998,7 +1032,7 @@ RSpec.describe WorkPackages::BaseContract do
         work_package.due_date = "2022-08-29"
       end
 
-      it_behaves_like "contract is valid"
+      include_examples "contract is valid"
     end
 
     context "when setting duration and dates and duration is too small" do
@@ -1009,7 +1043,7 @@ RSpec.describe WorkPackages::BaseContract do
         work_package.due_date = Time.zone.today + 1.day
       end
 
-      it_behaves_like "contract is invalid", duration: :smaller_than_dates
+      include_examples "contract is invalid", duration: :smaller_than_dates
     end
 
     context "when setting duration and dates while covering non-working days and duration is too small" do
@@ -1021,7 +1055,7 @@ RSpec.describe WorkPackages::BaseContract do
         work_package.due_date = "2022-08-29"
       end
 
-      it_behaves_like "contract is invalid", duration: :smaller_than_dates
+      include_examples "contract is invalid", duration: :smaller_than_dates
     end
 
     context "when setting duration and dates and duration is too big" do
@@ -1032,7 +1066,7 @@ RSpec.describe WorkPackages::BaseContract do
         work_package.due_date = Time.zone.today + 1.day
       end
 
-      it_behaves_like "contract is invalid", duration: :larger_than_dates
+      include_examples "contract is invalid", duration: :larger_than_dates
     end
 
     context "when setting duration and dates while covering non-working days and duration is too big" do
@@ -1044,7 +1078,7 @@ RSpec.describe WorkPackages::BaseContract do
         work_package.due_date = "2022-08-29"
       end
 
-      it_behaves_like "contract is invalid", duration: :larger_than_dates
+      include_examples "contract is invalid", duration: :larger_than_dates
     end
 
     context "when setting start date and due date without duration" do
@@ -1054,7 +1088,7 @@ RSpec.describe WorkPackages::BaseContract do
         work_package.due_date = Time.zone.today
       end
 
-      it_behaves_like "contract is invalid", duration: :cannot_be_null
+      include_examples "contract is invalid", duration: :cannot_be_null
     end
   end
 

@@ -1,12 +1,13 @@
-name: migration-warning-on-release-branches
+name: Dangerfile
 
 on:
   pull_request:
-    branches:
-      - release/*
-    paths:
-      - 'db/migrate/**.rb'
-      - 'modules/**/db/migrate/*.rb'
+    types: [opened, reopened, synchronize]
+    paths-ignore:
+      - 'docs/**'
+      - 'help/**'
+      - 'packaging/**'
+      - '.pkgr.yml'
 
 jobs:
   danger:
@@ -17,10 +18,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.4.1'
-      - uses: MeilCli/danger-action@v6
-        with:
-          danger_file: 'Dangerfile'
-          danger_id: 'danger-pr'
+          ruby-version: "3.4.2"
+      - name: Setup danger
+        run: |
+          gem install danger
+      - name: Run inconsistent translations check
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          danger --verbose

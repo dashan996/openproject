@@ -74,7 +74,7 @@ Apart from these features that apply the Meetings module directly, the following
 
 **Please note**: On the project overview page and on the My page, the "+" button on the top right has been removed. However, new widgets can be added by project admins as usual if you hover at the border of an existing widget and click on the “+” there.
 
-Read more about [dynamic meetings in OpenProject](../../../user-guide/meetings/dynamic-meetings/).
+Read more about [dynamic meetings in OpenProject](../../../user-guide/meetings/).
 
 ### Possibility to hide attachments in the Files tab
 

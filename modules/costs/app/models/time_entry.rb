@@ -59,6 +59,10 @@ class TimeEntry < ApplicationRecord
             },
             allow_nil: true
 
+  validates :comments,
+            length: { maximum: 1_000 },
+            allow_blank: true
+
   validates :start_time,
             presence: true,
             if: -> { TimeEntry.must_track_start_and_end_time? }

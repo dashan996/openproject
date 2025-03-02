@@ -1,11 +1,27 @@
 ru:
   activerecord:
     attributes:
+      oauth_client:
+        client_id: Client ID
+        client_secret: Client secret
+      project:
+        project_folder_type: Project folder type
       storages/file_link:
-        origin_id: ID оригинала
+        origin: Origin
+        storage: Storage
+      storages/nextcloud_storage:
+        authentication_methods:
+          oauth2_sso: Single-Sign-On through OpenID Connect Identity Provider
+          oauth2_sso_with_two_way_oauth2_fallback: Single-Sign-On with Two-Way OAuth 2.0 as fallback
+          two_way_oauth2: Two-way OAuth 2.0 authorization code flow
+        storage_audience: Storage Audience
       storages/project_storage:
+        project_folder: Project folder
+        project_folder_mode: Project folder mode
         storage: Хранилище
+        storage_url: Storage URL
       storages/storage:
+        authentication_method: Метод аутентификации
         creator: Создатель
         drive: ID диска
         host: Хост
@@ -74,7 +90,7 @@ ru:
         confirmation_text: Пожалуйста, подтвердите, что Вы понимаете и хотите удалить это файловое хранилище из данного проекта
         heading_text: Удалить проект из %{storage}
         text: Это действие необратимо и удалит все ссылки из пакетов работ этого проекта на файлы и папки этого хранилища.
-        title: Remove project from storage
+        title: Удалить проект из хранилища
       label: Удалить проект
   services:
     attributes:
@@ -199,15 +215,19 @@ ru:
         manual_management_description: Создавайте и управляйте папками для каждого проекта вручную. Вам нужно будет вручную обеспечить доступ соответствующим пользователям.
         setup_incomplete: Выберите тип управления доступом пользователя и созданием папок.
         subtitle: Управление доступом
-        title: Доступ и папки проекта
+      access_management_section: Доступ и папки проекта
       automatically_managed_folders: Автоматически управляемые папки
       general_information: Информация общего характера
-      nextcloud_oauth: Nextcloud OAuth
-      oauth_applications: Приложения OAuth
+      oauth_configuration: Конфигурация OAuth
       one_drive_oauth: Azure OAuth
       openproject_oauth: OpenProject OAuth
       project_folders: Папки проекта
       redirect_uri: URI перенаправления
+      storage_audience: Storage Audience
+      storage_audience_blank: No audience has been configured
+      storage_audience_description: Obtaining tokens for audience "%{audience}".
+      storage_audience_idp: Using first access token received by identity provider, regardless of audience.
+      storage_oauth: Nextcloud OAuth
       storage_provider: Поставщик хранилища
     health:
       checked: Последняя проверка %{datetime}
@@ -222,6 +242,9 @@ ru:
         host_not_found: По настроенному адресу хоста сервер Nextcloud не найден. Пожалуйста, проверьте конфигурацию.
         missing_dependencies: 'Для файлового хранилища отсутствует необходимая зависимость. Пожалуйста, добавьте следующую зависимость: %{dependency}.'
         not_configured: Соединение не удалось подтвердить. Пожалуйста, сначала завершите настройку.
+        oidc_no_token_with_required_audience: There's no OpenID Connect token with the required %{audience} audience.
+        oidc_non_oidc_user: The current user, while provisioned, wasn't provisioned by an OpenID Connect (OIDC) Identity Provider. Please re-run the check with an OIDC provisioned user.
+        oidc_non_provisioned_user: Текущий пользователь не представлен провайдером идентификации OpenID Connect. Пожалуйста, повторите проверку пользователя.
         placeholder: Проверьте подключение к серверу.
         subtitle: Проверка соединения
         tenant_id_wrong: Настроенный идентификатор каталога недействителен. Пожалуйста, проверьте конфигурацию.
@@ -250,6 +273,7 @@ ru:
       project_folder_bulk: Папка проекта - это папка по умолчанию для загрузки файлов для всех выбранных проектов. Вы можете изменить этот параметр в настройках каждого проекта. Тем не менее, пользователи могут загружать файлы в другие места.
     instructions:
       all_available_storages_already_added: Все доступные хранилища уже добавлены в проект.
+      authentication_method: The way that requests between OpenProject and the Storage are authenticated.
       automatic_folder: Это автоматически создаст корневую папку для этого проекта и будет управлять правами доступа для каждого участника проекта.
       empty_project_folder_validation: Выбор папки является обязательным для продолжения.
       existing_manual_folder: Вы можете назначить существующую папку в качестве корневой папки для этого проекта. Однако разрешения не управляются автоматически, администратору необходимо вручную обеспечить доступ соответствующим пользователям. Выбранная папка может использоваться несколькими проектами.
@@ -259,9 +283,11 @@ ru:
       new_storage: Прочтите нашу документацию по <a target='_blank' href='%{provider_link}'>настройке интеграции файлового хранилища %{provider_name}</a> для получения дополнительной информации.
       nextcloud:
         application_link_text: Приложение «Интеграция OpenProject»
-        integration: Администрирование NextCloud / OpenProject
+        integration: Администрирование Nextcloud / OpenProject
         oauth_configuration: Скопируйте эти значения из %{application_link_text}.
         provider_configuration: Пожалуйста, убедитесь, что у вас есть права администрирования в копии Nextcloud, и перед установкой настроен %{application_link_text}.
+        storage_audience: Please enter the Client ID that the Nextcloud instance uses to communicate with the identity provider.
+        storage_audience_placeholder: e.g. nextcloud
       no_specific_folder: По умолчанию каждый пользователь при загрузке файла начинает работу со своей собственной домашней папки.
       no_storage_set_up: Нет настроенных хранилищ файлов.
       not_logged_into_storage: Чтобы выбрать папку проекта, сначала войдите
@@ -293,6 +319,7 @@ ru:
     label_creator: Создатель
     label_delete_storage: Удалить хранилище
     label_edit_storage_access_management: Редактировать управление доступом к хранилищу
+    label_edit_storage_audience: Edit Storage Audience
     label_edit_storage_automatically_managed_folders: Редактирование хранилища автоматически управляемых папок
     label_edit_storage_host: Изменить узел хранения
     label_existing_manual_folder: Существующая папка с разрешениями, управляемыми вручную
@@ -382,8 +409,15 @@ ru:
         name: OneDrive/SharePoint
         name_placeholder: напр. OneDrive
     show_attachments_toggle:
-      description: 'Деактивация этой опции скроет список вложений на вкладке «Файлы» пакетов работ. Файлы, прикрепленные к описанию пакета работ, по-прежнему будут загружены во внутреннее хранилище вложений.'
+      description: Deactivating this option will hide the attachments list on the work packages files tab. The files attached in the description of a work package will still be uploaded in the internal attachments storage.
       label: Показывать вложения во вкладке "Файлы" пакетов работ
+    storage_audience:
+      idp:
+        helptext: OpenProject will use the first access token received by the identity provider to authenticate requests to the storage. It will not try to obtain another token.
+        label: Use first access token obtained by identity provider
+      manual:
+        helptext: Allows you to set the audience of the storage. OpenProject will try to obtain a token for the given audience from the identity provider.
+        label: Define storage audience manually
     storage_list_blank_slate:
       description: Добавьте хранилище, чтобы увидеть его здесь.
       heading: У вас пока нет хранилищ.

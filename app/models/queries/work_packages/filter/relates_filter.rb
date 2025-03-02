@@ -35,4 +35,8 @@ class Queries::WorkPackages::Filter::RelatesFilter <
   def relation_type
     ::Relation::TYPE_RELATES
   end
+
+  def human_name
+    I18n.t(:label_relates)
+  end
 end

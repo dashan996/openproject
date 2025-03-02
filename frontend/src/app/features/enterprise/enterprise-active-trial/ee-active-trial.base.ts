@@ -38,6 +38,8 @@ export class EEActiveTrialBase extends UntilDestroyedMixin {
     label_domain: this.I18n.t('js.admin.enterprise.trial.form.label_domain'),
     label_starts_at: this.I18n.t('js.admin.enterprise.trial.form.label_starts_at'),
     label_subscriber: this.I18n.t('js.admin.enterprise.trial.form.label_subscriber'),
+    label_plan: this.I18n.t('js.admin.enterprise.trial.form.label_plan'),
+    label_additional_features: this.I18n.t('js.admin.enterprise.trial.form.label_additional_features'),
     text_expired: this.I18n.t('js.admin.enterprise.text_expired'),
     text_reprieve_days_left: (days:number) => this.I18n.t('js.admin.enterprise.text_reprieve_days_left', { days }),
   };

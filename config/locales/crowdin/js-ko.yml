@@ -103,7 +103,6 @@ ko:
     button_settings: "설정"
     button_uncheck_all: "모두 선택 취소"
     button_update: "업데이트"
-    button_export-pdf: "PDF 다운로드"
     button_export-atom: "Atom 다운로드"
     button_generate_pdf: "PDF 생성"
     button_create: "만들기"
@@ -222,6 +221,8 @@ ko:
             label_maximum_users: "최대 활성 사용자"
             label_starts_at: "시작:"
             label_expires_at: "에서 만료됨"
+            label_plan: "Plan"
+            label_additional_features: "Additional features"
             receive_newsletter: OpenProject <a target="_blank" href="%{link}">뉴스레터</a>를 받아 보겠습니다.
             taken_domain: 도메인당 하나의 활성 평가판만 있어야 합니다.
             domain_mismatch: 현재 요청 호스트 이름이 구성된 호스트 이름과 일치하지 않습니다. 시스템 설정을 다시 확인하세요.
@@ -357,10 +358,10 @@ ko:
           learn_about: "새로운 기능에 대해 자세히 알아보기"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_2":
+          "15_3":
             standard:
               new_features_html: >
-                이 릴리스에는 사용자를 위한 다양한 기능과 개선 사항이 포함되어 있습니다. 예: <br> <ul class="%{list_styling_class}"> <li>작업 패키지에 대한 미리 알림을 설정하여 날짜 경보 알림을 생성합니다.</li> <li>파일 저장소의 위치 선택기에서 새 폴더를 바로 만듭니다.</li> <li>작업 패키지 후행 단계 및 선행 단계 간에 필요한 지연 시간을 지정합니다.</li> <li>사용자 지정 필드 유형 계층 값에 대한 작업 패키지의 순서 지정 및 그룹화를 활성화합니다.</li> <li>시간 항목을 PDF 타임시트로 내보냅니다.</li> <li>마우스를 올리면 사용자 정보가 표시되는 팝오버를 추가합니다.</li> </ul>
+                이 릴리스에는 다음과 같이 다양한 기능과 개선 사항이 포함되어 있습니다. <br> <ul class="%{list_styling_class}"> <li>반복 미팅을 스케줄링하여 주간, 격주 또는 사용자 지정 약속을 효율화합니다.</li> <li>관계 탭에서 바로 자식 작업 패키지를 만듭니다.</li> <li>보다 우수한 인사이트를 위해 타임시트 PDF 내보내기에 총계를 포함합니다.</li> <li>보다 정확한 추적을 위해 비용 보고서에 자식 작업 패키지를 포함합니다.</li> <li>이전에 숨겨지거나, 권한이 제한된 관계의 날짜를 확인하여 정보에 입각한 스케줄린 결정을 내립니다.</li> </ul>
     ical_sharing_modal:
       title: "캘린더 구독"
       inital_setup_error_message: "데이터를 가져오는 중에 오류가 발생했습니다."
@@ -625,11 +626,11 @@ ko:
       date_alerts:
         milestone_date: "마일스톤 날짜"
         overdue: "기한 지남"
-        overdue_since: "since %{difference_in_days}."
-        property_today: "is today."
-        property_is: "is in %{difference_in_days}."
-        property_was: "was %{difference_in_days} ago."
-        property_is_deleted: "is deleted."
+        overdue_since: "- %{difference_in_days} 이후."
+        property_today: "- 오늘입니다."
+        property_is: "- %{difference_in_days} 이내입니다."
+        property_was: "- %{difference_in_days} 전이었습니다."
+        property_is_deleted: "- 삭제되었습니다."
         upsale:
           title: "날짜 경보"
           description: "날짜 경보를 사용하면, 중요 마감일을 놓치거나 잊지 않도록 향후 시작 날짜 또는 종료 날짜에 대한 알림을 받게 됩니다."
@@ -851,8 +852,6 @@ ko:
       select_branch: "브랜치 선택"
     field_value_enter_prompt: "'%{field}'에 대 한 값을 입력하세요."
     project_menu_details: "세부 정보"
-    scheduling:
-      manual: "수동 스케줄링"
     sort:
       sorted_asc: "오름차순 정렬이 적용됨, "
       sorted_dsc: "내림차순 정렬이 적용됨, "
@@ -900,15 +899,6 @@ ko:
       comment_send_failed: "오류가 발생했습니다. 코멘트를 제출할 수 없습니다."
       comment_updated: "코멘트가 성곡적으로 갱신되었습니다."
       confirm_edit_cancel: "편집 중인 작업 패키지를 취소하시겠습니까?"
-      datepicker_modal:
-        automatically_scheduled_parent: "자동으로 예약됩니다. 날짜는 관계에서 파생됩니다."
-        manually_scheduled: "수동 스케줄링이 활성화되고, 모든 관계가 무시됩니다."
-        start_date_limited_by_relations: "사용 가능한 시작 및 종료 날짜는 관계에 따라 제한됩니다."
-        changing_dates_affects_follow_relations: "이 날짜를 변경하면 관련 작업 패키지의 날짜에 영향을 줍니다."
-        click_on_show_relations_to_open_gantt: 'GANTT 개요를 보려면 "%{button_name}" 클릭을 하세요.'
-        show_relations: "관계 표시"
-        ignore_non_working_days:
-          title: "근무일만"
       description_filter: "필터"
       description_enter_text: "텍스트 입력"
       description_options_hide: "옵션 숨기기"

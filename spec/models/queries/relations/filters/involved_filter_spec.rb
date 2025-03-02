@@ -37,6 +37,7 @@ RSpec.describe Queries::Relations::Filters::InvolvedFilter do
   it_behaves_like "basic query filter" do
     let(:class_key) { :involved }
     let(:type) { :integer }
+    let(:human_name) { "Involved" }
 
     describe "#allowed_values" do
       it "is nil" do

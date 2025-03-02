@@ -55,7 +55,7 @@ ar:
               group_name: الأطفال
       groups:
         item_0:
-          name: Architects
+          name:
         item_1:
           name: BIM Coordinators
         item_2:
@@ -256,7 +256,7 @@ ar:
 
                     *   Create a useful overview of the results
                     *   Check what has been done and summarize the results
-                    *   Communicate all the relevant results with the customer
+                    *   Communicate all the relevant results with the customer
                     *   Identify the fundamental boundary conditions of the project
 
                     ## Description
@@ -271,7 +271,7 @@ ar:
 
                     *   Create a useful overview of the results
                     *   Check what has been done and summarize the results
-                    *   Communicate all the relevant results with the customer
+                    *   Communicate all the relevant results with the customer
                     *   Identify the fundamental boundary conditions of the project
 
                     ## Description

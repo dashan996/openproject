@@ -39,10 +39,10 @@ See COPYRIGHT and LICENSE files for more details.
     <%= f.text_field :lastname,
                      label: Group.human_attribute_name(:name),
                      required: true,
-                     container_class: '-middle' %>
+                     container_class: "-middle" %>
   </div>
 
-  <%= render partial: 'customizable/form', locals: { form: f,
+  <%= render partial: "customizable/form", locals: { form: f,
                                                      all_fields: true,
                                                      only_required: false } %>
 </section>

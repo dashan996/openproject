@@ -9,38 +9,39 @@
       header.with_breadcrumbs(breadcrumb_items)
 
       if render_create_button?
-        header.with_action_menu(menu_arguments: { anchor_align: :end },
-                                button_arguments: { icon: "op-kebab-vertical",
-                                                    classes: "hide-when-print",
-                                                    "aria-label": "Menu",
-                                                    data: {
-                                                      "test-selector": "recurring-meeting-action-menu"
-                                                    } }) do |menu, _button|
-
+        header.with_action_menu(
+          menu_arguments: { anchor_align: :end },
+          button_arguments: { icon: "op-kebab-vertical",
+                              classes: "hide-when-print",
+                              "aria-label": "Menu",
+                              data: {
+                                "test-selector": "recurring-meeting-action-menu"
+                              } }
+        ) do |menu, _button|
           menu.with_item(
             label: I18n.t(:label_recurring_meeting_series_edit),
             icon: :gear,
-            href: details_dialog_recurring_meeting_path(@meeting),
+            href: details_dialog_project_recurring_meeting_path(@project, @meeting),
             tag: :a,
             content_arguments: {
-              data: { controller: 'async-dialog' },
+              data: { controller: "async-dialog" }
             },
-            'aria-label': t(:label_recurring_meeting_series_edit),
-            test_selector: "edit-meeting-details-button",
+            "aria-label": t(:label_recurring_meeting_series_edit),
+            test_selector: "edit-meeting-details-button"
           ) do |item|
             item.with_leading_visual_icon(icon: :pencil)
           end
 
           menu.with_item(
             label: t(:label_icalendar_download),
-            href: download_ics_recurring_meeting_path(@meeting)
+            href: download_ics_project_recurring_meeting_path(@project, @meeting)
           ) do |item|
             item.with_leading_visual_icon(icon: :calendar)
           end
 
           menu.with_item(
-            label: t('meeting.label_mail_all_participants'),
-            href: notify_recurring_meeting_path(@meeting),
+            label: t("meeting.label_mail_all_participants"),
+            href: notify_project_recurring_meeting_path(@project, @meeting),
             form_arguments: { method: :post }
           ) do |item|
             item.with_leading_visual_icon(icon: :mail)
@@ -49,10 +50,10 @@
           if !@meeting.has_ended? && @meeting.start_time.to_date < Time.zone.today
             menu.with_item(
               label: t(:label_recurring_meeting_series_end),
-              href: end_series_dialog_recurring_meeting_path(@meeting),
+              href: end_series_dialog_project_recurring_meeting_path(@project, @meeting),
               tag: :a,
               content_arguments: {
-                data: { controller: 'async-dialog' },
+                data: { controller: "async-dialog" }
               }
             ) do |item|
               item.with_leading_visual_icon(icon: :"x-circle")
@@ -61,11 +62,11 @@
 
           menu.with_item(
             label: I18n.t(:label_recurring_meeting_series_delete),
-            href: polymorphic_path([:delete_dialog, @project, @meeting]),
+            href: delete_dialog_project_recurring_meeting_path(@project, @meeting),
             scheme: :danger,
             tag: :a,
             content_arguments: {
-              data: { controller: 'async-dialog' }
+              data: { controller: "async-dialog" }
             }
           ) do |item|
             item.with_leading_visual_icon(icon: :trash)

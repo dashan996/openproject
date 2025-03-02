@@ -50,7 +50,7 @@ See COPYRIGHT and LICENSE files for more details.
               <div class="generic-table--sort-header-outer">
                 <div class="generic-table--sort-header">
                   <span>
-                    <%= t('custom_fields.enabled_in_project') %>
+                    <%= t("custom_fields.enabled_in_project") %>
                   </span>
                 </div>
               </div>
@@ -59,7 +59,7 @@ See COPYRIGHT and LICENSE files for more details.
               <div class="generic-table--sort-header-outer">
                 <div class="generic-table--sort-header">
                   <span>
-                    <%= t('custom_fields.contained_in_type') %>
+                    <%= t("custom_fields.contained_in_type") %>
                   </span>
                 </div>
               </div>
@@ -72,7 +72,7 @@ See COPYRIGHT and LICENSE files for more details.
           <%
             options = {
               lang: custom_field.name_locale,
-              label_options: { class: 'hidden-for-sighted' }
+              label_options: { class: "hidden-for-sighted" }
             }
           %>
             <tr class="custom-field-<%= custom_field.id %>">
@@ -85,7 +85,7 @@ See COPYRIGHT and LICENSE files for more details.
               </td>
               <td>
                 <% if custom_field.is_for_all? %>
-                  <%= t('custom_fields.is_enabled_globally') %>
+                  <%= t("custom_fields.is_enabled_globally") %>
                 <% else %>
                 <%= form.collection_check_box :work_package_custom_field_ids,
                                               custom_field.id,
@@ -97,9 +97,9 @@ See COPYRIGHT and LICENSE files for more details.
               <td>
                 <% if current_user.admin? %>
                   <% type_links = custom_field.types.map { |t| link_to(t.name, edit_tab_type_path(id: t.id, tab: "form_configuration")) } %>
-                  <%= safe_join type_links, ', '.html_safe %>
+                  <%= safe_join type_links, ", ".html_safe %>
                 <% else %>
-                  <%= custom_field.types.map(&:name).join(', ') %>
+                  <%= custom_field.types.map(&:name).join(", ") %>
                 <% end %>
               </td>
             </tr>

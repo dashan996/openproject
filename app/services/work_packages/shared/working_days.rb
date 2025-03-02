@@ -29,12 +29,26 @@
 module WorkPackages
   module Shared
     class WorkingDays
-      # Returns number of working days between two dates, excluding weekend days
-      # and non working days.
+      class << self
+        def clear_cache
+          RequestStore.delete(:work_package_non_working_dates)
+        end
+      end
+
+      # Returns number of working days between two dates, inclusive, excluding
+      # weekend days and non working days.
       def duration(start_date, due_date)
         return nil unless start_date && due_date
 
         (start_date..due_date).count { working?(_1) }
+      end
+
+      # Returns the number of working days between a predecessor date and
+      # successor date, exclusive.
+      def lag(predecessor_date, successor_date)
+        return nil unless predecessor_date && successor_date
+
+        duration(predecessor_date + 1.day, successor_date - 1.day)
       end
 
       def start_date(due_date, duration)

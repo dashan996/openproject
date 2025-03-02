@@ -195,7 +195,7 @@ RSpec.describe AddValidityPeriodToJournals, type: :model do
     expect(seventh_journal.created_at).to be_x_ms_earlier_than seventh_journal_time, 0
     expect(seventh_journal.updated_at).to be_x_ms_earlier_than seventh_journal_time, 0
     expect(seventh_journal.validity_period.begin).to be_x_ms_earlier_than seventh_journal_time, 0
-    # Since it is the currently last journal, it's range is open-ended.
+    # Since it is the currently last journal, its range is open-ended.
     expect(seventh_journal.validity_period.end).to be_nil
   end
 end

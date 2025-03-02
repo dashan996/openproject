@@ -29,4 +29,4 @@ See COPYRIGHT and LICENSE files for more details.
 
 <% html_title t(:label_administration), t("project_module_storages"), @storage.name, t("storages.page_titles.managed_project_folders.title") %>
 
-<%= render(Storages::Admin::StorageViewComponent.new(@storage, automatically_managed_project_folders_section_open: true)) %>
+<%= render(Storages::Admin::StorageViewComponent.new(@storage, wizard: @wizard, wizard_step: :automatically_managed_folders)) %>

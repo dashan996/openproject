@@ -30,7 +30,7 @@ module HourlyRatesHelper
   include CostlogHelper
 
   # Returns the rate that is the closest at the specified date and that is
-  # defined in the specified projects or it's ancestors. The ancestor chain
+  # defined in the specified projects or its ancestors. The ancestor chain
   # is traversed from the specified project upwards.
   #
   # Expects all_rates to be all the rates that the user possibly has

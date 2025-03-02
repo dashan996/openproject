@@ -1,45 +1,45 @@
 # frozen_string_literal: true
 
-class WorkPackages::StatusButtonComponent < ApplicationComponent
-  include OpPrimer::ComponentHelpers
+class WorkPackages::StatusButtonComponent < OpPrimer::StatusButtonComponent
+  include Primer::ClassNameHelper
+
+  attr_reader :work_package, :user
 
   def initialize(work_package:, user:, readonly: false, button_arguments: {}, menu_arguments: {})
-    super
-
     @work_package = work_package
     @user = user
-    @status = work_package.status
-    @project = work_package.project
 
-    @readonly = readonly
-    @menu_arguments = menu_arguments
-    @button_arguments = button_arguments.merge({ classes: "__hl_background_status_#{@status.id}" })
+    button_arguments[:classes] = class_names(
+      button_arguments[:classes],
+      "__hl_background_status_#{work_package.status.id}"
+    )
 
-    @items = available_statusses
+    super(
+      current_status: map_status(work_package.status),
+      items: available_statuses,
+      readonly:,
+      button_arguments:,
+      menu_arguments:
+    )
   end
 
-  def button_title
+  def default_button_title
     I18n.t("js.label_edit_status")
   end
 
   def disabled?
-    !@user.allowed_in_project?(:edit_work_packages, @project)
+    !user.allowed_in_project?(:edit_work_packages, work_package.project)
   end
 
-  def readonly?
-    @status.is_readonly?
+  def available_statuses
+    WorkPackages::UpdateContract
+      .new(work_package, user)
+      .assignable_statuses
+      .map { |status| map_status(status) }
   end
 
-  def button_arguments
-    { title: button_title,
-      disabled: disabled?,
-      aria: {
-        label: button_title
-      } }.deep_merge(@button_arguments)
-  end
-
-  def available_statusses
-    WorkPackages::UpdateContract.new(@work_package, @user)
-                                .assignable_statuses
+  def map_status(status)
+    icon = status.is_readonly? ? :lock : nil
+    OpPrimer::StatusButtonOption.new(name: status.name, color: status.color, icon:)
   end
 end

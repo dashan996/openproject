@@ -4,12 +4,12 @@ fa:
     description: "Adds OmniAuth OpenID Connect strategy providers to OpenProject."
   logout_warning: >
     You have been logged out. The contents of any form you submit may be lost. Please [log in].
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
-        name: نام
+        name: Name
         slug: Unique identifier
-        display_name: نمایش نام
+        display_name: Display name
         client_id: Client ID
         client_secret: Client secret
         secret: Secret
@@ -29,7 +29,6 @@ fa:
         claims: Claims
         acr_values: ACR values
         redirect_url: Redirect URL
-  activerecord:
     errors:
       models:
         openid_connect/provider:

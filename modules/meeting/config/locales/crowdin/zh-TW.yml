@@ -53,7 +53,10 @@ zh-TW:
         frequency: "頻率"
         interval: "間隔"
         start_date: "開始於"
+        start_time: "開始時間"
+        start_time_hour: "開始時間"
         end_after: "系列會議結束"
+        end_date: "結束日期"
         iterations: "出現次數"
     errors:
       messages:
@@ -61,6 +64,7 @@ zh-TW:
     models:
       recurring_meeting: "重複性會議"
       structured_meeting: "一次性會議"
+      meeting: "會議"
       meeting_agenda_item: "議程項目"
       meeting_agenda: "會議大綱"
       meeting_minutes: "會議記錄"
@@ -116,7 +120,7 @@ zh-TW:
   label_template: "模板"
   label_recurring_meeting_view: "檢視會議系列"
   label_recurring_meeting_create: "開啟"
-  label_recurring_meeting_copy: "複製為一次性"
+  label_recurring_meeting_copy: "一次性複製"
   label_recurring_meeting_cancel: "取消此事件"
   label_recurring_meeting_delete: "刪除此事件"
   label_recurring_meeting_restore: "恢復此事件"
@@ -176,15 +180,29 @@ zh-TW:
         立即發送電子郵件邀請函給上述選定的與會者。您也可以稍後隨時手動執行。
       send_invitation_emails_structured: "立即向所有參與者傳送電子郵件邀請函。您也可以稍後隨時手動執行。"
       open_meeting_link: "打開會議連結"
+      open_my_meetings_link: "前往我的會議"
       series:
-        title: "[%{project_name}] 會議系列 %{title}"
-        summary: "%{actor} 已建立一個新的會議系列 %{title}"
+        title: "[%{project_name}] 會議系列 '%{title}'"
+        summary: "%{actor} 已設立新的會議系列 '%{title}'"
+      series_rescheduled:
+        title: "[%{project_name}] 會議系列 '%{title}' 已改時程"
+        summary: "%{actor} 已變更會議系列的時間表 '%{title}'"
+        old_schedule: "舊排程"
+        new_schedule: "新增排程"
       invited:
-        summary: "%{actor} 已經向您發送了一個 %{title} 會議邀請"
+        summary: "%{actor} 已向您發出會議邀請 '%{title}'"
+      cancelled:
+        header: "取消：會議 '%{title}'"
+        header_occurrence: "取消：會議發起 '%{title}'"
+        header_series: "取消：系列會議 '%{title}'"
+        summary_occurrence: "%{title}' 已被 %{actor}取消。"
+        summary_series: "'%{title}' 系列會議已被 %{actor}取消。"
+        summary: "%{title}' 已被 %{actor}取消。"
+        date_time: "排定日期/時間"
       rescheduled:
         header: "會議 %{title} 已經重新安排"
         summary: "會議 %{title} 已經被 %{actor} 重新安排"
-        body: "此會議 %{title} 已經被 %{actor} 重新安排。"
+        body: "會議 %{title} 已經被 %{actor} 重新安排。"
         old_date_time: "舊日期/時間"
         new_date_time: "新日期/時間"
     label_mail_all_participants: "發送電子郵件給所有參與者"
@@ -205,10 +223,11 @@ zh-TW:
         confirmation_message_html: >
           此動作無法還原。請小心操作。
       occurrence:
-        title: "刪除會議事件"
-        heading: "刪除此會議事件？"
+        title: "取消會議事件"
+        heading: "取消此會議事件？"
         confirmation_message_html: >
-          這次會議是 <strong>%{title}</strong> 系列的一部份.這只會刪除此特定事件，而不會刪除整個系列。您要繼續嗎？
+          任何不在範本中的會議資訊將會遺失。 要繼續嗎？
+        confirm_button: "取消事件"
     blankslate:
       title: "沒有可顯示的會議"
       desc: "沒有符合篩選條件的會議。"
@@ -229,7 +248,7 @@ zh-TW:
       first_created: >
         第一次會議已從範本成功建立。以後所有的會議都會在前一次發生時自動建立。
     template:
-      button_finalize: "完成範本"
+      button_finalize: "開放首次會議"
       blank_title: "您的會議範本是空的"
       description: >
         每當在系列中建立新會議時，都會使用此範本。您可以在此範本中加入議程項目、與會者和附件。
@@ -240,10 +259,12 @@ zh-TW:
       banner_html: >
         您目前正在編輯會議系列的範本： %{link}。系列會議中的每次新會議都會使用此範本。變更不會影響過去或已建立的會議。
     frequency:
+      x_daily:
+        other: "每 %{count} 天"
+      x_weekly:
+        other: "每 %{count} 週"
       every_weekday: "每個 %{day_of_the_week}"
-      daily: "每日"
       working_days: "每個工作天"
-      weekly: "每週"
     end_after:
       never: "永不"
       specific_date: "特定日期之後"
@@ -278,11 +299,11 @@ zh-TW:
       heading: "永久刪除此會議系列？"
       confirmation_message_html:
         zero: >
-          刪除 <strong>%{title}</strong>將刪除此系列中的任何會議。此動作不可還原。請小心操作。
+          會議系列 <strong>%{title}</strong>沒有會議發起。所有人會議系列會被刪除。請謹慎處理。
         one: >
-          將刪除 <strong>%{title}</strong>系列中的所有系列會議。此動作不可還原。請小心操作。
+          刪除 <strong>%{title}</strong>也會刪除此系列中已發之會議。此動作不可還原。請小心操作。
         other: >
-          將刪除 <strong>%{title}</strong>系列中的所有 %{count} 會議。此動作不可還原。請小心操作。
+          刪除 <strong>%{title}</strong>將刪除此系列中的所有 %{count} 個已發起會議。此動作不可還原。請小心操作。
     scheduled_delete_dialog:
       title: "取消會議事件？"
       heading: "取消此會議事件？"

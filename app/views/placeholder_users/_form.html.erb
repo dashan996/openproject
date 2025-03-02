@@ -31,7 +31,7 @@ See COPYRIGHT and LICENSE files for more details.
 
 <!--[form:placeholder_user]-->
 <section class="form--section">
-  <div class="form--field -required"><%= f.text_field :name, label: t('label_name'),  required: true, container_class: '-middle' %></div>
+  <div class="form--field -required"><%= f.text_field :name, label: t("label_name"), required: true, container_class: "-middle" %></div>
 
   <%= call_hook(:view_placeholder_users_form, placeholder_user: @placeholder_user, form: f) %>
 </section>

@@ -98,6 +98,24 @@ RSpec.describe "Progress modal", :js do
   end
 
   describe "work based mode" do
+    it "formats the values on input field blur" do
+      visit_progress_query_displaying_work_package
+
+      progress_popover.open
+
+      progress_popover.set_values(work: "5")
+      progress_popover.focus(:remaining_work)
+      progress_popover.expect_values(work: "5h")
+
+      progress_popover.set_values(remaining_work: "2")
+      progress_popover.focus(:percent_complete)
+      progress_popover.expect_values(remaining_work: "2h")
+
+      progress_popover.set_values(percent_complete: "30")
+      progress_popover.focus(:work)
+      progress_popover.expect_values(percent_complete: "30%")
+    end
+
     shared_examples_for "opens the modal with the clicked field in focus" do
       it "when clicking on a field opens the modal and focuses on the related modal input field", :aggregate_failures do
         visit_progress_query_displaying_work_package
@@ -128,6 +146,16 @@ RSpec.describe "Progress modal", :js do
   end
 
   describe "status based mode", with_settings: { work_package_done_ratio: "status" } do
+    it "formats the values on input field blur" do
+      visit_progress_query_displaying_work_package
+
+      progress_popover.open
+
+      progress_popover.set_values(work: "5")
+      progress_popover.focus(:status)
+      progress_popover.expect_values(work: "5h")
+    end
+
     describe "clicking on the work field in the work package table " \
              "with no fields set" do
       before { update_work_package_with(work_package, estimated_hours: nil, remaining_hours: nil) }

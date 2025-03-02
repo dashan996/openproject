@@ -13,7 +13,7 @@
     end
 
     def row_class
-      @clazz ||= Class.new(OpPrimer::BorderBoxRowComponent) do
+      @row_class ||= Class.new(OpPrimer::BorderBoxRowComponent) do
         def self.name
           "MyRow"
         end
@@ -31,7 +31,7 @@
     def headers
       [
         [:foo, { caption: "3 columns wide" }],
-        [:bar, { caption: "1 column wide" }],
+        [:bar, { caption: "1 column wide" }]
       ]
     end
   end

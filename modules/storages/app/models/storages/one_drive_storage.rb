@@ -42,6 +42,7 @@ module Storages
     def configuration_checks
       {
         storage_oauth_client_configured: oauth_client.present?,
+        storage_redirect_uri_configured: oauth_client&.persisted?,
         storage_tenant_drive_configured: tenant_id.present? && drive_id.present?,
         access_management_configured: !automatic_management_unspecified?,
         name_configured: name.present?
@@ -63,6 +64,18 @@ module Storages
       else
         ["inactive", "manual"]
       end
+    end
+
+    def audience
+      nil
+    end
+
+    def authenticate_via_idp?
+      false
+    end
+
+    def authenticate_via_storage?
+      true
     end
 
     def oauth_configuration

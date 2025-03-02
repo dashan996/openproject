@@ -28,8 +28,7 @@
 
 import { OpenProjectPluginContext } from 'core-app/features/plugins/plugin-context';
 import { input, InputState } from '@openproject/reactivestates';
-import { take } from 'rxjs/operators';
-import { GlobalHelpers } from 'core-app/core/setup/globals/global-helpers';
+import { getMetaElement, GlobalHelpers } from 'core-app/core/setup/globals/global-helpers';
 import { firstValueFrom } from 'rxjs';
 
 /**
@@ -59,15 +58,15 @@ export class OpenProject {
   }
 
   public get urlRoot():string {
-    return jQuery('meta[name=app_base_path]').attr('content') || '';
+    return getMetaElement('app_base_path')?.content || '';
   }
 
   public get environment():string {
-    return jQuery('meta[name=openproject_initializer]').data('environment');
+    return getMetaElement('openproject_initializer')?.dataset.environment || '';
   }
 
   public get edition():string {
-    return jQuery('meta[name=openproject_initializer]').data('edition');
+    return getMetaElement('openproject_initializer')?.dataset.edition || '';
   }
 
   public get isStandardEdition():boolean {

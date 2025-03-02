@@ -2,12 +2,13 @@ require "spec_helper"
 
 RSpec.describe EnterpriseToken do
   let(:object) { OpenProject::Token.new domain: Setting.host_name }
+  let(:ee_manager_visible) { true }
 
   subject { EnterpriseToken.new(encoded_token: "foo") }
 
   before do
     RequestStore.delete :current_ee_token
-    allow(OpenProject::Configuration).to receive(:ee_manager_visible?).and_return(true)
+    allow(OpenProject::Configuration).to receive(:ee_manager_visible?).and_return(ee_manager_visible)
   end
 
   describe ".active?" do
@@ -34,6 +35,85 @@ RSpec.describe EnterpriseToken do
 
       it "returns false" do
         expect(described_class.active?).to be(false)
+      end
+    end
+  end
+
+  describe ".show_banners?" do
+    before do
+      allow(described_class).to receive(:allows_to?).with(:active_feature).and_return(true)
+      allow(described_class).to receive(:allows_to?).with(:inactive_feature).and_return(false)
+    end
+
+    context "when ee manager is visible" do
+      let(:ee_manager_visible) { true }
+
+      context "when token is active" do
+        before { allow(described_class).to receive(:active?).and_return(true) }
+
+        it "returns false when requesting without a feature" do
+          expect(described_class).not_to be_show_banners
+        end
+
+        it "returns false when requesting with a feature that is enabled in the token" do
+          expect(described_class).not_to be_show_banners(feature: :active_feature)
+        end
+
+        it "returns true when requesting with a feature that is disabled in the token" do
+          expect(described_class).to be_show_banners(feature: :inactive_feature)
+        end
+      end
+
+      context "when token is inactive" do
+        before { allow(described_class).to receive(:active?).and_return(false) }
+
+        it "returns true when requesting without a feature" do
+          expect(described_class).to be_show_banners
+        end
+
+        it "returns true when requesting with a feature that is enabled in the token" do
+          expect(described_class).to be_show_banners(feature: :active_feature)
+        end
+
+        it "returns true when requesting with a feature that is disabled in the token" do
+          expect(described_class).to be_show_banners(feature: :inactive_feature)
+        end
+      end
+    end
+
+    context "when ee manager is not visible" do
+      let(:ee_manager_visible) { false }
+
+      context "when token is active" do
+        before { allow(described_class).to receive(:active?).and_return(true) }
+
+        it "returns false when requesting without a feature" do
+          expect(described_class).not_to be_show_banners
+        end
+
+        it "returns false when requesting with a feature that is enabled in the token" do
+          expect(described_class).not_to be_show_banners(feature: :active_feature)
+        end
+
+        it "returns false when requesting with a feature that is disabled in the token" do
+          expect(described_class).not_to be_show_banners(feature: :inactive_feature)
+        end
+      end
+
+      context "when token is inactive" do
+        before { allow(described_class).to receive(:active?).and_return(false) }
+
+        it "returns false when requesting without a feature" do
+          expect(described_class).not_to be_show_banners
+        end
+
+        it "returns false when requesting with a feature that is enabled in the token" do
+          expect(described_class).not_to be_show_banners(feature: :active_feature)
+        end
+
+        it "returns false when requesting with a feature that is disabled in the token" do
+          expect(described_class).not_to be_show_banners(feature: :inactive_feature)
+        end
       end
     end
   end

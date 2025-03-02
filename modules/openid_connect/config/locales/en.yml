@@ -5,7 +5,7 @@ en:
   logout_warning: >
     You have been logged out. The contents of any form you submit may be lost.
     Please [log in].
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
         name: Name
@@ -30,7 +30,6 @@ en:
         claims: Claims
         acr_values: ACR values
         redirect_url: Redirect URL
-  activerecord:
     errors:
       models:
         openid_connect/provider:

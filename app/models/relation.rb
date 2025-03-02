@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -30,22 +32,22 @@ class Relation < ApplicationRecord
   belongs_to :from, class_name: "WorkPackage"
   belongs_to :to, class_name: "WorkPackage"
 
-  TYPE_RELATES      = "relates".freeze
-  TYPE_PRECEDES     = "precedes".freeze
-  TYPE_FOLLOWS      = "follows".freeze
-  TYPE_BLOCKS       = "blocks".freeze
-  TYPE_BLOCKED      = "blocked".freeze
-  TYPE_DUPLICATES   = "duplicates".freeze
-  TYPE_DUPLICATED   = "duplicated".freeze
-  TYPE_INCLUDES     = "includes".freeze
-  TYPE_PARTOF       = "partof".freeze
-  TYPE_REQUIRES     = "requires".freeze
-  TYPE_REQUIRED     = "required".freeze
+  TYPE_RELATES      = "relates"
+  TYPE_PRECEDES     = "precedes"
+  TYPE_FOLLOWS      = "follows"
+  TYPE_BLOCKS       = "blocks"
+  TYPE_BLOCKED      = "blocked"
+  TYPE_DUPLICATES   = "duplicates"
+  TYPE_DUPLICATED   = "duplicated"
+  TYPE_INCLUDES     = "includes"
+  TYPE_PARTOF       = "partof"
+  TYPE_REQUIRES     = "requires"
+  TYPE_REQUIRED     = "required"
   # The parent/child relation is maintained separately
   # (in WorkPackage and WorkPackageHierarchy) and a relation cannot
   # have the type 'parent' but this is abstracted to simplify the code.
-  TYPE_PARENT       = "parent".freeze
-  TYPE_CHILD        = "child".freeze
+  TYPE_PARENT       = "parent"
+  TYPE_CHILD        = "child"
 
   TYPES = {
     TYPE_RELATES => {
@@ -93,7 +95,7 @@ class Relation < ApplicationRecord
 
   include ::Scopes::Scoped
 
-  scopes :follows_non_manual_ancestors,
+  scopes :used_for_scheduling_of,
          :types,
          :visible
 
@@ -102,6 +104,18 @@ class Relation < ApplicationRecord
 
   scope :follows_with_lag,
         -> { follows.where("lag > 0") }
+
+  scope :of_predecessor,
+        ->(work_package) { where(to: work_package) }
+
+  scope :of_successor,
+        ->(work_package) { where(from: work_package) }
+
+  scope :not_of_predecessor,
+        ->(work_package) { where.not(to: work_package) }
+
+  scope :not_of_successor,
+        ->(work_package) { where.not(from: work_package) }
 
   validates :lag, numericality: {
     allow_nil: true,
@@ -138,10 +152,23 @@ class Relation < ApplicationRecord
     TYPES[relation_type] ? TYPES[relation_type][key] : :unknown
   end
 
+  def predecessor = to
+  def predecessor_id = to_id
+  def successor = from
+  def successor_id = from_id
+
+  def predecessor_date
+    predecessor.due_date || predecessor.start_date
+  end
+
+  def successor_date
+    successor.start_date || successor.due_date
+  end
+
   def successor_soonest_start
-    if follows? && (to.start_date || to.due_date)
+    if follows? && predecessor_date
       days = WorkPackages::Shared::Days.for(from)
-      relation_start_date = (to.due_date || to.start_date) + 1.day
+      relation_start_date = predecessor_date + 1.day
       days.soonest_working_day(relation_start_date, lag:)
     end
   end

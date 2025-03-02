@@ -1,11 +1,27 @@
 uk:
   activerecord:
     attributes:
+      oauth_client:
+        client_id: Client ID
+        client_secret: Client secret
+      project:
+        project_folder_type: Project folder type
       storages/file_link:
-        origin_id: Код джерела
+        origin: Origin
+        storage: Storage
+      storages/nextcloud_storage:
+        authentication_methods:
+          oauth2_sso: Single-Sign-On through OpenID Connect Identity Provider
+          oauth2_sso_with_two_way_oauth2_fallback: Single-Sign-On with Two-Way OAuth 2.0 as fallback
+          two_way_oauth2: Two-way OAuth 2.0 authorization code flow
+        storage_audience: Storage Audience
       storages/project_storage:
+        project_folder: Project folder
+        project_folder_mode: Project folder mode
         storage: Сховище
+        storage_url: Storage URL
       storages/storage:
+        authentication_method: Authentication Method
         creator: Автор
         drive: ID диску
         host: Хост
@@ -74,7 +90,7 @@ uk:
         confirmation_text: Підтвердьте, що ви розумієте наслідки й хочете вилучити цей проєкт із файлового сховища
         heading_text: Вилучити проєкт із %{storage}
         text: Буде вилучено всі посилання з пакетів робіт цього проєкту на файли й папки, що зберігаються в цьому сховищі. Це незворотна дія.
-        title: Remove project from storage
+        title: Вилучити проєкт зі сховища
       label: Вилучити проєкт
   services:
     attributes:
@@ -199,15 +215,19 @@ uk:
         manual_management_description: Створюйте папки для кожного проєкту й керуйте ними самостійно. Вам знадобиться вручну надавати доступ відповідним користувачам.
         setup_incomplete: Виберіть тип керування доступом користувачів і створенням папок.
         subtitle: Керування доступом
-        title: Доступ і папки проєкту
+      access_management_section: Доступ і папки проєкту
       automatically_managed_folders: Папки з автоматичним керуванням
       general_information: Загальна інформація
-      nextcloud_oauth: Nextcloud OAuth
-      oauth_applications: Програми OAuth
+      oauth_configuration: Конфігурація OAuth
       one_drive_oauth: Azure OAuth
       openproject_oauth: OpenProject OAuth
       project_folders: Папки проєкту
       redirect_uri: URI переспрямування
+      storage_audience: Storage Audience
+      storage_audience_blank: No audience has been configured
+      storage_audience_description: Obtaining tokens for audience "%{audience}".
+      storage_audience_idp: Using first access token received by identity provider, regardless of audience.
+      storage_oauth: Nextcloud OAuth
       storage_provider: Постачальник сховища
     health:
       checked: 'Востаннє перевірено: %{datetime}'
@@ -222,6 +242,9 @@ uk:
         host_not_found: Сервер Nextcloud  не знайдено за вказаною URL-адресою. Перевірте конфігурацію.
         missing_dependencies: 'Відсутня обов’язкова залежність для файлового сховища. Додайте таку залежність: %{dependency}.'
         not_configured: Не вдалося перевірити підключення. Спочатку налаштуйте конфігурацію.
+        oidc_no_token_with_required_audience: There's no OpenID Connect token with the required %{audience} audience.
+        oidc_non_oidc_user: The current user, while provisioned, wasn't provisioned by an OpenID Connect (OIDC) Identity Provider. Please re-run the check with an OIDC provisioned user.
+        oidc_non_provisioned_user: Поточного користувача не надано постачальником ідентифікаційних даних OpenID Connect. Повторіть перевірку з наданим користувачем.
         placeholder: Перевірте підключення до сервера.
         subtitle: Перевірка підключення
         tenant_id_wrong: Налаштований ідентифікатор каталогу (клієнта) недійсний. Перевірте конфігурацію.
@@ -250,6 +273,7 @@ uk:
       project_folder_bulk: Папка проєкту – це папка за замовчуванням, у якій зберігаються додані файли для всіх вибраних проєктів. Ви можете змінити її окремо в налаштуваннях кожного проєкту. Однак користувачі все одно можуть додавати файли в інші папки.
     instructions:
       all_available_storages_already_added: У проєкт уже додано всі доступні сховища.
+      authentication_method: The way that requests between OpenProject and the Storage are authenticated.
       automatic_folder: Буде автоматично створено кореневу папку для цього проєкту й налаштовано дозволи на доступ для кожного учасника проєкту.
       empty_project_folder_validation: Щоб продовжити, потрібно вибрати папку.
       existing_manual_folder: Ви можете призначити наявну папку як кореневу папку для цього проєкту. Однак дозволи автоматично не налаштовуються, і адміністратор має вручну надати користувачам відповідні дозволи на доступ. Вибрану папку зможуть використовувати кілька проєктів.
@@ -262,6 +286,8 @@ uk:
         integration: Адміністрування Nextcloud / OpenProject
         oauth_configuration: Скопіюйте ці значення з додатка %{application_link_text}.
         provider_configuration: Перш ніж виконувати налаштування, переконайтеся, що маєте права адміністратора у своєму екземплярі Nextcloud і що встановлено %{application_link_text}.
+        storage_audience: Please enter the Client ID that the Nextcloud instance uses to communicate with the identity provider.
+        storage_audience_placeholder: e.g. nextcloud
       no_specific_folder: За замовчуванням кожен користувач, який передасть файл, починатиме роботу у власній головній папці.
       no_storage_set_up: Файлові сховища поки не створено.
       not_logged_into_storage: Шоб вибрати папку проєкту, спочатку ввійдіть
@@ -293,6 +319,7 @@ uk:
     label_creator: Автор
     label_delete_storage: Видалити сховище
     label_edit_storage_access_management: Змінити керування доступом до сховища
+    label_edit_storage_audience: Edit Storage Audience
     label_edit_storage_automatically_managed_folders: Редагувати папки сховища з автоматичним керуванням
     label_edit_storage_host: Редагувати хост сховища
     label_existing_manual_folder: Наявна папка з ручним керуванням дозволами
@@ -383,8 +410,15 @@ uk:
         name: OneDrive / SharePoint
         name_placeholder: напр. OneDrive
     show_attachments_toggle:
-      description: 'Якщо вимкнути цей параметр, список вкладень буде приховано на вкладці «Файли» пакетів робіт. Файли, вкладені в опис пакета робіт, усе одно буде додано у внутрішнє сховище вкладень. '
+      description: Deactivating this option will hide the attachments list on the work packages files tab. The files attached in the description of a work package will still be uploaded in the internal attachments storage.
       label: Показувати вкладення на вкладці «Файли» пакетів робіт
+    storage_audience:
+      idp:
+        helptext: OpenProject will use the first access token received by the identity provider to authenticate requests to the storage. It will not try to obtain another token.
+        label: Use first access token obtained by identity provider
+      manual:
+        helptext: Allows you to set the audience of the storage. OpenProject will try to obtain a token for the given audience from the identity provider.
+        label: Define storage audience manually
     storage_list_blank_slate:
       description: Додайте сховище, щоб воно з’явилося тут.
       heading: У вас ще немає жодного сховища.

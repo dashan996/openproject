@@ -20,11 +20,12 @@ import {
   TemplateRef,
   Type,
   ViewChild,
-  ViewContainerRef, ViewEncapsulation,
+  ViewContainerRef,
+  ViewEncapsulation,
 } from '@angular/core';
 import { DropdownPosition, NgSelectComponent } from '@ng-select/ng-select';
 import { BehaviorSubject, merge, NEVER, Observable, of, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, switchMap, tap } from 'rxjs/operators';
 import { AddTagFn, GroupValueFn } from '@ng-select/ng-select/lib/ng-select.component';
 
 import { HalResource } from 'core-app/features/hal/resources/hal-resource';
@@ -50,14 +51,13 @@ import { ID } from '@datorama/akita';
 import { HttpClient } from '@angular/common/http';
 import { ApiV3Service } from 'core-app/core/apiv3/api-v3.service';
 import { HalResourceService } from 'core-app/features/hal/services/hal-resource.service';
-import { CollectionResource } from 'core-app/features/hal/resources/collection-resource';
-import { ApiV3FilterBuilder } from 'core-app/shared/helpers/api-v3/api-v3-filter-builder';
-import { addFiltersToPath } from 'core-app/core/apiv3/helpers/add-filters-to-path';
 import {
   IAPIFilter,
   IOPAutocompleterOption,
   TOpAutocompleterResource,
 } from 'core-app/shared/components/autocompleter/op-autocompleter/typings';
+import { UserResource } from 'core-app/features/hal/resources/user-resource';
+import { PathHelperService } from 'core-app/core/path-helper/path-helper.service';
 
 export interface IAutocompleteItem {
   id:ID;
@@ -234,8 +234,6 @@ export class OpAutocompleterComponent<T extends IAutocompleteItem = IAutocomplet
 
   @Input() public url:string;
 
-  @Input() public relations?:boolean = false;
-
   @Input() public debounceTimeMs:number = 250;
 
   @Output() public open = new EventEmitter<unknown>();
@@ -294,7 +292,7 @@ export class OpAutocompleterComponent<T extends IAutocompleteItem = IAutocomplet
 
   footerTemplate:TemplateRef<Element>;
 
-  readonly opAutocompleterService = new OpAutocompleterService(this.apiV3Service);
+  readonly opAutocompleterService = new OpAutocompleterService(this.apiV3Service, this.halResourceService);
 
   constructor(
     readonly injector:Injector,
@@ -306,6 +304,7 @@ export class OpAutocompleterComponent<T extends IAutocompleteItem = IAutocomplet
     readonly vcRef:ViewContainerRef,
     readonly I18n:I18nService,
     readonly halResourceService:HalResourceService,
+    readonly pathHelperService:PathHelperService,
   ) {
     super();
   }
@@ -475,21 +474,21 @@ export class OpAutocompleterComponent<T extends IAutocompleteItem = IAutocomplet
     }
 
     return this.typeahead.pipe(
-      filter(() => !!(this.defaultData || this.getOptionsFn)),
+      filter(() => !!(this.defaultData || this.url || this.getOptionsFn)),
       distinctUntilChanged(),
       tap(() => this.loading$.next(true)),
       debounceTime(this.debounceTimeForCurrentEnvironment),
       switchMap((queryString:string) => {
-        if (this.relations && this.url) {
-          return this.fetchFromUrl(queryString);
+        if (this.getOptionsFn) {
+          return this.getOptionsFn(queryString);
+        }
+
+        if (this.url) {
+          return this.opAutocompleterService.loadFromUrl(this.url, queryString, this.resource, this.filters, this.searchKey);
         }
 
         if (this.defaultData) {
           return this.opAutocompleterService.loadData(queryString, this.resource, this.filters, this.searchKey);
-        }
-
-        if (this.getOptionsFn) {
-          return this.getOptionsFn(queryString);
         }
 
         return NEVER;
@@ -499,39 +498,6 @@ export class OpAutocompleterComponent<T extends IAutocompleteItem = IAutocomplet
         error: () => this.loading$.next(false),
       }),
     );
-  }
-
-  private fetchFromUrl(queryString:string):Observable<unknown> {
-    // Exit early if the query string is empty as there is no typeahead
-    if (queryString === null || queryString.length === 0) {
-      return of([]);
-    }
-
-    // Build filters if provided
-    const finalFilters = new ApiV3FilterBuilder();
-    this.filters?.forEach((currentFilter) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      finalFilters.add(currentFilter.name, currentFilter.operator, currentFilter.values);
-    });
-
-    const urlWithFilters = addFiltersToPath(this.url, finalFilters);
-
-    // Add default sort parameters if resource is work packages
-    if (this.resource === 'work_packages') {
-      urlWithFilters.searchParams.set('sortBy', '[["updatedAt","desc"]]');
-    }
-
-    // Add query string to the url if provided
-    urlWithFilters.searchParams.set('query', queryString);
-
-    const stringifiedBuiltOutUrl = urlWithFilters.toString();
-
-    return this
-      .halResourceService
-      .get(stringifiedBuiltOutUrl)
-      .pipe(
-        map((collection:CollectionResource<T>) => collection.elements),
-      );
   }
 
   private get debounceTimeForCurrentEnvironment():number {
@@ -613,7 +579,31 @@ export class OpAutocompleterComponent<T extends IAutocompleteItem = IAutocomplet
     return null;
   }
 
-  protected defaultCompareWithFunction():(a:unknown, b:unknown) => boolean {
-    return (a, b) => a === b;
+  protected defaultCompareWithFunction():null|((a:unknown, b:unknown) => boolean) {
+    return (a, b) => {
+      if (this.bindValue && !_.isObject(b)) {
+        return (a as Record<string, unknown>)[this.bindValue] === b;
+      }
+
+      return a === b;
+    };
+  }
+
+  /**
+   * Attaches hover card event listeners by setting this attribute for users.
+   */
+  protected getHoverCardTriggerTarget(item:HalResource) {
+    return item instanceof UserResource ? 'trigger' : '';
+  }
+
+  /**
+   * Enables hover card data loading by setting this attribute for users.
+   */
+  protected getHoverCardUrl(item:HalResource) {
+    if (item instanceof UserResource && item.id) {
+      return this.pathHelperService.userHoverCardPath(item.id);
+    }
+
+    return '';
   }
 }

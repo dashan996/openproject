@@ -1,29 +1,28 @@
 pt-PT:
-  activemodel:
+  activerecord:
     attributes:
       saml/provider:
-        display_name: Nome
-        identifier: Identificador
-        secret: Segredo
-        scope: Âmbito
-        assertion_consumer_service_url: URL do ACS (Assertion consumer service)
-        limit_self_registration: Limitar auto-registo
-        sp_entity_id: ID da entidade de serviço
-        metadata_url: URL dos metadados do fornecedor de identidade
-        name_identifier_format: Formato do identificador do nome
-        idp_sso_service_url: Ponto final do início de sessão do fornecedor de identidade
-        idp_slo_service_url: Ponto final do fim de sessão do fornecedor de identidade
-        idp_cert: Certificado público do fornecedor de identidade
-        authn_requests_signed: Assinar SAML AuthnRequests
-        want_assertions_signed: Exigir respostas assinadas
-        want_assertions_encrypted: Exigir respostas encriptadas
-        certificate: Certificado utilizado pelo OpenProject para pedidos SAML
-        private_key: Chave privada correspondente para pedidos SAML do OpenProject
-        signature_method: Algoritmo de assinatura
-        digest_method: Algoritmo de resumo
-        format: "Formato"
-        icon: "Ícone personalizado"
-  activerecord:
+        display_name: Name
+        identifier: Identifier
+        secret: Secret
+        scope: Scope
+        assertion_consumer_service_url: ACS (Assertion consumer service) URL
+        limit_self_registration: Limit self registration
+        sp_entity_id: Service entity ID
+        metadata_url: Identity provider metadata URL
+        name_identifier_format: Name identifier format
+        idp_sso_service_url: Identity provider login endpoint
+        idp_slo_service_url: Identity provider logout endpoint
+        idp_cert: Public certificate of identity provider
+        authn_requests_signed: Sign SAML AuthnRequests
+        want_assertions_signed: Require signed responses
+        want_assertions_encrypted: Require encrypted responses
+        certificate: Certificate used by OpenProject for SAML requests
+        private_key: Corresponding private key for OpenProject SAML requests
+        signature_method: Signature algorithm
+        digest_method: Digest algorithm
+        format: "Format"
+        icon: "Custom icon"
     errors:
       models:
         saml/provider:

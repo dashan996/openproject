@@ -35,7 +35,9 @@ module RecurringMeetings
 
     def initialize(series)
       super
+
       @series = series
+      @project = series.project
     end
   end
 end

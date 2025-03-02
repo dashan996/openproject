@@ -33,6 +33,7 @@ RSpec.describe Queries::Roles::Filters::GrantableFilter do
     let(:class_key) { :grantable }
     let(:type) { :list }
     let(:model) { Role }
+    let(:human_name) { "Grantable role" }
   end
 
   it_behaves_like "boolean query filter", scope: false do

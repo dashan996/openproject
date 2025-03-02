@@ -33,16 +33,16 @@ See COPYRIGHT and LICENSE files for more details.
   <%= f.select :category_id,
                DocumentCategory.all.map { |c| [c.name, c.id] },
                required: true,
-               container_class: '-slim' %>
+               container_class: "-slim" %>
 </div>
 <div class="form--field -required">
-  <%= f.text_field :title, required: true, container_class: '-wide' %>
+  <%= f.text_field :title, required: true, container_class: "-wide" %>
 </div>
 <div class="form--field -visible-overflow">
   <%= f.text_area :description,
-                  container_class: '-xxwide',
+                  container_class: "-xxwide",
                   label_options: {
-                    class: '-top'
+                    class: "-top"
                   },
                   with_text_formatting: true,
                   resource: api_v3_document_resource(f.object),

@@ -343,4 +343,10 @@ RSpec.shared_examples_for "nextcloud storage contract", :storage_server_helpers,
       end
     end
   end
+
+  describe ".with_provider_contract" do
+    it "looks like it descends from Storages::Storages::BaseContract" do
+      expect(described_class.with_provider_contract(instance_double(Class))).to be <= Storages::Storages::BaseContract
+    end
+  end
 end

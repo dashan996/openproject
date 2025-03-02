@@ -113,7 +113,7 @@ As described above, *project* custom fields are now called 'Project attributes' 
 
 ### Enhanced Meetings module with new features
 
-OpenProject's [(Dynamic) Meetings](../../../user-guide/meetings/dynamic-meetings/) have been updated with the following new features:
+OpenProject's [(Dynamic) Meetings](../../../user-guide/meetings/) have been updated with the following new features:
 
 * [Meetings attachments](https://www.openproject.com/docs/user-guide/meetings/dynamic-meetings/#meeting-attachments) are now shown in the bottom section of the right-hand sidebar. You can add them directly to the meeting there and drag and drop them from this section to the Notes section of the agenda items.
 * When [copying a meeting](https://www.openproject.com/docs/user-guide/meetings/dynamic-meetings/#copy-a-meeting), you can now check a box to choose whether you want to include attachments.

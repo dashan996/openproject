@@ -37,7 +37,7 @@ module Projects
         # generated in the context of the component index action, instead of any turbo stream actions performing
         # partial updates on the page.
         #
-        # params[:url_for_action] is passed to the pagination_options making it's way down to any pagination links
+        # params[:url_for_action] is passed to the pagination_options making its way down to any pagination links
         # that are generated via link_to which calls url_for which uses the params[:url_for_action] to specify
         # the controller action that link_to should use.
         #

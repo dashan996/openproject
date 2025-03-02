@@ -29,51 +29,37 @@
 class Relations::BaseService < BaseServices::BaseCallable
   include Contracted
   include Shared::ServiceContext
+  include Relations::Concerns::Rescheduling
 
   attr_accessor :user
 
   def initialize(user:)
+    super()
     self.user = user
   end
 
   private
 
-  def update_relation(model, attributes)
-    model.attributes = model.attributes.merge attributes
+  def update_relation(relation, attributes)
+    relation.attributes = relation.attributes.merge attributes
 
-    success, errors = validate_and_save(model, user)
+    success, errors = validate_and_save(relation, user)
 
-    result = ServiceResult.new success:, errors:, result: model
+    result = ServiceResult.new success:, errors:, result: relation
 
-    if success && model.follows?
-      reschedule_result = reschedule(model)
+    if success && relation.follows?
+      reschedule_result = reschedule_successor(relation)
       result.merge!(reschedule_result)
     end
 
     result
   end
 
-  def set_defaults(model)
-    if Relation::TYPE_FOLLOWS == model.relation_type
-      model.lag ||= 0
+  def set_defaults(relation)
+    if relation.follows?
+      relation.lag ||= 0
     else
-      model.lag = nil
+      relation.lag = nil
     end
-  end
-
-  def reschedule(model)
-    schedule_result = WorkPackages::SetScheduleService
-                      .new(user:, work_package: model.to)
-                      .call
-
-    # The to-work_package will not be altered by the schedule service so
-    # we do not have to save the result of the service.
-    save_result = if schedule_result.success?
-                    schedule_result.dependent_results.all? { |dr| !dr.result.changed? || dr.result.save(validate: false) }
-                  end || false
-
-    schedule_result.success = save_result
-
-    schedule_result
   end
 end

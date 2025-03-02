@@ -23,7 +23,7 @@ ru:
         locked: 'Заблокировано'
         closed: 'Закрыто'
       new_board: 'Новая доска'
-      add_list: 'Добавить список в форум'
+      add_list: 'Добавить список на доску'
       add_card: 'Добавить карточку'
       error_attribute_not_writable: "Невозможно переместить пакет работ, %{attribute} не доступен для записи."
       error_loading_the_list: "Ошибка загрузки списка: %{error_message}"

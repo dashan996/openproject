@@ -96,12 +96,22 @@ module WorkPackage::PDFExport::Export::Page
     text_style = styles.page_footer
     spacing = styles.page_footer_horizontal_spacing
     page_nr_x, page_nr_width = draw_text_centered(footer_page_nr, text_style, top)
+    draw_footer_on_page_left(page_nr_x, text_style, spacing, top)
+    draw_footer_on_page_right(page_nr_x, page_nr_width, text_style, spacing, top)
+  end
+
+  def draw_footer_on_page_right(page_nr_x, page_nr_width, text_style, spacing, top)
+    if footer_title.present?
+      draw_text_multiline_right(
+        text: footer_title, max_left: page_nr_x + page_nr_width + spacing,
+        text_style:, top:, max_lines: MAX_NR_OF_PDF_FOOTER_LINES
+      )
+    end
+  end
+
+  def draw_footer_on_page_left(page_nr_x, text_style, spacing, top)
     draw_text_multiline_left(
       text: footer_date, max_left: page_nr_x - spacing,
-      text_style:, top:, max_lines: MAX_NR_OF_PDF_FOOTER_LINES
-    )
-    draw_text_multiline_right(
-      text: footer_title, max_left: page_nr_x + page_nr_width + spacing,
       text_style:, top:, max_lines: MAX_NR_OF_PDF_FOOTER_LINES
     )
   end

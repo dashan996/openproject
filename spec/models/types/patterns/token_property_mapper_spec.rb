@@ -41,9 +41,19 @@ RSpec.describe Types::Patterns::TokenPropertyMapper do
   shared_let(:work_package_parent) do
     create(:work_package, project:, category:, start_date: Date.yesterday, estimated_hours: 120, due_date: 3.months.from_now)
   end
+
   shared_let(:work_package) do
-    create(:work_package, responsible:, project:, category:, due_date: 1.month.from_now,
-                          assigned_to: assignee, parent: work_package_parent, start_date: Time.zone.today, estimated_hours: 30)
+    create(:work_package, responsible:, project:, category:, due_date: 1.month.from_now, assigned_to: assignee,
+                          parent: work_package_parent, start_date: Time.zone.today, estimated_hours: 30)
+  end
+
+  shared_let(:string_custom_field) do
+    create(:string_wp_custom_field).tap do |custom_field|
+      project.work_package_custom_fields << custom_field
+      work_package.type.custom_fields << custom_field
+
+      create(:work_package_custom_value, custom_field:, customized: work_package, value: "test")
+    end
   end
 
   described_class::TOKEN_PROPERTY_MAP.each_pair do |key, details|
@@ -54,9 +64,11 @@ RSpec.describe Types::Patterns::TokenPropertyMapper do
   end
 
   it "returns all possible tokens" do
+    cf = string_custom_field
     tokens = described_class.new.tokens_for_type(work_package.type)
 
     expect(tokens.keys).to match_array(%i[work_package project parent])
     expect(tokens[:project][:project_status]).to eq(Project.human_attribute_name(:status_code))
+    expect(tokens[:work_package][:"custom_field_#{cf.id}"]).to eq(cf.name)
   end
 end

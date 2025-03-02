@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -124,7 +126,7 @@ class CustomFieldFormBuilder < TabularFormBuilder
   # Return custom field label tag
   def custom_field_label_tag(options)
     classes = "form--label"
-    classes << " error" unless Array(custom_value).flat_map(&:errors).empty?
+    classes += " error" unless Array(custom_value).flat_map(&:errors).empty?
 
     content_tag "label",
                 for: custom_field_field_id,

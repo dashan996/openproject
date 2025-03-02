@@ -51,7 +51,7 @@ RSpec.describe Meetings::RowComponent, type: :component do
 
   describe "actions" do
     context "with default permissions" do
-      context "with a one-off meeting" do
+      context "with a one-time meeting" do
         let(:meeting) { build_stubbed(:meeting, project:) }
 
         it "shows default menu items" do
@@ -77,12 +77,14 @@ RSpec.describe Meetings::RowComponent, type: :component do
         end
       end
 
-      context "with a one-off meeting" do
+      context "with a one-time meeting" do
         let(:meeting) { build_stubbed(:meeting, project:) }
 
         context "without a current project" do
-          it "shows delete menu item" do
-            expect(subject).to have_link "Delete meeting", href: delete_dialog_meeting_path(meeting)
+          it "shows delete menu item with a back url" do
+            back_url = meetings_path
+            expect(subject).to have_link "Delete meeting",
+                                         href: delete_dialog_project_meeting_path(project, meeting, back_url:)
           end
         end
 
@@ -100,8 +102,10 @@ RSpec.describe Meetings::RowComponent, type: :component do
         let(:meeting) { build_stubbed(:structured_meeting_template, recurring_meeting: series, project:) }
 
         context "without a current project" do
-          it "shows delete menu item" do
-            expect(subject).to have_link "Delete occurrence", href: delete_dialog_meeting_path(meeting)
+          it "shows delete menu item with a back url" do
+            back_url = meetings_path
+            expect(subject).to have_link "Delete occurrence",
+                                         href: delete_dialog_project_meeting_path(project, meeting, back_url:)
           end
         end
 
@@ -122,7 +126,7 @@ RSpec.describe Meetings::RowComponent, type: :component do
         end
       end
 
-      context "with a one-off meeting" do
+      context "with a one-time meeting" do
         let(:meeting) { build_stubbed(:meeting, project:) }
 
         it "shows copy menu item" do

@@ -29,6 +29,10 @@
 class Queries::Members::Filters::BlockedFilter < Queries::Members::Filters::MemberFilter
   include Queries::Filters::Shared::UserBlockedFilter
 
+  def human_name
+    I18n.t(:status_blocked)
+  end
+
   def joins
     :principal
   end

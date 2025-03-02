@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -48,6 +49,18 @@ RSpec.describe Meetings::CreateService, "integration", type: :model do
   end
 
   subject { instance.call(**params, **default_params) }
+
+  describe "project" do
+    context "when not provided" do
+      let(:default_params) { { title: "foo" } }
+
+      it "complains about the project, not the base authorization" do
+        expect(subject).not_to be_success
+        expect(subject.errors[:base]).to be_empty
+        expect(subject.errors[:project_id]).to contain_exactly "can't be blank."
+      end
+    end
+  end
 
   describe "participants" do
     context "when passed" do

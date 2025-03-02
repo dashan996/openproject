@@ -31,7 +31,7 @@ See COPYRIGHT and LICENSE files for more details.
 
 <div class="form--field">
   <%# Empty label for styling only %>
-  <%= styled_label_tag "lang", '' %>
+  <%= styled_label_tag "lang", "" %>
   <div class="form--field-container">
     <%=
       styled_select_tag(
@@ -39,7 +39,7 @@ See COPYRIGHT and LICENSE files for more details.
         options_for_select(helpers.lang_options_for_select(false), current_language.to_s),
         id: "lang-for-#{name}",
         class: "lang-select-switch",
-        container_class: '-slim'
+        container_class: "-slim"
       )
     %>
   </div>
@@ -60,15 +60,15 @@ See COPYRIGHT and LICENSE files for more details.
   <div class="form--field-container">
     <%=
       styled_text_area_tag(
-        "settings[#{name}][#{current_language.to_s}]",
+        "settings[#{name}][#{current_language}]",
         Setting.send(name)[current_language.to_s],
         disabled: !Setting.send(:"#{name}_writable?"),
         label: false,
         id: "settings-#{name}",
-        class: 'wiki-edit',
+        class: "wiki-edit",
         with_text_formatting: true,
         rows: 5,
-        container_class: '-xxwide'
+        container_class: "-xxwide"
       )
     %>
   </div>

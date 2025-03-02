@@ -38,7 +38,6 @@ The package is available for the following Linux distributions:
 | [Debian 12 Bookworm](#debian-12)            |
 | [Debian 11 Bullseye](#debian-11)            |
 | [CentOS/RHEL 9.x](#centos-9--rhel-9)        |
-| [CentOS/RHEL 8.x](#centos-8--rhel-8)        |
 | [Suse Linux Enterprise Server 15](#sles-15) |
 
 Please ensure that you are running on a 64bit system before proceeding with the installation. You can check by running the `uname -i` command on the target server and verifying that it outputs `x86_64`:
@@ -217,47 +216,6 @@ Then finish the installation by reading the [*Initial configuration*](#initial-c
 > On this distribution full-text extraction for attachments [*is not supported*](#full-text-extraction-not-supported) by default.
 >
 
-### CentOS 8 / RHEL 8
-
-Add the OpenProject package source:
-
-```shell
-sudo wget -O /etc/yum.repos.d/openproject.repo \
-  https://dl.packager.io/srv/opf/openproject/stable/15/installer/el/8.repo
-```
-
-If it is not already enabled, make sure to enable [Extra Packages for Enterprise Linux](https://fedoraproject.org/wiki/EPEL) (EPEL).
-
-```shell
-sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
-```
-
-Download the OpenProject package:
-
-```shell
-sudo yum install openproject
-```
-
-Then finish the installation by reading the [*Initial configuration*](#initial-configuration) section.
-
-> [!NOTE] 
-> On this distribution full-text extraction for attachments [*is not supported*](#full-text-extraction-not-supported) by default.
->
-
-**Workaround for outdated PostgreSQL library package**
-
-Depending on your version and installation variant, you might receive errors like `symbol lookup error: /opt/openproject/vendor/bundle/ruby/3.1.0/gems/pg-1.4.3/lib/pg_ext.so: undefined symbol: PQconninfo`.
-
-This happens when your local postgresql-libs package is outdated. You'll have to install a newer version manually like so:
-
-1. Add the package source for PostgreSQL (the exact URL might differ, double check https://www.postgresql.org/download/linux/redhat/)
-
-`yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm`
-
-2. Install postgresql13-libs
-
-`yum install postgresql13-libs`
-
 ## SUSE Linux Enterprise Server (SLES) Installation
 
 > [!NOTE]
@@ -329,7 +287,7 @@ You can find more about the BIM edition on [this page](https://www.openproject.o
 
 > This wizard step is only available on the following distributions:
 >
-> * RHEL/CentOS 8
+> * RHEL/CentOS 9
 > * Ubuntu 22.04
 > * Ubuntu 20.04
 > * Debian 11

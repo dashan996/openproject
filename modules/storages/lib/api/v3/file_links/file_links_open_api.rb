@@ -31,14 +31,17 @@ class API::V3::FileLinks::FileLinksOpenAPI < API::OpenProjectAPI
 
   using Storages::Peripherals::ServiceResultRefinements
 
+  helpers do
+    def auth_strategy
+      storage = @file_link.storage
+      Storages::Peripherals::Registry.resolve("#{storage}.authentication.user_bound").call(user: current_user, storage:)
+    end
+  end
+
   resources :open do
     get do
-      auth_strategy = Storages::Peripherals::StorageInteraction::AuthenticationStrategies::OAuthUserToken
-                        .strategy
-                        .with_user(current_user)
-
       Storages::Peripherals::Registry
-        .resolve("#{@file_link.storage.short_provider_type}.queries.open_file_link")
+        .resolve("#{@file_link.storage}.queries.open_file_link")
         .call(
           storage: @file_link.storage,
           auth_strategy:,

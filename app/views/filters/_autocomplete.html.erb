@@ -1,10 +1,12 @@
 <div class="advanced-filters--filter-value <%= value_visibility %>">
   <%= angular_component_tag autocomplete_options[:component],
                             inputs: {
-                              inputName: 'value',
+                              inputName: "value",
                               multiple: true,
                               multipleAsSeparateInputs: false,
                               inputValue: filter.values,
+                              appendTo: "body",
+                              id: "#{filter.name}_value",
                               hiddenFieldAction: "change->filter--filters-form#autocompleteSendForm"
                               # Set on the template as there is a timing issue where the
                               # angular component is not yet ready in the DOM and hence
@@ -12,11 +14,10 @@
                               # of the #connect lifecycle hook of the filter--filters-form
                               # Stimulus controller.
                             }.merge(autocomplete_options.except(:component)),
-                            id: "#{filter.name}_value",
                             data: {
-                              'filter-autocomplete': true,
-                              'filter--filters-form-target': 'filterValueContainer',
-                              'filter-name': filter.name
+                              "filter-autocomplete": true,
+                              "filter--filters-form-target": "filterValueContainer",
+                              "filter-name": filter.name
                             }
   %>
 </div>

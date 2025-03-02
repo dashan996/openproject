@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -94,7 +96,7 @@ RSpec.describe "GET /projects/:project_id/settings/project_storages/:id/oauth_ac
       shared_let(:oauth_client_token) { create(:oauth_client_token, oauth_client: storage.oauth_client, user:) }
 
       before do
-        Storages::Peripherals::Registry.stub("nextcloud.queries.auth_check", ->(_) { ServiceResult.success })
+        Storages::Peripherals::Registry.stub("nextcloud.queries.user", ->(_) { ServiceResult.success })
       end
 
       it "redirects to destination_url" do

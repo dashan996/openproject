@@ -112,13 +112,13 @@ RSpec.shared_examples_for "relation contract" do
     context "when the work package for from is not visible" do
       let(:relation_from_visible) { false }
 
-      it_behaves_like "contract is invalid", from: :error_not_found
+      it_behaves_like "contract is invalid", from_id: :error_not_found
     end
 
     context "when the work package for to is not visible" do
       let(:relation_to_visible) { false }
 
-      it_behaves_like "contract is invalid", to: :error_not_found
+      it_behaves_like "contract is invalid", to_id: :error_not_found
     end
 
     Relation::TYPES.each_key do |available_type|

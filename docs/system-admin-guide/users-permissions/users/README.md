@@ -200,7 +200,7 @@ The **Avatar** tab shows the default icon to be shown for this user. A custom im
 
 > ![TIP]
 >
-> Hovering over a user's avatar, for example on the Members page or the Activity page, will display their information. 
+> Hovering over a user's avatar or name, for example on the Members page or the Activity page, will display their information. 
 
 ### Two-factor authentication (2FA)
 

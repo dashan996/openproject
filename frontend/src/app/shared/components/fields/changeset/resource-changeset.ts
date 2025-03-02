@@ -488,7 +488,7 @@ export class ResourceChangeset<T extends HalResource = HalResource> {
   protected setNewDefaults(form:FormResource) {
     _.each(form.payload, (val:unknown, key:string) => {
       const fieldSchema:IFieldSchema|null = this.schema.ofProperty(key);
-      if (!fieldSchema?.writable) {
+      if (!fieldSchema?.writable && !fieldSchema?.required) {
         return;
       }
 

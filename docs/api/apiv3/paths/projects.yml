@@ -21,7 +21,7 @@ get:
         Currently supported filters are:
 
         + active: based on the active property of the project
-        + ancestor: filters projects by their ancestor. A project is not considered to be it's own ancestor.
+        + ancestor: filters projects by their ancestor. A project is not considered to be its own ancestor.
         + available_project_attributes: filters projects based on the activated project project attributes.
         + created_at: based on the time the project was created
         + latest_activity_at: based on the time the last activity was registered on a project.

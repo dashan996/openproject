@@ -22,7 +22,7 @@ When you first access this tab, you will see the comments and list of changes in
 
 You can scroll up and down to go forwards or backwards in time.
 
-By default, the activity tab shows both comments and changes, but you can filter this to only show one or the other:
+By default, the Activity tab shows both comments and changes, but you can filter this to only show one or the other:
 
 ![Filter the activity tab](Activity-filter.png)
 

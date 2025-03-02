@@ -1,5 +1,5 @@
 <%
-  on_work_package_path = request.path.include?('/work_packages')
+  on_work_package_path = request.path.include?("/work_packages")
   path =
     if @project
       menu_project_work_packages_path(@project, **params.permit(:query_props, :query_id, :name), on_work_package_path:)

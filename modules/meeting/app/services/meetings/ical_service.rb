@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -39,10 +40,10 @@ module Meetings
       @url_helpers = OpenProject::StaticRouting::StaticUrlHelpers.new
     end
 
-    def call
+    def call(cancelled: false)
       User.execute_as(user) do
         @timezone = Time.zone || Time.zone_default
-        ServiceResult.success(result: generate_ical)
+        ServiceResult.success(result: generate_ical(cancelled:))
       end
     rescue StandardError => e
       Rails.logger.error("Failed to generate ICS for meeting #{@meeting.id}: #{e.message}")
@@ -52,8 +53,8 @@ module Meetings
     private
 
     # rubocop:disable Metrics/AbcSize
-    def generate_ical
-      ical_event(meeting.start_time) do |e|
+    def generate_ical(cancelled:)
+      ical_event(meeting.start_time, cancelled:) do |e|
         tzinfo = timezone.tzinfo
         tzid = tzinfo.canonical_identifier
 
@@ -66,6 +67,7 @@ module Meetings
         e.organizer = ical_organizer(meeting)
         e.location = meeting.location.presence
 
+        set_status(cancelled, e)
         add_attendees(e, meeting)
       end
     end

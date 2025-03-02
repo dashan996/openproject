@@ -27,28 +27,28 @@ See COPYRIGHT and LICENSE files for more details.
 
 ++#%>
 
-<% unless @ifc_model.new_record?  %>
+<% unless @ifc_model.new_record? %>
   <div class="form--field -required">
-    <%= f.text_field :title, required: true, container_class: '-wide' %>
+    <%= f.text_field :title, required: true, container_class: "-wide" %>
   </div>
 <% end %>
 
 <% if OpenProject::Configuration.direct_uploads? %>
   <% Hash(@form).each do |key, value| %>
-    <input type="hidden" name="<%= key %>" value="<%= value %>" />
+    <input type="hidden" name="<%= key %>" value="<%= value %>">
   <% end %>
 <% end %>
 
-<div class="form--field <%= @ifc_model.new_record? ? '-required': '' %>">
+<div class="form--field <%= @ifc_model.new_record? ? "-required" : "" %>">
   <% if OpenProject::Configuration.direct_uploads? %>
-    <input class="form--file-field" type="file" name="file" accept=".ifc" />
+    <input class="form--file-field" type="file" name="file" accept=".ifc">
   <% else %>
-    <%= f.file_field :ifc_attachment, accept: '.ifc' %>
+    <%= f.file_field :ifc_attachment, accept: ".ifc" %>
   <% end %>
 </div>
 
 <div class="form--field">
-  <%= f.check_box 'is_default' %>
+  <%= f.check_box "is_default" %>
 </div>
 
 <% if OpenProject::Configuration.direct_uploads? %>

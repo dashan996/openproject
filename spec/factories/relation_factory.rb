@@ -36,6 +36,15 @@ FactoryBot.define do
   end
 
   factory :follows_relation, parent: :relation do
+    # Use these transient attributes if you always mix up `from` and `to`
+    # attributes in a follows relation
+    transient do
+      predecessor { nil }
+      successor { nil }
+    end
+
+    from { successor || super() }
+    to { predecessor || super() }
     relation_type { "follows" }
     lag { 0 }
   end

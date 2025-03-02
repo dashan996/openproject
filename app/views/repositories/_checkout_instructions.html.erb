@@ -37,8 +37,8 @@ See COPYRIGHT and LICENSE files for more details.
     <p>
     <%= simple_format instructions.instructions %>
     <% if instructions.manages_permissions? %>
-      <br/>
-      <span><%= t('repositories.checkout.access_permission') %>:</span>
+      <br>
+      <span><%= t("repositories.checkout.access_permission") %>:</span>
       <strong><%= t("repositories.checkout.access.#{instructions.permission}") %></strong>
     <% end %>
     </p>
@@ -50,7 +50,7 @@ See COPYRIGHT and LICENSE files for more details.
      class="op-toast--close icon-context icon-close">
   </a>
   <div class="op-toast--content">
-    <p><%= t('repositories.checkout.not_available') %></p>
+    <p><%= t("repositories.checkout.not_available") %></p>
   </div>
 </div>
 <% end %>

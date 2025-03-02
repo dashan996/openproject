@@ -34,6 +34,8 @@ ru:
   enumeration_doc_categories: "Категории документов"
   documents:
     label_attachment_author: "Автор вложения"
+    label_categories: "Категории"
+    new_category: "Новая категория"
   label_document_added: "Документ добавлен"
   label_document_new: "Новый документ"
   label_document_plural: "Документы"

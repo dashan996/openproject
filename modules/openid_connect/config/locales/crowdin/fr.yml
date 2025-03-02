@@ -4,32 +4,31 @@ fr:
     description: "Ajoute des fournisseurs de stratégie OmniAuth OpenID Connect à OpenProject."
   logout_warning: >
     Vous avez été déconnecté. Le contenu de tout formulaire que vous soumettez peut être perdu. Veuillez [vous connecter].
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
-        name: Nom
-        slug: Identifiant unique
-        display_name: Nom d'affichage
-        client_id: ID du client
-        client_secret: Clé secrète du client
+        name: Name
+        slug: Unique identifier
+        display_name: Display name
+        client_id: Client ID
+        client_secret: Client secret
         secret: Secret
-        scope: Portée
-        grant_types_supported: Types d'autorisations pris en charge
-        limit_self_registration: Limiter l'inscription automatique
-        authorization_endpoint: Point de terminaison d'autorisation
-        userinfo_endpoint: Point de terminaison des informations de l'utilisateur
-        token_endpoint: Point de terminaison de jeton
-        end_session_endpoint: Point de terminaison de la session
-        post_logout_redirect_uri: URL de redirection après déconnexion
-        jwks_uri: URL JWKS
-        issuer: Émetteur
-        tenant: Locataire
-        metadata_url: URL de métadonnées
-        icon: Icône personnalisée
-        claims: Réclamations
-        acr_values: Valeurs ACR
-        redirect_url: URL de redirection
-  activerecord:
+        scope: Scope
+        grant_types_supported: Supported grant types
+        limit_self_registration: Limit self registration
+        authorization_endpoint: Authorization endpoint
+        userinfo_endpoint: User information endpoint
+        token_endpoint: Token endpoint
+        end_session_endpoint: End session endpoint
+        post_logout_redirect_uri: Post logout redirect URI
+        jwks_uri: JWKS URI
+        issuer: Issuer
+        tenant: Tenant
+        metadata_url: Metadata URL
+        icon: Custom icon
+        claims: Claims
+        acr_values: ACR values
+        redirect_url: Redirect URL
     errors:
       models:
         openid_connect/provider:

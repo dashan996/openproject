@@ -459,7 +459,7 @@ RSpec.describe "API V3 Authentication" do
               headers: {
                 "Accept" => "*/*",
                 "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
-                "User-Agent" => "JSON::JWK::Set::Fetcher 2.9.1"
+                "User-Agent" => "JSON::JWK::Set::Fetcher 2.10.1"
               }
             )
             .to_return(status: 200, body: JWT::JWK::Set.new(jwk).export.to_json, headers: {})
@@ -521,7 +521,7 @@ RSpec.describe "API V3 Authentication" do
               headers: {
                 "Accept" => "*/*",
                 "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
-                "User-Agent" => "JSON::JWK::Set::Fetcher 2.9.1"
+                "User-Agent" => "JSON::JWK::Set::Fetcher 2.10.1"
               }
             )
             .to_return(status: 200, body: JWT::JWK::Set.new(wrong_key).export.to_json, headers: {})

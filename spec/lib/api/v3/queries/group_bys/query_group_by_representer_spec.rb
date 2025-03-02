@@ -102,6 +102,11 @@ RSpec.describe API::V3::Queries::GroupBys::QueryGroupByRepresenter do
     end
 
     it "busts the cache on changes to the caption (cf rename)" do
+      allow(WorkPackage)
+        .to receive(:human_attribute_name)
+        .with("blubs")
+        .and_return("humanized_blubs")
+
       allow(column)
         .to receive(:caption)
         .and_return("blubs")
@@ -113,6 +118,11 @@ RSpec.describe API::V3::Queries::GroupBys::QueryGroupByRepresenter do
     end
 
     it "busts the cache on changes to the name" do
+      allow(WorkPackage)
+        .to receive(:human_attribute_name)
+        .with("blubs")
+        .and_return("humanized_blubs")
+
       allow(column)
         .to receive(:name)
         .and_return("blubs")

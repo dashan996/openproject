@@ -35,6 +35,10 @@ class Queries::Projects::Filters::UserActionFilter < Queries::Projects::Filters:
     :list_all
   end
 
+  def human_name
+    "User action" # API only
+  end
+
   def where
     operator = if operator_class <= ::Queries::Operators::Equals || operator_class <= ::Queries::Operators::EqualsAll
                  "IN"

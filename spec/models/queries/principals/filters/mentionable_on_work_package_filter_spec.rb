@@ -34,6 +34,7 @@ RSpec.describe Queries::Principals::Filters::MentionableOnWorkPackageFilter do
   it_behaves_like "basic query filter" do
     let(:class_key) { :mentionable_on_work_package }
     let(:type) { :list_optional }
+    let(:human_name) { "mentionable" }
 
     describe "#scope" do
       subject { instance.apply_to(Principal) }

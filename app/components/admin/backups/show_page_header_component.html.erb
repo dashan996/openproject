@@ -29,34 +29,40 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render(Primer::OpenProject::PageHeader.new) do |header|
     header.with_title { t(:label_backup) }
-    header.with_breadcrumbs([{ href: admin_index_path, text: t(:label_administration) },
-                             t(:label_backup)])
+    header.with_breadcrumbs(
+      [{ href: admin_index_path, text: t(:label_administration) },
+       t(:label_backup)]
+    )
 
-    header.with_action_button(tag: :a,
-                              scheme: button_scheme,
-                              mobile_label: button_title,
-                              mobile_icon: button_icon,
-                              size: :medium,
-                              href: reset_token_admin_backups_path,
-                              aria: { label: button_title },
-                              title: button_title) do |button|
+    header.with_action_button(
+      tag: :a,
+      scheme: button_scheme,
+      mobile_label: button_title,
+      mobile_icon: button_icon,
+      size: :medium,
+      href: reset_token_admin_backups_path,
+      aria: { label: button_title },
+      title: button_title
+    ) do |button|
       button.with_leading_visual_icon(icon: button_icon)
       button_title
     end
 
     if @backup_token.present?
-      header.with_action_button(tag: :a,
-                                scheme: :danger,
-                                mobile_icon: :trash,
-                                mobile_label: t("backup.label_delete_token"),
-                                size: :medium,
-                                href: delete_token_admin_backups_path,
-                                aria: { label: I18n.t("backup.label_delete_token") },
-                                data: {
-                                  confirm: I18n.t(:text_are_you_sure),
-                                  method: :post
-                                },
-                                title: I18n.t(:button_delete)) do |button|
+      header.with_action_button(
+        tag: :a,
+        scheme: :danger,
+        mobile_icon: :trash,
+        mobile_label: t("backup.label_delete_token"),
+        size: :medium,
+        href: delete_token_admin_backups_path,
+        aria: { label: I18n.t("backup.label_delete_token") },
+        data: {
+          confirm: I18n.t(:text_are_you_sure),
+          method: :post
+        },
+        title: I18n.t(:button_delete)
+      ) do |button|
         button.with_leading_visual_icon(icon: :trash)
         t("backup.label_delete_token")
       end

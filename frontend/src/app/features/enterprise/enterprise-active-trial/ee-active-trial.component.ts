@@ -28,6 +28,7 @@
 
 import {
   ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   OnInit,
@@ -48,6 +49,7 @@ import { IEnterpriseData } from 'core-app/features/enterprise/enterprise-trial.m
   selector: 'enterprise-active-trial',
   templateUrl: './ee-active-trial.component.html',
   styleUrls: ['./ee-active-trial.component.sass'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EEActiveTrialComponent extends EEActiveTrialBase implements OnInit {
   public subscriber:string;
@@ -64,12 +66,18 @@ export class EEActiveTrialComponent extends EEActiveTrialBase implements OnInit 
 
   public expiresAt:string;
 
-  constructor(readonly elementRef:ElementRef,
+  public plan:string;
+
+  public additionalFeatures:string;
+
+  constructor(
+    readonly elementRef:ElementRef,
     readonly cdRef:ChangeDetectorRef,
     readonly I18n:I18nService,
     readonly http:HttpClient,
     readonly Gon:GonService,
-    public eeTrialService:EnterpriseTrialService) {
+    public eeTrialService:EnterpriseTrialService,
+  ) {
     super(I18n);
   }
 
@@ -90,7 +98,7 @@ export class EEActiveTrialComponent extends EEActiveTrialBase implements OnInit 
   }
 
   private initialize():void {
-    const eeTrialKey = this.Gon.get('ee_trial_key') as { value:string }|undefined;
+    const eeTrialKey = this.Gon.get('ee_trial_key') as { value:string } | undefined;
     const { data } = this.eeTrialService.current;
 
     if (eeTrialKey && !data) {

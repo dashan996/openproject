@@ -106,7 +106,7 @@ Redmine::MenuManager.map :account_menu do |menu|
             partial: "/my/timer/menu"
   menu.push :my_page,
             :my_page_path,
-            caption: I18n.t("js.my_page.label"),
+            caption: I18n.t("my_page.label"),
             if: ->(_) { User.current.logged? }
   menu.push :my_profile,
             { controller: "/users", action: "show", id: "me" },
@@ -132,12 +132,17 @@ Redmine::MenuManager.map :global_menu do |menu|
             icon: "home",
             first: true
 
+  menu.push :my_page,
+            { controller: "/my/page", action: "show" },
+            after: :home,
+            icon: "person"
+
   # Projects
   menu.push :projects,
             { controller: "/projects", project_id: nil, action: "index" },
             caption: I18n.t("label_projects_menu"),
             icon: "project",
-            after: :home,
+            after: :my_page,
             if: ->(_) {
               User.current.logged? || !Setting.login_required?
             }
@@ -323,6 +328,12 @@ Redmine::MenuManager.map :admin_menu do |menu|
             caption: :label_status,
             parent: :admin_work_packages
 
+  menu.push :priorities,
+            { controller: "/admin/settings/work_package_priorities" },
+            if: ->(_) { User.current.admin? },
+            caption: IssuePriority.model_name.human(count: :other),
+            parent: :admin_work_packages
+
   menu.push :progress_tracking,
             { controller: "/admin/settings/progress_tracking", action: :show },
             if: ->(_) { User.current.admin? },
@@ -390,11 +401,6 @@ Redmine::MenuManager.map :admin_menu do |menu|
             caption: :"attribute_help_texts.label_plural",
             icon: "question",
             if: ->(_) { User.current.allowed_globally?(:edit_attribute_help_texts) }
-
-  menu.push :enumerations,
-            { controller: "/enumerations" },
-            if: ->(_) { User.current.admin? },
-            icon: "multi-select"
 
   menu.push :calendars_and_dates,
             { controller: "/admin/settings/working_days_and_hours_settings", action: :show },

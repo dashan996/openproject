@@ -26,13 +26,13 @@ tr:
     text_upload_instructions: |
       128 x 128 piksellik kendi özel avatarınızı yükleyin. Büyük dosyalar yeniden boyutlandırılacak ve eşleşecek şekilde kırpılacaktır.
       Bir resmi seçtikten sonra, yüklemeden önce avatarınızın bir önizlemesi gösterilir.
-    text_change_gravatar_html: 'Posta adresinize ait Gravatar''ı değiştirmek veya eklemek için, %{gravatar_url}. adresine gidin.'
+    text_change_gravatar_html: 'Posta adresinize ait Gravatar''ı değiştirmek veya eklemek için %{gravatar_url} adresine gidin.'
     text_your_local_avatar: |
       OpenProject kendi özel avatarınızı yüklemenizi sağlar.
     text_local_avatar_over_gravatar: |
       Birini ayarlarsanız, bu özel avatar yukarıdaki gravatar üzerinde öncelikli olarak kullanılır.
     text_your_current_gravatar: |
-      OpenProject bir tanesini kaydettiyseniz gravatarınızı veya varsa bir varsayılan görüntü veya simgeyi kullanır.
+      OpenProject, kayıtlı bir gravatarınız varsa onu, yoksa varsayılan bir resim veya simgeyi kullanır.
       Mevcut gravatar aşağıdaki gibidir:
     settings:
       enable_gravatars: 'Kullanıcı gravatarlarını etkinleştir'

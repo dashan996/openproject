@@ -54,7 +54,8 @@ export class UserDisplayField extends DisplayField {
         element,
         this.typeSafeAttribute() as PrincipalLike,
         { hide: false, link: false },
-        { hide: false, size: 'medium', hoverCard: { url: this.typeSafeAttribute()?.url || '' } },
+        { hide: false, size: 'medium' },
+        { isActivated: true, url: this.typeSafeAttribute()?.url || '' },
       );
     }
   }

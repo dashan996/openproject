@@ -63,7 +63,9 @@ RSpec.describe TimeEntries::CreateContract do
       let(:permissions) { [] }
 
       it "is invalid" do
-        expect_valid(false, base: %i(error_unauthorized))
+        expect_valid(false,
+                     work_package: %i(cannot_log_for_this_work_package),
+                     base: %i(error_unauthorized))
       end
     end
 
@@ -88,7 +90,9 @@ RSpec.describe TimeEntries::CreateContract do
         let(:changed_by_system) { {} }
 
         it "is invalid" do
-          expect_valid(false, base: %i(error_unauthorized))
+          expect_valid(false,
+                       work_package: %i(cannot_log_for_this_work_package),
+                       base: %i(error_unauthorized))
         end
       end
     end
@@ -105,7 +109,9 @@ RSpec.describe TimeEntries::CreateContract do
       end
 
       it "is invalid" do
-        expect_valid(false, base: %i(error_unauthorized))
+        expect_valid(false,
+                     work_package: %i(cannot_log_for_this_work_package),
+                     base: %i(error_unauthorized))
       end
     end
 
@@ -130,7 +136,9 @@ RSpec.describe TimeEntries::CreateContract do
       end
 
       it "is invalid" do
-        expect_valid(false, base: %i(error_unauthorized))
+        expect_valid(false,
+                     work_package: %i(cannot_log_for_this_work_package),
+                     base: %i(error_unauthorized))
       end
     end
 

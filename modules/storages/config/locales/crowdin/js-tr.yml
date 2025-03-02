@@ -26,9 +26,9 @@ tr:
           Bazı %{storageType} verileri getirilemedi. Lütfen bu sayfayı yeniden yüklemeyi deneyin veya %{storageType} yöneticinizle iletişime geçin.
         no_file_links: "Dosyaları bu iş paketine bağlamak için lütfen bunu %{storageType} aracılığıyla yapın."
         not_logged_in: >
-          Bir bağlantı eklemek, bu iş paketiyle ilgili dosyaları görmek veya yüklemek için lütfen %{storageType}'da oturum açın.
+          Bu iş paketiyle ilgili bir bağlantı eklemek, dosyaları görmek veya yüklemek için lütfen %{storageType} adresine giriş yapın.
       files:
-        already_existing_header: "This file already exists"
+        already_existing_header: "Bu dosya zaten mevcut"
         already_existing_body: >
           A file with the name "%{fileName}" already exists in the location where you are trying to upload this file. What would you like to do?
         directory_not_writeable: "You do not have permission to add files to this folder."
@@ -44,7 +44,7 @@ tr:
         managed_project_folder_no_access: >
           You have no access yet to the managed project folder. Please wait a bit and try again.
         cannot_create_folder: Failed to create folder. Avoid using special characters and symbols and make sure the folder does not exist already.
-        upload_keep_both: "Keep both"
+        upload_keep_both: "Her ikisini de koru"
         upload_replace: "Değiştir"
       file_links:
         empty: >
@@ -67,21 +67,21 @@ tr:
           other: "%{count} dosya bağlantısı başarıyla oluşturuldu."
         upload_error:
           default: >
-            Your file (%{fileName}) could not be uploaded.
+            Dosyanız (%{fileName}) yüklenemedi.
           403: >
-            Your file (%{fileName}) could not be uploaded due to system restrictions. Please contact your administrator for more information.
+            Dosyanız (%{fileName}) sistem kısıtlamaları nedeniyle yüklenemedi. Daha fazla bilgi için lütfen yöneticinize başvurun.
           413: >
             Your file (%{fileName}) is bigger than what OpenProject can upload to %{storageType}. You can upload it directly to %{storageType} first and then link the file.
           507: >
             Your file (%{fileName}) is bigger than the storage quota allows. Contact your administrator to modify this quota.
           detail:
             nextcloud: >
-              Please check that the latest version of the Nextcloud App "OpenProject Integration" is installed and contact your administrator for more information.
+              Lütfen Nextcloud Uygulaması "OpenProject Integration"ın en son sürümünün yüklü olduğunu kontrol edin ve daha fazla bilgi için yöneticinizle iletişime geçin.
         link_uploaded_file_error: >
           Yakın zamanda yüklenen '%{fileName}' dosyasını %{workPackageId} iş paketine bağlarken bir hata oluştu.
         tooltip:
-          not_logged_in: "Please log in to the storage to access this file."
+          not_logged_in: "Bu dosyaya erişmek için lütfen depoda oturum açın."
           view_not_allowed: "Bu dosyayı görme izniniz yok."
-          not_found: "This file cannot be found."
+          not_found: "Bu dosya bulunamadı."
         already_linked_file: "Bu dosya zaten bu iş paketine bağlı."
         already_linked_directory: "Bu dizin zaten bu çalışma paketine bağlı."

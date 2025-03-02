@@ -27,7 +27,7 @@ zh-TW:
     work_packages:
       activity_tab:
         no_results_title_text: 無活動顯示
-        no_results_description_text: "選擇「顯示所有內容」以顯示所有活動和留言"
+        no_results_description_text: '選擇「顯示所有內容」以顯示所有活動和留言'
         label_activity_show_all: "全部顯示"
         label_activity_show_only_comments: "僅顯示留言"
         label_activity_show_only_changes: "僅顯示檔案異動"
@@ -128,9 +128,9 @@ zh-TW:
     sync_failed: "LDAP同步失敗：%{message} 。"
     back_to_index: "按一下此處返回連線清單。"
     technical_warning_html: |
-      此 LDAP 資料表需要具備 LDAP/Active Directory 技術知識。
-      <br/>
-      <a href="https://www.openproject.org/help/administration/manage-ldap-authentication/">請查閱此文件取得詳細說明</a>。
+      此 LDAP 設定表需要您提供 LDAP / Active Directory 設定參數。
+      <br>
+      <a href="https://www.openproject.org/help/administration/manage-ldap-authentication/">請連到我們的參考文件以取得詳細說明</a>。
     attribute_texts:
       name: LDAP 連線名稱
       host: LDAP 主機名稱或 IP 位址
@@ -138,8 +138,8 @@ zh-TW:
       generic_map: LDAP 的的屬性對應到 OpenProject的 `%{attribute}`
       admin_map_html: "可選：LDAP 中的屬性金鑰，<strong>如果存在即</strong>標示 OpenProject 使用者為管理員。有疑問時請留空。"
       system_user_dn_html: |
-        輸入用於唯讀存取的系統使用者 DN。
-        <br/>
+        輸入唯讀權限的系統使用者 DN。
+        <br>
         範例：uid=openproject,ou=system,dc=example,dc=com
       system_user_password: 輸入該系統之使用者密碼
       base_dn: |
@@ -178,7 +178,7 @@ zh-TW:
     tls_options:
       verify_peer: "驗證SSL證書"
       verify_peer_description_html: >
-        啓用對受信任鏈證書的嚴格SSL驗證。<br/> <strong>警告：</strong>取消選中此選項會禁用LDAP服務器證書的SSL驗證。這將使您的連接暴露於中間人攻擊。
+        啟用憑證信任鏈的嚴格 SSL 驗證。 <br> <strong>警告：</strong>取消選取此選項將停用 LDAP 伺服器憑證的 SSL 驗證。這會暴露您與中間人攻擊的關係。
       tls_certificate_description: "如果LDAP服務器證書不在此系統中，您可以在此手動增加它。輸入PEM X509證書字符串。"
   forums:
     show:
@@ -345,6 +345,7 @@ zh-TW:
         placeholder: "新專案清單"
       delete_modal:
         title: "刪除專案列表"
+        heading: "刪除此專案清單？"
         text: "此動作不會刪除清單中包含的任何專案。您確定要刪除此專案清單？"
     settings:
       change_identifier: 變更識別碼
@@ -393,6 +394,8 @@ zh-TW:
         no_results_content_text: 建立一個新版本
       storage:
         no_results_title_text: 該專案沒有額外消耗磁碟空間。
+      work_package_priorities:
+        new_label: "新優先權"
   project_stage:
     working_days_count:
       other: "時間： %{count} 工作天"
@@ -564,10 +567,10 @@ zh-TW:
         在<a href="%{href}">基於狀態的進度計算模式</a>下，工作項目的完成百分比會自動設定為此值。
         而基於工作的模式則會被忽略。
       status_readonly_html: |
-        選中此選項可將具有此狀態的工作項目設定為唯讀。
-        不能更改任何屬性, 但狀態除外。
-        123 _ 2 _
-        <strong>筆記</strong>: 繼承的值 (例如, 來自子項或關係) 仍將適用。
+        勾選此選項可以將該狀態的工作項目標記為唯讀。
+        除狀態外，任何屬性都無法改變。
+        <br>
+        <strong>注意</strong>：繼承的值（例如來自子項或關係）仍然適用。
     index:
       no_results_title_text: 目前沒有工作項目狀態
       no_results_content_text: 新增一個狀態
@@ -606,6 +609,14 @@ zh-TW:
         pattern:
           label: "主題模板"
           caption: "搜尋屬性或新增文字。若要在元素之間建立空格，請將其建立為文字。"
+      export_configuration:
+        tab: "產生PDF檔案"
+        intro: "從可用的範本中選擇您想要為此類型啟用的範本。範本決定了使用此類工作項目匯出的 PDF 中顯示的設計和屬性。預設為選定清單中的第一個模板。"
+        pdf_export_templates:
+          label: "PDF匯出範本"
+          actions:
+            label_enable_all: "全部啟用"
+            label_disable_all: "全部停用"
   versions:
     overview:
       work_packages_in_archived_projects: "該版本與歸檔項目共用，這些專案仍然有分配給此版本的工作項目。雖然這些工作項目被計算在內，但不會顯示在視圖中。"
@@ -620,6 +631,47 @@ zh-TW:
     index:
       no_results_title_text: 目前沒有工作流程
   work_packages:
+    datepicker_modal:
+      banner:
+        description:
+          automatic_mobile: "Start date derived."
+          click_on_show_relations_to_open_gantt: 'Click on "%{button_name}" for Gantt overview.'
+          manual_mobile: "Ignoring relations."
+          manual_gap_between_predecessors: "There is a gap between this and all predecessors."
+          manual_overlap_with_predecessors: "Overlaps with at least one predecessor."
+          manual_with_children: "This has child work packages but their start dates are ignored."
+        title:
+          automatic_mobile: "Automatically scheduled."
+          automatic_with_children: "The dates are determined by child work packages."
+          automatic_with_predecessor: "The start date is set by a predecessor."
+          manual_mobile: "Manually scheduled."
+          manually_scheduled: "Manually scheduled. Dates not affected by relations."
+      blankslate:
+        title: "No predecessors"
+        description: "To enable automatic scheduling, this work package needs to have at least one predecessor. It will then automatically be scheduled to start after the last predecessor."
+      ignore_non_working_days:
+        title: "Working days only"
+      mode:
+        title: "Scheduling mode"
+        automatic: "Automatic"
+        manual: "Manual"
+      show_relations: "Show relations"
+      tabs:
+        aria_label: "Datepicker tabs"
+        children: "Children"
+        dates: "Dates"
+        predecessors: "Predecessors"
+        successors: "Successors"
+        blankslate:
+          predecessors:
+            title: "No predecessors"
+            description: "This work package does not have any predecessors."
+          successors:
+            title: "No successors"
+            description: "This work package does not have any successors."
+          children:
+            title: "No children"
+            description: "This work package does not have any children."
     x_descendants:
       other: "%{count} 個子工作項目"
     bulk:
@@ -768,6 +820,7 @@ zh-TW:
       attachment:
         attachment_content: "附件內容"
         attachment_file_name: "附件檔案名稱"
+        content_type: "檔案類型"
         downloads: "下載"
         file: "檔案"
         filename: "檔案"
@@ -775,10 +828,10 @@ zh-TW:
       attribute_help_text:
         attribute_name: "属性"
         help_text: "說明文字"
+      capability:
+        context: "內容"
       changeset:
         repository: "版本庫"
-      color:
-        hexcode: "Hex code"
       comment:
         commented: "已留言" #an object that this comment belongs to
       custom_action:
@@ -811,7 +864,10 @@ zh-TW:
         client_credentials_user_id: "用戶端憑證使用者 id"
         scopes: "範圍"
         confidential: "機密的"
+      emoji_reaction:
+        reactable: "反應於"
       enterprise_token:
+        domain: "網域"
         starts_at: "生效自"
         subscriber: "訂閱者"
         encoded_token: "Enterprise support token"
@@ -823,6 +879,7 @@ zh-TW:
         widgets: "小工具"
       journal:
         notes: "備註"
+        cause_type: "原因類型"
       ldap_auth_source:
         account: "帳號"
         attr_firstname: "名"
@@ -838,10 +895,11 @@ zh-TW:
         tls_certificate_string: "LDAP伺服器SSL證書"
       member:
         roles: "角色"
+      notification:
+        read_ian: "在應用程式內閱讀"
+        resource: "資源"
       oauth_client:
         client: "客戶端 ID"
-      planning_element_type_color:
-        hexcode: 十六進位碼
       project:
         active_value:
           true: "解除封存"
@@ -854,6 +912,7 @@ zh-TW:
           true: "公開"
           false: "私人的"
         queries: "查詢"
+        enabled_modules: "啟用的模組"
         status_code: "專案狀態"
         description: "說明"
         status_explanation: "專案描述"
@@ -874,23 +933,47 @@ zh-TW:
       project_custom_field:
         is_required: "所有專案都需要"
         custom_field_section: 區段
+      project/life_cycle_step:
+        definition: "定義"
       project/life_cycle_step_definition:
         name: "名稱"
         color: "顏色"
       query:
+        sums: "總和"
+        columns: "欄位"
         column_names: "欄"
         relations_to_type_column: "與 %{type} 的關連"
         relations_of_type_column: "%{type} 關係"
         group_by: "分組依據"
+        sort_by: "排序結果"
         filters: "篩選條件"
         timeline_labels: "時間軸標籤"
+        timeline_visible: "顯示甘特圖"
+        timeline_zoom_level: "甘特圖縮放程度"
+        timestamps: "基準時間"
+        sort_criteria: "排序標準"
+        highlighted_attributes: "強調屬性"
+        highlighting_mode: "高亮模式"
+        display_representation: "顯示模式"
+        show_hierarchies: "顯示模式"
+        starred: "收藏"
+        hidden: "隐藏"
+        manual_sorting: "手動排序順序"
+        ordered_work_packages: "工作項目排序"
+        include_subprojects: "包含子專案"
+        results: "結果"
       relation:
         lag: "延遲"
-        from: "工作項目"
+        from: "相關的工作項目"
         to: "相關的工作項目"
+        relation_type: "關聯類別"
       reminder:
+        remindable: "提醒物件"
+        remind_at: "提醒於"
         remind_at_date: "日期"
         remind_at_time: "時間"
+      reminder_notification:
+        notification: "通知"
       repository:
         url: "URL"
       role:
@@ -900,6 +983,9 @@ zh-TW:
         is_readonly: "設定「工作項目」唯讀"
         excluded_from_totals: "從層次結構的總計中排除"
         default_done_ratio: "% 完成"
+      token/ical:
+        calendar: "行事曆"
+        ical_token_query_assignment: "指派查詢"
       time_entry:
         activity: "活動"
         hours: "小時"
@@ -913,6 +999,7 @@ zh-TW:
         is_default: "新專案的預設啟動類型"
         is_milestone: "里程碑"
         color: "顏色"
+        patterns: "樣板"
       user:
         admin: "管理員"
         auth_source: "驗證方式"
@@ -922,6 +1009,10 @@ zh-TW:
         force_password_change: "強制在下次登入時更改密碼"
         language: "語言"
         last_login_on: "上次登入時間"
+        failed_login_count: "登入失敗嘗試"
+        first_name: "名字"
+        last_name: "姓"
+        first_login: "首次登入"
         new_password: "新密碼"
         password_confirmation: "確認密碼"
         consented_at: "同意在"
@@ -933,6 +1024,8 @@ zh-TW:
         warn_on_leaving_unsaved: "離開尚未儲存的工作項目時提示我"
         theme: "模式 "
         mode_guideline: "為了親和性以及方便閱讀性，某些模式將覆蓋自訂主題顏色。對於完整的自訂主題，請選擇白色模式。"
+        daily_reminders: "每日提醒"
+        workdays: "工作日"
       version:
         effective_date: "完成日期"
         sharing: "分享"
@@ -1210,16 +1303,16 @@ zh-TW:
           typed_dag:
             circular_dependency: "無限迴圈的關聯。"
           attributes:
-            to:
-              error_not_found: "“結束”的工作項目不存在或無法顯示"
-              error_readonly: "您無法更改現有關係的“結束”連結"
-            from:
-              error_not_found: "“開始”的工作項目不存在或無法顯示"
-              error_readonly: "您無法更改現有關係的“開始”連結"
+            to_id:
+              error_not_found: "未找到或不可見。"
+              error_readonly: "無法變更現有的關係。"
+            from_id:
+              error_not_found: "未找到或不可見。"
+              error_readonly: "無法變更現有的關係。"
             lag:
               greater_than_or_equal_to:
-                zero: "cannot be negative."
-              less_than_or_equal_to: "is too high."
+                zero: "不能為負數。"
+              less_than_or_equal_to: "太高。"
         repository:
           not_available: "版本控制無法使用"
           not_whitelisted: "不被設定所允許"
@@ -1271,6 +1364,10 @@ zh-TW:
         work_package:
           is_not_a_valid_target_for_time_entries: "工作項目 #%{id} 不是重新分配時間項目有效的目標"
           attributes:
+            id:
+              format: "%{message}"
+              cannot_add_child_because_of_lack_of_permission: "無法新增子項，因為您沒有所選工作項目的編輯權限。"
+              blank: "ID 不能空白。"
             assigned_to:
               format: "%{message}"
             done_ratio:
@@ -1287,6 +1384,7 @@ zh-TW:
               smaller_than_dates: "小於開始日期和結束日期之間的間隔。"
               not_available_for_milestones: "不適用於里程碑類型的工作項目。"
               cannot_be_null: "無法設置為 null，因為開始日期和結束日期已知。"
+              not_an_integer: "is not a valid duration."
             parent:
               cannot_be_milestone: "不能是里程碑"
               cannot_be_self_assigned: "不能指派給自己"
@@ -1383,6 +1481,8 @@ zh-TW:
       forum: "討論區"
       global_role: "全域角色"
       group: "群組"
+      issue_priority:
+        other: "優先權"
       member: "成員"
       news: "最新消息"
       notification:
@@ -1394,6 +1494,7 @@ zh-TW:
       project_query:
         other: "專案列表"
       query: "自訂查詢"
+      reminder: "提醒"
       role:
         other: "角色"
       status: "工作項目狀態"
@@ -1452,18 +1553,25 @@ zh-TW:
     assigned_to: "執行者"
     assignee: "執行者"
     attachments: "附加檔"
+    actor: "行動者"
+    action: "動作"
     author: "工作項目發起者"
+    avatar: "大頭貼"
     base: "一般錯誤:"
+    body: "本體"
     blocks_ids: "已被限制的工作項目 IDs"
     category: "類別"
     comment: "留言"
     comments: "留言"
     content: "內容"
     color: "顏色"
+    creator: "建立者"
     created_at: "建立於"
+    custom_field: "客製欄位"
     custom_options: "可選擇內容"
     custom_values: "客製欄位"
     date: "日期"
+    dates_interval: "日期範圍"
     default_columns: "預設欄"
     description: "說明"
     derived_due_date: "派生的完成日期"
@@ -1473,39 +1581,63 @@ zh-TW:
     due_date: "完成日期"
     estimated_hours: "工時"
     estimated_time: "工時"
+    email: "電子郵件"
+    entity_type: "實體"
     expires_at: "過期於"
     firstname: "名字"
+    filter: "篩選條件"
     group: "群組"
     groups: "群組"
+    hexcode: "十六進位碼"
     id: "ID"
     is_default: "預設值"
     is_for_all: "對所有的專案"
     public: "公開"
+    principal: "使用者或群組"
     #kept for backwards compatibility
     issue: "工作項目"
+    journal: "日誌"
+    journal_notes: "留言"
     lastname: "姓："
     login: "使用者帳號"
     mail: "電子郵件"
     name: "名稱"
     note: "備註"
+    notes: "備註"
+    number: "數字"
+    options: "選項"
+    operator: "操作員"
     password: "密碼"
     priority: "優先等級"
     project: "專案"
+    project_ids: "專案IDs"
+    reason: "理由"
     responsible: "負責人"
+    required: "必填"
+    recipient: "收件者"
     role: "角色"
     roles: "角色"
+    search: "搜尋"
     start_date: "起始日期"
     status: "狀態"
+    state: "狀態"
     subject: "名稱"
+    slug: "網址後綴"
     summary: "總覽"
+    text: "文字"
     title: "標題"
     type: "類型"
+    typeahead: "自動完成"
     updated_at: "更新於"
     updated_on: "更新於"
     uploader: "上傳者"
     user: "使用者"
+    username: "使用者名稱"
+    unit: "單位"
     value: "值"
+    values: "值"
     version: "版本"
+    visible: "可見"
     work_package: "工作項目"
   backup:
     failed: "備份失敗"
@@ -1799,6 +1931,8 @@ zh-TW:
   enumeration_activities: "時間追蹤活動"
   enumeration_work_package_priorities: "工作項目優先等級"
   enumeration_reported_project_statuses: "報告的專案狀態"
+  enumeration_caption_order_changed: "成功更改排序。"
+  enumeration_could_not_be_moved: "無法移動枚舉。"
   error_auth_source_sso_failed: "單一登入 (SSO) 使用者 '%{value}' 失敗"
   error_can_not_archive_project: "這個專案無法封存：%{errors}"
   error_can_not_delete_entry: "無法刪除項目"
@@ -1888,6 +2022,7 @@ zh-TW:
         input_label_report: "將欄位新增至屬性表"
         input_caption_report: "預設情況下，所有在工作項目清單中新增為欄位的屬性都會被選取。長文字欄位在屬性表中不可用，但可以顯示在屬性表下方。"
         input_caption_table: "預設情況下，所有在工作項目清單中新增為欄位的屬性都會被選取。長文字欄位在以表格匯出中不可用。"
+        input_caption_required: "無法匯出沒有任何欄位的檢視。請至少新增一欄。"
       pdf:
         export_type:
           label: "PDF 匯出類型"
@@ -1958,21 +2093,29 @@ zh-TW:
       days: 日
   pdf_generator:
     page_nr_footer: "頁面 %{page} of %{total}"
+    template_attributes:
+      label: "屬性以及說明"
+      caption: 目前表單配置中存在的所有屬性均使用預設範本。
+    template_contract:
+      label: "合約範本"
+      caption: 工作項目詳細資料格式化為標準德國合約格式。
     dialog:
       title: 產生PDF檔案
-      submit: 產生
-      header_right:
-        label: 標題右側
-        caption: 要顯示在標頭右側的文字
+      submit: 下載
+      templates:
+        label: "範本"
+        none_enabled: "尚未啟用此工作項目類型範本"
       footer_center:
-        label: 頁尾中心
-        caption: 要顯示在頁尾中央的文字
+        label: 頁尾文字
+        caption: 此文字將會出現在每一頁頁尾的中心。
+      footer_right:
+        label: 頁尾文字
+        caption: 此文字將會出現在每一頁頁尾右邊。
       hyphenation:
         label: 連字符
-        caption: 在行與行之間分隔字詞，以改善文字的正確性和可讀性。
-      paper_size:
-        label: 紙張大小
-        caption: PDF 要使用的紙張尺寸。
+        caption: 在單字之間換行，以便更好地佈局和對齊。
+      hyphenation_language:
+        label: '「語言」連字符號'
   extraction:
     available:
       pdftotext: "Pdftotext 可用 (非必要)"
@@ -1984,7 +2127,7 @@ zh-TW:
   general_csv_decimal_separator: "."
   general_csv_encoding: "UTF-8"
   general_csv_separator: ","
-  general_first_day_of_week: "星期日"
+  general_first_day_of_week: "7"
   general_pdf_encoding: "ISO-8859-1"
   general_text_no: "否"
   general_text_yes: "是"
@@ -2054,6 +2197,8 @@ zh-TW:
           自動計算進度<a href="%{href}" target="_blank">設定為「基於工時」模式並隨著版本更新進行調整</a>。
         progress_calculation_adjusted: >-
           自動計算進度<a href="%{href}" target="_blank">隨版本更新調整</a>。
+        scheduling_mode_adjusted: >-
+          Scheduling mode automatically adjusted with version update.
         totals_removed_from_childless_work_packages: >-
           使用 <a href="%{href}" target="_blank">版本更新</a>的非父工作包的工作和進度總計自動移除。 這是一個維護任務，可以安全地被忽略。
       total_percent_complete_mode_changed_to_work_weighted_average: >-
@@ -2298,6 +2443,7 @@ zh-TW:
   label_missing_or_hidden_custom_option: "(缺少值或缺少訪問權限)"
   label_descending: "降冪"
   label_details: "詳細資料"
+  label_defaults: "預設"
   label_development_roadmap: "開發藍圖"
   label_diff: "比較"
   label_diff_inline: "行內"
@@ -2354,6 +2500,7 @@ zh-TW:
   label_filter: "篩選條件"
   label_filter_add: "新增條件"
   label_filter_by: "篩選條件："
+  label_filter_any_name_attribute: "名稱屬性"
   label_filter_plural: "篩選器"
   label_filters_toggle: "顯示/隱藏篩選條件"
   label_float: "浮點數"
@@ -2633,6 +2780,7 @@ zh-TW:
   label_roadmap_overdue: "%{value} 逾期"
   label_role_and_permissions: "角色與權限"
   label_role_new: "新增角色"
+  label_role_grantable: "可授予的角色"
   label_role_plural: "角色"
   label_role_search: "為新成員分配角色"
   label_scm: "SCM"
@@ -2686,6 +2834,7 @@ zh-TW:
   label_title: "標題"
   label_projects_menu: "專案"
   label_today: "今天"
+  label_token_version: "Token Version"
   label_top_menu: "頂層選單"
   label_topic_plural: "主題"
   label_total: "全部"
@@ -2798,7 +2947,7 @@ zh-TW:
   label_global_role: "全域角色"
   label_not_changeable: "(不可更改)"
   label_global: "全域設定"
-  label_seeded_from_env_warning: 此記錄通過設置/環境變量創建。無法通過 UI 編輯。
+  label_seeded_from_env_warning: 此記錄已透過設定環境變數建立。無法透過 UI 進行編輯。
   macro_execution_error: "執行巨集 (%{macro_name}) 錯誤"
   macro_unavailable: "巨集 \"%{macro_name}\" 無法顯示"
   macros:
@@ -3327,6 +3476,12 @@ zh-TW:
     activated: "已啟用"
     deactivated: "已停用"
   search_input_placeholder: "搜尋 ..."
+  setting_after_first_login_redirect_url: "First login redirect"
+  setting_after_first_login_redirect_url_text_html: >
+    Set a path to redirect users after their first login. If empty, redirects to the home page for the onboarding tour. <br/> Example: <code>/my/page</code>
+  setting_after_login_default_redirect_url: "After login redirect"
+  setting_after_login_default_redirect_url_text_html: >
+    Set a default path to redirect users after login, if no back link was provided. Redirects to home page if not set. <br/> Example: <code>/my/page</code>
   setting_apiv3_cors_title: "跨原始來源資源共用 (CORS, Cross-Origin Resource Sharing)"
   setting_apiv3_cors_enabled: "啟用 CORS"
   setting_apiv3_cors_origins: "CROSS-ORIGIN RESOURCE SHARING (CORS)"
@@ -3705,6 +3860,7 @@ zh-TW:
   text_unallowed_characters: "不允許的字元"
   text_user_invited: 這個使用者已經被邀請而且正在等待註冊。
   text_user_wrote: "%{value} 寫道："
+  text_wrote: "寫"
   text_warn_on_leaving_unsaved: "若離開當前頁面，將遺失此工作項目未儲存的內容。"
   text_what_did_you_change_click_to_add_comment: "點擊這裡來說明變更了什麼"
   text_wiki_destroy_confirmation: "您是否確定要刪除此 wiki 和它所有的內容？"
@@ -4162,3 +4318,29 @@ zh-TW:
   plugin_openproject_auth_saml:
     name: "OmniAuth SAML / SSO單點登錄"
     description: "將 OmniAuth SAML 提供商增加到 OpenProject"
+  enterprise_plans:
+    legacy_enterprise: "Enterprise Plan"
+  enterprise_features:
+    baseline_comparison: Baseline Comparison
+    board_view: Board View
+    conditional_highlighting: Conditional Highlighting
+    custom_actions: Custom Actions
+    custom_field_hierarchies: Custom Field Hierarchies
+    customize_life_cycle: Customize Life Cycle
+    date_alerts: Date Alerts
+    define_custom_style: Define Custom Style
+    edit_attribute_groups: Edit Attribute Groups
+    gantt_pdf_export: Gantt PDF Export
+    grid_widget_wp_graph: Grid Widget Work Package Graph
+    ldap_groups: LDAP Groups
+    one_drive_sharepoint_file_storage: OneDrive/SharePoint File Storage
+    placeholder_users: Placeholder Users
+    project_list_sharing: Project List Sharing
+    readonly_work_packages: Readonly Work Packages
+    sso_auth_providers: SSO Auth Providers
+    team_planner_view: Team Planner View
+    two_factor_authentication: Two-Factor Authentication
+    virus_scanning: Attachment Virus Scanning
+    work_package_query_relation_columns: Work Package Query Relation Columns
+    work_package_sharing: Work Package Sharing
+    work_package_subject_generation: Work Package Subject Generation

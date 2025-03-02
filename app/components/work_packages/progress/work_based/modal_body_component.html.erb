@@ -11,18 +11,26 @@
       ) do |f| %>
     <%= flex_layout do |modal_body| %>
       <% modal_body.with_row(classes: "FormControl-horizontalGroup--sm-vertical") do |_fields| %>
-        <%= render(WorkPackages::ProgressForm.new(f,
-                                                  work_package:,
-                                                  mode:,
-                                                  focused_field:,
-                                                  touched_field_map:)) %>
+        <%= render(
+              WorkPackages::ProgressForm.new(
+                f,
+                work_package:,
+                mode:,
+                focused_field:,
+                touched_field_map:
+              )
+            ) %>
       <% end %>
 
       <% modal_body.with_row(mt: 3) do |_actions_row| %>
         <%= flex_layout(justify_content: :flex_end) do |action_buttons| %>
           <%= action_buttons.with_column do %>
-            <%= render(Primer::Beta::Button.new(scheme: :primary,
-                                                type: :submit)) { t(:button_save) } %>
+            <%= render(
+                  Primer::Beta::Button.new(
+                    scheme: :primary,
+                    type: :submit
+                  )
+                ) { t(:button_save) } %>
           <% end %>
         <% end %>
       <% end %>

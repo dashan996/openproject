@@ -9,8 +9,8 @@
           with_search_icon: true,
           openDirectly: false,
           focusDirectly: false,
-          dropdownPosition: 'bottom',
-          disabledProjects: Project.visible.take(10).pluck(:id).to_h { |id| [id, "Disabled reason!"] },
+          dropdownPosition: "bottom",
+          disabledProjects: Project.visible.take(10).pluck(:id).index_with { |_id| "Disabled reason!" }
         }
       )
     end
@@ -21,8 +21,8 @@
 
 <%= primer_form_with(
       model:,
-      url: '/abc',
-      id: 'asdf') do |f|
-  render(the_form.new(f))
-end
-%>
+      url: "/abc",
+      id: "asdf"
+    ) do |f|
+      render(the_form.new(f))
+    end %>

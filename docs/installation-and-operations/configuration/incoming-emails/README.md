@@ -180,21 +180,22 @@ OR set it as fixed variable with `project=identifier`.
 
 The subject of the work package that shall be created is derived from the subject of the email. The body of the email gets parsed and all lines that contain recognized keys are removed. What is left will become the description.
 
-Other available keys for the email are:
+Other available keys for the email are as follows. You can always use the internal **Key** or the **Name** of the attribute. The name will depend on the system's default language or the selected language of the user identified through the email address.
 
-| Key             | Description                                           | Example                          |
-|-----------------|-------------------------------------------------------|----------------------------------|
-| Project         | sets the project. Use the project identifier          | Project:test\_project            |
-| Accountable     | sets the accountable, via user email or login         | Accountable:user@example.org     |
-| Assignee        | sets the assignee. Use the email or login of the user | Assignee:test.nutzer@example.org |
-| Type            | sets the type                                         | type:Milestone                   |
-| Version         | sets the version                                      | version:v4.1.0                   |
-| Start date      | sets the start date                                   | start date:2015-02-28            |
-| Due date        | sets the finish date                                  |                                  |
-| Estimated hours | sets the estimated hours. Use a number                | Estimated hours:10.5             |
-| Remaining hours | sets the remaining hours. Use a number                | Remaining hours:2.5              |
-| Status          | sets the status                                       | Status:closed                    |
-| priority        | sets the priority                                     | priority:High                    |
+| Key             | Name (EN)       | Description                                           | Example                          |
+| --------------- | --------------- | ----------------------------------------------------- | -------------------------------- |
+| project         | Project         | sets the project. Use the project identifier          | project:test\_project            |
+| responsible     | Accountable     | sets the accountable, via user email or login         | responsible:user@example.org     |
+| assigned_to     | Assignee        | sets the assignee. Use the email or login of the user | assignee:test.nutzer@example.org |
+| type            | Type            | sets the type                                         | type:Milestone                   |
+| version         | Version         | sets the version                                      | version:v4.1.0                   |
+| start_date      | Start date      | sets the start date                                   | start_date:2015-02-28            |
+| due_date        | Due date        | sets the finish date                                  | due:_date:2015-02-28             |
+| estimated_hours | Estimated hours | sets the estimated hours. Use a number                | estimated_hours:10.5             |
+| remaining_hours | Remaining hours | sets the remaining hours. Use a number                | remaining_hours:2.5              |
+| status          | Status          | sets the status                                       | status:closed                    |
+| priority        | Priority        | sets the priority                                     | priority:High                    |
+| category        | Category        | sets the category from the project's categories       | category:Testing                 |
 
 If you want to set a custom field just use the name as it is displayed in your browser, e.g. `Custom field:new value`
 

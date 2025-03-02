@@ -34,6 +34,8 @@ ca:
   enumeration_doc_categories: "Categories de documents"
   documents:
     label_attachment_author: "Autor de l'adjunt"
+    label_categories: "Categories"
+    new_category: "New category"
   label_document_added: "Document afegit"
   label_document_new: "Nou document"
   label_document_plural: "Documents"

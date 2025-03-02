@@ -251,31 +251,33 @@ zh-TW:
                 item_0:
                   subject: 發展初稿
                   description: |-
-                    ＃＃ 目標
+                    ## Goal
 
-                    * 建立有用的結果概述
-                    * 檢查已完成的工作並總結結果
-                    * 與客戶溝通所有相關結果
-                    * 確定專案的基本邊界條件
+                    *   Create a useful overview of the results
+                    *   Check what has been done and summarize the results
+                    *   Communicate all the relevant results with the customer
+                    *   Identify the fundamental boundary conditions of the project
 
-                    ＃＃ 描述
+                    ## Description
 
-                    * 每個主題都有自己的概述，該概述將用作結果目錄
-                    * 此概述告知所有參與者所做的決定
+                    *   Each topic gets its own overview which will be used as a catalogue of results
+                    *   This overview informs all participants about the decisions made
+                    *   ...
                 item_1:
                   subject: 匯總結果
                   description: |-
-                    ＃＃ 目標
+                    ## Goal
 
-                    * 建立有用的結果概述
-                    * 檢查已完成的工作並總結結果
-                    * 與客戶溝通所有相關結果
-                    * 確定專案的基本邊界條件
+                    *   Create a useful overview of the results
+                    *   Check what has been done and summarize the results
+                    *   Communicate all the relevant results with the customer
+                    *   Identify the fundamental boundary conditions of the project
 
-                    ＃＃ 描述
+                    ## Description
 
-                    * 每個主題都有自己的概述，該概述將用作結果目錄
-                    * 此概述告知所有參與者所做的決定
+                    *   Each topic gets its own overview which will be used as a catalogue of results
+                    *   This overview informs all participants about the decisions made
+                    *   ...
             item_3:
               subject: 初步規劃通過
               description: 此類型在層級上是「衝突&quot;」類型&quot;的父代。因此，「請求&quot;」和「請求&quot;」代表一般註釋。

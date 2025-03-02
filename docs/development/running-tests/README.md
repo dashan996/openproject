@@ -683,8 +683,8 @@ CSP `localhost` restrictions.
 One way is to disable the Angular CLI that serves some of the assets when developing. To do that, run
 
 ```shell
-# Precompile the application
-./bin/rails assets:precompile
+# Precompile the application assets
+./bin/rails openproject:plugins:register_frontend assets:precompile
 
 # Start the application server while disabling the CLI asset host
 OPENPROJECT_CLI_PROXY='' ./bin/rails s -b 0.0.0.0 -p 3000
@@ -700,16 +700,31 @@ Assuming your openproject is served at `<your local ip>:3000` and your ng serve 
 you can access both from inside a VM with nat/bridged networking as follows:
 
 ```shell
-# Start ng serve middleware binding to all interfaces
-PROXY_HOSTNAME=<your local IP address> npm run serve
+# Start ng serve middleware binding to the interface given by FE_HOST or on localhost if not defined
+FE_HOST=<your local IP address> PROXY_HOSTNAME=<your local IP address> npm run serve
+```
+On npm run serve, you want to ensure it logs the correct hostname:
 
+```log
+** Angular Live Development Server is listening on <you local IP address>:4200, open your browser on http://<you local IP address>:4200/assets/frontend **
+```
+
+```shell
 # Start your openproject server with the CLI proxy configuration set
-OPENPROJECT_CLI_PROXY='http://<your local ip>:4200' ./bin/rails s -b 0.0.0.0 -p 3000
+OPENPROJECT_DEV_EXTRA_HOSTS=<your local IP address> OPENPROJECT_HOST_NAME=<your local IP address> OPENPROJECT_CLI_PROXY='http://<your local ip>:4200' ./bin/rails s -b 0.0.0.0 -p 3000
 
 # Now access your server from http://<your local ip>:3000 with code reloading
 ```
 
-You might have to also update your host name setting `bundle exec rake setting:set[host_name=yourip]`.
+You can also add the environment variables directly to the `.env` file and just run `./bin/rails s -b 0.0.0.0 -p 3000`. Ensure `OPENPROJECT_HTTPS` is set to `false`.
+
+```env
+LOCAL_IP_ADDR='192.168.x.y'
+OPENPROJECT_DEV_EXTRA_HOSTS=$LOCAL_IP_ADDR
+OPENPROJECT_HTTPS=false
+OPENPROJECT_HOST_NAME=$LOCAL_IP_ADDR
+OPENPROJECT_CLI_PROXY="http://$LOCAL_IP_ADDR:4200"
+```
 
 ### Legacy LDAP tests
 

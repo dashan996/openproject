@@ -36,6 +36,10 @@ class Queries::WorkPackages::Filter::FollowsFilter <
     ::Relation::TYPE_FOLLOWS
   end
 
+  def human_name
+    I18n.t(:label_follows)
+  end
+
   private
 
   def relation_filter

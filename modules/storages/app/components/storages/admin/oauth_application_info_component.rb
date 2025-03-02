@@ -29,19 +29,9 @@
 #++
 #
 module Storages::Admin
-  class OAuthApplicationInfoComponent < ApplicationComponent
-    include OpPrimer::ComponentHelpers
-    include OpTurbo::Streamable
-    include StorageViewInformation
-
-    attr_reader :storage
-    alias_method :oauth_application, :model
-
-    def initialize(oauth_application:, storage:, **)
-      super(oauth_application, **)
-      @storage = storage
-    end
-
+  class OAuthApplicationInfoComponent < StorageInfoComponent
     def self.wrapper_key = :storage_openproject_oauth_section
+
+    delegate :oauth_application, to: :storage
   end
 end

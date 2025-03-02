@@ -48,6 +48,10 @@ module WorkPackages
     default_attribute_permission :edit_work_packages
     attribute_permission :project_id, :move_work_packages
 
+    def can_set_parent?
+      @can.allowed?(model, :manage_subtasks)
+    end
+
     private
 
     def user_allowed_to_edit

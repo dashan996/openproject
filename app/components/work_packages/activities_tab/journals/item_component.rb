@@ -119,7 +119,9 @@ module WorkPackages
                            data: {
                              action: "click->work-packages--activities-tab--index#quote",
                              "content-param": journal.notes,
-                             "user-name-param": I18n.t(:text_user_wrote, value: ERB::Util.html_escape(journal.user)),
+                             "user-id-param": journal.user_id,
+                             "user-name-param": journal.user.name,
+                             "text-wrote-param": t(:text_wrote),
                              test_selector: "op-wp-journal-#{journal.id}-quote"
                            }
                          }) do |item|

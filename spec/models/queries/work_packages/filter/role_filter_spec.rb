@@ -33,8 +33,14 @@ RSpec.describe Queries::WorkPackages::Filter::RoleFilter do
   let(:all_roles_relation) { [role] }
 
   def mock_roles_query_chain(return_value)
+    scope = instance_double(ActiveRecord::Relation)
+
     allow(Role)
-      .to receive(:givable)
+      .to receive(:includes)
+            .and_return(scope)
+
+    allow(scope)
+      .to receive(:where)
             .and_return(return_value)
 
     return_value
@@ -46,7 +52,7 @@ RSpec.describe Queries::WorkPackages::Filter::RoleFilter do
     let(:name) { I18n.t("query_fields.assigned_to_role") }
 
     describe "#available?" do
-      context "when any givable role exists" do
+      context "when a role with the 'work_package_assigned' permission exists" do
         before do
           givable_roles_relation = instance_double(ActiveRecord::Relation)
           allow(givable_roles_relation)
@@ -59,7 +65,7 @@ RSpec.describe Queries::WorkPackages::Filter::RoleFilter do
         it { expect(instance).to be_available }
       end
 
-      context "when no givable role exists" do
+      context "when no role with the 'work_package_assigned' permission exists" do
         before do
           givable_roles_relation = instance_double(ActiveRecord::Relation)
           allow(givable_roles_relation)

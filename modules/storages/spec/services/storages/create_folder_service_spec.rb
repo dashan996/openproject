@@ -38,7 +38,7 @@ RSpec.describe Storages::CreateFolderService do
   let(:name) { "TestFolderName" }
 
   context "when storage is nextcloud" do
-    let(:storage) { create(:nextcloud_storage) }
+    let(:storage) { create(:nextcloud_storage_configured) }
     let(:parent_id) { file_info.id }
 
     let(:file_info) do

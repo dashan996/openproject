@@ -6,7 +6,7 @@
       case @meeting.state
       when "open"
         section.with_description(display: [:none, nil, :block]) { t("text_meeting_open_description") }
-        flex_layout(classes: 'op-meeting-sidebar-state') do |open_state|
+        flex_layout(classes: "op-meeting-sidebar-state") do |open_state|
           open_state.with_row do
             render(Primer::Beta::State.new(title: "state", scheme: :open)) do
               flex_layout do |open_state_label|
@@ -24,9 +24,9 @@
           if edit_enabled?
             section.with_footer_button(
               tag: :a,
-              href: change_state_meeting_path(@meeting, state: 'closed'),
+              href: change_state_project_meeting_path(@project, @meeting, state: "closed"),
               classes: "hide-when-print",
-              data: { 'turbo-stream': true, 'turbo-method': 'put' },
+              data: { "turbo-stream": true, "turbo-method": "put" },
               test_selector: "close-meeting-button"
             ) do |button|
               button.with_leading_visual_icon(icon: :unlock)
@@ -37,7 +37,7 @@
       when "closed"
         section.with_description(display: [:none, nil, :block]) { t("text_meeting_closed_description") }
 
-        flex_layout(classes: 'op-meeting-sidebar-state') do |closed_state|
+        flex_layout(classes: "op-meeting-sidebar-state") do |closed_state|
           closed_state.with_row do
             render(Primer::Beta::State.new(title: "state", scheme: :default)) do
               flex_layout do |closed_state_label|
@@ -55,9 +55,9 @@
           if edit_enabled?
             section.with_footer_button(
               tag: :a,
-              href: change_state_meeting_path(@meeting, state: 'open'),
+              href: change_state_project_meeting_path(@project, @meeting, state: "open"),
               classes: "hide-when-print",
-              data: { 'turbo-stream': true, 'turbo-method': 'put' }
+              data: { "turbo-stream": true, "turbo-method": "put" }
             ) do |button|
               button.with_leading_visual_icon(icon: :unlock)
               t("label_meeting_reopen_action")

@@ -85,4 +85,18 @@ RSpec.describe Migration::MigrationUtils::PermissionAdder, type: :model do # rub
       expect(anonymous_role.permissions).not_to include(:archive_project)
     end
   end
+
+  context "with a permission that does not exist" do
+    it "results in a no-op" do
+      result = nil
+      expect { result = described_class.add(:view_project, :non_existent_permission) }.not_to raise_error
+      expect(result).to be_nil
+
+      roles.each(&:reload)
+
+      expect(role.permissions).not_to include(:non_existent_permission)
+      expect(non_member_role.permissions).not_to include(:non_existent_permission)
+      expect(anonymous_role.permissions).not_to include(:non_existent_permission)
+    end
+  end
 end

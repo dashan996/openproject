@@ -31,9 +31,11 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render Primer::OpenProject::PageHeader.new do |header|
     header.with_title { t(:label_calendar_plural) }
-    header.with_breadcrumbs([*([ href: home_path, text: organization_name ] unless @project),
-                             *([ href: project_overview_path(@project.id), text: @project.name ] if @project),
-                             t(:label_calendar_plural)])
+    header.with_breadcrumbs(
+      [*([href: home_path, text: organization_name] unless @project),
+       *([href: project_overview_path(@project.id), text: @project.name] if @project),
+       t(:label_calendar_plural)]
+    )
   end
 %>
 
@@ -44,6 +46,5 @@ See COPYRIGHT and LICENSE files for more details.
     end
   end
 %>
-
 
 <%= render ::Calendar::TableComponent.new(rows: @views, current_project: @project, current_user: current_user) %>

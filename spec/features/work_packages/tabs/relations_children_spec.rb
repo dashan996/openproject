@@ -64,6 +64,34 @@ RSpec.describe "Relations children tab", :js, :with_cuprite do
       end
     end
 
+    context "when being on the split screen" do
+      let(:wp_split_page) { Pages::SplitWorkPackage.new(work_package, project) }
+
+      it "can render the page correctly after creation (regression #60629)" do
+        wp_split_page.visit_tab!("relations")
+        relations_tab.expect_add_relation_button
+        relations_tab.expect_new_relation_type("New child")
+        relations_tab.expect_new_relation_type("Existing child")
+
+        relations_tab.select_relation_type "New child"
+
+        create_dialog.select_type "Risk"
+        create_dialog.set_subject "Hello there"
+        create_dialog.set_custom_field(required_cf, "Custom value")
+
+        create_dialog.submit
+
+        wait_for_network_idle
+
+        page.within("#work-package-relations-tab-content") do
+          expect(page).to have_content("Hello there")
+          expect(page).to have_content("RISK")
+        end
+
+        expect(page).to have_css("body.router--work-packages-partitioned-split-view-details")
+      end
+    end
+
     context "when work package is a milestone and user does not have manage_work_package_relations permission" do
       let(:work_package) { create(:work_package, type: type_milestone, project:, subject: "Milestone") }
 
@@ -88,6 +116,25 @@ RSpec.describe "Relations children tab", :js, :with_cuprite do
         relations_tab.expect_new_relation_type("Related to")
         relations_tab.expect_no_new_relation_type("Existing child")
         relations_tab.expect_no_new_relation_type("New child")
+      end
+    end
+
+    context "in status-based progress calculation mode (bug #61551)",
+            with_settings: { work_package_done_ratio: "status" } do
+      it "can add a new child" do
+        wp_page.visit_tab!("relations")
+        relations_tab.select_relation_type "New child"
+
+        create_dialog.select_type "Task"
+        create_dialog.set_subject "Hello there"
+        create_dialog.submit
+
+        wait_for_network_idle
+
+        page.within("#work-package-relations-tab-content") do
+          expect(page).to have_content("Hello there")
+          expect(page).to have_content("TASK")
+        end
       end
     end
   end

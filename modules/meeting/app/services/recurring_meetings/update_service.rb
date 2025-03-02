@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -32,11 +33,22 @@ module RecurringMeetings
 
     protected
 
+    def validate_params(*)
+      @old_schedule = model.full_schedule_in_words
+      super
+    end
+
     def after_perform(call)
       return call unless call.success?
 
-      cleanup_cancelled_schedules(call.result)
-      reschedule_init_job(call.result)
+      recurring_meeting = call.result
+      cleanup_cancelled_schedules(recurring_meeting)
+
+      if should_reschedule?(recurring_meeting)
+        reschedule_init_job(recurring_meeting)
+        send_rescheduled_mail(recurring_meeting)
+      end
+
       update_template(call)
     end
 
@@ -61,9 +73,22 @@ module RecurringMeetings
       end
     end
 
-    def reschedule_init_job(recurring_meeting)
-      return unless should_reschedule?(recurring_meeting)
+    def send_rescheduled_mail(recurring_meeting)
+      recurring_meeting
+        .template
+        .participants
+        .invited
+        .find_each do |participant|
+        MeetingSeriesMailer.rescheduled(
+          recurring_meeting,
+          participant.user,
+          User.current,
+          changes: { old_schedule: @old_schedule }
+        ).deliver_later
+      end
+    end
 
+    def reschedule_init_job(recurring_meeting)
       concurrency_key = InitNextOccurrenceJob.unique_key(recurring_meeting)
 
       # Delete all scheduled jobs for this meeting

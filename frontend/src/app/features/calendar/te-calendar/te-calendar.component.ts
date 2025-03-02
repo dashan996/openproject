@@ -640,7 +640,7 @@ export class TimeEntryCalendarComponent implements AfterViewInit, OnDestroy {
           </li>
           <li class="tooltip--map--item">
             <span class="tooltip--map--key">${schema.comment.name}:</span>
-            <span class="tooltip--map--value">${entry.comment.raw || this.i18n.t('js.placeholders.default')}</span>
+            <span class="tooltip--map--value">${this.sanitizedValue(entry.comment.raw || this.i18n.t('js.placeholders.default'))}</span>
           </li>
         `;
   }

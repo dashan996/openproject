@@ -106,7 +106,7 @@ module OpenProject
         end
 
         ##
-        # Checks if the repository is up-to-date. It is not it's updated.
+        # Checks if the repository is up-to-date. If it is not, it's updated.
         # Checks out the repository if necessary.
         def refresh_repository!
           if checkout?

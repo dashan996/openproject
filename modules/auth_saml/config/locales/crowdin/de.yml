@@ -1,29 +1,28 @@
 de:
-  activemodel:
+  activerecord:
     attributes:
       saml/provider:
         display_name: Name
-        identifier: Kennung
-        secret: Geheim
-        scope: Geltungsbereich
-        assertion_consumer_service_url: ACS (Assertion Consumer Service) URL
-        limit_self_registration: Selbstregistrierung begrenzen
-        sp_entity_id: Entity-ID des Services
-        metadata_url: Metadaten-URL des Identitätsanbieters
-        name_identifier_format: Format der Namenskennung
-        idp_sso_service_url: Endpunkt für die Anmeldung beim Identitätsanbieter
-        idp_slo_service_url: Endpunkt für die Abmeldung beim Identitätsanbieter
-        idp_cert: Öffentliches Zertifikat des Identitätsanbieters
-        authn_requests_signed: SAML AuthnRequests signieren
-        want_assertions_signed: Signierte Antworten erfordern
-        want_assertions_encrypted: Verschlüsselte Antworten erfordern
-        certificate: Von OpenProject verwendetes Zertifikat für SAML-Anfragen
-        private_key: Zugehöriger privater Schlüssel für OpenProject SAML-Anfragen
-        signature_method: Signatur-Algorithmus
-        digest_method: Digest-Algorithmus
+        identifier: Identifier
+        secret: Secret
+        scope: Scope
+        assertion_consumer_service_url: ACS (Assertion consumer service) URL
+        limit_self_registration: Limit self registration
+        sp_entity_id: Service entity ID
+        metadata_url: Identity provider metadata URL
+        name_identifier_format: Name identifier format
+        idp_sso_service_url: Identity provider login endpoint
+        idp_slo_service_url: Identity provider logout endpoint
+        idp_cert: Public certificate of identity provider
+        authn_requests_signed: Sign SAML AuthnRequests
+        want_assertions_signed: Require signed responses
+        want_assertions_encrypted: Require encrypted responses
+        certificate: Certificate used by OpenProject for SAML requests
+        private_key: Corresponding private key for OpenProject SAML requests
+        signature_method: Signature algorithm
+        digest_method: Digest algorithm
         format: "Format"
-        icon: "Benutzerdefiniertes Symbol"
-  activerecord:
+        icon: "Custom icon"
     errors:
       models:
         saml/provider:

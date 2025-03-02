@@ -36,13 +36,15 @@ module WorkPackages
       attr_reader :query, :id, :caption, :label
 
       def initialize(query, id, caption,
-                     label = I18n.t(:"queries.configure_view.columns.input_label"))
+                     label = I18n.t(:"queries.configure_view.columns.input_label"),
+                     required: true)
         super()
 
         @query = query
         @id = id
         @caption = caption
         @label = label
+        @required = required
       end
 
       def available_columns

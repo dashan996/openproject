@@ -34,6 +34,8 @@ cs:
   enumeration_doc_categories: "Kategorie dokumentů"
   documents:
     label_attachment_author: "Autor přílohy"
+    label_categories: "Categories"
+    new_category: "New category"
   label_document_added: "Dokument byl přidán"
   label_document_new: "Nový dokument"
   label_document_plural: "Dokumenty"

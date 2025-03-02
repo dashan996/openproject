@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -29,7 +31,8 @@
 require "spec_helper"
 
 RSpec.describe BaseContract do
-  let(:model) { double(name: "name") } # rubocop:disable RSpec/VerifiedDoubles
+  let(:model) { WorkPackage.new }
+  let(:current_errors) { model.errors }
   let(:user) { build(:user) }
 
   describe ".writable_attributes" do
@@ -253,6 +256,38 @@ RSpec.describe BaseContract do
       end
 
       it_behaves_like "the parent writable parameter is overridden by the child writable parameter"
+    end
+  end
+
+  describe "#validate_and_merge_errors" do
+    subject { current_contract.send(:validate_and_merge_errors, other_contract) }
+
+    let(:current_contract) { described_class.new(model, user) }
+    let(:other_contract) { double("contract", errors: other_errors) } # rubocop:disable RSpec/VerifiedDoubles
+
+    before do
+      current_errors.add(:base, :invalid)
+      allow(other_contract).to receive(:validate) do
+        other_contract.errors.add(:base, :blank)
+      end
+    end
+
+    context "when the other contract has an own #errors instance" do
+      let(:other_errors) { ActiveModel::Errors.new(nil) }
+
+      it "merges errors of current contract and other contract" do
+        subject
+        expect(current_contract.errors.details[:base].map { |d| d[:error] }).to eq(%i[invalid blank])
+      end
+    end
+
+    context "when the other contract shares errors instance with current contract" do
+      let(:other_errors) { current_errors }
+
+      it "merges errors of current contract and other contract (without duplicates)" do
+        subject
+        expect(current_contract.errors.details[:base].map { |d| d[:error] }).to eq(%i[invalid blank])
+      end
     end
   end
 end

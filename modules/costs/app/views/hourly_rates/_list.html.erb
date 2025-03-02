@@ -28,5 +28,5 @@ See COPYRIGHT and LICENSE files for more details.
 ++#%>
 
 <% @rates.each_pair do |project, rates| %>
-  <%= render :partial => 'hourly_rates/list_project', :locals => { rates: rates, project: project, all_rates: @rates } %>
+  <%= render partial: "hourly_rates/list_project", locals: { rates: rates, project: project, all_rates: @rates } %>
 <% end %>

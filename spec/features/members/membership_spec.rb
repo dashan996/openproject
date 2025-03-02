@@ -138,19 +138,27 @@ RSpec.describe "Administrating memberships via the project settings", :js do
       expect(members_page).not_to have_group group.name
     end
 
-    it "shows more information when hovering over an avatar" do
-      members_page.in_user_row(peter) do |row|
-        # Hover over the avatar of peter to open the hover card
-        row.find(".op-principal--avatar").hover
+    context "when showing hover cards" do
+      it "shows more information when hovering over an avatar" do
+        members_page.in_user_row(peter) do |row|
+          # Hover over the username of peter to open the hover card
+          row.find(".op-principal--name").hover
+        end
+
+        members_page.in_user_hover_card(peter) do
+          find_test_selector("user-hover-card-name", text: peter.name)
+          find_test_selector("user-hover-card-email", text: peter.mail)
+          find_test_selector("user-hover-card-groups", text: "Member of #{peter.groups.first.name}")
+
+          button = find_test_selector("user-hover-card-profile-btn", text: "Open profile")
+          expect(button["href"]).to eq(edit_user_url(peter))
+        end
       end
 
-      members_page.in_user_hover_card(peter) do
-        find_test_selector("user-hover-card-name", text: peter.name)
-        find_test_selector("user-hover-card-email", text: peter.mail)
-        find_test_selector("user-hover-card-groups", text: "Member of #{peter.groups.first.name}")
+      it "does not display a hover card on the top menu user avatar" do
+        page.find(".op-top-menu-user-avatar").hover
 
-        button = find_test_selector("user-hover-card-profile-btn", text: "Open profile")
-        expect(button["href"]).to eq(edit_user_url(peter))
+        expect { page.find_test_selector("user-hover-card-#{User.current.id}") }.to raise_error(Capybara::ElementNotFound)
       end
     end
 

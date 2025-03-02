@@ -32,21 +32,25 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render Primer::OpenProject::PageHeader.new do |header|
     header.with_title { t(:label_type_plural) }
-    header.with_breadcrumbs([{ href: admin_index_path, text: t("label_administration") },
-                             { href: admin_settings_work_packages_general_path, text: t(:label_work_package_plural) },
-                             t(:label_type_plural)])
+    header.with_breadcrumbs(
+      [{ href: admin_index_path, text: t("label_administration") },
+       { href: admin_settings_work_packages_general_path, text: t(:label_work_package_plural) },
+       t(:label_type_plural)]
+    )
   end
 %>
 <%=
   render(Primer::OpenProject::SubHeader.new) do |subheader|
-    subheader.with_action_button(scheme: :primary,
-                                 aria: { label: I18n.t(:label_type_new) },
-                                 title: I18n.t(:label_type_new),
-                                 test_selector: "op-admin-types--button-new",
-                                 tag: :a,
-                                 href: new_type_path) do |button|
+    subheader.with_action_button(
+      scheme: :primary,
+      aria: { label: I18n.t(:label_type_new) },
+      title: I18n.t(:label_type_new),
+      test_selector: "op-admin-types--button-new",
+      tag: :a,
+      href: new_type_path
+    ) do |button|
       button.with_leading_visual_icon(icon: :plus)
-      t('activerecord.attributes.work_package.type')
+      t("activerecord.attributes.work_package.type")
     end
   end
 %>
@@ -109,7 +113,7 @@ See COPYRIGHT and LICENSE files for more details.
               <div class="generic-table--sort-header-outer">
                 <div class="generic-table--sort-header">
                   <span>
-                    <%=t(:button_sort)%>
+                    <%= t(:button_sort) %>
                   </span>
                 </div>
               </div>
@@ -127,9 +131,9 @@ See COPYRIGHT and LICENSE files for more details.
                 <% if type.workflows.empty? %>
                 <span class="icon-context icon-warning">
                   <%= t(:text_type_no_workflow) %>
-                  (<%= link_to t(:button_edit), { controller: '/workflows',
-                                                  action: 'edit',
-                                                  type_id: type} %>)
+                  (<%= link_to t(:button_edit), { controller: "/workflows",
+                                                  action: "edit",
+                                                  type_id: type } %>)
                 </span>
                 <% end %>
               </td>
@@ -143,15 +147,15 @@ See COPYRIGHT and LICENSE files for more details.
                 <%= checked_image(type.is_milestone) %>
               </td>
               <td class="timelines-pet-reorder">
-                <%= reorder_links('type', {action: 'move', id: type}) %>
+                <%= reorder_links("type", { action: "move", id: type }) %>
               </td>
               <td class="buttons">
                 <% if !type.is_standard? %>
-                  <%= link_to '', type,
-                                  method: :delete,
-                                  data: { confirm: t(:text_are_you_sure) },
-                                  class: 'icon icon-delete',
-                                  title: t(:button_delete) %>
+                  <%= link_to "", type,
+                              method: :delete,
+                              data: { confirm: t(:text_are_you_sure) },
+                              class: "icon icon-delete",
+                              title: t(:button_delete) %>
                 <% end %>
               </td>
             </tr>
@@ -163,5 +167,5 @@ See COPYRIGHT and LICENSE files for more details.
   </div>
   <%= pagination_links_full @types %>
 <% else %>
-  <%= no_results_box(action_url: new_type_path, display_action: true)%>
+  <%= no_results_box(action_url: new_type_path, display_action: true) %>
 <% end %>

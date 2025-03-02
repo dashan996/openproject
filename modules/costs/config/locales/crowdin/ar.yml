@@ -30,6 +30,7 @@ ar:
         overridden_costs: "تكاليف متجاوزة"
         spent: "أنفق"
         spent_on: "التاريخ"
+        logged_by: "Logged by"
       cost_type:
         unit: "اسم الوحدة"
         unit_plural: "اسم الوحدة متعددة الأقطاب"
@@ -63,11 +64,19 @@ ar:
         few: "أنواع التكلفة"
         many: "أنواع التكلفة"
         other: "أنواع التكلفة"
+      time_entry_activity:
+        zero: "Time tracking activities"
+        one: "Time tracking activity"
+        two: "Time tracking activities"
+        few: "Time tracking activities"
+        many: "Time tracking activities"
+        other: "Time tracking activities"
       rate: "المعدل"
     errors:
       models:
         time_entry:
           invalid_time: "must be between 00:00 and 23:59."
+          cannot_log_for_this_work_package: "Cannot log time for this work package."
         work_package:
           is_not_a_valid_target_for_cost_entries: "مجموعة العمل #%{id} ليست هدفًا صالحًا لإعادة تعيين إدخالات التكلفة."
           nullify_is_not_valid_for_cost_entries: "لا يمكن تعيين إدخالات التكلفة للمشروع."
@@ -83,6 +92,7 @@ ar:
   button_add_rate: "أضِف المعدل"
   button_log_costs: "سجل تكاليف الوحدة"
   button_log_time: "Log"
+  button_add_activity: "Activity"
   caption_booked_on_project: "حُجِِز على المشروع"
   caption_default: "الافتراضي"
   caption_default_rate_history_for: "تاريخ المعدل الافتراضي ل %{user}"
@@ -96,6 +106,8 @@ ar:
   caption_show_locked: "إظهار الأنواع المغلقة"
   caption_log_time_dialog: "Log time"
   description_date_for_new_rate: "تاريخ المعدل الجديد"
+  description_costs_settings: "Define the desired format for the costs in all projects."
+  description_time_settings: "Define which fields are mandatory to fill when logging time in all projects."
   group_by_others: "ليس في أي مجموعة"
   label_between: "بين"
   label_cost_filter_add: "أضِف عامل تصفية لإدخال التكلفة"
@@ -122,6 +134,8 @@ ar:
   label_kind: "النّوع"
   label_less_or_equal: "=>"
   label_log_costs: "سجل تكاليف الوحدة"
+  label_new_time_entry_activity: "New time entry activity"
+  label_time_entry_activity_form_description: "Changes to this time entry activity will be reflected in all projects where it is enabled."
   label_no: "لا"
   label_option_plural: "الخيارات"
   label_overall_costs: "التكاليف الإجمالية"
@@ -134,6 +148,10 @@ ar:
   label_until: "حتى"
   label_valid_from: "صالح من"
   label_yes: "نعم"
+  label_time: "Time"
+  label_cost: "Cost"
+  label_costs: "Costs"
+  label_mandatory_fields: "Mandatory fields"
   placeholder_activity_select_work_package_first: Work package selection is required first
   notice_something_wrong: "حصل خطأ ما. من فضلك حاول مرة أخرى."
   notice_successful_restore: "استعادة ناجحة."

@@ -34,6 +34,8 @@
   enumeration_doc_categories: "Dokumentkategorier"
   documents:
     label_attachment_author: "Vedleggsforfatter"
+    label_categories: "Categories"
+    new_category: "New category"
   label_document_added: "Dokument lagt til"
   label_document_new: "Nytt dokumenter"
   label_document_plural: "Dokumenter"

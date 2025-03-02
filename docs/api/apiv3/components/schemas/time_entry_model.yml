@@ -7,9 +7,8 @@ properties:
     description: The id of the time entry
     minimum: 1
   comment:
-    allOf:
-      - $ref: "./formattable.yml"
-      - description: A comment to the time entry
+    type: string
+    description: A comment to the time entry
   spentOn:
     type: string
     format: date

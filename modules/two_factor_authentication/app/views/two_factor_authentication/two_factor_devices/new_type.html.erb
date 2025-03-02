@@ -1,10 +1,12 @@
-<% html_title(t(:button_login), t('two_factor_authentication.devices.add_new')) -%>
+<% html_title(t(:button_login), t("two_factor_authentication.devices.add_new")) -%>
 
 <%=
   render(Primer::OpenProject::PageHeader.new) do |header|
-    header.with_title { t('two_factor_authentication.devices.add_new') }
-    header.with_breadcrumbs([{ href: signin_path, text: t(:button_login) },
-                             t('two_factor_authentication.devices.add_new')])
+    header.with_title { t("two_factor_authentication.devices.add_new") }
+    header.with_breadcrumbs(
+      [{ href: signin_path, text: t(:button_login) },
+       t("two_factor_authentication.devices.add_new")]
+    )
   end
 %>
 
@@ -16,7 +18,7 @@
         <p><%= t("two_factor_authentication.devices.#{key}.description") %></p>
       </div>
       <div class="mobile-otp-new-device--footer">
-        <%= link_to t('two_factor_authentication.devices.register'), url_for(action: :new, type: key), class: 'button button--tiny' %>
+        <%= link_to t("two_factor_authentication.devices.register"), url_for(action: :new, type: key), class: "button button--tiny" %>
       </div>
     </div>
   <% end %>

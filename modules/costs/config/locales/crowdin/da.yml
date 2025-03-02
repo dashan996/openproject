@@ -30,6 +30,7 @@ da:
         overridden_costs: "Tilsidesatte omkostninger"
         spent: "Forbrugt"
         spent_on: "Dato"
+        logged_by: "Logged by"
       cost_type:
         unit: "Enhedsnavn"
         unit_plural: "Pluralistisk enhedsnavn"
@@ -59,11 +60,15 @@ da:
       cost_type:
         one: "Omkostningstype"
         other: "Omkostningstyper"
+      time_entry_activity:
+        one: "Time tracking activity"
+        other: "Time tracking activities"
       rate: "Sats"
     errors:
       models:
         time_entry:
           invalid_time: "must be between 00:00 and 23:59."
+          cannot_log_for_this_work_package: "Cannot log time for this work package."
         work_package:
           is_not_a_valid_target_for_cost_entries: "Arbejdspakke #%{id} er ikke et gyldigt mål til omfordeling af omkostningsangivelser."
           nullify_is_not_valid_for_cost_entries: "Omkostningsangivelser kan ikke tildeles et projekt."
@@ -79,6 +84,7 @@ da:
   button_add_rate: "Tilføj sats"
   button_log_costs: "Registrér enhedsomkostninger"
   button_log_time: "Log"
+  button_add_activity: "Activity"
   caption_booked_on_project: "Reservationer til projekt"
   caption_default: "Forhåndsvalgt"
   caption_default_rate_history_for: "Standardsatshistorik for %{user}"
@@ -92,6 +98,8 @@ da:
   caption_show_locked: "Vis låste typer"
   caption_log_time_dialog: "Log time"
   description_date_for_new_rate: "Dato for ny sats"
+  description_costs_settings: "Define the desired format for the costs in all projects."
+  description_time_settings: "Define which fields are mandatory to fill when logging time in all projects."
   group_by_others: "ikke i nogen gruppe"
   label_between: "mellem"
   label_cost_filter_add: "Tilføj omkostningangivelsesfilter"
@@ -118,6 +126,8 @@ da:
   label_kind: "Type"
   label_less_or_equal: "<="
   label_log_costs: "Registrér enhedsomkostninger"
+  label_new_time_entry_activity: "New time entry activity"
+  label_time_entry_activity_form_description: "Changes to this time entry activity will be reflected in all projects where it is enabled."
   label_no: "Nej"
   label_option_plural: "Valgmuligheder"
   label_overall_costs: "Samlede omkostninger"
@@ -130,6 +140,10 @@ da:
   label_until: "indtil"
   label_valid_from: "Gældende fra"
   label_yes: "Ja"
+  label_time: "Time"
+  label_cost: "Cost"
+  label_costs: "Costs"
+  label_mandatory_fields: "Mandatory fields"
   placeholder_activity_select_work_package_first: Work package selection is required first
   notice_something_wrong: "Noget gik galt. Forsøg venligst igen."
   notice_successful_restore: "Gendannet."

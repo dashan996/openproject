@@ -56,7 +56,10 @@ uk:
         frequency: "Частота"
         interval: "Інтервал"
         start_date: "Починається"
-        end_after: "Meeting series ends"
+        start_time: "Час початку"
+        start_time_hour: "Час початку"
+        end_after: "Серія нарад завершується"
+        end_date: "End date"
         iterations: "Повторення"
     errors:
       messages:
@@ -64,6 +67,7 @@ uk:
     models:
       recurring_meeting: "Повторювана нарада"
       structured_meeting: "Одноразова нарада"
+      meeting: "Meeting"
       meeting_agenda_item: "Порядок денний"
       meeting_agenda: "Порядок денний"
       meeting_minutes: "Хвилини"
@@ -118,29 +122,29 @@ uk:
   label_recurring_meeting_plural: "Повторювані наради"
   label_template: "Шаблон"
   label_recurring_meeting_view: "Переглянути серію нарад"
-  label_recurring_meeting_create: "Open"
+  label_recurring_meeting_create: "Відкрити"
   label_recurring_meeting_copy: "Копіювати як одноразову"
   label_recurring_meeting_cancel: "Скасувати це повторення"
   label_recurring_meeting_delete: "Видалити повторення"
   label_recurring_meeting_restore: "Відновити це повторення"
-  label_recurring_meeting_schedule: "Schedule"
-  label_recurring_meeting_next_occurrence: "Next occurrence"
+  label_recurring_meeting_schedule: "Розклад"
+  label_recurring_meeting_next_occurrence: "Наступна нарада серії"
   label_recurring_meeting_more: "Є інші (%{count}) заплановані наради (%{schedule})."
-  label_recurring_meeting_no_end_date: "There are more scheduled meetings (%{schedule})."
+  label_recurring_meeting_no_end_date: "Є інші заплановані наради (%{schedule})."
   label_recurring_meeting_more_singular: "Є ще %{count} запланована нарада (%{schedule})."
   label_recurring_meeting_more_past: "Є інші (%{count}) завершені наради."
   label_recurring_meeting_more_past_singular: "Є ще %{count} завершена нарада."
   label_recurring_meeting_show_more: "Показати більше"
-  label_recurring_meeting_series_create: "Create meeting series"
+  label_recurring_meeting_series_create: "Створити серію нарад"
   label_recurring_meeting_series_edit: "Редагувати серію нарад"
   label_recurring_meeting_series_delete: "Видалити серію нарад"
-  label_recurring_meeting_series_end: "End meeting series"
-  label_recurring_meeting_series_end_now: "End series now"
+  label_recurring_meeting_series_end: "Завершити серію нарад"
+  label_recurring_meeting_series_end_now: "Завершити серію зараз"
   label_meeting_more:
-    one: "There is one more meeting."
-    few: "There are %{count} more meetings."
-    many: "There are %{count} more meetings."
-    other: "There are %{count} more meetings."
+    one: "Є ще одна нарада."
+    few: "Є ще %{count} наради."
+    many: "Є ще %{count} нарад."
+    other: "Є ще %{count} наради."
   label_my_meetings: "Мої наради"
   label_all_meetings: "Усі наради"
   label_upcoming_meetings: "Майбутні заходи"
@@ -182,15 +186,29 @@ uk:
         Надішліть запрошення електронною поштою вибраним вище учасникам. Це можна будь-коли зробити вручну.
       send_invitation_emails_structured: "Надішліть запрошення електронною поштою одразу всім учасникам. Це можна будь-коли зробити вручну."
       open_meeting_link: "Відкрити зустріч"
+      open_my_meetings_link: "Перейдіть до Моїх нарад"
       series:
-        title: "[%{project_name}] Meeting series %{title}"
-        summary: "%{actor} has set up a new meeting series %{title}"
+        title: "[%{project_name}] – серія нарад «%{title}»"
+        summary: "%{actor} створив(-ла) нову серію нарад «%{title}»"
+      series_rescheduled:
+        title: "[%{project_name}] – запланований час серії нарад «%{title}» змінено"
+        summary: "%{actor} змінив(-ла) запланований час серії нарад «%{title}»"
+        old_schedule: "Старий розклад"
+        new_schedule: "Новий розклад"
       invited:
-        summary: "%{actor} надіслав запрошення на зустріч %{title}"
+        summary: "%{actor} надіслав(-ла) вам запрошення на нараду «%{title}»"
+      cancelled:
+        header: "Скасовано: нарада «%{title}»"
+        header_occurrence: "Скасовано: нарада серії «%{title}»"
+        header_series: "Скасовано: серія нарад «%{title}»"
+        summary_occurrence: "Нараду серії %{title} скасував(-ла) %{actor}."
+        summary_series: "Серію нарад «%{title}» скасував(-ла) %{actor}."
+        summary: "«%{title}» скасував(-ла) %{actor}."
+        date_time: "Заплановані дата/час"
       rescheduled:
-        header: "Запланований час наради %{title} змінено"
-        summary: "Зустріч  %{title} перепланована  %{actor}"
-        body: "Зустріч  %{title} перепланована  %{actor}"
+        header: "Запланований час наради «%{title}» змінено"
+        summary: "Запланований час наради «%{title}» змінив(-ла) %{actor}"
+        body: "Запланований час наради «%{title}» змінив(-ла) %{actor}."
         old_date_time: "Стара дата/час"
         new_date_time: "Нова дата/час"
     label_mail_all_participants: "Надіслати лист усім учасникам"
@@ -206,18 +224,19 @@ uk:
     copied: "Скопійовано з наради #%{id} "
     delete_dialog:
       one_time:
-        title: "Delete meeting"
-        heading: "Delete this meeting?"
+        title: "Видалити нараду"
+        heading: "Видалити цю нараду?"
         confirmation_message_html: >
-          This action is not reversible. Please proceed with caution.
+          Зверніть увагу: цю дію не можна відмінити.
       occurrence:
-        title: "Delete meeting occurrence"
-        heading: "Delete this meeting occurrence?"
+        title: "Скасувати нараду серії"
+        heading: "Скасувати цю нараду серії?"
         confirmation_message_html: >
-          This meeting is part of a series called <strong>%{title}</strong>. This will only delete this particular occurrence and not the entire series. Do you want to continue?
+          Будь-яку інформацію про нараду, відсутню в шаблоні, буде втрачено. Продовжити?
+        confirm_button: "Скасувати нараду"
     blankslate:
-      title: "No meetings to display"
-      desc: "There are no meetings that meet the active filter criteria."
+      title: "Немає нарад"
+      desc: "Немає нарад, які відповідають критеріям активного фільтра."
   meeting_section:
     untitled_title: "Розділ без назви"
     delete_confirmation: "Видалення цього розділу також призведе до видалення його елементів порядку денного. Ви впевнені?"
@@ -225,9 +244,9 @@ uk:
     empty_text: "Перетягніть елементи сюди або створіть новий"
   recurring_meeting:
     ended_blankslate:
-      title: "Meeting series ended"
-      message: "This meeting series has come to an end. There are no upcoming meetings. "
-      action: "You can still view past occurrences or edit the meeting series to extend it."
+      title: "Серія нарад завершилася"
+      message: "Ця серія нарад завершилася. Запланованих нарад немає. "
+      action: "Ви все одно можете переглянути завершені наради або відредагувати серію нарад, щоб продовжити її."
     occurrence:
       infoline: "Ця нарада належить до серії повторюваних нарад."
       error_no_next: "Це одноразова нарада."
@@ -235,7 +254,7 @@ uk:
       first_created: >
         Першу нараду створено на основі шаблона. Усі наступні наради створюватимуться автоматично в момент початку попередніх.
     template:
-      button_finalize: "Завершити шаблон"
+      button_finalize: "Відкрити першу нараду"
       blank_title: "Ваш шаблон серії нарад порожній"
       description: >
         Цей шаблон використовуватиметься щоразу, коли створюватимуться нові наради в серії. Ви можете додавати до нього пункти порядку денного, учасників і вкладення.
@@ -246,14 +265,22 @@ uk:
       banner_html: >
         Ви редагуєте шаблон серії нарад: %{link}. Кожна нова нарада в серії буде створюватиметься на основі цього шаблона. Зміни не вплинуть на завершені або вже створені наради.
     frequency:
+      x_daily:
+        one: "Every day"
+        few: "Every %{count} days"
+        many: "Every %{count} days"
+        other: "Every %{count} days"
+      x_weekly:
+        one: "Every week"
+        few: "Every %{count} weeks"
+        many: "Every %{count} weeks"
+        other: "Every %{count} weeks"
       every_weekday: "Кожний(-на) %{day_of_the_week}"
-      daily: "Щодня"
       working_days: "Кожен робочий день"
-      weekly: "Щотижня"
     end_after:
-      never: "never"
-      specific_date: "after a specific date"
-      iterations: "after a number of occurrences"
+      never: "ніколи"
+      specific_date: "після конкретної дати"
+      iterations: "після певної кількості подій"
     starts: "Починається"
     in_words:
       daily_interval: "Через %{interval} дн."
@@ -262,41 +289,41 @@ uk:
       weekly_interval: "Через %{interval} тижн. у %{weekday}"
       frequency: "%{base} о %{time}"
       full: "%{base} о %{time}, закінчується %{end_date}"
-      full_past: "%{base} at %{time}, ended on %{end_date}"
-      never_ending: "%{base} at %{time}"
+      full_past: "%{base} о %{time}, завершено %{end_date}"
+      never_ending: "%{base} о %{time}"
     open:
-      title: "Open"
+      title: "Відкриті"
       subtitle: >
-        Open meetings have agendas that can be edited and show up in individual users’ ‘My meetings’ section. Changes to the meeting series template do not affect already-open meeting occurrences.
+        Відкриті наради мають порядок денний, який можна редагувати і який відображається в розділі «Мої наради» для окремих користувачів. Зміни в шаблоні серії нарад не впливають на вже відкриті наради.
       blankslate:
-        title: "No open meetings at the moment"
-        desc: "You can manually open a planned meeting by clicking on the 'Open' button below"
+        title: "Зараз немає відкритих нарад"
+        desc: "Ви можете вручну відкрити заплановану нараду, натиснувши кнопку «Відкрити» нижче"
     planned:
-      title: "Planned"
+      title: "Заплановані"
       subtitle: >
-        The following meetings are planned in the recurring meeting schedule but are not open yet. Every time a planned meeting starts, the next one will automatically be opened for you. You can also open planned meetings manually to import the template and start editing the agenda.
+        Наступні наради в серії повторюваної наради заплановані, але не відкриті. Щоразу, коли починається запланована нарада, автоматично відкривається наступна. Ви також можете відкрити заплановані наради вручну, щоб імпортувати шаблон і почати редагування порядку денного.
       blankslate:
-        title: "No more planned meetings"
+        title: "Запланованих нарад більше немає"
         desc: >
-          There are no additional meetings planned in this series. To schedule additional meetings or extend the series, go to the template and edit meeting details to change the end date, frequency or interval.
+          У цій серії більше немає запланованих нарад. Щоб запланувати додаткові наради або продовжити серію, відкрийте шаблон і відредагуйте деталі наради, змінивши її дату завершення, частоту або інтервал.
     delete_dialog:
-      title: "Delete meeting series"
-      heading: "Permanently delete this meeting series?"
+      title: "Видалити серію нарад"
+      heading: "Назавжди видалити цю серію нарад?"
       confirmation_message_html:
         zero: >
-          Deleting <strong>%{title}</strong> will delete any meetings in this series. This action is not reversible. Please proceed with caution.
+          Серія нарад <strong>%{title}</strong> не містить жодних нарад. Зверніть увагу: її буде видалено для всіх.
         one: >
-          Deleting <strong>%{title}</strong> will also delete one meeting in this series. This action is not reversible. Please proceed with caution.
+          Якщо видалити <strong>%{title}</strong>, буде також видалено одну нараду в цій серії. Зверніть увагу: цю дію не можна відмінити.
         other: >
-          Deleting <strong>%{title}</strong> will delete all %{count} meetings in this series. This action is not reversible. Please proceed with caution.
+          Якщо видалити <strong>%{title}</strong>, буде видалено всі наради (%{count}) у цій серії. Зверніть увагу: цю дію не можна відмінити.
     scheduled_delete_dialog:
-      title: "Cancel meeting occurrence"
-      heading: "Cancel this meeting occurrence?"
+      title: "Скасувати нараду серії"
+      heading: "Скасувати цю нараду серії?"
       confirmation_message_html: >
-        Any meeting information not in the template will be lost. Do you want to continue?
-      confirm_button: "Cancel occurrence"
+        Будь-яку інформацію про нараду, відсутню в шаблоні, буде втрачено. Продовжити?
+      confirm_button: "Скасувати нараду"
     end_series_dialog:
-      title: "End meeting series"
+      title: "Завершити серію нарад"
   notice_successful_notification: "Повідомлення успішно надіслано"
   notice_timezone_missing: Часовий пояс не встановлено і %{zone} передбачається. Щоб вибрати часовий пояс, натисніть тут.
   notice_meeting_updated: "Цю сторінку оновив інший користувач. Перезавантажте її, щоб побачити зміни."
@@ -318,8 +345,8 @@ uk:
   text_duration_in_hours: "Тривалість у годинах"
   text_in_hours: "у годинах"
   text_meeting_agenda_for_meeting: 'порядку денного засідання %{meeting}'
-  text_meeting_series_end_early_heading: "Delete future occurrences?"
-  text_meeting_series_end_early: "Ending the series will delete any future open or scheduled meeting occurrences"
+  text_meeting_series_end_early_heading: "Видалити майбутні наради серії?"
+  text_meeting_series_end_early: "Завершення серії призведе до видалення всіх наступних відкритих або запланованих нарад"
   text_meeting_closing_are_you_sure: "Справді закрити порядок денний заходу?"
   text_meeting_agenda_open_are_you_sure: "Це вмить призведе до виправлення усіх змін! Бажаєте продовжити?"
   text_meeting_minutes_for_meeting: 'протокол засідання %{meeting}'
@@ -334,10 +361,10 @@ uk:
   label_meeting_created_by: "Створено "
   label_meeting_last_updated: "Востаннє оновлено"
   label_meeting_reload: "Перезавантажити"
-  label_meeting_index_today: "Today"
-  label_meeting_index_tomorrow: "Tomorrow"
-  label_meeting_index_this_week: "Later this week"
-  label_meeting_index_later: "Next week and later"
+  label_meeting_index_today: "Сьогодні"
+  label_meeting_index_tomorrow: "Завтра"
+  label_meeting_index_this_week: "Пізніше цього тижня"
+  label_meeting_index_later: "Наступного тижня й пізніше"
   label_agenda_items: "Пункти порядку денного"
   label_agenda_items_reordered: "перевпорядковано"
   label_agenda_item_remove: "Зняти з порядку денного"
@@ -363,7 +390,7 @@ uk:
   label_meeting_state_closed: "Закрито"
   label_meeting_state_closed_html: "<i>Закрита</i>"
   label_meeting_state_agenda_created: "Порядок денний створено"
-  label_meeting_state_planned: "Planned"
+  label_meeting_state_planned: "Заплановані"
   label_meeting_state_cancelled: "Скасовано"
   label_meeting_state_skipped: "Пропущено"
   label_meeting_reopen_action: "Відкрити зустріч знову"

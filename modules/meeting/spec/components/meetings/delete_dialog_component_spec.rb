@@ -37,7 +37,7 @@ RSpec.describe Meetings::DeleteDialogComponent, type: :component do
   let(:user) { build_stubbed(:user) }
 
   subject do
-    render_inline(described_class.new(meeting:, project:))
+    render_inline(described_class.new(meeting:))
     page
   end
 
@@ -48,24 +48,14 @@ RSpec.describe Meetings::DeleteDialogComponent, type: :component do
   describe "dialog form" do
     let(:meeting) { build_stubbed(:meeting, project:) }
 
-    context "without a current project" do
-      let(:project) { nil }
+    let(:project) { build_stubbed(:project) }
 
-      it "renders the correct form action" do
-        expect(subject).to have_element "form", action: meeting_path(meeting)
-      end
-    end
-
-    context "with a current project" do
-      let(:project) { build_stubbed(:project) }
-
-      it "renders the correct form action" do
-        expect(subject).to have_element "form", action: project_meeting_path(project, meeting)
-      end
+    it "renders the correct form action" do
+      expect(subject).to have_element "form", action: project_meeting_path(project, meeting)
     end
   end
 
-  describe "with a one-off meeting" do
+  describe "with a one-time meeting" do
     let(:meeting) { build_stubbed(:meeting, project:) }
 
     it "shows a heading" do
@@ -82,11 +72,11 @@ RSpec.describe Meetings::DeleteDialogComponent, type: :component do
     let(:meeting) { build_stubbed(:structured_meeting_template, recurring_meeting: series) }
 
     it "shows a heading" do
-      expect(subject).to have_text "Delete this meeting occurrence?"
+      expect(subject).to have_text "Cancel this meeting occurrence?"
     end
 
-    it "shows a message that the meeting is part of a series" do
-      expect(subject).to have_text "meeting is part of a series"
+    it "shows a warning about potential information loss" do
+      expect(subject).to have_text "Any meeting information not in the template will be lost."
     end
   end
 end

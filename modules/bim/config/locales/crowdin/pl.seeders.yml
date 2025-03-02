@@ -252,33 +252,33 @@ pl:
                 item_0:
                   subject: Opracowanie pierwszej wersji roboczej
                   description: |-
-                    ## Cel
+                    ## Goal
 
-                    * Utwórz użyteczny przegląd wyników
-                    * Sprawdź, co zostało zrobione i podsumowaj wyniki
-                    * Przekaż wszystkie istotne wyniki klientowi
-                    * Określ podstawowe warunki graniczne projektu
+                    *   Create a useful overview of the results
+                    *   Check what has been done and summarize the results
+                    *   Communicate all the relevant results with the customer
+                    *   Identify the fundamental boundary conditions of the project
 
-                    ## Opis
+                    ## Description
 
-                    * Każdy temat ma własny przegląd, który będzie używany jako katalog wyników
-                    * Ten przegląd informuje wszystkich uczestników o podjętych decyzjach
-                    * ...
+                    *   Each topic gets its own overview which will be used as a catalogue of results
+                    *   This overview informs all participants about the decisions made
+                    *   ...
                 item_1:
                   subject: Podsumuj wyniki
                   description: |-
-                    ## Cel
+                    ## Goal
 
-                    * Utwórz użyteczny przegląd wyników
-                    * Sprawdź, co zostało zrobione i podsumowaj wyniki
-                    * Przekaż wszystkie istotne wyniki klientowi
-                    * Określ podstawowe warunki graniczne projektu
+                    *   Create a useful overview of the results
+                    *   Check what has been done and summarize the results
+                    *   Communicate all the relevant results with the customer
+                    *   Identify the fundamental boundary conditions of the project
 
-                    ## Opis
+                    ## Description
 
-                    * Każdy temat ma własny przegląd, który będzie używany jako katalog wyników
-                    * Ten przegląd informuje wszystkich uczestników o podjętych decyzjach
-                    * ...
+                    *   Each topic gets its own overview which will be used as a catalogue of results
+                    *   This overview informs all participants about the decisions made
+                    *   ...
             item_3:
               subject: Przejście planowania wstępnego
               description: Ten typ jest hierarchicznie nadrzędny dla typów „Starcie” i „Żądanie”, w ten sposób reprezentuje ogólną notatkę.

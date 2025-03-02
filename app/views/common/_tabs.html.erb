@@ -32,7 +32,7 @@ See COPYRIGHT and LICENSE files for more details.
   <opce-content-tabs></opce-content-tabs>
 <% end %>
 
-<%= content_tag 'div',
-                render(partial: selected_tab[:partial], locals: { f: f, tab: selected_tab } ),
+<%= content_tag "div",
+                render(partial: selected_tab[:partial], locals: { f: f, tab: selected_tab }),
                 id: "tab-content-#{selected_tab[:name]}",
-                class: 'tab-content' %>
+                class: "tab-content" %>

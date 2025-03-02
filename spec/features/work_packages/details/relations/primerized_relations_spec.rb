@@ -300,13 +300,15 @@ RSpec.describe "Primerized work package relations tab",
 
   describe "creating a relation" do
     let(:wp_successor) { create(:work_package, type: type1, subject: "successor of main") }
+    let(:wp_blocks) { create(:work_package, type: type1, subject: "I am blocking") }
 
     it "renders the new relation form for the selected type and creates the relation" do
       scroll_to_element relations_panel
 
       wait_for_network_idle
 
-      relations_tab.add_relation(type: :precedes, relatable: wp_successor,
+      relations_tab.add_relation(type: :precedes,
+                                 relatable: wp_successor,
                                  description: "Discovered relations have descriptions!")
       relations_tab.expect_relation(wp_successor)
 
@@ -318,6 +320,33 @@ RSpec.describe "Primerized work package relations tab",
       # Ghost relations are shown here due to lack of permissions on the project
       relations_tab.expect_ghost_relation(restricted_relation_relates)
       relations_tab.expect_ghost_relation(restricted_child_work_package)
+    end
+
+    it "renders an error when there is no WP selected (regression #60869)" do
+      scroll_to_element relations_panel
+
+      wait_for_network_idle
+
+      relations_tab.select_relation_type("Blocked by")
+
+      wait_for_network_idle
+
+      click_link_or_button "Add"
+
+      wait_for_network_idle
+
+      expect(page).to have_text "Related work package not found or not visible"
+
+      relations_tab.search_in_autocompleter(wp_blocks)
+
+      click_link_or_button "Add"
+
+      relations_tab.expect_relation(wp_blocks)
+
+      # Bumped by one
+      tabs.expect_counter("relations", 7)
+      # Relation is created
+      expect(Relation.blocks.where(from: wp_blocks, to: work_package)).to exist
     end
 
     it "does not autocomplete unrelatable work packages" do

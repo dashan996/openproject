@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -48,6 +50,7 @@ RSpec.describe "OpenID Connect", :skip_2fa_stage, # Prevent redirects to 2FA sta
   end
   let(:access_token) { "foo-bar-baz" }
   let(:refresh_token) { "refreshing-foo-bar-baz" }
+  let(:expires_in) { 60 }
   let(:oidc_sid) { "oidc-session-id-42" }
 
   before do
@@ -57,6 +60,7 @@ RSpec.describe "OpenID Connect", :skip_2fa_stage, # Prevent redirects to 2FA sta
       instance_double(OpenIDConnect::AccessToken,
                       access_token:,
                       refresh_token:,
+                      expires_in:,
                       userinfo!: OpenIDConnect::ResponseObject::UserInfo.new(user_info),
                       id_token: "not-nil").as_null_object
     end
@@ -72,7 +76,7 @@ RSpec.describe "OpenID Connect", :skip_2fa_stage, # Prevent redirects to 2FA sta
     let(:limit_self_registration) { false }
     let!(:provider) { create(:oidc_provider, slug: "keycloak", limit_self_registration:) }
 
-    it "signs up and logs in the user" do
+    it "signs up and logs in the user", :freeze_time do
       ##
       # it should redirect to the provider's openid connect authentication endpoint
       click_on_signin("keycloak")
@@ -106,9 +110,12 @@ RSpec.describe "OpenID Connect", :skip_2fa_stage, # Prevent redirects to 2FA sta
 
       token = user.oidc_user_tokens.first
       expect(token).not_to be_nil
-      expect(token.access_token).to eq access_token
-      expect(token.refresh_token).to eq refresh_token
-      expect(token.audiences).to eq ["__op-idp__"]
+      aggregate_failures "OIDC user token details" do
+        expect(token.access_token).to eq access_token
+        expect(token.refresh_token).to eq refresh_token
+        expect(token.expires_at).to eq 60.seconds.from_now.change(usec: 0)
+        expect(token.audiences).to eq ["__op-idp__"]
+      end
     end
 
     context "when the user is already registered" do
@@ -130,7 +137,7 @@ RSpec.describe "OpenID Connect", :skip_2fa_stage, # Prevent redirects to 2FA sta
         redirect_from_provider("keycloak")
 
         expect(response).to have_http_status :found
-        expect(response.location).to match /\/my\/page/
+        expect(response.location).to eq "http://#{Setting.host_name}/"
       end
     end
 

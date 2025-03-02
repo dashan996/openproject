@@ -20,21 +20,35 @@
 #See COPYRIGHT and LICENSE files for more details.
 #++
 tr:
-  button_add_deploy_target: Add deploy target
-  label_deploy_target: Deploy target
-  label_deploy_target_new: New deploy target
-  label_deploy_target_plural: Deploy targets
-  label_github_integration: GitHub Integration
-  notice_deploy_target_created: Deploy target created
-  notice_deploy_target_destroyed: Deploy target deleted
+  attributes:
+    additions_count: "Ekleme sayısı"
+    deletions_count: "Silinme sayısı"
+    comments_count: "Yorum sayısı"
+    github_html_url: "Çekme İsteği Adresi"
+    github_app_owner_avatar_url: "Sahip avatar adresi"
+    review_comments_count: "İnceleme yorumlarının sayısı"
+    github: "GitHub tanımlayıcı"
+    github_avatar_url: "Avatar adresi"
+    github_updated_at: "Güncellenme tarihi"
+    github_login: "GitHub girişi"
+    labels: "Etiketler"
+    repository: "Depo"
+    changed_files_count: "Değişen dosyalar"
+  button_add_deploy_target: Dağıtım hedefi ekle
+  label_deploy_target: Hedefi dağıt
+  label_deploy_target_new: Yeni dağıtım hedefi
+  label_deploy_target_plural: Hedefleri dağıt
+  label_github_integration: GitHub Entegrasyonu
+  notice_deploy_target_created: Dağıtım hedefi oluşturuldu
+  notice_deploy_target_destroyed: Dağıtım hedefi silindi
   plugin_openproject_github_integration:
     name: "OpenProject GitHub Entegrasyonu"
     description: "Integrates OpenProject and GitHub for a better workflow"
   project_module_github: "GitHub"
   permission_show_github_content: "Github içeriğini göster"
-  permission_introspection: Read running OpenProject core version and build SHA
+  permission_introspection: Çalışan OpenProject çekirdek sürümünü okuyun ve SHA oluşturun
   text_deploy_target_type_info: >
-    So far we only support OpenProject itself.
+    Şimdiye kadar sadece OpenProject'in kendisini destekliyoruz.
   text_deploy_target_api_key_info: >
-    An OpenProject [API key](docs_url) belonging to a user who has the global introspection permission.
+    Global iç gözlem iznine sahip bir kullanıcıya ait bir OpenProject [API anahtarı](docs_url).
   text_pull_request_deployed_to: "%{pr_link} deployed to %{deploy_target_link}"

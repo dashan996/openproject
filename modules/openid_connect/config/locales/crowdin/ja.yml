@@ -4,32 +4,31 @@ ja:
     description: "OmniAuth OpenID Connect ストラテジープロバイダを OpenProject に追加します。"
   logout_warning: >
     ログアウトしています。送信したフォームの内容は失われる可能性があります。 [ログイン] してください。
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
-        name: 名称
-        slug: 一意な識別子
-        display_name: 表示名
-        client_id: クライアントID
-        client_secret: クライアントシークレット
-        secret: シークレット
-        scope: スコープ
-        grant_types_supported: サポートされている権限タイプ
-        limit_self_registration: 自己登録を制限
-        authorization_endpoint: 認証エンドポイント
-        userinfo_endpoint: ユーザー情報エンドポイント
-        token_endpoint: トークンエンドポイント
-        end_session_endpoint: エンドセッションエンドポイント
-        post_logout_redirect_uri: ログアウト後のリダイレクトURI
+        name: Name
+        slug: Unique identifier
+        display_name: Display name
+        client_id: Client ID
+        client_secret: Client secret
+        secret: Secret
+        scope: Scope
+        grant_types_supported: Supported grant types
+        limit_self_registration: Limit self registration
+        authorization_endpoint: Authorization endpoint
+        userinfo_endpoint: User information endpoint
+        token_endpoint: Token endpoint
+        end_session_endpoint: End session endpoint
+        post_logout_redirect_uri: Post logout redirect URI
         jwks_uri: JWKS URI
-        issuer: 発行者
-        tenant: テナント
-        metadata_url: メタデータURL
-        icon: カスタム アイコン
-        claims: クレーム
-        acr_values: ACR値
-        redirect_url: リダイレクトURL
-  activerecord:
+        issuer: Issuer
+        tenant: Tenant
+        metadata_url: Metadata URL
+        icon: Custom icon
+        claims: Claims
+        acr_values: ACR values
+        redirect_url: Redirect URL
     errors:
       models:
         openid_connect/provider:

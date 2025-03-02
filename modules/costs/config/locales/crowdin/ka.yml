@@ -30,6 +30,7 @@ ka:
         overridden_costs: "გადაფარული ფასები"
         spent: "დახარჯული"
         spent_on: "თარიღი"
+        logged_by: "Logged by"
       cost_type:
         unit: "ერთეულის სახელი"
         unit_plural: "ერთეულის სახელი მრავლობითში"
@@ -59,11 +60,15 @@ ka:
       cost_type:
         one: "ღირებულების ტიპი"
         other: "ღირებულების ტიპი"
+      time_entry_activity:
+        one: "Time tracking activity"
+        other: "Time tracking activities"
       rate: "სიხშირე"
     errors:
       models:
         time_entry:
           invalid_time: "must be between 00:00 and 23:59."
+          cannot_log_for_this_work_package: "Cannot log time for this work package."
         work_package:
           is_not_a_valid_target_for_cost_entries: "Work package #%{id} is not a valid target for reassigning the cost entries."
           nullify_is_not_valid_for_cost_entries: "ღირებულების ჩანაწერებს პროექტს ვერ მიანიჭებთ."
@@ -79,6 +84,7 @@ ka:
   button_add_rate: "სიხშირის დამატება"
   button_log_costs: "ერთეულის ფასის ჟურნალი"
   button_log_time: "Log"
+  button_add_activity: "Activity"
   caption_booked_on_project: "Booked on project"
   caption_default: "ნაგულისხმევი"
   caption_default_rate_history_for: "Default rate history for %{user}"
@@ -92,6 +98,8 @@ ka:
   caption_show_locked: "Show locked types"
   caption_log_time_dialog: "Log time"
   description_date_for_new_rate: "Date for new rate"
+  description_costs_settings: "Define the desired format for the costs in all projects."
+  description_time_settings: "Define which fields are mandatory to fill when logging time in all projects."
   group_by_others: "not in any group"
   label_between: "მითითებულ დროის შუალედში"
   label_cost_filter_add: "Add cost entry filter"
@@ -118,6 +126,8 @@ ka:
   label_kind: "ტიპი"
   label_less_or_equal: "<="
   label_log_costs: "ერთეულის ფასის ჟურნალი"
+  label_new_time_entry_activity: "New time entry activity"
+  label_time_entry_activity_form_description: "Changes to this time entry activity will be reflected in all projects where it is enabled."
   label_no: "არა"
   label_option_plural: "მორგება"
   label_overall_costs: "ჯამური ფასი"
@@ -130,6 +140,10 @@ ka:
   label_until: "დასასრულის დრო"
   label_valid_from: "Ძალაშია"
   label_yes: "დიახ"
+  label_time: "Time"
+  label_cost: "Cost"
+  label_costs: "Costs"
+  label_mandatory_fields: "Mandatory fields"
   placeholder_activity_select_work_package_first: Work package selection is required first
   notice_something_wrong: "მოხდა შეცდომა. სცადეთ თავიდან."
   notice_successful_restore: "Successful restore."

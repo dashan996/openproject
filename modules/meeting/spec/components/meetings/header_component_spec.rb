@@ -36,7 +36,7 @@ RSpec.describe Meetings::HeaderComponent, type: :component do
   let(:user) { build_stubbed(:user) }
 
   subject do
-    render_inline(described_class.new(meeting:, project:))
+    render_inline(described_class.new(meeting:))
     page
   end
 

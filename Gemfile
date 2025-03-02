@@ -49,7 +49,7 @@ gem "rdoc", ">= 2.4.2"
 gem "doorkeeper", "~> 5.8.0"
 # Maintain our own omniauth due to relative URL root issues
 # see upstream PR: https://github.com/omniauth/omniauth/pull/903
-gem "omniauth", git: "https://github.com/opf/omniauth", ref: "fe862f986b2e846e291784d2caa3d90a658c67f0"
+gem "omniauth", git: "https://github.com/opf/omniauth", ref: "7eb21563ba047ef86d71f099975587b5ec88f9c9"
 gem "request_store", "~> 1.7.0"
 
 gem "warden", "~> 1.2"
@@ -158,7 +158,7 @@ gem "structured_warnings", "~> 0.4.0"
 gem "airbrake", "~> 13.0.0", require: false
 
 gem "markly", "~> 0.10" # another markdown parser like commonmarker, but with AST support used in PDF export
-gem "md_to_pdf", git: "https://github.com/opf/md-to-pdf", ref: "965034bdd4b119c7233ea4ecd62d3964d3dec11d"
+gem "md_to_pdf", git: "https://github.com/opf/md-to-pdf", ref: "66893683b94a5fe8f1dc9a60600773307209cdd2"
 gem "prawn", "~> 2.4"
 gem "ttfunk", "~> 1.7.0" # remove after https://github.com/prawnpdf/prawn/issues/1346 resolved.
 
@@ -201,7 +201,7 @@ gem "aws-sdk-core", "~> 3.107"
 # File upload via fog + screenshots on travis
 gem "aws-sdk-s3", "~> 1.91"
 
-gem "openproject-token", "~> 4.0"
+gem "openproject-token", "~> 5.0"
 
 gem "plaintext", "~> 0.3.2"
 
@@ -235,7 +235,9 @@ gem "factory_bot_rails", "~> 6.4.4", require: false
 gem "turbo_power", "~> 0.7.0"
 gem "turbo-rails", "~> 2.0.0"
 
-gem "httpx"
+# There is a problem with version 1.4.0. Do not update until you're sure there is no infinite hang
+# happenning in failing tests when WebMock or VCR stub cannot be found.
+gem "httpx", "~> 1.3.4"
 
 # Brings actual deep freezing to most ruby objects
 gem "ice_nine"
@@ -278,7 +280,7 @@ group :test do
   gem "capybara_accessible_selectors", git: "https://github.com/citizensadvice/capybara_accessible_selectors", tag: "v0.12.0"
   gem "capybara-screenshot", "~> 1.0.17"
   gem "cuprite", "~> 0.15.0"
-  gem "ferrum", github: "toy/ferrum", ref: "mouse-events-buttons-property-0.15"
+  gem "ferrum", github: "opf/ferrum", ref: "mouse-events-buttons-property-0.15"
   gem "rspec-wait"
   gem "selenium-devtools"
   gem "selenium-webdriver", "~> 4.20"
@@ -407,4 +409,4 @@ end
 
 gem "openproject-octicons", "~>19.20.0 "
 gem "openproject-octicons_helper", "~>19.20.0 "
-gem "openproject-primer_view_components", "~>0.53.1"
+gem "openproject-primer_view_components", "~>0.56.0"

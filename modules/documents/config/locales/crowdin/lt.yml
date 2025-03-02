@@ -34,6 +34,8 @@ lt:
   enumeration_doc_categories: "Dokumentų kategorijos"
   documents:
     label_attachment_author: "Priedo autorius"
+    label_categories: "Categories"
+    new_category: "New category"
   label_document_added: "Dokumentas pridėtas"
   label_document_new: "Naujas dokumentas"
   label_document_plural: "Dokumentai"

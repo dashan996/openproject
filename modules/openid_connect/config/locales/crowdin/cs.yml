@@ -4,32 +4,31 @@ cs:
     description: "Adds OmniAuth OpenID Connect strategy providers to OpenProject."
   logout_warning: >
     Byli jste odhlášeni. Obsah formuláře může být ztracen. Prosím, [přihlaste se].
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
-        name: Jméno
-        slug: Jedinečný identifikátor
-        display_name: Zobrazovaný název
-        client_id: ID klienta
+        name: Name
+        slug: Unique identifier
+        display_name: Display name
+        client_id: Client ID
         client_secret: Client secret
-        secret: Tajný klíč
-        scope: Rozsah
-        grant_types_supported: Podporované typy grantů
-        limit_self_registration: Omezit vlastní registraci
-        authorization_endpoint: Koncový bod autorizace
-        userinfo_endpoint: Koncový bod s informacemi o uživateli
-        token_endpoint: Koncový bod tokenu
-        end_session_endpoint: Ukončení koncového bodu relace
-        post_logout_redirect_uri: URI přesměrování po odhlášení
+        secret: Secret
+        scope: Scope
+        grant_types_supported: Supported grant types
+        limit_self_registration: Limit self registration
+        authorization_endpoint: Authorization endpoint
+        userinfo_endpoint: User information endpoint
+        token_endpoint: Token endpoint
+        end_session_endpoint: End session endpoint
+        post_logout_redirect_uri: Post logout redirect URI
         jwks_uri: JWKS URI
-        issuer: Emitent
+        issuer: Issuer
         tenant: Tenant
-        metadata_url: URL metadat
-        icon: Vlastní ikona
-        claims: Nároky
-        acr_values: ACR hodnoty
-        redirect_url: Přesměrování URL
-  activerecord:
+        metadata_url: Metadata URL
+        icon: Custom icon
+        claims: Claims
+        acr_values: ACR values
+        redirect_url: Redirect URL
     errors:
       models:
         openid_connect/provider:

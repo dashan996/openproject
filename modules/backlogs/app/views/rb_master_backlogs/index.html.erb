@@ -33,26 +33,29 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render Primer::OpenProject::PageHeader.new do |header|
     header.with_title { t(:label_backlogs) }
-    header.with_breadcrumbs( [{ href: project_overview_path(@project.id), text: @project.name },
-                              t(:label_backlogs)
-                             ])
+    header.with_breadcrumbs(
+      [{ href: project_overview_path(@project.id), text: @project.name },
+       t(:label_backlogs)]
+    )
   end
 %>
 
 <%= render(Primer::OpenProject::SubHeader.new) do |subheader|
-  subheader.with_action_button(scheme: :primary,
-                               aria: { label: t(:label_version_new) },
-                               title: t(:label_version_new),
-                               tag: :a,
-                               href: url_for({ controller: '/versions', action: 'new', project_id: @project })) do |button|
-    button.with_leading_visual_icon(icon: :plus)
-    t('activerecord.models.version')
-  end
-end %>
+      subheader.with_action_button(
+        scheme: :primary,
+        aria: { label: t(:label_version_new) },
+        title: t(:label_version_new),
+        tag: :a,
+        href: url_for({ controller: "/versions", action: "new", project_id: @project })
+      ) do |button|
+        button.with_leading_visual_icon(icon: :plus)
+        t("activerecord.models.version")
+      end
+    end %>
 
 <% if (@owner_backlogs.empty? && @sprint_backlogs.empty?) %>
   <%= no_results_box action_url: new_project_version_path(@project),
-                     display_action: authorize_for('versions', 'new'),
+                     display_action: authorize_for("versions", "new"),
                      custom_title: t(:backlogs_empty_title),
                      custom_action_text: t(:backlogs_empty_action_text) %>
 <% end %>
@@ -60,10 +63,10 @@ end %>
 <div id="rb">
   <div id="backlogs_container" class="clearfix">
     <div id="owner_backlogs_container">
-      <%= render partial: 'backlog', collection: @owner_backlogs %>
+      <%= render partial: "backlog", collection: @owner_backlogs %>
     </div>
     <div id="sprint_backlogs_container">
-      <%= render partial: 'backlog', collection: @sprint_backlogs %>
+      <%= render partial: "backlog", collection: @sprint_backlogs %>
     </div>
   </div>
 

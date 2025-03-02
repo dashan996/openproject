@@ -34,6 +34,7 @@ RSpec.describe Queries::Projects::Filters::UserActionFilter do
     let(:type) { :list_all }
     let(:model) { Project }
     let(:attribute) { :user_action }
+    let(:name) { "User action" }
     let(:values) { ["projects/view"] }
   end
 end

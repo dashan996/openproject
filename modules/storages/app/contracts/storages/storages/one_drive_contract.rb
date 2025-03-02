@@ -30,6 +30,8 @@
 
 module Storages::Storages
   class OneDriveContract < ::ModelContract
+    attribute :name
+    validates :name, presence: true, length: { maximum: 255 }
     attribute :host
     validates :host, absence: true
     attribute :tenant_id

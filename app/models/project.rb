@@ -93,6 +93,8 @@ class Project < ApplicationRecord
            inverse_of: :project,
            dependent: :destroy
 
+  has_many :recurring_meetings, dependent: :destroy
+
   accepts_nested_attributes_for :available_life_cycle_steps
   validates_associated :available_life_cycle_steps, on: :saving_life_cycle_steps
 

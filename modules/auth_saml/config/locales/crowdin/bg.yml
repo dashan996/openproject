@@ -1,29 +1,28 @@
 bg:
-  activemodel:
+  activerecord:
     attributes:
       saml/provider:
-        display_name: Име
-        identifier: Идентификатор
-        secret: Тайна
-        scope: Обхват
-        assertion_consumer_service_url: URL на ACS (потребителска услуга за твърдения)
-        limit_self_registration: Ограничаване на самостоятелната регистрация
-        sp_entity_id: Идентификатор на обслужващата единица
-        metadata_url: URL на метаданните на доставчика на идентичност
-        name_identifier_format: Формат на идентификатора на името
-        idp_sso_service_url: Крайна точка за вход на доставчик на идентичности
-        idp_slo_service_url: Крайна точка за вход на доставчик на идентичности
-        idp_cert: Публично удостоверение на доставчика на идентификация
-        authn_requests_signed: Подписване на SAML AuthnRequests
-        want_assertions_signed: Изискване за подписани отговори
-        want_assertions_encrypted: Изискване за подписани отговори
-        certificate: Сертификат, използван от OpenProject за SAML заявки
-        private_key: Съответстващ частен ключ за OpenProject SAML заявки
-        signature_method: Алгоритъм на подписа
-        digest_method: Алгоритъм Digest
-        format: "Формат"
-        icon: "Персонализирана икона"
-  activerecord:
+        display_name: Name
+        identifier: Identifier
+        secret: Secret
+        scope: Scope
+        assertion_consumer_service_url: ACS (Assertion consumer service) URL
+        limit_self_registration: Limit self registration
+        sp_entity_id: Service entity ID
+        metadata_url: Identity provider metadata URL
+        name_identifier_format: Name identifier format
+        idp_sso_service_url: Identity provider login endpoint
+        idp_slo_service_url: Identity provider logout endpoint
+        idp_cert: Public certificate of identity provider
+        authn_requests_signed: Sign SAML AuthnRequests
+        want_assertions_signed: Require signed responses
+        want_assertions_encrypted: Require encrypted responses
+        certificate: Certificate used by OpenProject for SAML requests
+        private_key: Corresponding private key for OpenProject SAML requests
+        signature_method: Signature algorithm
+        digest_method: Digest algorithm
+        format: "Format"
+        icon: "Custom icon"
     errors:
       models:
         saml/provider:
@@ -138,7 +137,7 @@ bg:
       authn_requests_signed: >
         If checked, OpenProject will sign the SAML AuthnRequest. You will have to provide a signing certificate and private key using the fields below.
       want_assertions_signed: >
-        If checked, OpenProject will required signed responses from the identity provider using it's own certificate keypair. OpenProject will verify the signature against the certificate from the basic configuration section.
+        If checked, OpenProject will required signed responses from the identity provider using its own certificate keypair. OpenProject will verify the signature against the certificate from the basic configuration section.
       want_assertions_encrypted: >
         If enabled, require the identity provider to encrypt the assertion response using the certificate pair that you provide.
       certificate: >

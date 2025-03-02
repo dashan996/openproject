@@ -8,7 +8,6 @@ class DateEditField < EditField
                  selector: nil,
                  is_milestone: false,
                  is_table: false)
-
     super(context, property_name, selector:)
     self.milestone = is_milestone
     self.is_table = is_table
@@ -33,8 +32,11 @@ class DateEditField < EditField
            :expect_duration,
            :set_duration,
            :duration_field,
-           :toggle_ignore_non_working_days,
-           :toggle_scheduling_mode, to: :datepicker
+           :toggle_working_days_only,
+           :toggle_scheduling_mode,
+           :expect_manual_scheduling_mode,
+           :expect_automatic_scheduling_mode,
+           to: :datepicker
 
   def modal_selector
     '[data-test-selector="op-datepicker-modal"]'
@@ -42,31 +44,20 @@ class DateEditField < EditField
 
   def input_selector
     if property_name == "combinedDate"
-      "input[name=startDate]"
+      "input[name='work_package[start_date]']"
     else
-      "input[name=#{property_name}]"
+      "input[name='work_package[#{property_name.underscore}]']"
     end
   end
 
   def property_name
     if milestone
-      "date"
+      # when displaying date picker for milestone, only one date is displayed,
+      # and the input field name is `start_date`.
+      "start_date"
     else
       super
     end
-  end
-
-  def expect_scheduling_mode(manually:)
-    datepicker.expect_scheduling_mode(manually)
-  end
-
-  def set_scheduling_mode(manually:)
-    # Expect currently set before toggling
-    expect_scheduling_mode(manually:)
-    # Change mode
-    datepicker.toggle_scheduling_mode
-    # Expect toggled
-    expect_scheduling_mode(manually: !manually)
   end
 
   def activate_start_date_within_modal
@@ -77,7 +68,7 @@ class DateEditField < EditField
 
   def activate_due_date_within_modal
     within_modal do
-      find('[data-test-selector="op-datepicker-modal--end-date-field"]').click
+      find('[data-test-selector="op-datepicker-modal--due-date-field"]').click
     end
   end
 
@@ -111,6 +102,8 @@ class DateEditField < EditField
     expect(page)
       .to have_selector(modal_selector, wait: 10),
           "Expected date field '#{property_name}' to be active."
+
+    wait_for_network_idle
   end
 
   def expect_inactive!

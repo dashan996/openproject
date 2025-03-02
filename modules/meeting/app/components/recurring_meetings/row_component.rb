@@ -35,7 +35,6 @@ module RecurringMeetings
     delegate :recurring_meeting, to: :model
     delegate :project, to: :recurring_meeting
     delegate :schedule, to: :meeting
-    delegate :current_project, to: :table
 
     def instantiated?
       meeting.present?
@@ -51,17 +50,9 @@ module RecurringMeetings
 
     def start_time
       if instantiated?
-        link_to start_time_title, current_project_meeting_path(meeting)
+        link_to start_time_title, project_meeting_path(project, meeting)
       else
         start_time_title
-      end
-    end
-
-    def current_project_meeting_path(meeting)
-      if current_project
-        project_meeting_path(current_project, meeting)
-      else
-        meeting_path(meeting)
       end
     end
 
@@ -130,7 +121,7 @@ module RecurringMeetings
           size: :medium,
           tag: :a,
           data: { "turbo-method": "post" },
-          href: init_recurring_meeting_path(model.recurring_meeting.id, start_time: model.start_time.iso8601)
+          href: init_project_recurring_meeting_path(project, model.recurring_meeting.id, start_time: model.start_time.iso8601)
         )
       ) do |_c|
         I18n.t(:label_recurring_meeting_create)
@@ -163,7 +154,9 @@ module RecurringMeetings
       return unless instantiated? && !cancelled?
 
       menu.with_item(label: I18n.t(:label_icalendar_download),
-                     href: download_ics_recurring_meeting_path(model.recurring_meeting, occurrence_id: model.id),
+                     href: download_ics_project_recurring_meeting_path(project,
+                                                                       model.recurring_meeting,
+                                                                       occurrence_id: meeting.id),
                      content_arguments: {
                        data: { turbo: false }
                      }) do |item|
@@ -177,7 +170,7 @@ module RecurringMeetings
       menu.with_item(
         label: past? ? I18n.t(:label_recurring_meeting_delete) : I18n.t(:label_recurring_meeting_cancel),
         scheme: :danger,
-        href: polymorphic_path([:delete_dialog, current_project, meeting.becomes(Meeting)]),
+        href: delete_dialog_project_meeting_path(project, meeting),
         tag: :a,
         content_arguments: {
           data: { controller: "async-dialog" }
@@ -193,8 +186,9 @@ module RecurringMeetings
       menu.with_item(
         label: I18n.t(:label_recurring_meeting_cancel),
         scheme: :danger,
-        href: polymorphic_path([:delete_scheduled_dialog, current_project, model.recurring_meeting],
-                               start_time: model.start_time.iso8601),
+        href: delete_scheduled_dialog_project_recurring_meeting_path(project,
+                                                                     model.recurring_meeting,
+                                                                     start_time: model.start_time.iso8601),
         tag: :a,
         content_arguments: {
           data: { controller: "async-dialog" }
@@ -209,7 +203,7 @@ module RecurringMeetings
 
       menu.with_item(
         label: I18n.t(:label_recurring_meeting_restore),
-        href: init_recurring_meeting_path(recurring_meeting, start_time: model.start_time.iso8601),
+        href: init_project_recurring_meeting_path(project, recurring_meeting, start_time: model.start_time.iso8601),
         form_arguments: {
           method: :post
         }

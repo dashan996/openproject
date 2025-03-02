@@ -92,7 +92,7 @@ export class WorkPackagesFullViewComponent extends WorkPackageSingleViewBase imp
 
   // enable other parts of the application to trigger an immediate update
   // e.g. a stimulus controller
-  // currently used by the new activities tab which does it's own polling
+  // currently used by the new activities tab which does its own polling
   @HostListener('document:ian-update-immediate')
   triggerImmediateUpdate() {
     this.storeService.reload();

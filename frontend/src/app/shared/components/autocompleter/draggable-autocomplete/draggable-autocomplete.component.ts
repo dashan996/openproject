@@ -62,11 +62,17 @@ export class DraggableAutocompleteComponent extends UntilDestroyedMixin implemen
   /** Label to display below the autocompleter input */
   @Input() inputCaption = '';
 
+  /** Label to display a validation error below the drag&drop area */
+  @Input() inputError = '';
+
   /** Label to display drag&drop area */
   @Input() dragAreaLabel = '';
 
   /** Name of drag&drop area group */
   @Input() dragAreaName = 'columns';
+
+  /** Indicates that at least one entry must be selected */
+  @Input() required = false;
 
   /** Decide whether to bind the component to the component or to the body */
   /** Binding to the component in case the component is inside a Primer Dialog which uses popover */
@@ -209,6 +215,14 @@ export class DraggableAutocompleteComponent extends UntilDestroyedMixin implemen
   searchFunction = (term:string, currentItem:QueryFilterResource):boolean => {
     return this.alternativeSearchService.searchFunction(term, currentItem);
   };
+
+  get hasError() {
+    return this.required && this.selectedOptions.length === 0;
+  }
+
+  get errorMessage() {
+    return this.inputError;
+  }
 
   private updateAvailableOptions() {
     this.availableOptions = this.options

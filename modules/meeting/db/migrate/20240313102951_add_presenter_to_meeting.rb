@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddPresenterToMeeting < ActiveRecord::Migration[7.1]
   def change
     add_reference :meeting_agenda_items, :presenter, type: :bigint, foreign_key: { to_table: :users }, index: true

@@ -27,5 +27,7 @@
 #++
 
 Rails.application.routes.draw do
-  get "/my/page", to: "angular#empty_layout"
+  namespace :my do
+    get "/page", to: "page#show"
+  end
 end

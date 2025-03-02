@@ -54,6 +54,7 @@ RSpec.describe OpenIDConnect::UserTokens::CreateService do
     expect(token.access_token).to eq access_token
     expect(token.refresh_token).to eq refresh_token
     expect(token.audiences).to contain_exactly("io", "aud1", "aud2")
+    expect(token.expires_at).to be_nil
   end
 
   it "logs no error" do
@@ -224,6 +225,18 @@ RSpec.describe OpenIDConnect::UserTokens::CreateService do
 
       token = OpenIDConnect::UserToken.last
       expect(token.audiences).to contain_exactly("io", "aud2")
+    end
+  end
+
+  context "when passing expires_in", :freeze_time do
+    let(:args) { { access_token:, refresh_token:, known_audiences: ["io"], expires_in: } }
+    let(:expires_in) { 120 }
+
+    it "creates a user token with correct expires_at", :aggregate_failures do
+      expect { subject }.to change(OpenIDConnect::UserToken, :count).by(1)
+
+      token = OpenIDConnect::UserToken.last
+      expect(token.expires_at).to eq expires_in.seconds.from_now.change(usec: 0)
     end
   end
 end

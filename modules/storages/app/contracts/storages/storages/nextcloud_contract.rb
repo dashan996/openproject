@@ -29,57 +29,9 @@
 #++
 
 module Storages::Storages
-  class NextcloudContract < ::ModelContract
-    attribute :host
-    validates :host, url: { message: :invalid_host_url }, length: { maximum: 255 }
-    # Check that a host actually is a storage server.
-    # But only do so if the validations above for URL were successful.
-    validates :host, secure_context_uri: true, nextcloud_compatible_host: true, unless: -> { errors.include?(:host) }
-
-    attribute :authentication_method
-    validates :authentication_method, presence: true, inclusion: { in: ::Storages::NextcloudStorage::AUTHENTICATION_METHODS }
-
-    attribute :nextcloud_audience
-    validates :nextcloud_audience, presence: true, if: :nextcloud_storage_authenticate_via_idp?
-
-    attribute :automatically_managed
-
-    attribute :username
-    validates :username, presence: true, if: :nextcloud_storage_automatic_management_enabled?
-    validates :username,
-              absence: true,
-              unless: -> { nextcloud_storage_automatic_management_enabled? || nextcloud_default_storage_username? }
-
-    attribute :password
-    validates :password, presence: true, if: :nextcloud_storage_automatic_management_enabled?
-    validates :password, absence: true, unless: :nextcloud_storage_automatic_management_enabled?
-
-    validate do
-      if nextcloud_storage_automatic_management_enabled? && errors.exclude?(:host) && errors.exclude?(:password)
-        NextcloudApplicationCredentialsValidator.new(self).call
-      end
-    end
-
-    private
-
-    def nextcloud_storage_automatic_management_enabled?
-      return false unless nextcloud_storage?
-
-      @model.automatic_management_enabled?
-    end
-
-    def nextcloud_default_storage_username?
-      return false unless nextcloud_storage?
-
-      @model.username == @model.provider_fields_defaults[:username]
-    end
-
-    def nextcloud_storage_authenticate_via_idp?
-      nextcloud_storage? && @model.authenticate_via_idp?
-    end
-
-    def nextcloud_storage?
-      @model.is_a?(Storages::NextcloudStorage)
-    end
+  class NextcloudContract < ComposedContract
+    include_contract NextcloudGeneralInformationContract
+    include_contract NextcloudAudienceContract
+    include_contract NextcloudAutomaticManagementContract
   end
 end

@@ -31,9 +31,11 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render(Primer::OpenProject::PageHeader.new) do |header|
     header.with_title { t(:label_project_list_plural) }
-    header.with_breadcrumbs([{ href: admin_index_path, text: t("label_administration") },
-                             { href: admin_settings_project_custom_fields_path, text: t(:label_project_plural) },
-                             t(:label_project_list_plural)])
+    header.with_breadcrumbs(
+      [{ href: admin_index_path, text: t("label_administration") },
+       { href: admin_settings_project_custom_fields_path, text: t(:label_project_plural) },
+       t(:label_project_list_plural)]
+    )
   end
 %>
 
@@ -41,17 +43,17 @@ See COPYRIGHT and LICENSE files for more details.
   <fieldset class="form--fieldset">
     <div class="form--field -full-width">
       <div class="form--text-field-container -xwide">
-        <%= angular_component_tag 'opce-draggable-autocompleter',
+        <%= angular_component_tag "opce-draggable-autocompleter",
                                   inputs: {
                                     options: projects_columns_options,
                                     selected: selected_projects_columns_options,
                                     protected: protected_projects_columns_options,
-                                    name: 'settings[enabled_projects_columns][]',
-                                    id: 'settings_enabled_projects_columns',
-                                    inputLabel: I18n.t(:'queries.configure_view.columns.input_label'),
-                                    inputPlaceholder: I18n.t(:'queries.configure_view.columns.input_placeholder'),
-                                    dragAreaLabel: I18n.t(:'queries.configure_view.columns.drag_area_label')
-                                  }%>
+                                    name: "settings[enabled_projects_columns][]",
+                                    id: "settings_enabled_projects_columns",
+                                    inputLabel: I18n.t(:"queries.configure_view.columns.input_label"),
+                                    inputPlaceholder: I18n.t(:"queries.configure_view.columns.input_placeholder"),
+                                    dragAreaLabel: I18n.t(:"queries.configure_view.columns.drag_area_label")
+                                  } %>
       </div>
     </div>
 
@@ -61,14 +63,13 @@ See COPYRIGHT and LICENSE files for more details.
       </div>
       <span class="form--field-container">
         <span class="form--text-field-container">
-          <%= angular_component_tag 'opce-editable-query-props',
+          <%= angular_component_tag "opce-editable-query-props",
                                     data: {
-                                      name: 'settings[project_gantt_query]',
-                                      id: 'settings_project_gantt_query',
+                                      name: "settings[project_gantt_query]",
+                                      id: "settings_project_gantt_query",
                                       query: ::Projects::GanttQueryGeneratorService.current_query,
-                                      'url-params': 'true'
-                                    }
-          %>
+                                      "url-params": "true"
+                                    } %>
         </span>
       </span>
       <div class="form--field-instructions">
@@ -76,5 +77,5 @@ See COPYRIGHT and LICENSE files for more details.
       </div>
     </div>
   </fieldset>
-  <%= styled_button_tag t(:button_save), class: '-primary -with-icon icon-checkmark' %>
+  <%= styled_button_tag t(:button_save), class: "-primary -with-icon icon-checkmark" %>
 <% end %>

@@ -31,25 +31,26 @@
 module Meetings
   class RowComponent < ::OpPrimer::BorderBoxRowComponent
     delegate :current_project, to: :table
+    delegate :project, to: :model
 
     def project_name
-      helpers.link_to_project model.project, {}, {}, false
+      helpers.link_to_project project, {}, {}, false
     end
 
     def title
       if recurring?
-        link_to model.title, recurring_meeting_path(model)
+        link_to model.title, project_recurring_meeting_path(project, model)
       elsif recurring_meeting.present?
         occurrence_title
       else
-        link_to model.title, project_meeting_path(model.project, model)
+        link_to model.title, project_meeting_path(project, model)
       end
     end
 
     def occurrence_title
       safe_join(
-        [(link_to model.title, project_meeting_path(model.project, model)),
-         (link_to recurring_label, recurring_meeting_path(recurring_meeting))], "  "
+        [(link_to model.title, project_meeting_path(project, model)),
+         (link_to recurring_label, project_recurring_meeting_path(project, recurring_meeting))], "  "
       )
     end
 
@@ -62,6 +63,8 @@ module Meetings
     end
 
     def duration
+      return if model.duration.blank?
+
       render OpenProject::Common::DurationComponent.new(model.duration, :hours, abbreviated: false)
     end
 
@@ -107,7 +110,7 @@ module Meetings
 
     def view_meeting_series(menu)
       menu.with_item(label: I18n.t(:label_recurring_meeting_view),
-                     href: recurring_meeting_path(recurring_meeting)) do |item|
+                     href: project_recurring_meeting_path(project, recurring_meeting)) do |item|
         item.with_leading_visual_icon(icon: :iterations)
       end
     end
@@ -116,7 +119,7 @@ module Meetings
       return unless copy_allowed?
 
       menu.with_item(label: I18n.t(:label_meeting_copy),
-                     href: copy_meeting_path(model),
+                     href: copy_project_meeting_path(project, model),
                      content_arguments: {
                        data: {
                          turbo: model.is_a?(StructuredMeeting),
@@ -129,7 +132,7 @@ module Meetings
 
     def ical_action(menu)
       menu.with_item(label: I18n.t(:label_icalendar_download),
-                     href: download_ics_meeting_path(model),
+                     href: download_ics_project_meeting_path(project, model),
                      content_arguments: {
                        data: { turbo: false }
                      }) do |item|
@@ -140,9 +143,10 @@ module Meetings
     def delete_action(menu)
       return unless delete_allowed?
 
+      back_url = current_project ? nil : meetings_path
       menu.with_item(label: recurring_meeting.present? ? I18n.t(:label_recurring_meeting_delete) : I18n.t(:label_meeting_delete),
                      scheme: :danger,
-                     href: polymorphic_path([:delete_dialog, current_project, model.becomes(Meeting)]),
+                     href: delete_dialog_project_meeting_path(project, model, back_url:),
                      tag: :a,
                      content_arguments: {
                        data: { controller: "async-dialog" }
@@ -159,11 +163,11 @@ module Meetings
     end
 
     def delete_allowed?
-      User.current.allowed_in_project?(:delete_meetings, model.project)
+      User.current.allowed_in_project?(:delete_meetings, project)
     end
 
     def copy_allowed?
-      User.current.allowed_in_project?(:create_meetings, model.project)
+      User.current.allowed_in_project?(:create_meetings, project)
     end
 
     def recurring?

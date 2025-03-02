@@ -87,7 +87,7 @@ RSpec.describe "Recurring meetings end series", :js do
       click_on "End series now"
     end
 
-    expect(page).to have_current_path recurring_meeting_path(meeting)
+    expect(page).to have_current_path project_recurring_meeting_path(project, meeting)
     expect(page).to have_text("Meeting series ended")
   end
 

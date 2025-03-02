@@ -57,7 +57,8 @@ module API::V3::StorageFiles
       end
 
       def auth_strategy
-        Storages::Peripherals::Registry.resolve("#{@storage}.authentication.user_bound").call(user: current_user)
+        Storages::Peripherals::Registry.resolve("#{@storage}.authentication.user_bound")
+                                       .call(user: current_user, storage: @storage)
       end
     end
 

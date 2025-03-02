@@ -14,11 +14,10 @@
   model = WorkPackage.new
 %>
 
-
 <%= primer_form_with(
       model:,
-      url: '/abc',
-      id: 'asdf') do |f|
-  render(the_form.new(f))
-end
-%>
+      url: "/abc",
+      id: "asdf"
+    ) do |f|
+      render(the_form.new(f))
+    end %>

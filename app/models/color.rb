@@ -35,6 +35,7 @@ class Color < ApplicationRecord
            class_name: "Type",
            dependent: :nullify
 
+  after_initialize :normalize_hexcode
   before_validation :normalize_hexcode
 
   validates :name, :hexcode, presence: true

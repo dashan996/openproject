@@ -41,7 +41,7 @@ RSpec.describe API::V3::Storages::StorageRepresenter, "rendering" do
 
   before do
     Storages::Peripherals::Registry.stub(
-      "#{storage}.queries.auth_check",
+      "#{storage}.queries.user",
       ->(_) { auth_check_result }
     )
   end

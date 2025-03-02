@@ -38,10 +38,11 @@ class WorkPackageRelationsTab::AddWorkPackageChildFormComponent < ApplicationCom
   ID_FIELD_TEST_SELECTOR = "work-package-child-form-id"
   I18N_NAMESPACE = "work_package_relations_tab"
 
-  def initialize(work_package:, base_errors: nil)
+  def initialize(work_package:, child: nil, base_errors: nil)
     super()
 
     @work_package = work_package
+    @child = child.presence || WorkPackage.new
     @base_errors = base_errors
   end
 

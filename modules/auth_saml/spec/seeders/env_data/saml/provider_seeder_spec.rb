@@ -104,7 +104,8 @@ RSpec.describe EnvData::Saml::ProviderSeeder, :settings_reset do
             OPENPROJECT_SAML_SAML_IDP__CERT: "invalid"
           } do
     it "raises an exception" do
-      expect { seeder.seed! }.to raise_error(/Idp cert is not a valid PEM-formatted certificate/)
+      expect { seeder.seed! }
+        .to raise_error(/Public certificate of identity provider is not a valid PEM-formatted certificate/)
 
       expect(Saml::Provider.all).to be_empty
     end

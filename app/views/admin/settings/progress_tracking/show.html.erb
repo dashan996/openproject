@@ -30,9 +30,11 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render Primer::OpenProject::PageHeader.new do |header|
     header.with_title { t(:label_progress_tracking) }
-    header.with_breadcrumbs([{ href: admin_index_path, text: t("label_administration") },
-                             { href: admin_settings_work_packages_general_path, text: t(:label_work_package_plural) },
-                             t(:label_progress_tracking)])
+    header.with_breadcrumbs(
+      [{ href: admin_index_path, text: t("label_administration") },
+       { href: admin_settings_work_packages_general_path, text: t(:label_work_package_plural) },
+       t(:label_progress_tracking)]
+    )
   end
 %>
 <%=
@@ -53,9 +55,11 @@ primer_form_with(
       }
     )
     form.html_content do
-      tag.div(class: "op-toast -warning -with-bottom-spacing",
-              hidden: true,
-              data: { admin__progress_tracking_target: "warningToast" }) do
+      tag.div(
+        class: "op-toast -warning -with-bottom-spacing",
+        hidden: true,
+        data: { admin__progress_tracking_target: "warningToast" }
+      ) do
         tag.div(class: "op-toast--content") do
           tag.p(data: { admin__progress_tracking_target: "warningText" })
         end

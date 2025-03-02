@@ -283,11 +283,29 @@ class BaseContract < Disposable::Twin
     end
   end
 
-  def with_merged_former_errors
+  def validate_and_merge_errors(contract)
+    # Duplicating errors beforehand, in case the other contract shares
+    # the errors with us (because by default contracts reuse the errors
+    # of the model they validate) to prevent that existing errors are cleaned
+    # during validation
     former_errors = errors.dup
 
-    yield
+    contract.validate
 
-    errors.merge!(former_errors)
+    # Another side effect of sharing errors is that they may have already been added to
+    # our list of errors, after the validation was executed, so we manually filter out
+    # duplicates.
+    # To avoid looping over all the errors we just added (forever), we copy the errors of the
+    # contract into an array first
+    contract_errors = contract.errors.each.to_a
+    merge_errors_deduplicated(former_errors.chain(contract_errors))
+  end
+
+  def merge_errors_deduplicated(other_errors)
+    other_errors.each do |e|
+      # This is why we can't have nice things: https://github.com/rails/rails/issues/54483
+      options = e.options.except(*ActiveModel::Error::CALLBACKS_OPTIONS + ActiveModel::Error::MESSAGE_OPTIONS)
+      errors.add(e.attribute, e.type, **e.options) unless errors.added?(e.attribute, e.type, options)
+    end
   end
 end

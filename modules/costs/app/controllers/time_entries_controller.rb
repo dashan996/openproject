@@ -40,7 +40,7 @@ class TimeEntriesController < ApplicationController
     before_action :load_and_authorize_optional_work_package
   end
 
-  before_action :load_or_build_and_authorize_time_entry, only: %i[dialog update destroy]
+  before_action :load_or_build_and_authorize_time_entry, only: %i[dialog update destroy refresh_form]
 
   authorization_checked! :dialog, :create, :update, :user_tz_caption, :refresh_form, :destroy
 
@@ -68,7 +68,7 @@ class TimeEntriesController < ApplicationController
   def refresh_form
     call = TimeEntries::SetAttributesService.new(
       user: current_user,
-      model: TimeEntry.new,
+      model: @time_entry,
       contract_class: EmptyContract
     ).call(permitted_params.time_entries)
 

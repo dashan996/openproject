@@ -167,8 +167,7 @@ class BackupJob < ApplicationJob
 
         paths_to_clean << get_cache_folder_path(attachment) if clean_up && attachment.file.cached?
       end
-
-      zipfile.get_output_stream("openproject.sql") { |f| f.write File.read(db_dump_file_name) }
+      zipfile.add "openproject.sql", db_dump_file_name
     end
 
     remove_paths! paths_to_clean # delete locally cached files that were downloaded just for the backup

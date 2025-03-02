@@ -6,12 +6,14 @@
       end
       if allowed_to_add_to_meeting?
         flex.with_column(ml: 3) do
-          render(Primer::Beta::Button.new(
-            tag: :a,
-            href: dialog_work_package_meeting_agenda_items_path(@work_package),
-            data: { controller: 'async-dialog' },
-            test_selector: "op-add-work-package-to-meeting-dialog-trigger"
-          )) do |button|
+          render(
+            Primer::Beta::Button.new(
+              tag: :a,
+              href: dialog_work_package_meeting_agenda_items_path(@work_package),
+              data: { controller: "async-dialog" },
+              test_selector: "op-add-work-package-to-meeting-dialog-trigger"
+            )
+          ) do |button|
             button.with_leading_visual_icon(icon: :plus)
             t("label_add_work_package_to_meeting_dialog_button")
           end

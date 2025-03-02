@@ -51,7 +51,6 @@ RSpec.shared_examples_for "basic query filter" do
   let(:project) { build_stubbed(:project) }
   let(:expected_class_key) { defined?(:class_key) ? class_key : raise("needs to be defined") }
   let(:type) { raise "needs to be defined" }
-  let(:human_name) { nil }
 
   describe ".key" do
     it "is the defined key" do
@@ -73,7 +72,8 @@ RSpec.shared_examples_for "basic query filter" do
 
   describe "#human_name" do
     it "is the l10 name for the filter" do
-      expect(instance.human_name).to eql(human_name.presence || name)
+      expected = defined?(human_name) ? (human_name.presence || name) : name
+      expect(instance.human_name).to eql(expected)
     end
   end
 end

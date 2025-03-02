@@ -27,21 +27,21 @@ See COPYRIGHT and LICENSE files for more details.
 
 ++#%>
 
-<%= render layout: 'mailer/spacer_table' do %>
-  <%= render partial: 'mailer/mailer_header',
+<%= render layout: "mailer/spacer_table" do %>
+  <%= render partial: "mailer/mailer_header",
              locals: {
                user: @user,
-               summary: I18n.t('meeting.email.series.summary', title: @series.title, actor: @actor),
+               summary: I18n.t("meeting.email.series.summary", title: @series.title, actor: @actor),
                bottom_spacing: false
              } %>
 
-  <%= render layout: 'mailer/border_table' do %>
+  <%= render layout: "mailer/border_table" do %>
     <tr>
-      <%= placeholder_cell('24px', vertical: true) %>
+      <%= placeholder_cell("24px", vertical: true) %>
       <td>
         <table>
           <tr>
-            <td style="<%= placeholder_text_styles(width: '30%') %>">
+            <td style="<%= placeholder_text_styles(width: "30%") %>">
               <%= I18n.t(:label_recurring_meeting_schedule) %>
             </td>
             <td style="<%= placeholder_text_styles %>">
@@ -50,7 +50,7 @@ See COPYRIGHT and LICENSE files for more details.
           </tr>
           <% if @next_occurrence %>
           <tr>
-            <td style="<%= placeholder_text_styles(width: '30%') %>">
+            <td style="<%= placeholder_text_styles(width: "30%") %>">
               <%= I18n.t(:label_recurring_meeting_next_occurrence) %>
             </td>
             <td style="<%= placeholder_text_styles %>">
@@ -61,7 +61,7 @@ See COPYRIGHT and LICENSE files for more details.
           <% end %>
           <% if @template.location.present? %>
             <tr>
-              <td style="<%= placeholder_text_styles(width: '30%') %>">
+              <td style="<%= placeholder_text_styles(width: "30%") %>">
                 <%= Meeting.human_attribute_name(:location) %>
               </td>
               <td style="<%= placeholder_text_styles %>">
@@ -70,7 +70,7 @@ See COPYRIGHT and LICENSE files for more details.
             </tr>
           <% end %>
           <tr>
-            <td style="<%= placeholder_text_styles(width: '30%') %>">
+            <td style="<%= placeholder_text_styles(width: "30%") %>">
               <%= Meeting.human_attribute_name(:project) %>
             </td>
             <td style="<%= placeholder_text_styles %>">
@@ -78,7 +78,7 @@ See COPYRIGHT and LICENSE files for more details.
             </td>
           </tr>
           <tr>
-            <td style="<%= placeholder_text_styles(width: '30%') %>">
+            <td style="<%= placeholder_text_styles(width: "30%") %>">
               <%= Meeting.human_attribute_name(:author) %>
             </td>
             <td style="<%= placeholder_text_styles %>">
@@ -87,7 +87,7 @@ See COPYRIGHT and LICENSE files for more details.
           </tr>
           <% if @template.participants.exists? %>
             <tr>
-              <td style="<%= placeholder_text_styles(width: '30%') %>">
+              <td style="<%= placeholder_text_styles(width: "30%") %>">
                 <%= Meeting.human_attribute_name(:participants_invited) %>
               </td>
               <td style="<%= placeholder_text_styles %>">
@@ -102,14 +102,14 @@ See COPYRIGHT and LICENSE files for more details.
 
   <table>
     <tr>
-      <%= placeholder_cell('20px', vertical: false) %>
+      <%= placeholder_cell("20px", vertical: false) %>
     </tr>
   </table>
 
   <%= action_button do %>
-    <%= link_to I18n.t(:'meeting.email.open_meeting_link'),
+    <%= link_to I18n.t(:"meeting.email.open_meeting_link"),
                 recurring_meeting_url(@series),
-                target: '_blank',
+                target: "_blank",
                 style: "color: #333333; text-decoration: none; font-size: 14px;white-space: nowrap;" %>
   <% end %>
 <% end %>

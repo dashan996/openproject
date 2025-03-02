@@ -139,7 +139,7 @@ RSpec.describe "API v3 time_entry resource" do
       end
     end
 
-    context "filtering by user" do
+    context "when filtering by user" do
       let(:invisible_time_entry) do
         create(:time_entry, project: other_project, work_package: other_work_package, user: other_user)
       end
@@ -171,7 +171,7 @@ RSpec.describe "API v3 time_entry resource" do
       end
     end
 
-    context "filtering by work package" do
+    context "when filtering by work package" do
       let(:unwanted_work_package) do
         create(:work_package, project:, type: project.types.first)
       end
@@ -208,7 +208,7 @@ RSpec.describe "API v3 time_entry resource" do
       end
     end
 
-    context "filtering by project" do
+    context "when filtering by project" do
       let(:other_time_entry) do
         create(:time_entry, project: other_project, work_package: other_work_package, user: current_user)
       end
@@ -244,7 +244,7 @@ RSpec.describe "API v3 time_entry resource" do
       end
     end
 
-    context "filtering by global activity" do
+    context "when filtering by global activity" do
       let(:activity) do
         create(:time_entry_activity)
       end
@@ -305,7 +305,7 @@ RSpec.describe "API v3 time_entry resource" do
       end
     end
 
-    context "invalid filter" do
+    context "when adding an invalid filter" do
       let(:path) do
         filter = [{ "bogus" => {
           "operator" => "=",

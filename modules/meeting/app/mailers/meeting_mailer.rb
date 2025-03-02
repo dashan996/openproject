@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -57,6 +59,36 @@ class MeetingMailer < UserMailer
     end
   end
 
+  def cancelled(meeting, user, actor)
+    @actor = actor
+    @user = user
+    @meeting = meeting
+
+    open_project_headers "Project" => @meeting.project.identifier,
+                         "Meeting-Id" => @meeting.id
+
+    with_attached_ics(meeting, user, cancelled: true) do
+      subject = I18n.t("meeting.email.cancelled.header", title: @meeting.title)
+
+      mail(to: user, subject: "[#{@meeting.project.name}] #{subject}")
+    end
+  end
+
+  def cancelled_series(series, user, actor)
+    @actor = actor
+    @user = user
+    @series = series
+
+    open_project_headers "Project" => @series.project.identifier,
+                         "Meeting-Id" => @series.id
+
+    with_attached_ics(@series, user, cancelled: true) do
+      subject = I18n.t("meeting.email.cancelled.header", title: @series.title)
+
+      mail(to: user, subject: "[#{@series.project.name}] #{subject}")
+    end
+  end
+
   def icalendar_notification(meeting, user, _actor, **)
     @meeting = meeting
 
@@ -70,12 +102,15 @@ class MeetingMailer < UserMailer
 
   private
 
-  def with_attached_ics(meeting, user)
+  def with_attached_ics(meeting, user, **args)
     User.execute_as(user) do
-      call = ics_service_call(meeting, user)
+      call = ics_service_call(meeting, user, **args)
 
       call.on_success do
-        attachments["meeting.ics"] = call.result
+        attachments["meeting.ics"] = {
+          mime_type: "text/calendar; method=REQUEST; charset=UTF-8",
+          content: call.result
+        }
 
         yield
       end
@@ -86,15 +121,19 @@ class MeetingMailer < UserMailer
     end
   end
 
-  def ics_service_call(meeting, user)
-    if meeting.recurring?
+  def ics_service_call(meeting, user, **args)
+    if meeting.is_a?(RecurringMeeting)
+      ::RecurringMeetings::ICalService
+        .new(user:, series: meeting)
+        .generate_series(**args)
+    elsif meeting.recurring?
       ::RecurringMeetings::ICalService
         .new(user:, series: meeting.recurring_meeting)
-        .generate_occurrence(meeting.scheduled_meeting)
+        .generate_occurrence(meeting, **args)
     else
       ::Meetings::ICalService
         .new(user:, meeting:)
-        .call
+        .call(**args)
     end
   end
 

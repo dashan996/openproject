@@ -30,6 +30,7 @@ zh-TW:
         overridden_costs: "覆蓋成本"
         spent: "花費"
         spent_on: "日期"
+        logged_by: "記錄者"
       cost_type:
         unit: "單位名稱"
         unit_plural: "單位名稱(複數)"
@@ -58,11 +59,14 @@ zh-TW:
     models:
       cost_type:
         other: "費用類別"
+      time_entry_activity:
+        other: "時間追蹤活動"
       rate: "費率"
     errors:
       models:
         time_entry:
           invalid_time: "必須在 00:00 到 23:59 之間。"
+          cannot_log_for_this_work_package: "無法記錄此工作項目的時間。"
         work_package:
           is_not_a_valid_target_for_cost_entries: "工作項目 #%{id} 不是重新分配支出的有效目標"
           nullify_is_not_valid_for_cost_entries: "支出項目無法分配至專案"
@@ -78,6 +82,7 @@ zh-TW:
   button_add_rate: "新增費率"
   button_log_costs: "紀錄單位成本"
   button_log_time: "日誌"
+  button_add_activity: "活動"
   caption_booked_on_project: "已記錄在專案上"
   caption_default: "預設"
   caption_default_rate_history_for: "%{user} 的費率歷史記錄"
@@ -91,6 +96,8 @@ zh-TW:
   caption_show_locked: "顯示鎖定類型"
   caption_log_time_dialog: "日誌時間"
   description_date_for_new_rate: "新費率的日期"
+  description_costs_settings: "定義所有專案中所需的成本格式。"
+  description_time_settings: "定義在所有專案中記錄時間時，哪些欄位是必須填寫的。"
   group_by_others: "不在任何群組中"
   label_between: "介於"
   label_cost_filter_add: "增加成本篩選條件"
@@ -117,6 +124,8 @@ zh-TW:
   label_kind: "類型"
   label_less_or_equal: "之後"
   label_log_costs: "紀錄支出單位"
+  label_new_time_entry_activity: "新的時間記錄活動"
+  label_time_entry_activity_form_description: "此時間記錄活動的變更會反映在啟用此功能的所有專案中。"
   label_no: "否"
   label_option_plural: "選項"
   label_overall_costs: "總計"
@@ -129,6 +138,10 @@ zh-TW:
   label_until: "到"
   label_valid_from: "有效期從"
   label_yes: "是"
+  label_time: "時間"
+  label_cost: "成本"
+  label_costs: "費用"
+  label_mandatory_fields: "必要欄位"
   placeholder_activity_select_work_package_first: 需要先選擇工作項目
   notice_something_wrong: "發生錯誤，請重試。"
   notice_successful_restore: "復原成功。"

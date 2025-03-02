@@ -6,6 +6,7 @@
           url: form_url,
           method: form_method,
           data: {
+            "turbo-frame": "page-content",
             controller: "storages--automatically-managed-project-folders-form",
             'application-target': "dynamic",
             'storages--automatically-managed-project-folders-form-provider-type-value': storage.provider_type,
@@ -29,6 +30,12 @@
             if storage.provider_type_nextcloud?
               general_info_row.with_row(mb: 3) do
                 render(Storages::Admin::ProviderHostInputForm.new(form))
+              end
+
+              if OpenProject::FeatureDecisions.oidc_token_exchange_active?
+                general_info_row.with_row(mb: 3) do
+                  render(Storages::Admin::NextcloudAuthenticationMethodInputForm.new(form))
+                end
               end
             end
 

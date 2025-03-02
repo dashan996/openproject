@@ -26,7 +26,7 @@ More information and screenshots can be found on our [website](https://www.openp
 
 ## Start now with OpenProject
 
-- **Free Trial**:[Start a 14-days free trial of OpenProject](https://start.openproject.com/).
+- **Free Trial**: [Start a 14-days free trial of OpenProject](https://start.openproject.com/).
 - **Community Edition**, free of charge: Download OpenProject and get started with the self-hosted Community edition. If you want to run an instance of OpenProject in production (or for evaluation), refer to our in-depth [installation guides](https://www.openproject.org/download-and-installation/).
 - **Enterprise Edition**: Sign up for the Enterprise version, choose between cloud or on-premises and benefit from comprehensive support and Enterprise add-ons.
 - **Documentation**: Explore our [comprehensive documentation](https://www.openproject.org/docs/) to help you get up and running quickly.

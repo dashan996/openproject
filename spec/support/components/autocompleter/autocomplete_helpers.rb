@@ -46,7 +46,12 @@ module Components::Autocompleter
       list
     end
 
-    def select_autocomplete(element, query:, results_selector: nil, item_selector: nil, select_text: nil)
+    def select_autocomplete(element,
+                            query:,
+                            results_selector: nil,
+                            item_selector: nil,
+                            select_text: nil,
+                            expected_value: nil)
       target_dropdown = search_autocomplete(element, results_selector:, query:)
 
       ##
@@ -61,6 +66,8 @@ module Components::Autocompleter
                         target_dropdown.find(".ng-option", text:)
                       end
       query_element.click
+
+      expect(page).to have_css(".ng-value", text: expected_value) if expected_value
     end
   end
 end

@@ -1,5 +1,5 @@
 zh-TW:
-  activemodel:
+  activerecord:
     attributes:
       saml/provider:
         display_name: 名稱
@@ -23,7 +23,6 @@ zh-TW:
         digest_method: 摘要演算法
         format: "格式"
         icon: "自訂圖示"
-  activerecord:
     errors:
       models:
         saml/provider:
@@ -138,7 +137,7 @@ zh-TW:
       authn_requests_signed: >
         如果啟用，OpenProject 將簽署 SAML AuthnRequest。您必須使用以下欄位提供簽名憑證和私鑰。
       want_assertions_signed: >
-        如果啟用，OpenProject 將要求身分提供者使用自己的憑證金鑰對簽署回應。 OpenProject 將根據基本設定的憑證驗證簽章。
+        如果勾選，OpenProject 將要求身分提供者使用自己的憑證金鑰對簽署回應。OpenProject 將根據基本組態部分的憑證驗證簽章。
       want_assertions_encrypted: >
         如果啟用，會要求身分提供商使用您提供的證書，對斷言回應加密。
       certificate: >

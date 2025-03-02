@@ -30,9 +30,11 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render Primer::OpenProject::PageHeader.new do |header|
     header.with_title { I18n.t(:label_module_plural) }
-    header.with_breadcrumbs( [ { href: project_overview_path(@project.id), text: @project.name  },
-                               { href: project_settings_general_path(@project.id), text: I18n.t("label_project_settings") },
-                               I18n.t(:label_module_plural)])
+    header.with_breadcrumbs(
+      [{ href: project_overview_path(@project.id), text: @project.name },
+       { href: project_settings_general_path(@project.id), text: I18n.t("label_project_settings") },
+       I18n.t(:label_module_plural)]
+    )
   end
 %>
 
@@ -44,5 +46,5 @@ See COPYRIGHT and LICENSE files for more details.
   <%= render partial: "form",
              locals: { form: form } %>
 
-  <p><%= form.button t(:button_save), class: 'button -primary -with-icon icon-checkmark' %></p>
+  <p><%= form.button t(:button_save), class: "button -primary -with-icon icon-checkmark" %></p>
 <% end %>

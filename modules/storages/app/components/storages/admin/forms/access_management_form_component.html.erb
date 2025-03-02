@@ -3,8 +3,9 @@
     render(Primer::Beta::Text.new(tag: :div, test_selector: 'storage-access-management-form')) do
       primer_form_with(
         model:,
-        url: admin_settings_storage_access_management_path(storage),
-        method: form_method
+        url: form_url,
+        method: form_method,
+        data: { turbo_frame: "page-content" }
       ) do |form|
         flex_layout do |access_management_row|
           access_management_row.with_row(mb: 3) do

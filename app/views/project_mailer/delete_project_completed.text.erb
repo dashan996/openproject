@@ -30,10 +30,10 @@ See COPYRIGHT and LICENSE files for more details.
 <%= @project.name %>
 <%= project_url(@project) %>
 
-<%= t('projects.delete.completed_text', name: @project.name) %>
+<%= t("projects.delete.completed_text", name: @project.name) %>
 
 <% if @dependent_projects.any? %>
-  <%= t('projects.delete.completed_text_children') %>
+  <%= t("projects.delete.completed_text_children") %>
 
   <% @dependent_projects.each do |subproject| %>
     - <%= subproject.name %>

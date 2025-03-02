@@ -10,10 +10,6 @@ keywords: Progress tracking, estimated time, remaining time, work, % complete, p
 
 OpenProject lets you track and monitor the progress of your work packages.
 
-> [!IMPORTANT]
-> In OpenProject 14.0, the way progress is reported and calculated has changed significantly. Refer to [this blog article](https://www.openproject.org/blog/changes-progress-work-estimates/) to follow the changes. 
-> **In OpenProject 14.6 some of the changes made in 14.0 were removed and updated**. Please read the documentation below and [this blog post](https://www.openproject.org/blog/updates-to-progress-tracking-in-14-6-based-on-user-feedback/) to understand how OpenProject handles work and progress estimates.
-
 ## Terms
 
 [OpenProject 13.2](../../../release-notes/13/13-2-0/) introduced important changes in the names of three work package fields:

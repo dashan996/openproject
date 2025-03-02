@@ -230,6 +230,63 @@ RSpec.describe Storages::Peripherals::NextcloudConnectionValidator do
     end
   end
 
+  describe "OpenID Connect support" do
+    let(:storage) { create(:nextcloud_storage_configured, :oidc_sso_enabled) }
+    let(:app_version) { Storages::SemanticVersion.parse("2.6.3") }
+    let(:capabilities_response) do
+      ServiceResult.success(result: Storages::NextcloudCapabilities.new(
+        app_enabled?: true,
+        app_version:,
+        group_folder_enabled?: false,
+        group_folder_version: nil
+      ))
+    end
+
+    let(:user) { create(:user) }
+    let!(:oidc_provider) { create(:oidc_provider) }
+
+    before { User.current = user }
+
+    it "returns a success" do
+      create(:oidc_user_token, user:, extra_audiences: storage.audience)
+      user.update!(identity_url: "#{oidc_provider.slug}:UNIVERSALLY-DUPLICATED-IDENTIFIER")
+
+      expect(subject.type).to eq(:healthy)
+      expect(subject.error_code).to eq(:none)
+    end
+
+    it "returns a validation failure if storage audience isn't set" do
+      storage.update!(storage_audience: nil)
+
+      expect(subject.type).to eq(:none)
+      expect(subject.error_code).to eq(:wrn_not_configured)
+      expect(subject.description).to eq(I18n.t("storages.health.connection_validation.not_configured"))
+    end
+
+    it "returns a validation warning if the current user isn't provided" do
+      expect(subject.type).to eq(:warning)
+      expect(subject.error_code).to eq(:oidc_non_provisioned_user)
+      expect(subject.description).to eq(I18n.t("storages.health.connection_validation.oidc_non_provisioned_user"))
+    end
+
+    it "returns a warning if the user is not provided by an oidc provider" do
+      user.update!(identity_url: "ldap-provider:this-will-trigger-a-warning")
+
+      expect(subject.type).to eq(:warning)
+      expect(subject.error_code).to eq(:oidc_non_oidc_user)
+      expect(subject.description).to eq(I18n.t("storages.health.connection_validation.oidc_non_oidc_user"))
+    end
+
+    it "returns an error if the user does not have a usable token" do
+      user.update!(identity_url: "#{oidc_provider.slug}:UNIVERSALLY-DUPLICATED-IDENTIFIER")
+
+      expect(subject.type).to eq(:error)
+      expect(subject.error_code).to eq(:oidc_no_token_with_required_audience)
+      expect(subject.description)
+        .to eq(I18n.t("storages.health.connection_validation.oidc_no_token_with_required_audience", audience: storage.audience))
+    end
+  end
+
   private
 
   def build_failure(code:, payload:)

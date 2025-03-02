@@ -305,7 +305,7 @@ class CustomField < ApplicationRecord
 
   ##
   # Overrides cache key so that a custom field's representation
-  # is updated correctly when it's mutli_value attribute changes.
+  # is updated correctly when its multi_value attribute changes.
   def cache_key
     tag = multi_value? ? "mv" : "sv"
 

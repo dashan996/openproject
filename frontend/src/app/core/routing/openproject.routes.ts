@@ -181,6 +181,9 @@ export function initializeUiRouterListeners(injector:Injector) {
     // Re-find the current app-base
     openprojectBaseApp = document.querySelector(appBaseSelector);
     uiRouter.urlService.sync();
+
+    // Re-apply the body classes
+    bodyClass(_.get(uiRouter.globals.current, 'data.bodyClasses'), 'add');
   });
 
   // Uncomment to trace route changes

@@ -67,7 +67,9 @@ class Queries::WorkPackages::Filter::RoleFilter < Queries::WorkPackages::Filter:
   private
 
   def roles
-    ::Role.givable
+    Role
+      .includes(:role_permissions)
+      .where(role_permissions: { permission: "work_package_assigned" })
   end
 
   def operator_for_filtering

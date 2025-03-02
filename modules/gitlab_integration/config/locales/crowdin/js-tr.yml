@@ -37,16 +37,16 @@ tr:
           description: Git kod parçacığını panoya kopyala
         git_actions:
           branch_name: Dal adı
-          commit_message: İşlem metni
+          commit_message: İşlem mesajı
           cmd: Boş işlemle dal oluştur
-          title: Git için hızlı snippet'ler
+          title: Git için hızlı kod parçaları
           copy_success: '✅ Kopyalandı!'
           copy_error: '❌ Kopyalanamadı!'
       tab_issue:
         empty: 'Henüz bağlantılı sorun yok. Sorun başlığında/açıklamasında <code>OP#%{wp_id}</code> (veya özel bağlantılar için <code>PP#%{wp_id}</code>) kodunu kullanarak mevcut bir sorunu bağlayın veya yeni bir sorun oluşturun.'
       tab_mrs:
         empty: 'Henüz bağlanmış bir birleştirme isteği yok. MR başlığında/açıklamasında <code>OP#%{wp_id}</code> (veya özel bağlantılar için <code>PP#%{wp_id}</code>) kodunu kullanarak mevcut bir MR''ı bağlayın veya yeni bir MR oluşturun.'
-      gitlab_pipelines: İş Akışı
+      gitlab_pipelines: İş Akışları
       updated_on: Güncelleme tarihi
     work_packages:
       tabs:

@@ -4,23 +4,29 @@ require "spec_helper"
 
 require "services/base_services/behaves_like_create_service"
 
-RSpec.describe RemoteIdentities::CreateService, type: :model do
+RSpec.describe RemoteIdentities::CreateService, :storage_server_helpers, :webmock, type: :model do
   let(:user) { create(:user) }
   let(:storage) { create(:nextcloud_storage_configured) }
   let(:oauth_config) { storage.oauth_configuration }
-  let(:oauth_token) { Rack::OAuth2::AccessToken.new(access_token: "sudo-access-token", user_id: "bob-from-accounting") }
+  let(:oauth_client_token) do
+    create(:oauth_client_token,
+           user:,
+           oauth_client: oauth_config.oauth_client)
+  end
 
-  subject(:service) { described_class.new(user:, oauth_config:, oauth_token:) }
+  subject(:service) { described_class.new(user:, oauth_config:, oauth_client_token:) }
+
+  before { stub_nextcloud_user_query(storage.host) }
 
   describe ".call" do
     it "requires a user, a oauth configuration and a rack token" do
       method = described_class.method :call
 
-      expect(method.parameters).to contain_exactly(%i[keyreq user], %i[keyreq oauth_config], %i[keyreq oauth_token])
+      expect(method.parameters).to contain_exactly(%i[keyreq user], %i[keyreq oauth_config], %i[keyreq oauth_client_token])
     end
 
-    it "succeeds" do
-      expect(described_class.call(user:, oauth_config:, oauth_token:)).to be_success
+    it "succeeds", :webmock do
+      expect(described_class.call(user:, oauth_config:, oauth_client_token:)).to be_success
     end
   end
 
@@ -38,20 +44,6 @@ RSpec.describe RemoteIdentities::CreateService, type: :model do
     it "returns the model as a result" do
       result = service.call.result
       expect(result).to be_a RemoteIdentity
-    end
-
-    context "if creation fails" do
-      let(:oauth_token) { Rack::OAuth2::AccessToken.new(access_token: "sudo-access-token") }
-
-      it "is unsuccessful" do
-        expect(service.call).to be_failure
-      end
-
-      it "exposes the errors" do
-        result = service.call
-        expect(result.errors.size).to eq(1)
-        expect(result.errors[:origin_user_id]).to eq(["can't be blank."])
-      end
     end
   end
 end

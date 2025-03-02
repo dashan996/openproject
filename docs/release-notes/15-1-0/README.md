@@ -53,7 +53,7 @@ Here's an example screenshot of the redesigned Meetings index page:
 
 ![Example screenshot of the redesigned Meetings index page](openproject-15-1-meetings.png)
 
-[Learn what is possible with OpenProject's Dynamic Meetings to improve collaboration with your colleagues](../../user-guide/meetings/dynamic-meetings/).
+[Learn what is possible with OpenProject's dynamic meetings to improve collaboration with your colleagues](../../user-guide/meetings/).
 
 ### Manual page breaks in PDF work package exports
 

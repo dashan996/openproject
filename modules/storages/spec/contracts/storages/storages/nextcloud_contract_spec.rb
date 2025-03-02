@@ -156,6 +156,8 @@ RSpec.describe Storages::Storages::NextcloudContract, :storage_server_helpers, :
     context "when the authentication method is oauth2_sso" do
       let(:authentication_method) { "oauth2_sso" }
 
+      before { storage.storage_audience = "valid_audience" }
+
       it { is_expected.to be_valid }
     end
 
@@ -172,22 +174,22 @@ RSpec.describe Storages::Storages::NextcloudContract, :storage_server_helpers, :
     end
   end
 
-  describe "nextcloud_audience validation" do
+  describe "storage_audience validation" do
     let(:storage) do
-      build(:nextcloud_storage, :as_not_automatically_managed, authentication_method:, nextcloud_audience:)
+      build(:nextcloud_storage, :as_not_automatically_managed, authentication_method:, storage_audience:)
     end
 
     context "when authentication happens through bidirectional OAuth 2.0" do
       let(:authentication_method) { "two_way_oauth2" }
 
-      context "and there is no nextcloud_audience" do
-        let(:nextcloud_audience) { nil }
+      context "and there is no storage_audience" do
+        let(:storage_audience) { nil }
 
         it { is_expected.to be_valid }
       end
 
-      context "and there is a nextcloud_audience" do
-        let(:nextcloud_audience) { "nextcloud" }
+      context "and there is a storage_audience" do
+        let(:storage_audience) { "nextcloud" }
 
         it { is_expected.to be_valid }
       end
@@ -196,14 +198,14 @@ RSpec.describe Storages::Storages::NextcloudContract, :storage_server_helpers, :
     context "when authentication happens through a common IDP" do
       let(:authentication_method) { "oauth2_sso" }
 
-      context "and there is no nextcloud_audience" do
-        let(:nextcloud_audience) { nil }
+      context "and there is no storage_audience" do
+        let(:storage_audience) { nil }
 
         it { is_expected.not_to be_valid }
       end
 
-      context "and there is a nextcloud_audience" do
-        let(:nextcloud_audience) { "nextcloud" }
+      context "and there is a storage_audience" do
+        let(:storage_audience) { "nextcloud" }
 
         it { is_expected.to be_valid }
       end

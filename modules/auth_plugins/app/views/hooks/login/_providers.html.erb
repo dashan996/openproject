@@ -31,13 +31,13 @@ See COPYRIGHT and LICENSE files for more details.
   <%
     opts = { script_name: OpenProject::Configuration.rails_relative_url_root }
 
-    if params['back_url']
-      opts[:origin] = params['back_url']
+    if params["back_url"]
+      opts[:origin] = params["back_url"]
     end
   %>
   <a
     href="<%= omni_auth_start_path(provider[:name], opts) %>"
-    class="auth-provider auth-provider-<%= provider[:name] %> <%= provider[:icon] ? 'auth-provider--imaged' : '' %> button">
+    class="auth-provider auth-provider-<%= provider[:name] %> <%= provider[:icon] ? "auth-provider--imaged" : "" %> button">
     <span class="auth-provider-name"><%= provider[:display_name] || provider[:name] %></span>
   </a>
 <% end %>

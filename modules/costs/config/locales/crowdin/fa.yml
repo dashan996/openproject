@@ -30,6 +30,7 @@ fa:
         overridden_costs: "هزینه‌های لغو شده"
         spent: "صرف شده"
         spent_on: "تاریخ"
+        logged_by: "Logged by"
       cost_type:
         unit: "نام واحد"
         unit_plural: "نام واحد پولی"
@@ -59,11 +60,15 @@ fa:
       cost_type:
         one: "نوع هزینه"
         other: "انواع هزینه"
+      time_entry_activity:
+        one: "Time tracking activity"
+        other: "Time tracking activities"
       rate: "نرخ"
     errors:
       models:
         time_entry:
           invalid_time: "must be between 00:00 and 23:59."
+          cannot_log_for_this_work_package: "Cannot log time for this work package."
         work_package:
           is_not_a_valid_target_for_cost_entries: "پکیج‌کاری شماره %{id} به عنوان مقصد معتبری برای تخصیص موارد هزینه نمی‌باشد."
           nullify_is_not_valid_for_cost_entries: "ورودی‌های هزینه نمی‌توانند به یک پروژه اختصاص یابند."
@@ -79,6 +84,7 @@ fa:
   button_add_rate: "افزودن نرخ (ضریب) پرداخت"
   button_log_costs: "ثبت هزینه‌های واحد"
   button_log_time: "Log"
+  button_add_activity: "Activity"
   caption_booked_on_project: "رزرو شده در پروژه"
   caption_default: "پیش‌فرض"
   caption_default_rate_history_for: "تاریخچه ضریب (نرخ) پرداختی پیش‌فرض برای %{user}"
@@ -92,6 +98,8 @@ fa:
   caption_show_locked: "نمایش انواع قفل‌شده"
   caption_log_time_dialog: "پیگیری زمان"
   description_date_for_new_rate: "تاریخ برای شروع ضریب پرداختی (نرخ) جدید"
+  description_costs_settings: "Define the desired format for the costs in all projects."
+  description_time_settings: "Define which fields are mandatory to fill when logging time in all projects."
   group_by_others: "در هیچ گروهی نیست"
   label_between: "بین"
   label_cost_filter_add: "افزودن فیلتر ورودی هزینه"
@@ -118,6 +126,8 @@ fa:
   label_kind: "نوع"
   label_less_or_equal: "=>"
   label_log_costs: "ثبت هزینه‌های واحد"
+  label_new_time_entry_activity: "New time entry activity"
+  label_time_entry_activity_form_description: "Changes to this time entry activity will be reflected in all projects where it is enabled."
   label_no: "نه"
   label_option_plural: "گزینه‌ها"
   label_overall_costs: "هزینه‌های کلی"
@@ -130,6 +140,10 @@ fa:
   label_until: "تا"
   label_valid_from: "معتبر از"
   label_yes: "بله"
+  label_time: "Time"
+  label_cost: "Cost"
+  label_costs: "Costs"
+  label_mandatory_fields: "Mandatory fields"
   placeholder_activity_select_work_package_first: Work package selection is required first
   notice_something_wrong: "مشکلی پیش آمد. لطفا دوباره تلاش کنید."
   notice_successful_restore: "بازیابی موفق"

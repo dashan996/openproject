@@ -55,20 +55,20 @@ See COPYRIGHT and LICENSE files for more details.
       <%= angular_component_tag "opce-basic-single-date-picker",
                                 inputs: {
                                   value: sprint.effective_date,
-                                  inputClassNames: 'effective_date editor',
+                                  inputClassNames: "effective_date editor",
                                   id: "effective_date_#{sprint.id}",
                                   name: :effective_date
                                 } %>
       <%= angular_component_tag "opce-basic-single-date-picker",
                                 inputs: {
                                   value: sprint.start_date,
-                                  inputClassNames: 'start_date editor',
+                                  inputClassNames: "start_date editor",
                                   id: "start_date_#{sprint.id}",
                                   name: :start_date
                                 } %>
       <%= text_field_tag :name,
                          sprint.name,
-                         class: 'name editor' %>
+                         class: "name editor" %>
     </div>
   <% end %>
 

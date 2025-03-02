@@ -1,11 +1,27 @@
 it:
   activerecord:
     attributes:
+      oauth_client:
+        client_id: Client ID
+        client_secret: Client secret
+      project:
+        project_folder_type: Project folder type
       storages/file_link:
-        origin_id: ID origine
+        origin: Origin
+        storage: Storage
+      storages/nextcloud_storage:
+        authentication_methods:
+          oauth2_sso: Single-Sign-On through OpenID Connect Identity Provider
+          oauth2_sso_with_two_way_oauth2_fallback: Single-Sign-On with Two-Way OAuth 2.0 as fallback
+          two_way_oauth2: Two-way OAuth 2.0 authorization code flow
+        storage_audience: Storage Audience
       storages/project_storage:
+        project_folder: Project folder
+        project_folder_mode: Project folder mode
         storage: Archivio
+        storage_url: Storage URL
       storages/storage:
+        authentication_method: Authentication Method
         creator: Autore
         drive: ID Drive
         host: Host
@@ -74,7 +90,7 @@ it:
         confirmation_text: Conferma di aver compreso e di voler rimuovere questo archivio di file da questo progetto
         heading_text: Rimuovi il progetto da %{storage}
         text: Questa azione è irreversibile e rimuoverà tutti i collegamenti dalle macro-attività di questo progetto ai file e alle cartelle di tale archivio.
-        title: Remove project from storage
+        title: Rimuovi il progetto dall'archivio
       label: Rimuovi il progetto
   services:
     attributes:
@@ -199,15 +215,19 @@ it:
         manual_management_description: Crea e gestisci manualmente le cartelle per progetto. Dovrai assicurarti manualmente che gli utenti interessati abbiano accesso.
         setup_incomplete: Seleziona il tipo di gestione dell'accesso degli utenti e della creazione di cartelle.
         subtitle: Gestione degli accessi
-        title: Accesso e cartelle di progetto
+      access_management_section: Accesso e cartelle di progetto
       automatically_managed_folders: Cartelle gestite automaticamente
       general_information: Informazioni generali
-      nextcloud_oauth: Nextcloud OAuth
-      oauth_applications: Applicazioni OAuth
+      oauth_configuration: Configurazione OAuth
       one_drive_oauth: Azure OAuth
       openproject_oauth: OpenProject OAuth
       project_folders: Cartelle del progetto
       redirect_uri: URI di reindirizzamento
+      storage_audience: Storage Audience
+      storage_audience_blank: No audience has been configured
+      storage_audience_description: Obtaining tokens for audience "%{audience}".
+      storage_audience_idp: Using first access token received by identity provider, regardless of audience.
+      storage_oauth: Nextcloud OAuth
       storage_provider: Fornitore di archiviazione
     health:
       checked: Ultimo controllo %{datetime}
@@ -222,6 +242,9 @@ it:
         host_not_found: Non è stato trovato alcun server Nextcloud all'indirizzo host configurato. Controlla la configurazione.
         missing_dependencies: 'Manca una dipendenza necessaria per l''archiviazione dei file. Aggiungi la seguente dipendenza: %{dependency}.'
         not_configured: Non è stato possibile verificare la connessione. Prima è necessario completare la configurazione.
+        oidc_no_token_with_required_audience: There's no OpenID Connect token with the required %{audience} audience.
+        oidc_non_oidc_user: The current user, while provisioned, wasn't provisioned by an OpenID Connect (OIDC) Identity Provider. Please re-run the check with an OIDC provisioned user.
+        oidc_non_provisioned_user: L'utente attuale non è fornito da un provider di identità OpenID Connect. Esegui nuovamente il controllo con un utente fornito.
         placeholder: Verifica la tua connessione con il server.
         subtitle: Verifica della connessione
         tenant_id_wrong: L'ID della directory non è valido. Verifica la configurazione.
@@ -250,6 +273,7 @@ it:
       project_folder_bulk: La cartella del progetto è la cartella predefinita per il caricamento dei file per tutti i progetti selezionati. Puoi modificarla individualmente nelle impostazioni di ciascun progetto. Gli utenti possono comunque caricare i file in altre posizioni.
     instructions:
       all_available_storages_already_added: Tutti gli archivi disponibili sono già stati aggiunti al progetto.
+      authentication_method: The way that requests between OpenProject and the Storage are authenticated.
       automatic_folder: Questa operazione creerà automaticamente una cartella principale per questo progetto e gestirà le autorizzazioni di accesso per ciascun membro del progetto.
       empty_project_folder_validation: Selezionare una cartella è obbligatorio per procedere.
       existing_manual_folder: 'Puoi designare una cartella esistente come la cartella di root per questo progetto. Le autorizzazioni, tuttavia, non sono gestite automaticamente: l''amministratore necessita di assicurarsi manualmente che gli utenti rilevanti abbiano accesso. La cartella selezionata è utilizzabile per svariati progetti.'
@@ -262,6 +286,8 @@ it:
         integration: Nextcloud Administration / OpenProject
         oauth_configuration: Copia questi valori dall'%{application_link_text}.
         provider_configuration: Assicurati di disporre dei privilegi di amministrazione nella tua istanza Nextcloud e che %{application_link_text} sia installato prima di eseguire la configurazione.
+        storage_audience: Please enter the Client ID that the Nextcloud instance uses to communicate with the identity provider.
+        storage_audience_placeholder: e.g. nextcloud
       no_specific_folder: Di default, ogni utente inizierà alla propria cartella home, al caricamento di un file.
       no_storage_set_up: Ancora nessuna archiviazione di file configurata.
       not_logged_into_storage: Per selezionare la cartella di un progetto, sei prim pregato di accedere
@@ -293,6 +319,7 @@ it:
     label_creator: Autore
     label_delete_storage: Elimina archivio
     label_edit_storage_access_management: Modifica gestione degli accessi all'archivio
+    label_edit_storage_audience: Edit Storage Audience
     label_edit_storage_automatically_managed_folders: Modifica cartelle gestite automaticamente dall'archivio
     label_edit_storage_host: Modifica host dell'archivio
     label_existing_manual_folder: Cartella esistente con autorizzazioni gestite manualmente
@@ -383,8 +410,15 @@ it:
         name: OneDrive/SharePoint
         name_placeholder: es. OneDrive
     show_attachments_toggle:
-      description: 'La disattivazione di questa opzione nasconderà l''elenco degli allegati nella scheda dei file delle macro-attività. I file allegati nella descrizione di una macro-attività verranno comunque caricati nell''archivio interno degli allegati. '
+      description: Deactivating this option will hide the attachments list on the work packages files tab. The files attached in the description of a work package will still be uploaded in the internal attachments storage.
       label: Mostra gli allegati nella scheda File delle macro-attività
+    storage_audience:
+      idp:
+        helptext: OpenProject will use the first access token received by the identity provider to authenticate requests to the storage. It will not try to obtain another token.
+        label: Use first access token obtained by identity provider
+      manual:
+        helptext: Allows you to set the audience of the storage. OpenProject will try to obtain a token for the given audience from the identity provider.
+        label: Define storage audience manually
     storage_list_blank_slate:
       description: Aggiungi un archivio per vederli qui.
       heading: Non hai ancora archivi.

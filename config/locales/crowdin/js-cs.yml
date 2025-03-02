@@ -103,7 +103,6 @@ cs:
     button_settings: "Nastavení"
     button_uncheck_all: "Odznačit vše"
     button_update: "Aktualizovat"
-    button_export-pdf: "Stáhnout PDF"
     button_export-atom: "Stáhnout Atom"
     button_generate_pdf: ""
     button_create: "Vytvořit"
@@ -222,6 +221,8 @@ cs:
             label_maximum_users: "Maximální počet aktivních uživatelů"
             label_starts_at: "Začíná v"
             label_expires_at: "Vyprší v"
+            label_plan: "Plan"
+            label_additional_features: "Additional features"
             receive_newsletter: Chci dostávat<a target="_blank" href="%{link}">newsletter OpenProject</a>.
             taken_domain: V každé doméně může být pouze jedna aktivní zkušební verze.
             domain_mismatch: Aktuální název hostitele se neshoduje s nakonfigurovaným názvem hostitele. Zkontrolujte prosím nastavení systému.
@@ -356,10 +357,10 @@ cs:
           learn_about: "Další informace o nových funkcích"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_2":
+          "15_3":
             standard:
               new_features_html: >
-                The release brings various features and improvements for you, e.g. <br> <ul class="%{list_styling_class}"> <li>Set reminders for work packages to generate date alert notifications.</li> <li>Create new folders directly from the location picker for file storage.</li> <li>Specify a required lag between work packages successors and predecessors.</li> <li>Enable ordering and grouping for work packages on values of custom fields type hierarchy.</li> <li>Export time entries as PDF timesheets.</li> <li>Add a popover displaying user information when hovering.</li> </ul>
+                The release brings various features and improvements for you, e.g. <br> <ul class="%{list_styling_class}"> <li>Schedule recurring meetings to streamline your weekly, biweekly, or custom appointments.</li> <li>Create child work packages directly from the Relations tab.</li> <li>Include total sums in timesheet PDF exports for better insights.</li> <li>Include child work packages in cost reports for more accurate tracking.</li> <li>See dates of previously hidden, permission-restricted relations to make informed scheduling decisions.</li> </ul>
     ical_sharing_modal:
       title: "Přihlásit kalendář k odběru"
       inital_setup_error_message: "Při načítání dat došlo k chybě."
@@ -853,8 +854,6 @@ cs:
       select_branch: "Vybrat větev"
     field_value_enter_prompt: "Zadejte hodnotu pro '%{field}'"
     project_menu_details: "Podrobnosti"
-    scheduling:
-      manual: "Manuální plánování"
     sort:
       sorted_asc: "Použito vzestupné řazení, "
       sorted_dsc: "Použité sestupně "
@@ -902,15 +901,6 @@ cs:
       comment_send_failed: "Došlo k chybě. Nelze odeslat komentář."
       comment_updated: "Komentář byl úspěšně aktualizován."
       confirm_edit_cancel: "Opravdu chcete zrušit úpravy pracovního balíčku?"
-      datepicker_modal:
-        automatically_scheduled_parent: "Automaticky naplánováno. Data jsou odvozena od vztahů."
-        manually_scheduled: "Manuální plánování povoleno, všechny vztahy jsou ignorovány."
-        start_date_limited_by_relations: "Dostupná data zahájení a ukončení jsou omezena vztahy."
-        changing_dates_affects_follow_relations: "Změna těchto dat ovlivní data souvisejících pracovních balíčků."
-        click_on_show_relations_to_open_gantt: 'Klikněte na "%{button_name}pro přehled GANTT.'
-        show_relations: "Zobrazit vztahy"
-        ignore_non_working_days:
-          title: "pouze pracovní dny"
       description_filter: "Filtr"
       description_enter_text: "Zadejte text"
       description_options_hide: "Skrýt možnosti"

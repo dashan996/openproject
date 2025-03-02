@@ -55,7 +55,7 @@ ru:
         work_packages_created:
           title: 'Пакеты работ, созданные мной'
         work_packages_watched:
-          title: 'Пакеты работ, просмотренные мной'
+          title: 'Пакеты работ, за которыми я наблюдаю'
         work_packages_table:
           title: 'Таблица пакетов работ'
         work_packages_graph:

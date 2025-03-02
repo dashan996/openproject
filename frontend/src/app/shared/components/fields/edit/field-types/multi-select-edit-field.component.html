@@ -21,6 +21,8 @@
   <ng-template ng-option-tmp let-item="item">
     <span
       class="ng-option-label ellipsis"
+      [attr.data-hover-card-trigger-target]="getHoverCardTriggerTarget()"
+      [attr.data-hover-card-url]="getHoverCardUrl(item)"
       [textContent]="item.name"
       [ngStyle]="{'padding-left.px': item.depth * 16}"
     ></span>

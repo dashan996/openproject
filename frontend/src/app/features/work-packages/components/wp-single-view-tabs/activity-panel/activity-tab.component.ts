@@ -26,7 +26,7 @@
 // See COPYRIGHT and LICENSE files for more details.
 //++
 
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { WorkPackageResource } from 'core-app/features/hal/resources/work-package-resource';
 import { trackByProperty } from 'core-app/shared/helpers/angular/tracking-functions';
 import {
@@ -45,9 +45,14 @@ export class WorkPackageActivityTabComponent extends ActivityPanelBaseController
 
   public trackByIdentifier = trackByProperty('identifier');
 
+  @ViewChild('activitiesTabContent', { static: true }) public activitiesTabContentElement!:ElementRef<HTMLElement>;
+
   ngOnInit() {
     const { workPackageId } = this.uiRouterGlobals.params as unknown as { workPackageId:string };
     this.workPackageId = (this.workPackage.id as string) || workPackageId;
     super.ngOnInit();
+    if (window.location.hash) {
+      this.activitiesTabContentElement.nativeElement.scrollIntoView();
+    }
   }
 }

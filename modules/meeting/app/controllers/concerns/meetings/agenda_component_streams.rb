@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -31,11 +32,10 @@ module Meetings
     extend ActiveSupport::Concern
 
     included do
-      def update_header_component_via_turbo_stream(project: @project, meeting: @meeting, state: :show)
+      def update_header_component_via_turbo_stream(meeting: @meeting, state: :show)
         update_via_turbo_stream(
           component: Meetings::HeaderComponent.new(
             meeting:,
-            project:,
             state:
           )
         )

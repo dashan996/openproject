@@ -252,33 +252,33 @@ es:
                 item_0:
                   subject: Desarrollo del primer borrador
                   description: |-
-                    ## Objetivo
+                    ## Goal
 
-                    * Crear una visión general útil de los resultados
-                    * Comprobar lo que se ha hecho y resumir los resultados
-                    * Comunicar todos los resultados relevantes al cliente
-                    * Identificar las condiciones límite fundamentales del proyecto
+                    *   Create a useful overview of the results
+                    *   Check what has been done and summarize the results
+                    *   Communicate all the relevant results with the customer
+                    *   Identify the fundamental boundary conditions of the project
 
-                    ## Descripción
+                    ## Description
 
-                    * Cada tema recibe su propia visión general que se utilizará como catálogo de resultados
-                    * Esta visión general informa a todos los participantes sobre las decisiones tomadas
-                    * ...
+                    *   Each topic gets its own overview which will be used as a catalogue of results
+                    *   This overview informs all participants about the decisions made
+                    *   ...
                 item_1:
                   subject: Resumir resultados
                   description: |-
-                    ## Objetivo
+                    ## Goal
 
-                    * Crear una visión general útil de los resultados
-                    * Comprobar lo que se ha hecho y resumir los resultados
-                    * Comunicar todos los resultados relevantes al cliente
-                    * Identificar las condiciones límite fundamentales del proyecto
+                    *   Create a useful overview of the results
+                    *   Check what has been done and summarize the results
+                    *   Communicate all the relevant results with the customer
+                    *   Identify the fundamental boundary conditions of the project
 
-                    ## Descripción
+                    ## Description
 
-                    * Cada tema recibe su propia visión general que se utilizará como catálogo de resultados
-                    * Esta visión general informa a todos los participantes sobre las decisiones tomadas
-                    * ...
+                    *   Each topic gets its own overview which will be used as a catalogue of results
+                    *   This overview informs all participants about the decisions made
+                    *   ...
             item_3:
               subject: Aprobación de la planificación preliminar
               description: Este tipo es jerárquicamente principal de los tipos &quot;Choque&quot; y &quot;Solicitud&quot;, por lo que representa una nota general.

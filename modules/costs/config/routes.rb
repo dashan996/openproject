@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     get :dialog, on: :member
     get "/users/:user_id/tz_caption", action: :user_tz_caption, on: :collection
     post :refresh_form, on: :collection
+    post :refresh_form, on: :member
   end
 
   scope "projects/:project_id", as: "projects" do
@@ -63,21 +64,32 @@ Rails.application.routes.draw do
 
   resources :cost_entries, controller: "costlog", only: %i[edit update destroy]
 
-  resources :cost_types, only: %i[index new edit update create destroy] do
-    member do
-      # TODO: check if this can be replaced with update method
-      put :set_rate
-      patch :restore
-    end
-  end
+  get "/cost_types", to: redirect("/admin/cost_types")
 
   # TODO: this is a duplicate from a route defined under project/:project_id, check whether we really want to do that
   resources :hourly_rates, only: %i[edit update]
 
-  scope :admin do
+  namespace :admin do
+    namespace :settings do
+      resources :time_entry_activities, except: [:show] do
+        member do
+          put :move
+          get :reassign
+        end
+      end
+    end
+
+    resources :cost_types, only: %i[index new edit update create destroy] do
+      member do
+        # TODO: check if this can be replaced with update method
+        put :set_rate
+        patch :restore
+      end
+    end
+
     resource :costs,
              only: %i[show update],
-             controller: :costs_settings,
-             as: "admin_costs_settings"
+             controller: "costs_settings",
+             as: "costs_settings"
   end
 end

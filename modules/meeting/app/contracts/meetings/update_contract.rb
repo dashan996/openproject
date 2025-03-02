@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -31,7 +33,7 @@ module Meetings
     include Redmine::I18n
 
     validate :user_allowed_to_edit
-    validate :not_before_scheduled_time
+    validate :valid_rescheduling_date, if: -> { check_reschedule? }
 
     attribute :lock_version do
       if model.lock_version.nil? || model.lock_version_changed?
@@ -45,14 +47,39 @@ module Meetings
       end
     end
 
-    def not_before_scheduled_time
-      return unless model.recurring_meeting_id && model.scheduled_meeting
-      return unless model.changed.intersect?(%w[start_time start_date])
-
-      scheduled_time = model.scheduled_meeting.start_time
-      if model.start_time < scheduled_time
-        errors.add :start_date, :after, date: format_date(scheduled_time)
+    def valid_rescheduling_date # rubocop:disable Metrics/AbcSize
+      if model.start_time < Time.zone.now
+        errors.add :start_date, :after_today
+        return
       end
+
+      check_before(model.scheduled_meeting.next_occurrence)
+      check_after(model.scheduled_meeting.previous_occurrence)
+      check_after(model.recurring_meeting.first_occurrence)
+    end
+
+    def check_before(time)
+      # Avoid adding more errors if we already checked closer candidates
+      return if errors.has_key?(:start_date)
+
+      if time && model.start_time >= time
+        errors.add :start_date, :before, date: format_time(time)
+      end
+    end
+
+    def check_after(time)
+      # Avoid adding more errors if we already checked closer candidates
+      return if errors.has_key?(:start_date)
+
+      if time && model.start_time <= time
+        errors.add :start_date, :after, date: format_time(time)
+      end
+    end
+
+    def check_reschedule?
+      model.recurring_meeting_id &&
+        model.scheduled_meeting &&
+        model.changed.intersect?(%w[start_time start_date start_time_hour])
     end
   end
 end

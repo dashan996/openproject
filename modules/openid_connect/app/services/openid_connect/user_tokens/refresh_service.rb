@@ -48,9 +48,10 @@ module OpenIDConnect
 
         access_token = json["access_token"]
         refresh_token = json["refresh_token"]
+        expires_in = json["expires_in"]
         return Failure("Refresh token response invalid") if access_token.blank?
 
-        token.update!(access_token:, refresh_token:)
+        token.update!(access_token:, refresh_token:, expires_at: expires_in&.seconds&.from_now)
 
         Success(token)
       end
@@ -69,17 +70,7 @@ module OpenIDConnect
       end
 
       def refresh_token_request(refresh_token)
-        response = OpenProject.httpx
-                              .basic_auth(provider.client_id, provider.client_secret)
-                              .post(provider.token_endpoint, form: {
-                                      grant_type: :refresh_token,
-                                      refresh_token:
-                                    })
-        response.raise_for_status
-
-        Success(response.json)
-      rescue HTTPX::Error => e
-        Failure(e)
+        TokenRequest.new(provider:).refresh(refresh_token)
       end
 
       def provider

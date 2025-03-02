@@ -29,24 +29,27 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render Primer::OpenProject::PageHeader.new do |header|
     header.with_title { t(:label_version_plural) }
-    header.with_breadcrumbs( [{ href: project_overview_path(@project.id), text: @project.name  },
-                              { href: project_settings_general_path(@project.id), text: I18n.t("label_project_settings") },
-                              t(:label_version_plural)
-                             ])
+    header.with_breadcrumbs(
+      [{ href: project_overview_path(@project.id), text: @project.name },
+       { href: project_settings_general_path(@project.id), text: I18n.t("label_project_settings") },
+       t(:label_version_plural)]
+    )
   end
 %>
 
 <% if current_user.allowed_in_project?(:manage_versions, @project) %>
   <%= render(Primer::OpenProject::SubHeader.new) do |subheader|
-    subheader.with_action_button(scheme: :primary,
-                                 aria: { label: t(:label_version_new) },
-                                 title: t(:label_version_new),
-                                 tag: :a,
-                                 href: url_for({ controller: '/versions', action: 'new', project_id: @project })) do |button|
-      button.with_leading_visual_icon(icon: :plus)
-      t('activerecord.models.version')
-    end
-  end %>
+        subheader.with_action_button(
+          scheme: :primary,
+          aria: { label: t(:label_version_new) },
+          title: t(:label_version_new),
+          tag: :a,
+          href: url_for({ controller: "/versions", action: "new", project_id: @project })
+        ) do |button|
+          button.with_leading_visual_icon(icon: :plus)
+          t("activerecord.models.version")
+        end
+      end %>
 <% end %>
 
 <% if @versions.any? %>
@@ -57,13 +60,12 @@ See COPYRIGHT and LICENSE files for more details.
       <%= link_to t(:label_close_versions),
                   close_completed_project_versions_path(@project),
                   method: :put,
-                  class: 'button' %>
+                  class: "button" %>
     </div>
   <% end %>
 <% else %>
   <%= no_results_box action_url: new_project_version_path(@project),
-                     display_action: authorize_for('versions', 'new'),
-                     custom_title: t('projects.settings.versions.no_results_title_text'),
-                     custom_action_text: t('projects.settings.versions.no_results_content_text')
-  %>
+                     display_action: authorize_for("versions", "new"),
+                     custom_title: t("projects.settings.versions.no_results_title_text"),
+                     custom_action_text: t("projects.settings.versions.no_results_content_text") %>
 <% end %>

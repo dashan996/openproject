@@ -30,6 +30,7 @@ vi:
         overridden_costs: "Chi phí ghi đè"
         spent: "Đã chi"
         spent_on: "Ngày"
+        logged_by: "Logged by"
       cost_type:
         unit: "Tên đơn vị"
         unit_plural: "Tên đơn vị đa năng"
@@ -58,11 +59,14 @@ vi:
     models:
       cost_type:
         other: "Loại chi phí"
+      time_entry_activity:
+        other: "Time tracking activities"
       rate: "Tỉ giá"
     errors:
       models:
         time_entry:
           invalid_time: "phải ở giữa khoảng 00:00 đến 23:59."
+          cannot_log_for_this_work_package: "Cannot log time for this work package."
         work_package:
           is_not_a_valid_target_for_cost_entries: "Gói công việc #%{id} không phải là mục tiêu hợp lệ để phân bổ lại các mục chi phí."
           nullify_is_not_valid_for_cost_entries: "Các mục chi phí không thể được phân bổ cho một dự án."
@@ -78,6 +82,7 @@ vi:
   button_add_rate: "Thêm tỷ lệ"
   button_log_costs: "Ghi lại chi phí đơn vị"
   button_log_time: "Nhật ký"
+  button_add_activity: "Activity"
   caption_booked_on_project: "Đã ghi trên dự án"
   caption_default: "Mặc định"
   caption_default_rate_history_for: "Lịch sử tỷ lệ mặc định cho %{user}"
@@ -91,6 +96,8 @@ vi:
   caption_show_locked: "Hiển thị các loại đã khóa"
   caption_log_time_dialog: "Thời gian nhật ký"
   description_date_for_new_rate: "Ngày cho tỷ lệ mới"
+  description_costs_settings: "Define the desired format for the costs in all projects."
+  description_time_settings: "Define which fields are mandatory to fill when logging time in all projects."
   group_by_others: "không thuộc nhóm nào"
   label_between: "giữa"
   label_cost_filter_add: "Thêm bộ lọc mục chi phí"
@@ -117,6 +124,8 @@ vi:
   label_kind: "Loại"
   label_less_or_equal: "<="
   label_log_costs: "Ghi lại chi phí đơn vị"
+  label_new_time_entry_activity: "New time entry activity"
+  label_time_entry_activity_form_description: "Changes to this time entry activity will be reflected in all projects where it is enabled."
   label_no: "Không"
   label_option_plural: "Tùy chọn"
   label_overall_costs: "Chi phí tổng cộng"
@@ -129,6 +138,10 @@ vi:
   label_until: "đến"
   label_valid_from: "Có hiệu lực từ"
   label_yes: "Có"
+  label_time: "Time"
+  label_cost: "Cost"
+  label_costs: "Costs"
+  label_mandatory_fields: "Mandatory fields"
   placeholder_activity_select_work_package_first: Phải chọn gói công việc trước đã
   notice_something_wrong: "Đã xảy ra lỗi. Vui lòng thử lại."
   notice_successful_restore: "Khôi phục thành công."

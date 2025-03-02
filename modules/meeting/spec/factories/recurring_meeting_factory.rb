@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -47,6 +48,7 @@ FactoryBot.define do
 
       # create template
       template = create(:structured_meeting_template,
+                        :author_participates,
                         author: recurring_meeting.author,
                         recurring_meeting:,
                         project:)

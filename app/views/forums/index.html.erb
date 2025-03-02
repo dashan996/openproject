@@ -31,20 +31,25 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render Primer::OpenProject::PageHeader.new do |header|
     header.with_title { t(:label_forum_plural) }
-    header.with_breadcrumbs( [{ href: project_overview_path(@project.id), text: @project.name },
-                               t(:label_forum_plural)
-                             ]) end %>
+    header.with_breadcrumbs(
+      [{ href: project_overview_path(@project.id), text: @project.name },
+       t(:label_forum_plural)]
+    )
+  end
+%>
 
 <% if User.current.allowed_in_project?(:manage_forums, @project) %>
   <%=
     render(Primer::OpenProject::SubHeader.new) do |subheader|
-      subheader.with_action_button(scheme: :primary,
-                                   aria: { label: t(:label_forum_new) },
-                                   title: t(:label_forum_new),
-                                   tag: :a,
-                                   href: new_project_forum_path(@project)) do |button|
+      subheader.with_action_button(
+        scheme: :primary,
+        aria: { label: t(:label_forum_new) },
+        title: t(:label_forum_new),
+        tag: :a,
+        href: new_project_forum_path(@project)
+      ) do |button|
         button.with_leading_visual_icon(icon: :plus)
-        t('activerecord.models.forum')
+        t("activerecord.models.forum")
       end
     end
   %>
@@ -108,20 +113,20 @@ See COPYRIGHT and LICENSE files for more details.
                 <div class="generic-table--sort-header-outer">
                   <div class="generic-table--sort-header">
                         <span>
-                          <%=t(:button_sort)%>
+                          <%= t(:button_sort) %>
                         </span>
                   </div>
                 </div>
               </th>
               <th><div class="generic-table--empty-header"></div></th>
-            <% end  %>
+            <% end %>
           </tr>
         </thead>
         <tbody>
           <% for forum in @forums %>
             <tr>
               <td class="-no-ellipsis">
-                <%= link_to h(forum.name), { action: 'show', id: forum }, class: "forum"  %><br />
+                <%= link_to h(forum.name), { action: "show", id: forum }, class: "forum" %><br>
                 <%= format_text(forum.description) %>
               </td>
               <td><%= forum.topics_count %></td>
@@ -129,29 +134,29 @@ See COPYRIGHT and LICENSE files for more details.
               <td>
                 <% if forum.last_message %>
                   <% forum.last_message %>
-                  <%= authoring forum.last_message.created_at, forum.last_message.author %><br />
+                  <%= authoring forum.last_message.created_at, forum.last_message.author %><br>
                   <%= link_to_message forum.last_message, no_root: true %>
                 <% end %>
               </td>
               <% if User.current.allowed_in_project?(:manage_forums, @project) %>
                 <td class="small-icons">
                   <% if authorize_for 'forums', 'edit' %>
-                    <%= reorder_links 'forum', controller: '/forums',
-                                      action: 'move',
-                                      project_id: @project,
-                                      id: forum %>
+                    <%= reorder_links "forum", controller: "/forums",
+                                               action: "move",
+                                               project_id: @project,
+                                               id: forum %>
                   <% end %>
                 </td>
                 <td class="buttons">
-                  <%= link_to_if_authorized '',
-                                            { controller: '/forums', action: 'edit', project_id: @project, id: forum },
-                                            class: 'icon icon-edit',
+                  <%= link_to_if_authorized "",
+                                            { controller: "/forums", action: "edit", project_id: @project, id: forum },
+                                            class: "icon icon-edit",
                                             title: t(:button_edit) %>
-                  <%= link_to_if_authorized '',
-                                            { controller: '/forums', action: 'destroy', project_id: @project, id: forum },
+                  <%= link_to_if_authorized "",
+                                            { controller: "/forums", action: "destroy", project_id: @project, id: forum },
                                             data: { confirm: t(:text_are_you_sure) },
                                             method: :delete,
-                                            class: 'icon icon-delete',
+                                            class: "icon icon-delete",
                                             title: t(:button_delete) %>
                 </td>
               <% end %>
@@ -164,9 +169,9 @@ See COPYRIGHT and LICENSE files for more details.
   </div>
 <% end %>
 <%= other_formats_links do |f| %>
-  <%= f.link_to 'Atom', url: { controller: '/activities', action: 'index', id: @project, show_messages: 1, key: User.current.rss_key } %>
+  <%= f.link_to "Atom", url: { controller: "/activities", action: "index", id: @project, show_messages: 1, key: User.current.rss_key } %>
 <% end %>
 
 <% content_for :header_tags do %>
-  <%= auto_discovery_link_tag(:atom, { controller: '/activities', action: 'index', id: @project, format: 'atom', show_messages: 1, key: User.current.rss_key }) %>
+  <%= auto_discovery_link_tag(:atom, { controller: "/activities", action: "index", id: @project, format: "atom", show_messages: 1, key: User.current.rss_key }) %>
 <% end %>

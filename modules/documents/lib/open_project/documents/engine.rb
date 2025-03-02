@@ -52,6 +52,13 @@ module OpenProject::Documents
                    require: :loggedin
       end
 
+      menu :admin_menu,
+           :document_categories,
+           { controller: "/admin/settings/document_categories", action: :index },
+           if: ->(_) { User.current.admin? },
+           caption: :"documents.label_categories",
+           parent: :files
+
       Redmine::Search.register :documents
     end
 

@@ -70,9 +70,24 @@ module Filter
         { autocomplete_options: project_autocomplete_options }
       when Queries::Filters::Shared::CustomFields::User
         { autocomplete_options: user_autocomplete_options }
+      when Queries::Filters::Shared::CustomFields::ListOptional,
+           Queries::Projects::Filters::ProjectStatusFilter,
+           Queries::Projects::Filters::TypeFilter
+        { autocomplete_options: list_autocomplete_options(filter) }
       else
         {}
       end
+    end
+
+    def list_autocomplete_options(filter)
+      {
+        component: "opce-autocompleter",
+        items: filter.allowed_values.map { |name, id| { name:, id: } },
+        model: filter.values,
+        bindValue: "id",
+        bindLabel: "name",
+        hideSelected: true
+      }
     end
 
     def project_autocomplete_options

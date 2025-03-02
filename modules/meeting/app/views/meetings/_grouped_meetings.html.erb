@@ -36,7 +36,7 @@ See COPYRIGHT and LICENSE files for more details.
 <% %i[today tomorrow this_week later].each_with_index do |key, i| %>
   <% group = @grouped_meetings[key] %>
   <% if group.present? %>
-    <%= render(Primer::Beta::Heading.new(
+    <%= render(Primer::OpenProject::Heading.new(
                  tag: :h3,
                  mb: 3,
                  mt: i == 0 ? 0 : 3

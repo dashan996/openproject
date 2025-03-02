@@ -74,7 +74,7 @@ module Storages
     end
 
     def auth_strategy(user)
-      Peripherals::Registry.resolve("#{@storage}.authentication.user_bound").call(user:)
+      Peripherals::Registry.resolve("#{@storage}.authentication.user_bound").call(user:, storage: @storage)
     end
   end
 end

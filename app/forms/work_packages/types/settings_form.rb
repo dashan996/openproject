@@ -51,7 +51,7 @@ module WorkPackages
         if show_work_flow_copy?
           settings_form.select_list(
             name: :copy_workflow_from,
-            label: label(:copy_workflow_from),
+            label: I18n.t(:label_copy_workflow_from),
             include_blank: true,
             input_width: :large
           ) do |other_types|

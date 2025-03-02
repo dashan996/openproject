@@ -6,7 +6,7 @@
     data: {
       controller: "show-when-value-selected"
     },
-    method: :post,
+    method: :post
   ) do |form|
     flex_layout do |flex|
       if edit_mode
@@ -30,7 +30,7 @@
       flex.with_row(
         mt: 2,
         hidden: provider.metadata_url.blank?,
-        data: { value: :url, 'show-when-value-selected-target': "effect" }
+        data: { value: :url, "show-when-value-selected-target": "effect" }
       ) do
         render(Saml::Providers::MetadataUrlForm.new(form, provider:))
       end
@@ -38,18 +38,21 @@
       flex.with_row(
         mt: 2,
         hidden: provider.metadata_xml.blank?,
-        data: { value: :xml, 'show-when-value-selected-target': "effect" }
+        data: { value: :xml, "show-when-value-selected-target": "effect" }
       ) do
         render(Saml::Providers::MetadataXmlForm.new(form, provider:))
       end
 
       flex.with_row(mt: 4) do
-        render(Saml::Providers::SubmitOrCancelForm.new(
-          form,
-          provider:,
-          submit_button_options: { label: button_label },
-          cancel_button_options: { hidden: edit_mode },
-          state: :metadata))
+        render(
+          Saml::Providers::SubmitOrCancelForm.new(
+            form,
+            provider:,
+            submit_button_options: { label: button_label },
+            cancel_button_options: { hidden: edit_mode },
+            state: :metadata
+          )
+        )
       end
     end
   end

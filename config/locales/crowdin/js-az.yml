@@ -103,7 +103,6 @@ az:
     button_settings: "Settings"
     button_uncheck_all: "Uncheck all"
     button_update: "Yeniləmə"
-    button_export-pdf: "Download PDF"
     button_export-atom: "Download Atom"
     button_generate_pdf: "Generate PDF"
     button_create: "Create"
@@ -222,6 +221,8 @@ az:
             label_maximum_users: "Maximum active users"
             label_starts_at: "Starts at"
             label_expires_at: "Expires at"
+            label_plan: "Plan"
+            label_additional_features: "Additional features"
             receive_newsletter: I want to receive the OpenProject <a target="_blank" href="%{link}">newsletter</a>.
             taken_domain: There can only be one active trial per domain.
             domain_mismatch: The current request host name does not match the configured host name. Please double check your system settings.
@@ -357,10 +358,10 @@ az:
           learn_about: "Learn more about the new features"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_2":
+          "15_3":
             standard:
               new_features_html: >
-                The release brings various features and improvements for you, e.g. <br> <ul class="%{list_styling_class}"> <li>Set reminders for work packages to generate date alert notifications.</li> <li>Create new folders directly from the location picker for file storage.</li> <li>Specify a required lag between work packages successors and predecessors.</li> <li>Enable ordering and grouping for work packages on values of custom fields type hierarchy.</li> <li>Export time entries as PDF timesheets.</li> <li>Add a popover displaying user information when hovering.</li> </ul>
+                The release brings various features and improvements for you, e.g. <br> <ul class="%{list_styling_class}"> <li>Schedule recurring meetings to streamline your weekly, biweekly, or custom appointments.</li> <li>Create child work packages directly from the Relations tab.</li> <li>Include total sums in timesheet PDF exports for better insights.</li> <li>Include child work packages in cost reports for more accurate tracking.</li> <li>See dates of previously hidden, permission-restricted relations to make informed scheduling decisions.</li> </ul>
     ical_sharing_modal:
       title: "Subscribe to calendar"
       inital_setup_error_message: "An error occured while fetching data."
@@ -852,8 +853,6 @@ az:
       select_branch: "Select branch"
     field_value_enter_prompt: "Enter a value for '%{field}'"
     project_menu_details: "Details"
-    scheduling:
-      manual: "Manual scheduling"
     sort:
       sorted_asc: "Ascending sort applied, "
       sorted_dsc: "Descending sort applied, "
@@ -901,15 +900,6 @@ az:
       comment_send_failed: "An error has occurred. Could not submit the comment."
       comment_updated: "The comment was successfully updated."
       confirm_edit_cancel: "Are you sure you want to cancel editing the work package?"
-      datepicker_modal:
-        automatically_scheduled_parent: "Automatically scheduled. Dates are derived from relations."
-        manually_scheduled: "Manual scheduling enabled, all relations ignored."
-        start_date_limited_by_relations: "Available start and finish dates are limited by relations."
-        changing_dates_affects_follow_relations: "Changing these dates will affect dates of related work packages."
-        click_on_show_relations_to_open_gantt: 'Click on "%{button_name}" for GANTT overview.'
-        show_relations: "Show relations"
-        ignore_non_working_days:
-          title: "Working days only"
       description_filter: "Filtr"
       description_enter_text: "Enter text"
       description_options_hide: "Hide options"

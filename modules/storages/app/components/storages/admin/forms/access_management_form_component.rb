@@ -29,13 +29,13 @@
 #++
 #
 module Storages::Admin::Forms
-  class AccessManagementFormComponent < ApplicationComponent
-    include OpPrimer::ComponentHelpers
-    include OpTurbo::Streamable
-
-    alias_method :storage, :model
-
+  class AccessManagementFormComponent < StorageFormComponent
     def self.wrapper_key = :access_management_section
+
+    def form_url
+      query = { continue_wizard: storage.id } if in_wizard
+      admin_settings_storage_access_management_path(storage, query)
+    end
 
     private
 

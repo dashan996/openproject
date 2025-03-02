@@ -354,14 +354,14 @@ ro:
               subject: New website
               children:
                 item_0:
-                  subject: Newsletter registration form
+                  subject: Formular de înregistrare la newsletter
                 item_1:
                   subject: Implement product tour
                 item_2:
-                  subject: New landing page
+                  subject: Pagină de destinație nouă
                   children:
                     item_0:
-                      subject: Create wireframes for new landing page
+                      subject: Creează wireframes pentru noua pagină de destinație
             item_3:
               subject: Contact form
             item_4:

@@ -38,6 +38,7 @@ RSpec.describe Queries::Users::Filters::AnyNameAttributeFilter do
     let(:class_key) { :any_name_attribute }
     let(:type) { :string }
     let(:model) { User.user }
+    let(:human_name) { "Name attributes" }
 
     describe "#allowed_values" do
       it "is nil" do

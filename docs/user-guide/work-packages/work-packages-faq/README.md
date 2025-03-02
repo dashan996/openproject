@@ -69,7 +69,7 @@ You need to activate the module "Time and costs" in the project settings, first.
 
 One possible solution: If you receive this error message when trying to create a new work package: Please navigate to *Administration ->Work packages ->Status ->[status of the work package you were trying to change, e.g. "New"]* and un-check the box next to "Work package read-only". If this box was checked it could have caused these problems, as project attributes couldn't be changed.
 
-### How can I change the order of the activities/comments in the activity tab of a work package?
+### How can I change the order of the activities/comments in the Activity tab of a work package?
 
 You can change this in your account settings. Please find out more [here](../../../user-guide/account-settings/#change-the-order-to-display-comments).
 

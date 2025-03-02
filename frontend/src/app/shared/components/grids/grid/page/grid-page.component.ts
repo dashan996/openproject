@@ -56,7 +56,7 @@ export abstract class GridPageComponent implements OnInit, OnDestroy {
     this.renderer.removeClass(document.body, 'widget-grid-layout');
   }
 
-  private setHtmlTitle() {
+  protected setHtmlTitle() {
     this.title.setFirstPart(this.text.html_title);
   }
 

@@ -94,8 +94,11 @@ RSpec.describe "Work package activity", :js, :with_cuprite do
 
     let(:work_package) { create(:work_package, project:, author: admin) }
     let(:first_comment) do
-      create(:work_package_journal, user: admin, notes: "First comment by admin", journable: work_package,
-                                    version: 2)
+      create(:work_package_journal,
+             user: admin,
+             notes: "First comment by admin",
+             journable: work_package,
+             version: 2)
     end
 
     context "when project is public", with_settings: { login_required: false } do
@@ -328,48 +331,47 @@ RSpec.describe "Work package activity", :js, :with_cuprite do
     end
 
     it "shows and merges activities and comments correctly", :aggregate_failures do
-      pending "works locally but is flaky on CI, reason unknown"
-      fail
+      first_journal = work_package.journals.first
 
-      # first_journal = work_package.journals.first
+      # initial journal entry is shown without changeset or comment
+      activity_tab.within_journal_entry(first_journal) do
+        activity_tab.expect_journal_details_header(text: admin.name)
+        activity_tab.expect_no_journal_notes
+        activity_tab.expect_no_journal_changed_attribute
+      end
 
-      # # initial journal entry is shown without changeset or comment
-      # activity_tab.within_journal_entry(first_journal) do
-      #   activity_tab.expect_journal_details_header(text: admin.name)
-      #   activity_tab.expect_no_journal_notes
-      #   activity_tab.expect_no_journal_changed_attribute
-      # end
+      wp_page.update_attributes(subject: "A new subject") # rubocop:disable Rails/ActiveRecordAliases
+      wait_for_network_idle
+      wp_page.expect_and_dismiss_toaster(message: "Successful update.")
 
-      # wp_page.update_attributes(subject: "A new subject")
-      # wp_page.expect_and_dismiss_toaster(message: "Successful update.")
+      second_journal = work_package.journals.second
+      # even when attributes are changed, the initial journal entry is still not showing any changeset
+      activity_tab.within_journal_entry(second_journal) do
+        activity_tab.expect_journal_details_header(text: member.name)
+        activity_tab.expect_journal_changed_attribute(text: "Subject")
+      end
 
-      # second_journal = work_package.journals.second
-      # # even when attributes are changed, the initial journal entry is still not showing any changeset
-      # activity_tab.within_journal_entry(second_journal) do
-      #   activity_tab.expect_journal_details_header(text: member.name)
-      #   activity_tab.expect_journal_changed_attribute(text: "Subject")
-      # end
+      # merges the second journal entry with the comment made by the user right afterwards
+      activity_tab.add_comment(text: "First comment")
 
-      # # merges the second journal entry with the comment made by the user right afterwards
-      # activity_tab.add_comment(text: "First comment")
+      activity_tab.within_journal_entry(second_journal) do
+        activity_tab.expect_no_journal_details_header
+        activity_tab.expect_journal_notes_header(text: member.name)
+        activity_tab.expect_journal_notes(text: "First comment")
+      end
 
-      # activity_tab.within_journal_entry(second_journal) do
-      #   activity_tab.expect_no_journal_details_header
-      #   activity_tab.expect_journal_notes_header(text: member.name)
-      #   activity_tab.expect_journal_notes(text: "First comment")
-      # end
+      travel_to (Setting.journal_aggregation_time_minutes.to_i.minutes + 1.minute).from_now
+      # the journals will not be merged due to the time difference
 
-      # travel_to (Setting.journal_aggregation_time_minutes.to_i.minutes + 1.minute).from_now
-      # # the journals will not be merged due to the time difference
+      wp_page.update_attributes(subject: "A new subject!!!") # rubocop:disable Rails/ActiveRecordAliases
+      wait_for_network_idle
 
-      # wp_page.update_attributes(subject: "A new subject!!!")
+      third_journal = work_package.journals.third
 
-      # third_journal = work_package.journals.third
-
-      # activity_tab.within_journal_entry(third_journal) do
-      #   activity_tab.expect_journal_details_header(text: member.name)
-      #   activity_tab.expect_journal_changed_attribute(text: "Subject")
-      # end
+      activity_tab.within_journal_entry(third_journal) do
+        activity_tab.expect_journal_details_header(text: member.name)
+        activity_tab.expect_journal_changed_attribute(text: "Subject")
+      end
     end
   end
 
@@ -397,8 +399,11 @@ RSpec.describe "Work package activity", :js, :with_cuprite do
 
     it "shows the comment of another user without browser reload", :aggregate_failures do
       # simulate member creating a comment
-      first_journal = create(:work_package_journal, user: member, notes: "First comment by member", journable: work_package,
-                                                    version: 2)
+      first_journal = create(:work_package_journal,
+                             user: member,
+                             notes: "First comment by member",
+                             journable: work_package,
+                             version: 2)
 
       # the comment is shown without browser reload
       activity_tab.expect_journal_notes(text: "First comment by member")
@@ -409,12 +414,14 @@ RSpec.describe "Work package activity", :js, :with_cuprite do
 
       activity_tab.add_comment(text: "First comment by admin")
 
-      expect(activity_tab.get_all_comments_as_arrary).to eq([
-                                                              "First comment by member",
-                                                              "Second comment by member",
-                                                              "Third comment by member",
-                                                              "First comment by admin"
-                                                            ])
+      activity_tab.expect_comments_order(
+        [
+          "First comment by member",
+          "Second comment by member",
+          "Third comment by member",
+          "First comment by admin"
+        ]
+      )
 
       first_journal.update!(notes: "First comment by member updated")
 
@@ -486,93 +493,84 @@ RSpec.describe "Work package activity", :js, :with_cuprite do
         wp_page.wait_for_activity_tab
       end
 
-      it "filters the activities based on type", :aggregate_failures do # rubocop:disable RSpec/RepeatedExample
-        pending "works locally but is flaky on CI, reason unknown"
-        fail
+      it "filters the activities based on type", :aggregate_failures do
+        # add a non-comment journal entry by changing the work package attributes
+        wp_page.update_attributes(subject: "A new subject") # rubocop:disable Rails/ActiveRecordAliases
+        wp_page.expect_and_dismiss_toaster(message: "Successful update.")
 
-        # # add a non-comment journal entry by changing the work package attributes
-        # wp_page.update_attributes(subject: "A new subject")
-        # wp_page.expect_and_dismiss_toaster(message: "Successful update.")
+        # expect all journal entries
+        activity_tab.expect_journal_notes(text: "First comment by admin")
+        activity_tab.expect_journal_notes(text: "Second comment by admin")
+        activity_tab.expect_journal_changed_attribute(text: "Subject")
 
-        # # expect all journal entries
-        # activity_tab.expect_journal_notes(text: "First comment by admin")
-        # activity_tab.expect_journal_notes(text: "Second comment by admin")
-        # activity_tab.expect_journal_changed_attribute(text: "Subject")
+        activity_tab.filter_journals(:only_comments)
 
-        # activity_tab.filter_journals(:only_comments)
+        # expect only the comments
+        activity_tab.expect_journal_notes(text: "First comment by admin")
+        activity_tab.expect_journal_notes(text: "Second comment by admin")
+        activity_tab.expect_no_journal_changed_attribute(text: "Subject")
 
-        # # expect only the comments
-        # activity_tab.expect_journal_notes(text: "First comment by admin")
-        # activity_tab.expect_journal_notes(text: "Second comment by admin")
-        # activity_tab.expect_no_journal_changed_attribute(text: "Subject")
+        activity_tab.filter_journals(:only_changes)
 
-        # activity_tab.filter_journals(:only_changes)
+        # expect only the changes
+        activity_tab.expect_no_journal_notes(text: "First comment by admin")
+        activity_tab.expect_no_journal_notes(text: "Second comment by admin")
+        activity_tab.expect_journal_changed_attribute(text: "Subject")
+        activity_tab.filter_journals(:all)
 
-        # # expect only the changes
-        # activity_tab.expect_no_journal_notes(text: "First comment by admin")
-        # activity_tab.expect_no_journal_notes(text: "Second comment by admin")
-        # activity_tab.expect_journal_changed_attribute(text: "Subject")
+        # expect all journal entries
+        activity_tab.expect_journal_notes(text: "First comment by admin")
+        activity_tab.expect_journal_notes(text: "Second comment by admin")
+        activity_tab.expect_journal_changed_attribute(text: "Subject")
 
-        # activity_tab.filter_journals(:all)
+        # strip journal entries with comments and changesets down to the comments
 
-        # # expect all journal entries
-        # activity_tab.expect_journal_notes(text: "First comment by admin")
-        # activity_tab.expect_journal_notes(text: "Second comment by admin")
-        # activity_tab.expect_journal_changed_attribute(text: "Subject")
+        # creating a journal entry with both a comment and a changeset
+        activity_tab.add_comment(text: "Third comment by admin")
+        wp_page.update_attributes(subject: "A new subject!!!") # rubocop:disable Rails/ActiveRecordAliases
+        wp_page.expect_and_dismiss_toaster(message: "Successful update.")
 
-        # # strip journal entries with comments and changesets down to the comments
+        latest_journal = work_package.journals.last
 
-        # # creating a journal entry with both a comment and a changeset
-        # activity_tab.add_comment(text: "Third comment by admin")
-        # wp_page.update_attributes(subject: "A new subject!!!")
-        # wp_page.expect_and_dismiss_toaster(message: "Successful update.")
+        activity_tab.within_journal_entry(latest_journal) do
+          activity_tab.expect_journal_notes_header(text: admin.name)
+          activity_tab.expect_journal_notes(text: "Third comment by admin")
+          activity_tab.expect_journal_changed_attribute(text: "Subject")
+          activity_tab.expect_no_journal_details_header
+        end
 
-        # latest_journal = work_package.journals.last
+        activity_tab.filter_journals(:only_comments)
 
-        # activity_tab.within_journal_entry(latest_journal) do
-        #   activity_tab.expect_journal_notes_header(text: admin.name)
-        #   activity_tab.expect_journal_notes(text: "Third comment by admin")
-        #   activity_tab.expect_journal_changed_attribute(text: "Subject")
-        #   activity_tab.expect_no_journal_details_header
-        # end
+        activity_tab.within_journal_entry(latest_journal) do
+          activity_tab.expect_journal_notes_header(text: admin.name)
+          activity_tab.expect_journal_notes(text: "Third comment by admin")
+          activity_tab.expect_no_journal_changed_attribute
+          activity_tab.expect_no_journal_details_header
+        end
 
-        # activity_tab.filter_journals(:only_comments)
+        activity_tab.filter_journals(:only_changes)
 
-        # activity_tab.within_journal_entry(latest_journal) do
-        #   activity_tab.expect_journal_notes_header(text: admin.name)
-        #   activity_tab.expect_journal_notes(text: "Third comment by admin")
-        #   activity_tab.expect_no_journal_changed_attribute
-        #   activity_tab.expect_no_journal_details_header
-        # end
+        activity_tab.within_journal_entry(latest_journal) do
+          activity_tab.expect_no_journal_notes_header
+          activity_tab.expect_no_journal_notes
 
-        # activity_tab.filter_journals(:only_changes)
-
-        # activity_tab.within_journal_entry(latest_journal) do
-        #   activity_tab.expect_no_journal_notes_header
-        #   activity_tab.expect_no_journal_notes
-
-        #   activity_tab.expect_journal_details_header(text: admin.name)
-        #   activity_tab.expect_journal_changed_attribute(text: "Subject")
-        # end
+          activity_tab.expect_journal_details_header(text: admin.name)
+          activity_tab.expect_journal_changed_attribute(text: "Subject")
+        end
       end
 
-      it "resets an only_changes filter if a comment is added by the user", :aggregate_failures do # rubocop:disable RSpec/RepeatedExample
-        pending "works locally but is flaky on CI, reason unknown"
-        fail
+      it "resets an only_changes filter if a comment is added by the user", :aggregate_failures do
+        activity_tab.filter_journals(:only_changes)
 
-        # activity_tab.filter_journals(:only_changes)
-        # sleep 0.5 # avoid flaky test
+        # expect only the changes
+        activity_tab.expect_no_journal_notes(text: "First comment by admin")
+        activity_tab.expect_no_journal_notes(text: "Second comment by admin")
 
-        # # expect only the changes
-        # activity_tab.expect_no_journal_notes(text: "First comment by admin")
-        # activity_tab.expect_no_journal_notes(text: "Second comment by admin")
+        # add a comment
+        activity_tab.add_comment(text: "Third comment by admin")
 
-        # # add a comment
-        # activity_tab.add_comment(text: "Third comment by admin")
-        # sleep 0.5 # avoid flaky test
-
-        # # the only_changes filter should be reset
-        # activity_tab.expect_journal_notes(text: "Third comment by admin")
+        # the only_changes filter should be reset
+        activity_tab.expect_journal_notes(text: "Third comment by admin")
       end
     end
   end
@@ -620,23 +618,29 @@ RSpec.describe "Work package activity", :js, :with_cuprite do
 
     it "sorts the activities based on the sorting preference", :aggregate_failures do
       # expect the default sorting to be asc
-      expect(activity_tab.get_all_comments_as_arrary).to eq([
-                                                              "First comment by admin",
-                                                              "Second comment by admin"
-                                                            ])
+      activity_tab.expect_comments_order(
+        [
+          "First comment by admin",
+          "Second comment by admin"
+        ]
+      )
       activity_tab.set_journal_sorting(:desc)
 
-      expect(activity_tab.get_all_comments_as_arrary).to eq([
-                                                              "Second comment by admin",
-                                                              "First comment by admin"
-                                                            ])
+      activity_tab.expect_comments_order(
+        [
+          "Second comment by admin",
+          "First comment by admin"
+        ]
+      )
 
       activity_tab.set_journal_sorting(:asc)
 
-      expect(activity_tab.get_all_comments_as_arrary).to eq([
-                                                              "First comment by admin",
-                                                              "Second comment by admin"
-                                                            ])
+      activity_tab.expect_comments_order(
+        [
+          "First comment by admin",
+          "Second comment by admin"
+        ]
+      )
 
       # expect a new comment to be added at the bottom
       # when the sorting is set to asc
@@ -644,21 +648,25 @@ RSpec.describe "Work package activity", :js, :with_cuprite do
       # creating a new comment
       activity_tab.add_comment(text: "Third comment by admin")
 
-      expect(activity_tab.get_all_comments_as_arrary).to eq([
-                                                              "First comment by admin",
-                                                              "Second comment by admin",
-                                                              "Third comment by admin"
-                                                            ])
+      activity_tab.expect_comments_order(
+        [
+          "First comment by admin",
+          "Second comment by admin",
+          "Third comment by admin"
+        ]
+      )
 
       activity_tab.set_journal_sorting(:desc)
       activity_tab.add_comment(text: "Fourth comment by admin")
 
-      expect(activity_tab.get_all_comments_as_arrary).to eq([
-                                                              "Fourth comment by admin",
-                                                              "Third comment by admin",
-                                                              "Second comment by admin",
-                                                              "First comment by admin"
-                                                            ])
+      activity_tab.expect_comments_order(
+        [
+          "Fourth comment by admin",
+          "Third comment by admin",
+          "Second comment by admin",
+          "First comment by admin"
+        ]
+      )
     end
   end
 
@@ -668,8 +676,11 @@ RSpec.describe "Work package activity", :js, :with_cuprite do
       create(:work_package_journal, user: admin, notes: "First comment by admin", journable: work_package, version: 2)
     end
     let!(:journal_mentioning_admin) do
-      create(:work_package_journal, user: member, notes: "First comment by member mentioning @#{admin.name}",
-                                    journable: work_package, version: 3)
+      create(:work_package_journal,
+             user: member,
+             notes: "First comment by member mentioning @#{admin.name}",
+             journable: work_package,
+             version: 3)
     end
     let!(:notificaton_for_admin) do
       create(:notification, recipient: admin, resource: work_package, journal: journal_mentioning_admin, reason: :mentioned)
@@ -772,11 +783,30 @@ RSpec.describe "Work package activity", :js, :with_cuprite do
 
       it "can quote other user's comments", :aggregate_failures do
         # quote other user's comment
-        # not adding additional text in this spec to the spec as I didn't find a way to add text the editor component
         activity_tab.quote_comment(first_comment_by_member)
 
         # expect the quoted comment to be shown
-        activity_tab.expect_journal_notes(text: "A Member wrote:\nFirst comment by member")
+        activity_tab.ckeditor.expect_include_value("@A Member wrote:\nFirst comment by member")
+      end
+    end
+
+    context "when writing a comment" do
+      current_user { admin }
+
+      before do
+        wp_page.visit!
+        wp_page.wait_for_activity_tab
+      end
+
+      it "can quote other user's comments", :aggregate_failures do
+        # open the editor and type something
+        activity_tab.type_comment("Partial message:")
+
+        # quote other user's comment
+        activity_tab.quote_comment(first_comment_by_member)
+
+        # expect the original comment and quote are shown
+        activity_tab.ckeditor.expect_include_value("Partial message:\n@A Member wrote:\nFirst comment by member")
       end
     end
   end
@@ -1001,8 +1031,11 @@ RSpec.describe "Work package activity", :js, :with_cuprite do
           # auto-scrolls to the bottom when a new comment is added by another user
           # add a comment
           latest_journal_version = work_package.journals.last.version
-          create(:work_package_journal, user: member, notes: "New comment by member", journable: work_package,
-                                        version: latest_journal_version + 1)
+          create(:work_package_journal,
+                 user: member,
+                 notes: "New comment by member",
+                 journable: work_package,
+                 version: latest_journal_version + 1)
           # wait for the comment to be added
           wait_for { page }.to have_test_selector("op-journal-notes-body", text: "New comment by member")
           sleep 1 # wait for auto scrolling to finish
@@ -1400,7 +1433,7 @@ RSpec.describe "Work package activity", :js, :with_cuprite do
         before do
           allow_any_instance_of(WorkPackages::ActivitiesTabController) # rubocop:disable RSpec/AnyInstance
             .to receive(:create_journal_service_call)
-            .and_raise(StandardError.new("Test error"))
+                  .and_raise(StandardError.new("Test error"))
         end
 
         it "shows an error banner when the server returns an error" do
@@ -1422,11 +1455,11 @@ RSpec.describe "Work package activity", :js, :with_cuprite do
         before do
           allow_any_instance_of(AddWorkPackageNoteService) # rubocop:disable RSpec/AnyInstance
             .to receive(:call)
-            .and_return(
-              ServiceResult.failure(errors: ActiveModel::Errors.new(Journal.new).tap do |e|
-                e.add(:notes, "Validation error")
-              end)
-            )
+                  .and_return(
+                    ServiceResult.failure(errors: ActiveModel::Errors.new(Journal.new).tap do |e|
+                      e.add(:notes, "Validation error")
+                    end)
+                  )
         end
 
         it "shows a validation error banner" do
@@ -1454,7 +1487,7 @@ RSpec.describe "Work package activity", :js, :with_cuprite do
         before do
           allow_any_instance_of(WorkPackages::ActivitiesTabController) # rubocop:disable RSpec/AnyInstance
             .to receive(:update_journal_service_call)
-            .and_raise(StandardError.new("Test error"))
+                  .and_raise(StandardError.new("Test error"))
         end
 
         it "shows an error banner" do
@@ -1472,11 +1505,11 @@ RSpec.describe "Work package activity", :js, :with_cuprite do
         before do
           allow_any_instance_of(Journals::UpdateService) # rubocop:disable RSpec/AnyInstance
             .to receive(:call)
-            .and_return(
-              ServiceResult.failure(errors: ActiveModel::Errors.new(Journal.new).tap do |e|
-                e.add(:notes, "Validation error")
-              end)
-            )
+                  .and_return(
+                    ServiceResult.failure(errors: ActiveModel::Errors.new(Journal.new).tap do |e|
+                      e.add(:notes, "Validation error")
+                    end)
+                  )
         end
 
         it "shows a validation error banner" do

@@ -32,18 +32,20 @@ See COPYRIGHT and LICENSE files for more details.
     header.with_breadcrumbs(breadcrumb_items)
 
     if @color.persisted?
-      header.with_action_button(tag: :a,
-                                scheme: :danger,
-                                mobile_icon: :trash,
-                                mobile_label: t(:button_delete),
-                                size: :medium,
-                                href: color_path(@color),
-                                aria: { label: I18n.t(:button_delete) },
-                                data: {
-                                  confirm: I18n.t(:text_are_you_sure),
-                                  method: :delete
-                                },
-                                title: I18n.t(:button_delete)) do |button|
+      header.with_action_button(
+        tag: :a,
+        scheme: :danger,
+        mobile_icon: :trash,
+        mobile_label: t(:button_delete),
+        size: :medium,
+        href: color_path(@color),
+        aria: { label: I18n.t(:button_delete) },
+        data: {
+          confirm: I18n.t(:text_are_you_sure),
+          method: :delete
+        },
+        title: I18n.t(:button_delete)
+      ) do |button|
         button.with_leading_visual_icon(icon: :trash)
         t(:button_delete)
       end

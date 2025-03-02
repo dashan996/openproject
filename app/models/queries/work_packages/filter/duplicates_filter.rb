@@ -36,6 +36,10 @@ class Queries::WorkPackages::Filter::DuplicatesFilter <
     ::Relation::TYPE_DUPLICATES
   end
 
+  def human_name
+    I18n.t("work_package_relations_tab.relations.label_duplicates_singular")
+  end
+
   private
 
   def relation_filter

@@ -103,7 +103,6 @@ pl:
     button_settings: "Ustawienia"
     button_uncheck_all: "Odznacz wszystko"
     button_update: "Aktualizacja"
-    button_export-pdf: "Pobierz plik PDF"
     button_export-atom: "Pobierz Atom"
     button_generate_pdf: "Wygeneruj PDF"
     button_create: "Utwórz"
@@ -222,6 +221,8 @@ pl:
             label_maximum_users: "Maksymalna liczba aktywnych użytkowników"
             label_starts_at: "Data rozpoczęcia"
             label_expires_at: "Wygasa"
+            label_plan: "Plan"
+            label_additional_features: "Additional features"
             receive_newsletter: Chcę otrzymywać <a target="_blank" href="%{link}">biuletyn </a> OpenProject.
             taken_domain: W każdej domenie może być aktywna tylko jedna wersja próbna.
             domain_mismatch: Obecna nazwa hosta żądania nie pasuje do skonfigurowanej nazwy hosta. Sprawdź dokładnie ustawienia systemu.
@@ -357,10 +358,10 @@ pl:
           learn_about: "Dowiedz się więcej o nowych funkcjach"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_2":
+          "15_3":
             standard:
               new_features_html: >
-                Wersja wprowadza różne funkcje i ulepszenia, takie jak <br> <ul class="%{list_styling_class}"> <li>Ustawianie przypomnień dla pakietów roboczych w celu generowania powiadomień o datach.</li> <li>Tworzenie nowych folderów bezpośrednio z selektora lokalizacji w celu przechowywania plików.</li> <li>Określanie wymaganego odstępu między następcami i poprzednikami pakietów roboczych.</li> <li>Włączanie porządkowania i grupowania pakietów roboczych na podstawie wartości hierarchii typów pól niestandardowych.</li> <li>Eksportowanie wpisów czasu jako kart czasu pracy w formacie PDF.</li> <li>Dodawanie okienka wyskakującego wyświetlającego informacje o użytkowniku po najechaniu nań myszą.</li> </ul>
+                W tej wersji wprowadzono różne funkcje i ulepszenia, np. <br> <ul class="%{list_styling_class}"> <li>Planowanie spotkań cyklicznych w celu usprawnienia cotygodniowych, codwutygodniowych lub niestandardowych spotkań.</li> <li>Tworzenie podrzędnych pakietów roboczych bezpośrednio z karty Relacje.</li> <li>Uwzględnianie sum w eksportach PDF arkuszy czasu pracy w celu uzyskania lepszych danych analitycznych.</li> <li>Uwzględnianie podrzędnych pakietów roboczych w raportach dotyczących kosztów w celu zwiększenia dokładności śledzenia.</li> <li>Wyświetlanie dat wcześniej ukrytych relacji z ograniczonymi uprawnieniami w celu podejmowania świadomych decyzji dotyczących planowania.</li> </ul>
     ical_sharing_modal:
       title: "Subskrybuj kalendarz"
       inital_setup_error_message: "Podczas pobierania danych wystąpił błąd."
@@ -625,11 +626,11 @@ pl:
       date_alerts:
         milestone_date: "Data  kamienia milowego"
         overdue: "Przekroczony termin"
-        overdue_since: "since %{difference_in_days}."
-        property_today: "is today."
-        property_is: "is in %{difference_in_days}."
-        property_was: "was %{difference_in_days} ago."
-        property_is_deleted: "is deleted."
+        overdue_since: "od %{difference_in_days}."
+        property_today: "jest dzisiaj."
+        property_is: "jest za %{difference_in_days}."
+        property_was: "była %{difference_in_days} temu."
+        property_is_deleted: "została usunięta."
         upsale:
           title: "Alerty dotyczące dat"
           description: "Dzięki alertom dotyczącym dat będziesz otrzymywać powiadomienia o zbliżających się terminach rozpoczęcia lub zakończenia pracy, dzięki czemu nigdy nie przegapisz ani nie zapomnisz ważnego terminu."
@@ -854,8 +855,6 @@ pl:
       select_branch: "Wybierz gałąź"
     field_value_enter_prompt: "Wprowadź wartość dla '%{field}'"
     project_menu_details: "Szczegóły"
-    scheduling:
-      manual: "Planowanie ręczne"
     sort:
       sorted_asc: "Zastosowano sortowanie rosnące, "
       sorted_dsc: "Zastosowano sortowanie malejące, "
@@ -903,15 +902,6 @@ pl:
       comment_send_failed: "Wystąpił błąd. Nie można zamieścić komentarza."
       comment_updated: "Komentarz zaktualizowano pomyślnie."
       confirm_edit_cancel: "Czy na pewno chcesz anulować edycję pakietu pracy?"
-      datepicker_modal:
-        automatically_scheduled_parent: "Automatycznie zaplanowano. Daty pochodzą z relacji."
-        manually_scheduled: "Włączono ręczne planowanie, tym samym wszystkie relacje zostają zignorowane."
-        start_date_limited_by_relations: "Dostępne daty rozpoczęcia i zakończenia są ograniczone relacjami."
-        changing_dates_affects_follow_relations: "Zmiana tych dat wpłynie na daty powiązanych pakietów roboczych."
-        click_on_show_relations_to_open_gantt: 'Kliknij "%{button_name}", aby wyświetlić wykres GANTTa.'
-        show_relations: "Pokaż relacje"
-        ignore_non_working_days:
-          title: "Tylko dni robocze"
       description_filter: "Filtr"
       description_enter_text: "Wpisz tekst"
       description_options_hide: "Ukryj opcje"

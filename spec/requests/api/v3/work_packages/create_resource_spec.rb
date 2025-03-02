@@ -187,22 +187,43 @@ RSpec.describe "API v3 Work package resource",
         # mind the () for the super call, those are required in rspec's super
         let(:parameters) { super().merge(scheduleManually: true) }
 
-        it "sets the scheduling mode to true" do
+        it "sets the scheduling mode to manual (schedule_manually: true)" do
           expect(work_package.schedule_manually).to be true
         end
       end
 
       context "with false" do
-        let(:parameters) { super().merge(scheduleManually: false) }
+        let(:parameters) do
+          super().merge(scheduleManually: false)
+        end
 
-        it "sets the scheduling mode to false" do
-          expect(work_package.schedule_manually).to be false
+        context "when the created work package has an indirect predecessor" do
+          let(:predecessor) { create(:work_package, project:) }
+          let(:parent) { create(:work_package, project:, schedule_manually: false) }
+          let(:parameters) do
+            super().merge(parent: parent)
+          end
+
+          before do
+            create(:follows_relation, from: parent, to: predecessor)
+          end
+
+          it "sets the scheduling mode to automatic (schedule_manually: false)" do
+            expect(work_package.schedule_manually).to be false
+          end
+        end
+
+        context "when the work package has no direct or indirect predecessors and no children" do
+          # TODO: should the API return an error here?
+          it "does not set the scheduling mode to automatic and keeps manual scheduling mode (schedule_manually: true)" do
+            expect(work_package.schedule_manually).to be true
+          end
         end
       end
 
       context "with scheduleManually absent" do
-        it "sets the scheduling mode to false (default)" do
-          expect(work_package.schedule_manually).to be false
+        it "sets the scheduling mode to manual (schedule_manually: true, the default)" do
+          expect(work_package.schedule_manually).to be true
         end
       end
     end

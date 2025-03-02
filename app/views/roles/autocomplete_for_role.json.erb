@@ -37,7 +37,7 @@ See COPYRIGHT and LICENSE files for more details.
       "name": <%= role.name.to_json.html_safe %>
   } <%= "," unless ix == @roles.length - 1 %>
 <% end %> ],
-    "total": <%= @total ? @total : @roles.size %>,
-    "more": <%= @more ? @more : 0 %>
+    "total": <%= @total || @roles.size %>,
+    "more": <%= @more || 0 %>
 }
 }

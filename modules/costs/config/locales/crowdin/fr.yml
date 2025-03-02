@@ -30,6 +30,7 @@ fr:
         overridden_costs: "Coûts outrepassés"
         spent: "Consommé"
         spent_on: "Date"
+        logged_by: "Logged by"
       cost_type:
         unit: "Nom de l'unité"
         unit_plural: "Nom pluriel de l'unité"
@@ -48,7 +49,7 @@ fr:
       time_entry:
         project: Projet
         user: Utilisateur
-        work_package: Paquet de travail
+        work_package: Lot de Travaux
         hours: Heures
         comments: Commentaire
         activity: Activité
@@ -59,11 +60,15 @@ fr:
       cost_type:
         one: "Types de coût"
         other: "Types de coûts"
+      time_entry_activity:
+        one: "Activités de suivi du temps"
+        other: "Activités de suivi du temps"
       rate: "Tarif"
     errors:
       models:
         time_entry:
           invalid_time: "doit être entre 00:00 et 23:59."
+          cannot_log_for_this_work_package: "Impossible d'enregistrer le temps consacré à ce lot de travaux."
         work_package:
           is_not_a_valid_target_for_cost_entries: "Le lot de travaux #%{id} n'est pas une cible valide pour réaffecter les entrées de coût."
           nullify_is_not_valid_for_cost_entries: "Des entrées de coût ne peuvent pas être assignées à un projet."
@@ -79,6 +84,7 @@ fr:
   button_add_rate: "Ajouter tarif"
   button_log_costs: "Consigner coûts unitaires"
   button_log_time: "Journal"
+  button_add_activity: "Activité"
   caption_booked_on_project: "Réservé pour le projet"
   caption_default: "Défaut"
   caption_default_rate_history_for: "Historique des tarifs par défaut pour %{user}"
@@ -92,6 +98,8 @@ fr:
   caption_show_locked: "Afficher les types verrouillés"
   caption_log_time_dialog: "Enregistrer le temps"
   description_date_for_new_rate: "Date pour le nouveau tarif"
+  description_costs_settings: "Définissez le format souhaité pour les coûts dans tous les projets."
+  description_time_settings: "Définissez les champs à remplir obligatoirement lors de l'enregistrement du temps de travail dans tous les projets."
   group_by_others: "dans aucun groupe"
   label_between: "entre"
   label_cost_filter_add: "Ajouter filtre d'entrée de coût"
@@ -118,6 +126,8 @@ fr:
   label_kind: "Type"
   label_less_or_equal: "<="
   label_log_costs: "Journaliser les coûts unitaires"
+  label_new_time_entry_activity: "Nouvelle saisie de temps d'activité"
+  label_time_entry_activity_form_description: "Les modifications apportées à cette saisie du temps d'activité seront répercutées dans tous les projets où elle est activée."
   label_no: "Non"
   label_option_plural: "Options"
   label_overall_costs: "Coûts globaux"
@@ -130,6 +140,10 @@ fr:
   label_until: "jusque"
   label_valid_from: "Valable à partir du"
   label_yes: "Oui"
+  label_time: "Heure "
+  label_cost: "Coût"
+  label_costs: "Coûts"
+  label_mandatory_fields: "Champs obligatoires"
   placeholder_activity_select_work_package_first: La sélection d'un paquet de travail est requise en premier
   notice_something_wrong: "Quelque chose s'est mal passé. Veuillez réessayer."
   notice_successful_restore: "Restauration réussie."

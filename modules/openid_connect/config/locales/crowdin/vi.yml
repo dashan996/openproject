@@ -4,32 +4,31 @@ vi:
     description: "Thêm các nhà cung cấp chiến lược OmniAuth OpenID Connect vào OpenProject."
   logout_warning: >
     Bạn đã được đăng xuất. Nội dung của bất kỳ biểu mẫu nào bạn gửi có thể bị mất. Vui lòng [đăng nhập].
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
-        name: Tên
+        name: Name
         slug: Unique identifier
-        display_name: Tên hiển thị
-        client_id: ID người dùng
-        client_secret: Khóa bí mật người dùng
-        secret: Bí mật
-        scope: Phạm vi
-        grant_types_supported: Loại hỗ trợ
-        limit_self_registration: Giới hạn đăng ký tự động
-        authorization_endpoint: Điểm cuối ủy quyền
-        userinfo_endpoint: Thông tin điểm cuối người dùng
-        token_endpoint: Mã khóa điểm cuối
-        end_session_endpoint: Kết phiên điểm cuối
-        post_logout_redirect_uri: URI chuyển hướng sau đăng xuất
+        display_name: Display name
+        client_id: Client ID
+        client_secret: Client secret
+        secret: Secret
+        scope: Scope
+        grant_types_supported: Supported grant types
+        limit_self_registration: Limit self registration
+        authorization_endpoint: Authorization endpoint
+        userinfo_endpoint: User information endpoint
+        token_endpoint: Token endpoint
+        end_session_endpoint: End session endpoint
+        post_logout_redirect_uri: Post logout redirect URI
         jwks_uri: JWKS URI
-        issuer: Nhà cung cấp
-        tenant: Thuê bao
-        metadata_url: Siêu dữ liệu URL
-        icon: Biểu tượng tùy chỉnh
-        claims: Tuyên bố
-        acr_values: Giá trị ACR
+        issuer: Issuer
+        tenant: Tenant
+        metadata_url: Metadata URL
+        icon: Custom icon
+        claims: Claims
+        acr_values: ACR values
         redirect_url: Redirect URL
-  activerecord:
     errors:
       models:
         openid_connect/provider:

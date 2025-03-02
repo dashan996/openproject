@@ -159,9 +159,9 @@ module TableHelpers
           )
       end
 
-      it "creates relations between work packages out of the table data" do
+      it "creates 'follows' relations between work packages out of the table data" do
         table_representation = <<~TABLE
-          subject  | properties
+          subject  | predecessors
           main     |
           follower | follows main with lag 2
         TABLE
@@ -174,6 +174,23 @@ module TableHelpers
         expect(follower.follows_relations.count).to eq(1)
         expect(follower.follows_relations.first.to).to eq(main)
         expect(follower.follows_relations.first.lag).to eq(2)
+      end
+
+      it "creates 'relates' relations between work packages out of the table data" do
+        table_representation = <<~TABLE
+          subject  | related to
+          main     |
+          other    | main
+        TABLE
+
+        table_data = described_class.for(table_representation)
+        table = table_data.create_work_packages
+        expect(table.work_packages.count).to eq(2)
+        main = table.work_package(:main)
+        other = table.work_package(:other)
+        expect(other.relations.relates.count).to eq(1)
+        expect(other.relations.relates.first.to).to eq(main)
+        expect(other.relations.relates.first.lag).to be_nil
       end
 
       it "raises an error if a given status name does not exist" do

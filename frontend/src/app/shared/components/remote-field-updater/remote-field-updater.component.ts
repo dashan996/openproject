@@ -26,8 +26,7 @@
 // See COPYRIGHT and LICENSE files for more details.
 //++
 
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit } from '@angular/core';
-import { KeyCodes } from 'core-app/shared/helpers/keyCodes.enum';
+import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 export const remoteFieldUpdaterSelector = 'remote-field-updater';
@@ -37,7 +36,7 @@ export const remoteFieldUpdaterSelector = 'remote-field-updater';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '',
 })
-export class RemoteFieldUpdaterComponent implements OnInit {
+export class RemoteFieldUpdaterComponent implements OnInit, OnDestroy {
   constructor(
     private elementRef:ElementRef,
     private http:HttpClient,
@@ -46,46 +45,67 @@ export class RemoteFieldUpdaterComponent implements OnInit {
 
   private url:string;
 
-  private htmlMode:boolean;
-
   private form:HTMLFormElement;
 
-  private target:HTMLElement;
+  private debouncedUpdaterBound:EventListener;
+
+  private spentOnTextField:HTMLInputElement | null = null;
+  private costTypeSelect:HTMLInputElement | null = null;
+  private unitsTextField:HTMLInputElement | null = null;
 
   ngOnInit():void {
     const element = this.elementRef.nativeElement as HTMLElement;
     this.form = element.closest('form') as HTMLFormElement;
-    this.target = this.form.querySelector('.remote-field--target') as HTMLElement;
+    this.costTypeSelect = this.form.querySelector('#cost_entry_cost_type_id');
+    this.unitsTextField = this.form.querySelector('#cost_entry_units');
 
     this.url = element.dataset.url as string;
-    this.htmlMode = element.dataset.mode === 'html';
 
-    const debouncedEvent = _.debounce((event:InputEvent) => {
-      // This prevents an update of the result list when
-      // tabbing to the result list (9),
-      // pressing enter (13)
-      // tabbing back with shift (16) and
-      // special cases where the tab code is not correctly recognized (undefined).
-      // Thus the focus is kept on the first element of the result list.
-      const keyCodes = [KeyCodes.TAB, KeyCodes.ENTER, KeyCodes.SHIFT];
-      if (event.type === 'change' || (event.which && keyCodes.indexOf(event.which) === -1)) {
-        this.updater();
-      }
-    }, 500);
+    this.debouncedUpdaterBound = _.debounce(this.updater.bind(this), 500);
 
-    this.form.addEventListener('keyup', debouncedEvent);
-    this.form.addEventListener('change', debouncedEvent);
+    this.addListeners();
+  }
+
+  ngOnDestroy():void {
+    this.removeListeners();
+  }
+
+  private addListeners() {
+    this.addEventListenerWhenSpentOnFieldIsAdded('input', this.debouncedUpdaterBound);
+    this.costTypeSelect?.addEventListener('change', this.debouncedUpdaterBound);
+    this.unitsTextField?.addEventListener('input', this.debouncedUpdaterBound);
+  }
+
+  private removeListeners() {
+    if (this.debouncedUpdaterBound && 'cancel' in this.debouncedUpdaterBound) {
+      (this.debouncedUpdaterBound as { cancel:() => void }).cancel();
+    }
+    this.spentOnTextField?.removeEventListener('input', this.debouncedUpdaterBound);
+    this.costTypeSelect?.removeEventListener('change', this.debouncedUpdaterBound);
+    this.unitsTextField?.removeEventListener('input', this.debouncedUpdaterBound);
+  }
+
+  private addEventListenerWhenSpentOnFieldIsAdded(type:string, eventListener:EventListener) {
+    // Use MutationObserver to watch for the addition of the spent_on input
+    // field. This input field is a date picker.
+    const observer = new MutationObserver((mutations) => {
+      mutations
+        .filter((mutation) => mutation.type === 'childList')
+        .forEach(() => {
+          if (this.spentOnTextField === null && this.form.querySelector('#cost_entry_spent_on')) {
+            this.spentOnTextField = this.form.querySelector('#cost_entry_spent_on') as HTMLInputElement;
+            this.spentOnTextField.addEventListener(type, eventListener);
+            observer.disconnect(); // Stop observing once the element is found and listener is added
+          }
+        });
+    });
+    observer.observe(this.form, { childList: true, subtree: true });
   }
 
   private request(params:Record<string, string>) {
     const headers:Record<string, string> = {};
 
-    // In HTML mode, expect html response
-    if (this.htmlMode) {
-      headers.Accept = 'text/html';
-    } else {
-      headers.Accept = 'application/json';
-    }
+    headers.Accept = 'application/json';
 
     return this.http
       .get(
@@ -93,7 +113,7 @@ export class RemoteFieldUpdaterComponent implements OnInit {
         {
           params,
           headers,
-          responseType: (this.htmlMode ? 'text' : 'json') as any,
+          responseType: 'json',
           withCredentials: true,
         },
       );
@@ -112,21 +132,16 @@ export class RemoteFieldUpdaterComponent implements OnInit {
 
     this
       .request(params)
-      .subscribe((response:any) => {
-        if (this.htmlMode) {
-          // Replace the given target
-          this.target.innerHTML = response as string;
-        } else {
-          _.each(response, (val:string, selector:string) => {
-            const element = document.getElementById(selector) as HTMLElement|HTMLInputElement;
+      .subscribe((response:object) => {
+        _.each(response, (val:string, selector:string) => {
+          const element = document.getElementById(selector) as HTMLElement|HTMLInputElement;
 
-            if (element instanceof HTMLInputElement) {
-              element.value = val;
-            } else if (element) {
-              element.textContent = val;
-            }
-          });
-        }
+          if (element instanceof HTMLInputElement) {
+            element.value = val;
+          } else if (element) {
+            element.textContent = val;
+          }
+        });
       });
   }
 }

@@ -53,6 +53,10 @@ class Queries::WorkPackages::Filter::ManualSortFilter <
     :manual_sort
   end
 
+  def human_name
+    I18n.t("activerecord.attributes.query.manual_sorting")
+  end
+
   def ar_object_filter?
     true
   end

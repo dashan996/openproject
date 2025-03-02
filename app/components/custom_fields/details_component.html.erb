@@ -3,10 +3,12 @@
     flex_layout do |content|
       if has_no_items_or_projects?
         content.with_row(mb: 3) do
-          render Primer::Alpha::Banner.new(scheme: :default,
-                                           icon: :info,
-                                           dismiss_scheme: :hide,
-                                           test_selector: "op-custom-fields--new-hierarchy-banner") do
+          render Primer::Alpha::Banner.new(
+            scheme: :default,
+            icon: :info,
+            dismiss_scheme: :hide,
+            test_selector: "op-custom-fields--new-hierarchy-banner"
+          ) do
             I18n.t("custom_fields.admin.notice.remember_items_and_projects")
           end
         end

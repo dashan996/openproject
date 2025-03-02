@@ -33,11 +33,11 @@ module RecurringMeetings
     include ApplicationHelper
     include OpTurbo::Streamable
 
-    def initialize(recurring_meeting:, project:)
+    def initialize(recurring_meeting:)
       super
 
       @recurring_meeting = recurring_meeting
-      @project = project
+      @project = recurring_meeting.project
     end
 
     private
@@ -49,7 +49,7 @@ module RecurringMeetings
     def confirmation_message
       t("recurring_meeting.delete_dialog.confirmation_message_html",
         title: @recurring_meeting.title,
-        count: @recurring_meeting.remaining_occurrences&.count || 0) # actually ♾️, but we show same message as for 0
+        count: @recurring_meeting.instantiated_meetings.count)
     end
   end
 end

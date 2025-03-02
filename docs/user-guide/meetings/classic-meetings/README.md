@@ -1,7 +1,7 @@
 ---
 sidebar_navigation:
   title: Classic meetings
-  priority: 900
+  priority: 700
 description: Manage meetings with agenda and meeting minutes in OpenProject.
 keywords: meetings, classic meetings, agenda, minutes
 ---
@@ -13,8 +13,13 @@ Meetings in OpenProject allow you to manage and document your project meetings, 
 <div class="glossary">
 **Meetings** is defined as a module that allows the organization of meetings. The module has to be activated in the project settings in order to be displayed in the side navigation.
 </div>
+
 > [!NOTE]
-> [Dynamic meetings](../dynamic-meetings) were introduced in OpenProject 13.1. At the moment, the Meetings module lets you create classic or dynamic meetings but please keep in mind that the ability to create classic meetings will eventually be removed from OpenProject.
+> With OpenProject 13.1 we introduced dynamic meetings alongside classic meetings. 
+> With OpenProject 15.3 dynamic meetings are replaced by [one-time meetings](../one-time-meetings) and [recurring meetings](../recurring-meetings) to further improve meeting management.
+
+> [!IMPORTANT]
+> Please keep in mind that the ability to create classic meetings will eventually be removed from OpenProject.At the moment, the Meetings module lets you create classic or dynamic meetings but please keep in mind that the ability to create classic meetings will eventually be removed from OpenProject.
 
 | Topic                                                                     | Content                                     |
 |---------------------------------------------------------------------------|---------------------------------------------|

@@ -29,25 +29,19 @@
 require "spec_helper"
 require "features/work_packages/work_packages_page"
 
-RSpec.describe "work package PDF generator", :js, :selenium, with_flag: { generate_pdf_from_work_package: true } do
-  let(:user) { create(:admin) }
-  let(:project) { create(:project) }
-  let(:default_footer_text) { work_package.subject }
-  let(:default_header_text) { "#{work_package.type} ##{work_package.id}" }
-  let(:expected_params) do
-    default_expected_params
+RSpec::Matchers.define :has_mandatory_params do |expected|
+  match do |actual|
+    expected.count do |key, value|
+      actual[key.to_sym] == value
+    end == expected.size
   end
-  let(:default_expected_params) do
-    {
-      header_text_right: default_header_text,
-      footer_text_center: default_footer_text,
-      hyphenation: "",
-      paper_size: "A4"
-    }
-  end
-  let(:download_list) do
-    DownloadList.new
-  end
+end
+
+RSpec.describe "work package generate PDF dialog", :js do
+  shared_let(:user) { create(:admin) }
+  shared_let(:project) { create(:project) }
+  shared_let(:default_footer_text) { project.name }
+  shared_let(:download_list) { DownloadList.new }
   let(:work_package) do
     build(:work_package,
           project:,
@@ -56,34 +50,32 @@ RSpec.describe "work package PDF generator", :js, :selenium, with_flag: { genera
           responsible: user)
   end
   let(:document_generator) { instance_double(WorkPackage::PDFExport::DocumentGenerator) }
-
-  RSpec::Matchers.define :has_mandatory_params do |expected|
-    match do |actual|
-      expected.count do |key, value|
-        actual[key.to_sym] == value
-      end == expected.size
-    end
-  end
+  let(:wp_exporter) { instance_double(WorkPackage::PDFExport::WorkPackageToPdf) }
+  let(:expected_params) { {} }
 
   def visit_work_package_page!
-    wp_page = Pages::FullWorkPackage.new(work_package)
-    wp_page.visit!
+    Pages::FullWorkPackage.new(work_package).visit!
   end
 
   def mock_generating_pdf
     allow(WorkPackage::PDFExport::DocumentGenerator)
       .to receive(:new)
-            .and_return(document_generator)
-    allow(document_generator)
-      .to receive(:initialize)
             .with(work_package, has_mandatory_params(expected_params))
-    allow(document_generator)
-      .to receive(:export!)
-            .and_return(
-              Exports::Result.new(
-                format: :pdf, title: "filename.pdf", content: "PDF Content", mime_type: "application/pdf"
+            .and_return(document_generator)
+    allow(WorkPackage::PDFExport::WorkPackageToPdf)
+      .to receive(:new)
+            .with(work_package, has_mandatory_params(expected_params))
+            .and_return(wp_exporter)
+
+    [document_generator, wp_exporter].each do |generator|
+      allow(generator)
+        .to receive(:export!)
+              .and_return(
+                Exports::Result.new(
+                  format: :pdf, title: "filename.pdf", content: "PDF Content", mime_type: "application/pdf"
+                )
               )
-            )
+    end
   end
 
   def open_generate_pdf_dialog!
@@ -92,7 +84,7 @@ RSpec.describe "work package PDF generator", :js, :selenium, with_flag: { genera
   end
 
   def generate!
-    click_link_or_button "Generate"
+    click_link_or_button "Download"
     expect(subject).to have_text("filename.pdf")
   end
 
@@ -111,26 +103,51 @@ RSpec.describe "work package PDF generator", :js, :selenium, with_flag: { genera
   subject { download_list.refresh_from(page).latest_download.to_s }
 
   context "with default parameters" do
+    let(:expected_params) do
+      {
+        hyphenation: "false",
+        hyphenation_language: "en",
+        template: "attributes",
+        footer_text_right: project.name
+      }
+    end
+
     it "downloads with options" do
+      generate!
+    end
+  end
+
+  context "with contract template" do
+    let(:expected_params) do
+      {
+        hyphenation: "false",
+        hyphenation_language: "en",
+        template: "contract",
+        footer_text_center: work_package.subject
+      }
+    end
+
+    it "downloads with options" do
+      select "Contract", from: "template"
+      expect(page).to have_field("footer_text_center")
       generate!
     end
   end
 
   context "with custom parameters" do
     let(:expected_params) do
-      default_expected_params.merge({
-                                      header_text_right: "Custom Header Text",
-                                      footer_text_center: "Custom Footer Text",
-                                      hyphenation: "de",
-                                      paper_size: "LETTER"
-                                    })
+      {
+        footer_text_right: "Custom Footer Text",
+        template: "attributes",
+        hyphenation: "true",
+        hyphenation_language: "de"
+      }
     end
 
     it "downloads with options" do
-      select "Letter", from: "paper_size"
-      select "Deutsch", from: "hyphenation"
-      fill_in "header_text_right", with: "Custom Header Text"
-      fill_in "footer_text_center", with: "Custom Footer Text"
+      check("Hyphenation")
+      select "Deutsch", from: "hyphenation_language"
+      fill_in "footer_text_right", with: "Custom Footer Text"
       generate!
     end
   end

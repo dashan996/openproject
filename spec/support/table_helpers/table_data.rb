@@ -79,8 +79,8 @@ module TableHelpers
     end
 
     def create_work_packages
-      work_packages_by_identifier = Factory.new(self).create
-      Table.new(work_packages_by_identifier)
+      work_packages_by_identifier, relations = Factory.new(self).create
+      Table.new(work_packages_by_identifier, relations)
     end
 
     def order_like!(other_table)
@@ -93,11 +93,14 @@ module TableHelpers
     end
 
     class Factory
-      attr_reader :table_data, :work_packages_by_identifier
+      include Identifier
+
+      attr_reader :table_data, :work_packages_by_identifier, :relations
 
       def initialize(table_data)
         @table_data = table_data
         @work_packages_by_identifier = {}
+        @relations = []
       end
 
       def create
@@ -106,9 +109,9 @@ module TableHelpers
         end
         # create relations only after having created all work packages
         table_data.work_package_identifiers.each do |identifier| # rubocop:disable Style/CombinableLoops
-          create_follows_relations(identifier)
+          create_relations(identifier)
         end
-        work_packages_by_identifier
+        [work_packages_by_identifier, relations]
       end
 
       def create_work_package(identifier)
@@ -122,18 +125,29 @@ module TableHelpers
         end
       end
 
-      def create_follows_relations(identifier)
-        relations = work_package_relations(identifier)
-        relations.each do |relation|
-          predecessor = work_packages_by_identifier[relation[:predecessor].to_sym]
-          follower = work_packages_by_identifier[identifier]
-          FactoryBot.create(
-            :follows_relation,
-            from: follower,
-            to: predecessor,
-            lag: relation[:lag]
+      def create_relations(identifier)
+        work_package_relations(identifier).each do |relation|
+          to = find_work_package_by_name(relation[:with])
+          from = work_packages_by_identifier[identifier]
+          extra_attributes = { lag: relation[:lag] }.compact
+          relations << FactoryBot.create(
+            :relation,
+            relation_type: relation[:type],
+            from:,
+            to:,
+            **extra_attributes
           )
         end
+      end
+
+      def find_work_package_by_name(name)
+        identifier = to_identifier(name)
+        work_package = work_packages_by_identifier[identifier]
+        if work_package.nil?
+          raise "Work package with name #{name.inspect} (identifier: #{identifier.inspect}) not found. " \
+                "Available work package identifiers: #{work_packages_by_identifier.keys}."
+        end
+        work_package
       end
 
       def lookup_parent(identifier)

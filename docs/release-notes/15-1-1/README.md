@@ -23,7 +23,7 @@ At the end, you will find a complete list of all changes and bug fixes.
 <!-- BEGIN AUTOMATED SECTION -->
 
 - Bugfix: Hierarchy custom fields: Can circumvent enterprise restrictions \[[#59985](https://community.openproject.org/wp/59985)\]
-- Bugfix: Cannot delete users who have favourite projects \[[#60171](https://community.openproject.org/wp/60171)\]
+- Bugfix: Cannot delete users who have favorite projects \[[#60171](https://community.openproject.org/wp/60171)\]
 - Bugfix: Deletion of users who have created authorization providers (SAML, OIDC) silently fails \[[#60172](https://community.openproject.org/wp/60172)\]
 - Bugfix: Relations tab should not show relations to work packages a user has no read access to \[[#60479](https://community.openproject.org/wp/60479)\]
 - Bugfix: Child relation for milestones must be prevented in relations tab \[[#60512](https://community.openproject.org/wp/60512)\]

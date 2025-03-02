@@ -31,12 +31,14 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render(Primer::OpenProject::PageHeader.new) do |header|
     header.with_title { t(:label_enumerations) }
-    header.with_breadcrumbs([{ href: admin_index_path, text: t(:label_administration) },
-                             t(:label_enumerations)])
+    header.with_breadcrumbs(
+      [{ href: admin_index_path, text: t(:label_administration) },
+       t(:label_enumerations)]
+    )
   end
 %>
 
-<% Enumeration.subclasses.each do |klass| %>
+<% enumeration_classes.each do |klass| %>
   <h3 class="-no-border"><%= t(klass::OptionName) %></h3>
   <%= render(::Enumerations::TableComponent.new(rows: klass.shared, enumeration: klass)) %>
 <% end %>

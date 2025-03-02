@@ -1,29 +1,28 @@
 ru:
-  activemodel:
+  activerecord:
     attributes:
       saml/provider:
-        display_name: Имя
-        identifier: Идентификатор
-        secret: Ключ
-        scope: Область применения
-        assertion_consumer_service_url: URL-адрес ACS (Служба Поддержки Потребителей)
-        limit_self_registration: Ограничение самостоятельной регистрации
-        sp_entity_id: Идентификатор объекта обслуживания
-        metadata_url: URL метаданных провайдера идентификации
-        name_identifier_format: Формат идентификатора имени
-        idp_sso_service_url: Конечная точка входа провайдера идентификации
-        idp_slo_service_url: Конечная точка выхода провайдера идентификации
-        idp_cert: Публичный сертификат провайдера идентификации
-        authn_requests_signed: Подпись запросов аутентификации SAML
-        want_assertions_signed: Требовать подписанные ответы
-        want_assertions_encrypted: Требовать зашифрованные ответы
-        certificate: Сертификат, используемый для запросов SAML
-        private_key: Соответствующий закрытый ключ для запросов SAML
-        signature_method: Алгоритм подписи
-        digest_method: Алгоритм дайджеста
-        format: "Формат"
-        icon: "Пользовательская иконка"
-  activerecord:
+        display_name: Name
+        identifier: Identifier
+        secret: Secret
+        scope: Scope
+        assertion_consumer_service_url: ACS (Assertion consumer service) URL
+        limit_self_registration: Limit self registration
+        sp_entity_id: Service entity ID
+        metadata_url: Identity provider metadata URL
+        name_identifier_format: Name identifier format
+        idp_sso_service_url: Identity provider login endpoint
+        idp_slo_service_url: Identity provider logout endpoint
+        idp_cert: Public certificate of identity provider
+        authn_requests_signed: Sign SAML AuthnRequests
+        want_assertions_signed: Require signed responses
+        want_assertions_encrypted: Require encrypted responses
+        certificate: Certificate used by OpenProject for SAML requests
+        private_key: Corresponding private key for OpenProject SAML requests
+        signature_method: Signature algorithm
+        digest_method: Digest algorithm
+        format: "Format"
+        icon: "Custom icon"
     errors:
       models:
         saml/provider:

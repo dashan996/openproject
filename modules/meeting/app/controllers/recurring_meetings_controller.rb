@@ -7,17 +7,11 @@ class RecurringMeetingsController < ApplicationController
   include OpTurbo::FlashStreamHelper
   include OpTurbo::DialogStreamHelper
 
-  before_action :find_meeting,
-                only: %i[show update details_dialog delete_dialog destroy edit init
-                         delete_scheduled_dialog destroy_scheduled template_completed download_ics notify end_series
-                         end_series_dialog]
-  before_action :find_optional_project,
-                only: %i[index show new create update details_dialog delete_dialog destroy edit delete_scheduled_dialog
-                         destroy_scheduled notify]
-  before_action :authorize_global, only: %i[index new create]
-  before_action :authorize, except: %i[index new create]
-  before_action :get_scheduled_meeting, only: %i[delete_scheduled_dialog destroy_scheduled]
+  before_action :load_and_authorize_in_optional_project
+  before_action :find_meeting, except: %i[index new create]
 
+  before_action :get_scheduled_meeting, only: %i[delete_scheduled_dialog destroy_scheduled]
+  before_action :redirect_to_project, only: %i[show]
   before_action :set_direction, only: %i[show]
   before_action :convert_params, only: %i[create update]
   before_action :check_template_completable, only: %i[template_completed]
@@ -46,7 +40,7 @@ class RecurringMeetingsController < ApplicationController
     @recurring_meeting = RecurringMeeting.new(project: @project)
   end
 
-  def show # rubocop:disable Metrics/AbcSize
+  def show
     if @direction == "past"
       @meetings = @recurring_meeting.scheduled_instances(upcoming: false).limit(@count)
     else
@@ -85,16 +79,18 @@ class RecurringMeetingsController < ApplicationController
       .new(user: current_user)
       .call(@converted_params)
 
+    @recurring_meeting = call.result
+
     if call.success?
       flash[:notice] = I18n.t(:notice_successful_create).html_safe
-      redirect_to polymorphic_path([@project, :meeting], { id: call.result.template.id }),
+      redirect_to project_meeting_path(@recurring_meeting.project, @recurring_meeting.template),
                   status: :see_other
     else
       respond_to do |format|
         format.turbo_stream do
           update_via_turbo_stream(
             component: Meetings::Index::FormComponent.new(
-              meeting: call.result,
+              meeting: @recurring_meeting,
               project: @project,
               copy_from: @copy_from
             ),
@@ -117,7 +113,8 @@ class RecurringMeetingsController < ApplicationController
       .call(@converted_params)
 
     if call.success?
-      redirect_back(fallback_location: recurring_meeting_path(call.result), status: :see_other, turbo: false)
+      fallback_location = project_recurring_meeting_path(@project, call.result)
+      redirect_back(fallback_location:, status: :see_other, turbo: false)
     else
       respond_to do |format|
         format.turbo_stream do
@@ -154,21 +151,22 @@ class RecurringMeetingsController < ApplicationController
 
   def delete_dialog
     respond_with_dialog RecurringMeetings::DeleteDialogComponent.new(
-      recurring_meeting: @recurring_meeting,
-      project: @project
+      recurring_meeting: @recurring_meeting
     )
   end
 
   def destroy
-    if @recurring_meeting.destroy
-      flash[:notice] = I18n.t(:notice_successful_delete)
-    else
-      flash[:error] = I18n.t(:error_failed_to_delete_entry)
-    end
+    # rubocop:disable Rails/ActionControllerFlashBeforeRender
+    RecurringMeetings::DeleteService
+      .new(model: @recurring_meeting, user: User.current)
+      .call
+      .on_success { flash[:notice] = I18n.t(:notice_successful_delete) }
+      .on_failure { flash[:error] = I18n.t(:error_failed_to_delete_entry) }
+    # rubocop:enable Rails/ActionControllerFlashBeforeRender
 
     respond_to do |format|
       format.html do
-        redirect_to polymorphic_path([@project, :meetings])
+        redirect_to project_meetings_path(@project), status: :see_other
       end
     end
   end
@@ -192,8 +190,7 @@ class RecurringMeetingsController < ApplicationController
 
   def delete_scheduled_dialog
     respond_with_dialog RecurringMeetings::DeleteScheduledDialogComponent.new(
-      scheduled_meeting: @scheduled_meeting,
-      project: @project
+      scheduled_meeting: @scheduled_meeting
     )
   end
 
@@ -204,7 +201,7 @@ class RecurringMeetingsController < ApplicationController
       flash[:error] = I18n.t(:error_failed_to_delete_entry)
     end
 
-    redirect_to polymorphic_path([@project, @recurring_meeting]), status: :see_other
+    redirect_to project_recurring_meeting_path(@project, @recurring_meeting), status: :see_other
   end
 
   def download_ics # rubocop:disable Metrics/AbcSize
@@ -233,9 +230,15 @@ class RecurringMeetingsController < ApplicationController
 
   private
 
+  def redirect_to_project
+    return if @project
+
+    redirect_to project_recurring_meeting_path(@recurring_meeting.project, @recurring_meeting), status: :see_other
+  end
+
   def init_next_occurrence_job(from_time)
     # Now we can schedule the job to create the next occurrence
-    next_occurrence = @recurring_meeting.next_occurrence(from_time:)&.to_time
+    next_occurrence = @recurring_meeting.next_occurrence(from_time:)
     return if next_occurrence.nil?
 
     ::RecurringMeetings::InitNextOccurrenceJob
@@ -272,7 +275,7 @@ class RecurringMeetingsController < ApplicationController
       .scheduled_occurrences(limit: count + opened.count)
       .reject { |start_time| opened.include?(start_time) }
       .map { |start_time| cancelled[start_time] || scheduled_meeting(start_time) }
-      .first(count)
+      .first([count, 0].max)
 
     [opened.values.sort_by(&:start_time), planned]
   end
@@ -287,7 +290,9 @@ class RecurringMeetingsController < ApplicationController
         @recurring_meeting.scheduled_instances(upcoming: false).count
       elsif @recurring_meeting.will_end?
         open = @recurring_meeting.upcoming_instantiated_meetings
-        @recurring_meeting.remaining_occurrences.count - open.count
+        ongoing = @recurring_meeting.ongoing_meetings
+        total = @recurring_meeting.remaining_occurrences.count - open.count + ongoing.count
+        [total, 0].max
       end
 
     @count = [show_more_limit_param, @max_count].compact.min
@@ -320,14 +325,14 @@ class RecurringMeetingsController < ApplicationController
     # instance variable.
     @converted_params = recurring_meeting_params.to_h
 
-    @converted_params[:project] = @project
+    @converted_params[:project] = @project if @project.present?
     @converted_params[:duration] = @converted_params[:duration].to_hours if @converted_params[:duration].present?
   end
 
   def recurring_meeting_params
     params
       .require(:meeting)
-      .permit(:title, :location, :start_time_hour, :duration, :start_date,
+      .permit(:project_id, :title, :location, :start_time_hour, :duration, :start_date,
               :interval, :frequency, :end_after, :end_date, :iterations)
   end
 
@@ -348,7 +353,7 @@ class RecurringMeetingsController < ApplicationController
   end
 
   def check_template_completable
-    @first_occurrence = @recurring_meeting.next_occurrence&.to_time
+    @first_occurrence = @recurring_meeting.next_occurrence
     if @first_occurrence.nil?
       render_400(message: I18n.t("recurring_meeting.occurrence.error_no_next"))
       return

@@ -1,11 +1,27 @@
 pt-BR:
   activerecord:
     attributes:
+      oauth_client:
+        client_id: Client ID
+        client_secret: Client secret
+      project:
+        project_folder_type: Project folder type
       storages/file_link:
-        origin_id: Id da origem
+        origin: Origin
+        storage: Storage
+      storages/nextcloud_storage:
+        authentication_methods:
+          oauth2_sso: Single-Sign-On through OpenID Connect Identity Provider
+          oauth2_sso_with_two_way_oauth2_fallback: Single-Sign-On with Two-Way OAuth 2.0 as fallback
+          two_way_oauth2: Two-way OAuth 2.0 authorization code flow
+        storage_audience: Storage Audience
       storages/project_storage:
+        project_folder: Project folder
+        project_folder_mode: Project folder mode
         storage: Armazenamento
+        storage_url: Storage URL
       storages/storage:
+        authentication_method: Authentication Method
         creator: Criador
         drive: Drive ID
         host: Servidor
@@ -74,7 +90,7 @@ pt-BR:
         confirmation_text: Confirme se você entende e deseja remover este armazenamento de arquivos do projeto
         heading_text: Remover projeto de %{storage}
         text: Esta ação é permanente e removerá todos os links entre os pacotes de trabalho deste projeto e os arquivos e pastas desse armazenamento.
-        title: Remove project from storage
+        title: Remover projeto do armazenamento
       label: Remover projeto
   services:
     attributes:
@@ -199,15 +215,19 @@ pt-BR:
         manual_management_description: Você pode criar e gerenciar manualmente pastas por projeto por conta própria. No entanto, será necessário garantir manualmente que os usuários relevantes tenham acesso.
         setup_incomplete: Escolha o tipo de gerenciamento de acesso do usuário e criação de pastas.
         subtitle: Gerenciamento de acesso
-        title: Acesso e pastas do projeto
+      access_management_section: Acesso e pastas do projeto
       automatically_managed_folders: Pastas gerenciadas automaticamente
       general_information: Informações gerais
-      nextcloud_oauth: OAuth Nextcloud
-      oauth_applications: Aplicações OAuth
+      oauth_configuration: Configuração de OAuth
       one_drive_oauth: Azure OAuth
       openproject_oauth: OAuth OpenProject
       project_folders: Pastas do projeto
       redirect_uri: Redirecionar URI
+      storage_audience: Storage Audience
+      storage_audience_blank: No audience has been configured
+      storage_audience_description: Obtaining tokens for audience "%{audience}".
+      storage_audience_idp: Using first access token received by identity provider, regardless of audience.
+      storage_oauth: Nextcloud OAuth
       storage_provider: Provedor de armazenamento
     health:
       checked: Última verificação em %{datetime}
@@ -222,6 +242,9 @@ pt-BR:
         host_not_found: Nenhum servidor Nextcloud encontrado na URL de host configurada. Verifique a configuração.
         missing_dependencies: 'Uma dependência necessária está faltando no armazenamento de arquivos. Adicione a seguinte dependência: %{dependency}.'
         not_configured: A conexão não pôde ser validada. Conclua a configuração primeiro.
+        oidc_no_token_with_required_audience: There's no OpenID Connect token with the required %{audience} audience.
+        oidc_non_oidc_user: The current user, while provisioned, wasn't provisioned by an OpenID Connect (OIDC) Identity Provider. Please re-run the check with an OIDC provisioned user.
+        oidc_non_provisioned_user: O usuário atual não foi fornecido por um Provedor de Identidade OpenID Connect. Execute a verificação novamente com um usuário fornecido.
         placeholder: Verifique sua conexão com o servidor.
         subtitle: Validação de conexão
         tenant_id_wrong: O ID do diretório (inquilino) configurado é inválido. Verifique a configuração.
@@ -250,6 +273,7 @@ pt-BR:
       project_folder_bulk: A pasta do projeto é o local padrão para o envio de arquivos em todos os projetos selecionados. Você pode alterar essa configuração individualmente em cada projeto. No entanto, os usuários ainda poderão enviar arquivos para outros locais.
     instructions:
       all_available_storages_already_added: Todos os armazenamentos disponíveis já foram adicionados ao projeto.
+      authentication_method: The way that requests between OpenProject and the Storage are authenticated.
       automatic_folder: Isto irá criar automaticamente uma pasta raiz para este projeto e gerenciará as permissões de acesso para cada membro do projeto.
       empty_project_folder_validation: Selecionar uma pasta é obrigatório para continuar.
       existing_manual_folder: Você pode definir uma pasta existente como a pasta raiz deste projeto. No entanto, as permissões não são gerenciadas automaticamente; o administrador deve garantir manualmente que os usuários necessários tenham acesso. A pasta selecionada pode ser usada por vários projetos.
@@ -262,6 +286,8 @@ pt-BR:
         integration: Administração de Nextcloud / OpenProject
         oauth_configuration: Copie estes valores de %{application_link_text}.
         provider_configuration: 'Certifique-se de ter os privilégios de administração em sua instância de Nextcloud e de que o %{application_link_text} está instalado antes de realizar a configuração:'
+        storage_audience: Please enter the Client ID that the Nextcloud instance uses to communicate with the identity provider.
+        storage_audience_placeholder: e.g. nextcloud
       no_specific_folder: Por padrão, cada usuário começará na sua própria pasta inicial ao carregar arquivos.
       no_storage_set_up: Ainda não há armazenamento de arquivos configurado.
       not_logged_into_storage: Para selecionar uma pasta de projeto, primeiro faça login
@@ -293,6 +319,7 @@ pt-BR:
     label_creator: Criador
     label_delete_storage: Excluir armazenamento
     label_edit_storage_access_management: Editar gerenciamento de acesso ao armazenamento
+    label_edit_storage_audience: Edit Storage Audience
     label_edit_storage_automatically_managed_folders: Editar pastas gerencias automaticamente de armazenamento
     label_edit_storage_host: Editar host de armazenamento
     label_existing_manual_folder: Pasta existente com permissões gerenciadas manualmente
@@ -382,8 +409,15 @@ pt-BR:
         name: OneDrive/SharePoint
         name_placeholder: 'por ex.: OneDrive'
     show_attachments_toggle:
-      description: 'Desativar esta opção ocultará a lista de anexos na aba Arquivos dos pacotes de trabalho. Os arquivos anexados na descrição de um pacote de trabalho ainda serão carregados no armazenamento interno de anexos. '
+      description: Deactivating this option will hide the attachments list on the work packages files tab. The files attached in the description of a work package will still be uploaded in the internal attachments storage.
       label: Exibir anexos na aba arquivos de pacotes de trabalho
+    storage_audience:
+      idp:
+        helptext: OpenProject will use the first access token received by the identity provider to authenticate requests to the storage. It will not try to obtain another token.
+        label: Use first access token obtained by identity provider
+      manual:
+        helptext: Allows you to set the audience of the storage. OpenProject will try to obtain a token for the given audience from the identity provider.
+        label: Define storage audience manually
     storage_list_blank_slate:
       description: Adicione um armazenamento para vê-lo aqui.
       heading: Ainda não tem nenhum armazenamento.

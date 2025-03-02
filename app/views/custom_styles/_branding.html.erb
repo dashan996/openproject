@@ -34,11 +34,11 @@ See COPYRIGHT and LICENSE files for more details.
       <% if @custom_style.id && @custom_style.logo.present? %>
         <div>
           <%# Don't use image_tag here due to asset host %>
-          <%= tag('img', src: custom_style_logo_path(digest: @custom_style.digest, filename: @custom_style.logo_identifier), class: 'custom-logo-preview') %>
+          <%= tag("img", src: custom_style_logo_path(digest: @custom_style.digest, filename: @custom_style.logo_identifier), class: "custom-logo-preview") %>
           <%= link_to t(:button_delete),
                       custom_style_logo_delete_path,
                       method: :delete,
-                      class: 'icon icon-delete confirm-form-submit' %>
+                      class: "icon icon-delete confirm-form-submit" %>
         </div>
       <% end %>
       <div class="grid-block">
@@ -49,7 +49,7 @@ See COPYRIGHT and LICENSE files for more details.
             </div>
           </div>
           <div class="form--field-instructions">
-            <%= t('text_custom_logo_instructions') %>
+            <%= t("text_custom_logo_instructions") %>
           </div>
         </div>
       </div>
@@ -65,11 +65,11 @@ See COPYRIGHT and LICENSE files for more details.
 
       <% if @custom_style.id && @custom_style.favicon.present? %>
         <div>
-          <%= tag('img', src: custom_style_favicon_path(digest: @custom_style.digest, filename: @custom_style.favicon_identifier), class: 'custom-favicon-preview') %>
+          <%= tag("img", src: custom_style_favicon_path(digest: @custom_style.digest, filename: @custom_style.favicon_identifier), class: "custom-favicon-preview") %>
           <%= link_to t(:button_delete),
                       custom_style_favicon_delete_path,
                       method: :delete,
-                      class: 'icon icon-delete confirm-form-submit' %>
+                      class: "icon icon-delete confirm-form-submit" %>
         </div>
       <% end %>
       <div class="grid-block">
@@ -80,7 +80,7 @@ See COPYRIGHT and LICENSE files for more details.
             </div>
           </div>
           <div class="form--field-instructions">
-            <%= t('text_custom_favicon_instructions') %>
+            <%= t("text_custom_favicon_instructions") %>
           </div>
         </div>
       </div>
@@ -94,11 +94,11 @@ See COPYRIGHT and LICENSE files for more details.
       <legend class="form--fieldset-legend"><%= I18n.t(:label_custom_touch_icon) %></legend>
       <% if @custom_style.id && @custom_style.touch_icon.present? %>
         <div>
-          <%= tag('img', src: custom_style_touch_icon_path(digest: @custom_style.digest, filename: @custom_style.touch_icon_identifier), class: 'custom-touch-icon-preview') %>
+          <%= tag("img", src: custom_style_touch_icon_path(digest: @custom_style.digest, filename: @custom_style.touch_icon_identifier), class: "custom-touch-icon-preview") %>
           <%= link_to t(:button_delete),
                       custom_style_touch_icon_delete_path,
                       method: :delete,
-                      class: 'icon icon-delete confirm-form-submit' %>
+                      class: "icon icon-delete confirm-form-submit" %>
         </div>
       <% end %>
       <div class="grid-block">
@@ -109,7 +109,7 @@ See COPYRIGHT and LICENSE files for more details.
             </div>
           </div>
           <div class="form--field-instructions">
-            <%= t('text_custom_touch_icon_instructions') %>
+            <%= t("text_custom_touch_icon_instructions") %>
           </div>
         </div>
       </div>

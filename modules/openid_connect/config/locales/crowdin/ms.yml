@@ -4,32 +4,31 @@ ms:
     description: "Tambah penyedia strategi OmniAuth OpenID Connect ke OpenProject."
   logout_warning: >
     Anda telah log keluar. Sebarang bentuk kandungan yang anda hantar mungkin hilang. Sila [log masuk].
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
-        name: Nama
-        slug: Pengecam unik
-        display_name: Nama paparan
-        client_id: ID Pelanggan
-        client_secret: Rahsia pelanggan
-        secret: "Rahsia\n"
-        scope: Skop
-        grant_types_supported: Jenis geran yang disokong
-        limit_self_registration: Hadkan pendaftaran sendiri
-        authorization_endpoint: Titik akhir kebenaran
-        userinfo_endpoint: Titik akhir maklumat pengguna
-        token_endpoint: Titik akhir token
-        end_session_endpoint: Titik tamat sesi
-        post_logout_redirect_uri: Post log keluar ubah hala URI
+        name: Name
+        slug: Unique identifier
+        display_name: Display name
+        client_id: Client ID
+        client_secret: Client secret
+        secret: Secret
+        scope: Scope
+        grant_types_supported: Supported grant types
+        limit_self_registration: Limit self registration
+        authorization_endpoint: Authorization endpoint
+        userinfo_endpoint: User information endpoint
+        token_endpoint: Token endpoint
+        end_session_endpoint: End session endpoint
+        post_logout_redirect_uri: Post logout redirect URI
         jwks_uri: JWKS URI
-        issuer: Pengeluar
-        tenant: Penyewa
-        metadata_url: URL metadata
-        icon: Ikon tersuai
-        claims: Tuntutan
-        acr_values: Nila ACR
-        redirect_url: Ubah hala URL
-  activerecord:
+        issuer: Issuer
+        tenant: Tenant
+        metadata_url: Metadata URL
+        icon: Custom icon
+        claims: Claims
+        acr_values: ACR values
+        redirect_url: Redirect URL
     errors:
       models:
         openid_connect/provider:

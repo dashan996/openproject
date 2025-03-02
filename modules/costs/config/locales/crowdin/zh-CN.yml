@@ -30,6 +30,7 @@ zh-CN:
         overridden_costs: "覆盖的成本"
         spent: "已支出"
         spent_on: "日期"
+        logged_by: "记录者为"
       cost_type:
         unit: "单位名称"
         unit_plural: "单位名称（复数）"
@@ -58,11 +59,14 @@ zh-CN:
     models:
       cost_type:
         other: "成本类型"
+      time_entry_activity:
+        other: "时间跟踪活动"
       rate: "费率"
     errors:
       models:
         time_entry:
           invalid_time: "必须在 00:00-23:59之间。"
+          cannot_log_for_this_work_package: "无法记录该工作包的时间。"
         work_package:
           is_not_a_valid_target_for_cost_entries: "工作包 #%{id} 不是重新分配成本条目的有效目标。"
           nullify_is_not_valid_for_cost_entries: "无法将成本条目分配到项目。"
@@ -78,6 +82,7 @@ zh-CN:
   button_add_rate: "添加费率"
   button_log_costs: "记录单位成本"
   button_log_time: "日志"
+  button_add_activity: "活动"
   caption_booked_on_project: "已记录在项目上"
   caption_default: "基本"
   caption_default_rate_history_for: "%{user} 的基本费率历史记录"
@@ -91,6 +96,8 @@ zh-CN:
   caption_show_locked: "显示锁定类型"
   caption_log_time_dialog: "日志时间"
   description_date_for_new_rate: "新费率的日期"
+  description_costs_settings: "定义所有项目成本的理想格式。"
+  description_time_settings: "定义记录项目时间必须填写哪些字段。"
   group_by_others: "不在任何组中"
   label_between: "介于"
   label_cost_filter_add: "添加成本条目筛选器"
@@ -117,6 +124,8 @@ zh-CN:
   label_kind: "类型"
   label_less_or_equal: "<="
   label_log_costs: "记录单位成本"
+  label_new_time_entry_activity: "新时间条目活动"
+  label_time_entry_activity_form_description: "对该时间条目活动的更改将反映的所有启用的项目中。"
   label_no: "否"
   label_option_plural: "选项"
   label_overall_costs: "总成本"
@@ -129,6 +138,10 @@ zh-CN:
   label_until: "到"
   label_valid_from: "有效起始日期"
   label_yes: "是"
+  label_time: "时间"
+  label_cost: "成本"
+  label_costs: "成本"
+  label_mandatory_fields: "必填字段"
   placeholder_activity_select_work_package_first: 首先需要选择工作包
   notice_something_wrong: "出错了。请重试。"
   notice_successful_restore: "成功恢复。"

@@ -34,11 +34,11 @@ module RecurringMeetings
     # rubocop:enable OpenProject/AddPreviewForViewComponent
     include ApplicationHelper
 
-    def initialize(meeting:, params:, project: nil)
+    def initialize(meeting:, params:)
       super
 
       @meeting = meeting
-      @project = project
+      @project = meeting.project
       @params = params
     end
 

@@ -5,7 +5,7 @@
       section.with_counter(count: @meeting.invited_or_attended_participants.count)
 
       if @meeting.templated?
-        section.with_description { I18n.t('meeting.participants.template') }
+        section.with_description { I18n.t("meeting.participants.template") }
       end
 
       if @meeting.editable?
@@ -13,11 +13,11 @@
           icon: :gear,
           scheme: :invisible,
           tag: :a,
-          href: participants_dialog_meeting_path(@meeting),
+          href: participants_dialog_project_meeting_path(@project, @meeting),
           classes: "hide-when-print",
-          data: { controller: 'async-dialog' },
-          'aria-label': t("label_meeting_manage_participants"),
-          test_selector: "manage-participants-button",
+          data: { controller: "async-dialog" },
+          "aria-label": t("label_meeting_manage_participants"),
+          test_selector: "manage-participants-button"
         )
       end
 
@@ -33,16 +33,18 @@
 
           if @meeting.editable?
             participants_container.with_row(mt: 3) do
-              render(Primer::Beta::Button.new(
-                scheme: :link,
-                color: :default,
-                underline: false,
-                font_weight: :bold,
-                tag: :a,
-                href: participants_dialog_meeting_path(@meeting),
-                classes: "hide-when-print",
-                data: { controller: 'async-dialog' }
-              )) do |button|
+              render(
+                Primer::Beta::Button.new(
+                  scheme: :link,
+                  color: :default,
+                  underline: false,
+                  font_weight: :bold,
+                  tag: :a,
+                  href: participants_dialog_project_meeting_path(@project, @meeting),
+                  classes: "hide-when-print",
+                  data: { controller: "async-dialog" }
+                )
+              ) do |button|
                 button.with_leading_visual_icon(icon: "person-add")
                 t("label_meeting_add_participants")
               end

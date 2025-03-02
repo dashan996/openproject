@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -63,7 +64,7 @@ RSpec.describe "Recurring meetings schedule text",
   describe "setting schedule" do
     it "returns the update text" do
       expect(subject).to have_http_status(:ok)
-      expect(subject.body).to include("Daily at 10:00 AM")
+      expect(subject.body).to include("Every day at 10:00 AM")
     end
 
     context "when changing the frequency and interval" do
@@ -90,7 +91,7 @@ RSpec.describe "Recurring meetings schedule text",
 
       it "falls back to the default" do
         expect(subject).to have_http_status(:ok)
-        expect(subject.body).to include("Daily at 10:00 AM")
+        expect(subject.body).to include("Every day at 10:00 AM")
       end
     end
 
@@ -100,7 +101,7 @@ RSpec.describe "Recurring meetings schedule text",
       it "returns an update turbo stream" do
         expect(subject).to have_http_status(:ok)
         expect(subject.body).to include("turbo-stream")
-        expect(subject.body).to include("Daily at 10:00 AM")
+        expect(subject.body).to include("Every day at 10:00 AM")
       end
     end
   end

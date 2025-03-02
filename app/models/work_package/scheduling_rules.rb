@@ -56,7 +56,7 @@ module WorkPackage::SchedulingRules
     # eager load `to` and `from` to avoid n+1 on successor_soonest_start
     @soonest_start ||=
       Relation
-        .follows_non_manual_ancestors(self)
+        .used_for_scheduling_of(self)
         .includes(:to, :from)
         .filter_map(&:successor_soonest_start)
         .max

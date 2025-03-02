@@ -41,7 +41,7 @@ RSpec.describe "creating a cost type", :js do
   end
 
   it "can create a cost type" do
-    visit "/cost_types/new"
+    visit "/admin/cost_types/new"
 
     fill_in "cost_type_name", with: "Test day rate"
     fill_in "cost_type_unit", with: "dayUnit"
@@ -72,7 +72,7 @@ RSpec.describe "creating a cost type", :js do
     let(:user) { create(:admin, language: :de) }
 
     it "creates the entry with german number separators" do
-      visit "/cost_types/new"
+      visit "/admin/cost_types/new"
 
       fill_in "cost_type_name", with: "Test day rate"
       fill_in "cost_type_unit", with: "dayUnit"

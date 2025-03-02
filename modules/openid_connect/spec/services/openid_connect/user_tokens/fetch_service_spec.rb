@@ -66,7 +66,7 @@ RSpec.describe OpenIDConnect::UserTokens::FetchService, :webmock do
       expect(result.value!).to eq(access_token)
     end
 
-    context "when the token can't be parsed as JWT" do
+    context "when the token doesn't expire and can't be parsed as JWT" do
       let(:jwt_parser) { instance_double(OpenIDConnect::JwtParser, parse: Failure("Not a valid JWT")) }
 
       it { is_expected.to be_success }
@@ -76,7 +76,31 @@ RSpec.describe OpenIDConnect::UserTokens::FetchService, :webmock do
       end
     end
 
-    context "when the token is expired" do
+    context "when it is expired" do
+      before do
+        user.oidc_user_tokens.first.update!(expires_at: Time.zone.now)
+      end
+
+      it { is_expected.to be_success }
+
+      it "returns the refreshed access token" do
+        expect(result.value!).to eq("access-token-refreshed")
+      end
+    end
+
+    context "when it expires in the future" do
+      before do
+        user.oidc_user_tokens.first.update!(expires_at: 10.seconds.from_now)
+      end
+
+      it { is_expected.to be_success }
+
+      it "returns the stored access token" do
+        expect(result.value!).to eq(access_token)
+      end
+    end
+
+    context "when parsing the token reveals, that it is expired" do
       let(:parsed_jwt) { { "exp" => Time.now.to_i } }
 
       it { is_expected.to be_success }

@@ -29,12 +29,16 @@ See COPYRIGHT and LICENSE files for more details.
 
 <%
   if local_assigns[:additional_breadcrumb].nil?
-    breadcrumb_paths(ActionController::Base.helpers.link_to(t(:label_administration), admin_index_path),
-                     default_breadcrumb)
+    breadcrumb_paths(
+      ActionController::Base.helpers.link_to(t(:label_administration), admin_index_path),
+      default_breadcrumb
+    )
   else
-    breadcrumb_paths(ActionController::Base.helpers.link_to(t(:label_administration), admin_index_path),
-                     default_breadcrumb,
-                     local_assigns[:additional_breadcrumb])
+    breadcrumb_paths(
+      ActionController::Base.helpers.link_to(t(:label_administration), admin_index_path),
+      default_breadcrumb,
+      local_assigns[:additional_breadcrumb]
+    )
   end
 %>
 

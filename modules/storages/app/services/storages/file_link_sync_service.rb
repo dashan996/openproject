@@ -79,7 +79,7 @@ module Storages
     end
 
     def strategy(storage)
-      Peripherals::Registry.resolve("#{storage}.authentication.user_bound").call(user: @user)
+      Peripherals::Registry.resolve("#{storage}.authentication.user_bound").call(user: @user, storage:)
     end
 
     def to_hash(file_infos)

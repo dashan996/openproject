@@ -103,7 +103,6 @@
     button_settings: "Innstillinger"
     button_uncheck_all: "Avmerk alle"
     button_update: "Oppdatèr"
-    button_export-pdf: "Last ned PDF"
     button_export-atom: "Last ned Atom"
     button_generate_pdf: "Generate PDF"
     button_create: "Opprett"
@@ -222,6 +221,8 @@
             label_maximum_users: "Maksimalt antall aktive brukere"
             label_starts_at: "Starter på"
             label_expires_at: "Utløper på"
+            label_plan: "Plan"
+            label_additional_features: "Additional features"
             receive_newsletter: Jeg vil motta OpenProject <a target="_blank" href="%{link}">nyhetsbrev</a>.
             taken_domain: Det kan kun være en aktiv prøveversjon per domene.
             domain_mismatch: Gjeldende forespørselsnavnet samsvarer ikke med det konfigurerte vertsnavnet. Vennligst dobbeltsjekk systeminnstillingene.
@@ -357,10 +358,10 @@
           learn_about: "Lær mer om de nye funksjonene"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_2":
+          "15_3":
             standard:
               new_features_html: >
-                The release brings various features and improvements for you, e.g. <br> <ul class="%{list_styling_class}"> <li>Set reminders for work packages to generate date alert notifications.</li> <li>Create new folders directly from the location picker for file storage.</li> <li>Specify a required lag between work packages successors and predecessors.</li> <li>Enable ordering and grouping for work packages on values of custom fields type hierarchy.</li> <li>Export time entries as PDF timesheets.</li> <li>Add a popover displaying user information when hovering.</li> </ul>
+                The release brings various features and improvements for you, e.g. <br> <ul class="%{list_styling_class}"> <li>Schedule recurring meetings to streamline your weekly, biweekly, or custom appointments.</li> <li>Create child work packages directly from the Relations tab.</li> <li>Include total sums in timesheet PDF exports for better insights.</li> <li>Include child work packages in cost reports for more accurate tracking.</li> <li>See dates of previously hidden, permission-restricted relations to make informed scheduling decisions.</li> </ul>
     ical_sharing_modal:
       title: "Abonner på kalender"
       inital_setup_error_message: "En feil oppstod under henting av data."
@@ -852,8 +853,6 @@
       select_branch: "Velg gren"
     field_value_enter_prompt: "Angi en verdi for '%{field}'"
     project_menu_details: "Detaljer"
-    scheduling:
-      manual: "Manuell planlegging"
     sort:
       sorted_asc: "Stigende sortering er valgt,"
       sorted_dsc: "Synkende sortering er valgt,"
@@ -901,15 +900,6 @@
       comment_send_failed: "En feil har oppstått.  Kommentaren kunne ikke sendes inn."
       comment_updated: "Kommentaren ble lagt til."
       confirm_edit_cancel: "Er du sikker å at du vil avbryte redigeringen av arbeidspakken?"
-      datepicker_modal:
-        automatically_scheduled_parent: "Automatisk planlagt.  Datoer er hentet fra relasjoner."
-        manually_scheduled: "Manuell planlegging er aktivert, alle realsjoner vil bli ignorert."
-        start_date_limited_by_relations: "Tilgjengelige start- og sluttdatoer er begrenset av relasjoner."
-        changing_dates_affects_follow_relations: "Endring av disse datoene vil ha innvirkning på daoter i relaterte arbeidspakker."
-        click_on_show_relations_to_open_gantt: 'Klikk på "%{button_name}" for GANTT oversikt.'
-        show_relations: "Vis relasjoner"
-        ignore_non_working_days:
-          title: "Kun arbeidsdager"
       description_filter: "Filter"
       description_enter_text: "Skriv tekst"
       description_options_hide: "Skjul alternativer"

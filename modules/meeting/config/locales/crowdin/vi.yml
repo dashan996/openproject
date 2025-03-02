@@ -53,7 +53,10 @@ vi:
         frequency: "Tần suất"
         interval: "Khoảng thời gian"
         start_date: "Bắt đầu vào"
+        start_time: "Start time"
+        start_time_hour: "Start time"
         end_after: "Kết thúc chuỗi họp"
+        end_date: "End date"
         iterations: "Số lần xuất hiện"
     errors:
       messages:
@@ -61,6 +64,7 @@ vi:
     models:
       recurring_meeting: "Họp định kỳ"
       structured_meeting: "Họp đột xuất"
+      meeting: "Meeting"
       meeting_agenda_item: "Mục chương trình nghị sự"
       meeting_agenda: "Các ý chính"
       meeting_minutes: "Phút"
@@ -116,7 +120,7 @@ vi:
   label_template: "Mẫu"
   label_recurring_meeting_view: "Xem chuỗi các cuộc họp"
   label_recurring_meeting_create: "Open"
-  label_recurring_meeting_copy: "Sao một lần"
+  label_recurring_meeting_copy: "Copy as one-time"
   label_recurring_meeting_cancel: "Hủy lần này"
   label_recurring_meeting_delete: "Xóa lần họp"
   label_recurring_meeting_restore: "Khôi phục lại lần họp này"
@@ -176,15 +180,29 @@ vi:
         Gửi lời mời qua email ngay lập tức đến những người tham gia được chọn ở trên. Bạn cũng có thể thực hiện thủ công bất kỳ lúc nào sau đó.
       send_invitation_emails_structured: "Gửi lời mời qua email ngay lập tức đến tất cả người tham gia. Bạn cũng có thể thực hiện thủ công bất kỳ lúc nào sau đó."
       open_meeting_link: "Mở cuộc họp"
+      open_my_meetings_link: "Go to My meetings"
       series:
-        title: "[%{project_name}] Chuỗi họp %{title}"
-        summary: "%{actor} đã lập chuỗi họp mới %{title}"
+        title: "[%{project_name}] Meeting series '%{title}'"
+        summary: "%{actor} has set up a new meeting series '%{title}'"
+      series_rescheduled:
+        title: "[%{project_name}] Meeting series '%{title}' rescheduled"
+        summary: "%{actor} has changed the schedule for meeting series '%{title}'"
+        old_schedule: "Old schedule"
+        new_schedule: "New schedule"
       invited:
-        summary: "%{actor} đã gửi cho bạn một lời mời tham gia cuộc họp %{title}"
+        summary: "%{actor} has sent you an invitation for the meeting '%{title}'"
+      cancelled:
+        header: "Cancelled: Meeting '%{title}'"
+        header_occurrence: "Cancelled: Meeting occurrence '%{title}'"
+        header_series: "Cancelled: Meeting series '%{title}'"
+        summary_occurrence: "An occurrence of '%{title}' has been cancelled by %{actor}."
+        summary_series: "Meeting series '%{title}' has been cancelled by %{actor}."
+        summary: "'%{title}' has been cancelled by %{actor}."
+        date_time: "Scheduled date/time"
       rescheduled:
-        header: "Cuộc họp %{title} đã được lên lại lịch"
-        summary: "Cuộc họp %{title} đã được lên lại lịch bởi %{actor}"
-        body: "Cuộc họp %{title} đã được lên lại lịch bởi %{actor}."
+        header: "Meeting '%{title}' has been rescheduled"
+        summary: "Meeting '%{title}' has been rescheduled by %{actor}"
+        body: "The meeting '%{title}' has been rescheduled by %{actor}."
         old_date_time: "Ngày/giờ cũ"
         new_date_time: "Ngày/giờ mới"
     label_mail_all_participants: "Gửi email đến tất cả người tham gia"
@@ -205,10 +223,11 @@ vi:
         confirmation_message_html: >
           This action is not reversible. Please proceed with caution.
       occurrence:
-        title: "Delete meeting occurrence"
-        heading: "Delete this meeting occurrence?"
+        title: "Cancel meeting occurrence"
+        heading: "Cancel this meeting occurrence?"
         confirmation_message_html: >
-          This meeting is part of a series called <strong>%{title}</strong>. This will only delete this particular occurrence and not the entire series. Do you want to continue?
+          Any meeting information not in the template will be lost. Do you want to continue?
+        confirm_button: "Cancel occurrence"
     blankslate:
       title: "No meetings to display"
       desc: "There are no meetings that meet the active filter criteria."
@@ -229,7 +248,7 @@ vi:
       first_created: >
         Cuộc họp đầu tiên đã được tạo thành công từ mẫu. Tất cả các cuộc họp trong tương lai sẽ được tạo tự động tại thời điểm xảy ra trước đó.
     template:
-      button_finalize: "Hoàn thành mẫu"
+      button_finalize: "Open first meeting"
       blank_title: "Mẫu chuỗi họp của bạn đang trống"
       description: >
         Mẫu này sẽ được sử dụng bất cứ khi nào các cuộc họp mới trong chuỗi được tạo. Bạn có thể thêm các mục chương trình làm việc, người tham gia và tệp đính kèm vào mẫu này.
@@ -240,10 +259,12 @@ vi:
       banner_html: >
         Bạn hiện đang chỉnh sửa mẫu của chuỗi họp: %{link}. Mỗi lần xuất hiện mới của một cuộc họp trong chuỗi sẽ sử dụng mẫu này. Các thay đổi sẽ không ảnh hưởng đến các cuộc họp trước đây hoặc đã tạo.
     frequency:
+      x_daily:
+        other: "Every %{count} days"
+      x_weekly:
+        other: "Every %{count} weeks"
       every_weekday: "Mỗi %{day_of_the_week}"
-      daily: "Mỗi ngày"
       working_days: "Mỗi ngày làm việc"
-      weekly: "Mỗi tuần"
     end_after:
       never: "không bao giờ"
       specific_date: "sau ngày cụ thể"
@@ -278,11 +299,11 @@ vi:
       heading: "Permanently delete this meeting series?"
       confirmation_message_html:
         zero: >
-          Deleting <strong>%{title}</strong> will delete any meetings in this series. This action is not reversible. Please proceed with caution.
+          The meeting series <strong>%{title}</strong> does not have any meeting occurrences. The series will be deleted for everyone. Please proceed with caution.
         one: >
-          Deleting <strong>%{title}</strong> will also delete one meeting in this series. This action is not reversible. Please proceed with caution.
+          Deleting <strong>%{title}</strong> will also delete one occurrence in this series. This action is not reversible. Please proceed with caution.
         other: >
-          Deleting <strong>%{title}</strong> will delete all %{count} meetings in this series. This action is not reversible. Please proceed with caution.
+          Deleting <strong>%{title}</strong> will delete all %{count} occurrences in this series. This action is not reversible. Please proceed with caution.
     scheduled_delete_dialog:
       title: "Cancel meeting occurrence"
       heading: "Cancel this meeting occurrence?"

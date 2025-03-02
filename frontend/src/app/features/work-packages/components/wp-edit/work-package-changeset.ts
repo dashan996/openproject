@@ -26,14 +26,27 @@ export class WorkPackageChangeset extends ResourceChangeset<WorkPackageResource>
     // Otherwise, the backend will set it for us.
     delete payload.description;
 
+    // Explicitly not send the subject, if the subject was not editable.
+    // In this case a generated template is rendered in the subject and
+    // must not get submitted.
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    if (!this.schema.isAttributeEditable('subject')) {
+      delete (payload as { subject?:string }).subject;
+    }
+
     return super.applyChanges(payload);
   }
 
   protected setNewDefaultFor(key:string, val:unknown) {
-    // Special handling for taking over the description
-    // to the pristine resource
+    // Special handling for taking over the description and
+    // the subject to the pristine resource.
     if (key === 'description' && isNewResource(this.pristineResource)) {
       this.pristineResource.description = val;
+      return;
+    }
+
+    if (key === 'subject' && isNewResource(this.pristineResource)) {
+      this.pristineResource.subject = val as string;
       return;
     }
 

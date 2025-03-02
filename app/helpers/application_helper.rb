@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -124,7 +126,7 @@ module ApplicationHelper
   end
 
   def project_nested_ul(projects, &)
-    s = ""
+    s = +""
     if projects.any?
       ancestors = []
       Project.project_tree(projects) do |project, _level|
@@ -428,8 +430,8 @@ module ApplicationHelper
 
   def initial_menu_classes(side_displayed, show_decoration)
     classes = "can-hide-navigation"
-    classes << " nosidebar" unless side_displayed
-    classes << " nomenus" unless show_decoration
+    classes += " nosidebar" unless side_displayed
+    classes += " nomenus" unless show_decoration
 
     classes
   end

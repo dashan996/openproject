@@ -47,7 +47,7 @@ module Saml
 
             form_group.select_list(
               name: :"requested_#{attribute}_format",
-              label: I18n.t("activemodel.attributes.saml/provider.format"),
+              label: I18n.t("activerecord.attributes.saml/provider.format"),
               input_width: :large,
               disabled: provider.seeded_from_env?,
               caption: link_translate(

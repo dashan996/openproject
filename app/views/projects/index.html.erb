@@ -35,12 +35,12 @@ See COPYRIGHT and LICENSE files for more details.
           state:,
           params:
         )
-      )
-  %>
+      ) %>
   <%= render(Projects::IndexSubHeaderComponent.new(query:, current_user:, disable_buttons: state === :rename)) %>
   <%= render Projects::TableComponent.new(
-    query:,
-    current_user: current_user,
-    params:) %>
+        query:,
+        current_user: current_user,
+        params:
+      ) %>
   <%= render Projects::DiskUsageInformationComponent.new(current_user: current_user) %>
 </div>

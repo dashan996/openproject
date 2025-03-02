@@ -35,7 +35,7 @@ require "services/base_services/behaves_like_create_service"
 
 RSpec.describe Storages::Storages::CreateService, type: :model do
   it_behaves_like "BaseServices create service" do
-    let(:factory) { :storage }
+    let(:factory) { :nextcloud_storage }
 
     let!(:user) { create(:admin) }
 

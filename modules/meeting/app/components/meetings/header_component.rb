@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -38,12 +39,12 @@ module Meetings
     STATE_EDIT = :edit
     STATE_OPTIONS = [STATE_DEFAULT, STATE_EDIT].freeze
 
-    def initialize(meeting:, project: nil, state: STATE_DEFAULT)
+    def initialize(meeting:, state: STATE_DEFAULT)
       super
 
       @meeting = meeting
       @series = meeting.recurring_meeting
-      @project = project
+      @project = meeting.project
       @state = fetch_or_fallback(STATE_OPTIONS, state)
     end
 
@@ -54,9 +55,9 @@ module Meetings
 
     def ics_download_path
       if @series
-        download_ics_recurring_meeting_path(@series, occurrence_id: @meeting.id)
+        download_ics_project_recurring_meeting_path(@series.project, @series, occurrence_id: @meeting.id)
       else
-        download_ics_meeting_path(@meeting)
+        download_ics_project_meeting_path(@meeting.project, @meeting)
       end
     end
 
@@ -94,7 +95,7 @@ module Meetings
 
     def meeting_series_element
       if @series.present?
-        { href: recurring_meeting_path(@series), text: @series.title }
+        { href: project_recurring_meeting_path(@series.project, @series), text: @series.title }
       end
     end
 

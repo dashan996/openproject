@@ -4,18 +4,18 @@ ca:
     description: "Afegeix proveïdors d'estratègia OmniAuth OpenID Connect a OpenProject."
   logout_warning: >
     S'ha tancat la teva sessió. Es poden haver perdut els continguts de qualsevol formulari sotmès. Si us plau, [inicia sessió].
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
-        name: Nom
+        name: Name
         slug: Unique identifier
-        display_name: Nom mostrat
+        display_name: Display name
         client_id: Client ID
         client_secret: Client secret
         secret: Secret
-        scope: Abast
+        scope: Scope
         grant_types_supported: Supported grant types
-        limit_self_registration: Limitar el registre per part dels propis usuaris
+        limit_self_registration: Limit self registration
         authorization_endpoint: Authorization endpoint
         userinfo_endpoint: User information endpoint
         token_endpoint: Token endpoint
@@ -29,7 +29,6 @@ ca:
         claims: Claims
         acr_values: ACR values
         redirect_url: Redirect URL
-  activerecord:
     errors:
       models:
         openid_connect/provider:

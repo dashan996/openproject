@@ -53,7 +53,10 @@ ja:
         frequency: "頻度"
         interval: "インターバル"
         start_date: "開始:"
+        start_time: "開始時刻"
+        start_time_hour: "開始時刻"
         end_after: "Meeting series ends"
+        end_date: "End date"
         iterations: "Occurrences"
     errors:
       messages:
@@ -61,6 +64,7 @@ ja:
     models:
       recurring_meeting: "Recurring meeting"
       structured_meeting: "One-time meeting"
+      meeting: "Meeting"
       meeting_agenda_item: "議題項目"
       meeting_agenda: "アジェンダ"
       meeting_minutes: "議事録"
@@ -116,7 +120,7 @@ ja:
   label_template: "Template"
   label_recurring_meeting_view: "View meeting series"
   label_recurring_meeting_create: "Open"
-  label_recurring_meeting_copy: "Copy as one-off"
+  label_recurring_meeting_copy: "Copy as one-time"
   label_recurring_meeting_cancel: "Cancel this occurrence"
   label_recurring_meeting_delete: "Delete occurrence"
   label_recurring_meeting_restore: "Restore this occurrence"
@@ -176,15 +180,29 @@ ja:
         上記で選択した参加者にすぐにメール招待を送信します。また、後で手動で行うこともできます。
       send_invitation_emails_structured: "すべての参加者にすぐにメール招待を送信します。また、後で手動で行うこともできます。"
       open_meeting_link: "会議を開く"
+      open_my_meetings_link: "自分のミーティングに移動"
       series:
-        title: "[%{project_name}] Meeting series %{title}"
-        summary: "%{actor} has set up a new meeting series %{title}"
+        title: "[%{project_name}] Meeting series '%{title}'"
+        summary: "%{actor} has set up a new meeting series '%{title}'"
+      series_rescheduled:
+        title: "[%{project_name}] Meeting series '%{title}' rescheduled"
+        summary: "%{actor} has changed the schedule for meeting series '%{title}'"
+        old_schedule: "古いスケジュール"
+        new_schedule: "新しいスケジュール"
       invited:
-        summary: "%{actor} が会議「%{title}」の招待状を送信しました。"
+        summary: "%{actor} has sent you an invitation for the meeting '%{title}'"
+      cancelled:
+        header: "キャンセルされました：会議「%{title}」"
+        header_occurrence: "Cancelled: Meeting occurrence '%{title}'"
+        header_series: "Cancelled: Meeting series '%{title}'"
+        summary_occurrence: "An occurrence of '%{title}' has been cancelled by %{actor}."
+        summary_series: "Meeting series '%{title}' has been cancelled by %{actor}."
+        summary: "'%{title}' has been cancelled by %{actor}."
+        date_time: "Scheduled date/time"
       rescheduled:
-        header: "会議「%{title}」は再スケジュールされました。"
-        summary: "会議「%{title}」は、%{actor} によって再スケジュールされました。"
-        body: "会議「%{title}」は、%{actor} によって再スケジュールされました。"
+        header: "Meeting '%{title}' has been rescheduled"
+        summary: "Meeting '%{title}' has been rescheduled by %{actor}"
+        body: "The meeting '%{title}' has been rescheduled by %{actor}."
         old_date_time: "古い日付/時刻"
         new_date_time: "新しい日付/時刻"
     label_mail_all_participants: "すべての参加者にメールを送信"
@@ -205,10 +223,11 @@ ja:
         confirmation_message_html: >
           This action is not reversible. Please proceed with caution.
       occurrence:
-        title: "Delete meeting occurrence"
-        heading: "Delete this meeting occurrence?"
+        title: "ミーティングのキャンセル"
+        heading: "このミーティングをキャンセルしますか？"
         confirmation_message_html: >
-          This meeting is part of a series called <strong>%{title}</strong>. This will only delete this particular occurrence and not the entire series. Do you want to continue?
+          Any meeting information not in the template will be lost. Do you want to continue?
+        confirm_button: "Cancel occurrence"
     blankslate:
       title: "No meetings to display"
       desc: "There are no meetings that meet the active filter criteria."
@@ -229,7 +248,7 @@ ja:
       first_created: >
         The first meeting has been successfuly created from template. All future meetings will be created automatically at the time of the previous occurrence.
     template:
-      button_finalize: "Finish template"
+      button_finalize: "Open first meeting"
       blank_title: "Your meeting series template is empty"
       description: >
         This template will be used whenever new meetings in the series get created. You can add agenda items, participants, and attachments to this template.
@@ -240,10 +259,12 @@ ja:
       banner_html: >
         You are currently editing a template of a meeting series: %{link}. Every new occurrence of a meeting in the series will use this template. Changes will not affect past or already created meetings.
     frequency:
+      x_daily:
+        other: "Every %{count} days"
+      x_weekly:
+        other: "Every %{count} weeks"
       every_weekday: "Every %{day_of_the_week}"
-      daily: "Daily"
       working_days: "Every working day"
-      weekly: "Weekly"
     end_after:
       never: "never"
       specific_date: "after a specific date"
@@ -278,11 +299,11 @@ ja:
       heading: "Permanently delete this meeting series?"
       confirmation_message_html:
         zero: >
-          Deleting <strong>%{title}</strong> will delete any meetings in this series. This action is not reversible. Please proceed with caution.
+          The meeting series <strong>%{title}</strong> does not have any meeting occurrences. The series will be deleted for everyone. Please proceed with caution.
         one: >
-          Deleting <strong>%{title}</strong> will also delete one meeting in this series. This action is not reversible. Please proceed with caution.
+          Deleting <strong>%{title}</strong> will also delete one occurrence in this series. This action is not reversible. Please proceed with caution.
         other: >
-          Deleting <strong>%{title}</strong> will delete all %{count} meetings in this series. This action is not reversible. Please proceed with caution.
+          Deleting <strong>%{title}</strong> will delete all %{count} occurrences in this series. This action is not reversible. Please proceed with caution.
     scheduled_delete_dialog:
       title: "Cancel meeting occurrence"
       heading: "Cancel this meeting occurrence?"

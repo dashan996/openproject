@@ -29,12 +29,7 @@
 #++
 #
 module Storages::Admin::Forms
-  class AutomaticallyManagedProjectFoldersFormComponent < ApplicationComponent
-    include OpPrimer::ComponentHelpers
-    include OpTurbo::Streamable
-
-    alias_method :storage, :model
-
+  class AutomaticallyManagedProjectFoldersFormComponent < StorageFormComponent
     def self.wrapper_key = :automatically_managed_project_folders_section
 
     def form_method
@@ -42,7 +37,8 @@ module Storages::Admin::Forms
     end
 
     def form_url
-      options[:form_url] || default_form_url
+      query = { continue_wizard: storage.id } if in_wizard
+      admin_settings_storage_automatically_managed_project_folders_path(storage, query)
     end
 
     def submit_button_options
@@ -81,10 +77,6 @@ module Storages::Admin::Forms
 
     def new_record?
       storage.automatic_management_new_record?
-    end
-
-    def default_form_url
-      admin_settings_storage_automatically_managed_project_folders_path(storage)
     end
   end
 end

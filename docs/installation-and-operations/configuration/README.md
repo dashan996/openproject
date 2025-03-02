@@ -701,6 +701,18 @@ OPENPROJECT_SECURITY__BADGE__DISPLAYED="false"
 
 `rails_asset_host`: A custom host to use to serve static assets such as javascript, CSS, images, etc. (default: `nil`)
 
+### Redirect after login
+
+`after_login_default_redirect_url`: Starting in OpenProject 15.4., users are redirected to the home page after logging in. To customize this behavior (e.g., redirecting them to the My page as before), you can override this with a path.
+
+Example: 
+
+```bash
+OPENPROJECT_AFTER__LOGIN__DEFAULT__REDIRECT__URL="/my/page"
+```
+
+
+
 ### Onboarding video url
 
 `onboarding_video_url`: An URL for the video displayed on the onboarding modal. This is only shown when the user logs in for the first time.

@@ -26,23 +26,25 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 See COPYRIGHT and LICENSE files for more details.
 
 ++#%>
-<% html_title(t('users.sessions.title')) -%>
+<% html_title(t("users.sessions.title")) -%>
 
 <%=
   render(Primer::OpenProject::PageHeader.new) do |header|
-    header.with_title { t('users.sessions.title') }
-    header.with_breadcrumbs([{ href: my_account_path, text: t(:label_my_account) },
-                             t('users.sessions.title')])
+    header.with_title { t("users.sessions.title") }
+    header.with_breadcrumbs(
+      [{ href: my_account_path, text: t(:label_my_account) },
+       t("users.sessions.title")]
+    )
   end
 %>
 
-<p><%= t('users.sessions.instructions') %></p>
+<p><%= t("users.sessions.instructions") %></p>
 
 <%= render ::Users::Sessions::TableComponent.new(rows: @sessions, current_session: session) %>
 
 <% if Setting::Autologin.enabled? && @autologin_tokens.any? %>
-  <h3><%= t('users.sessions.remembered_devices') %></h3>
-  <p><%= t('users.sessions.remembered_devices_caption') %></p>
+  <h3><%= t("users.sessions.remembered_devices") %></h3>
+  <p><%= t("users.sessions.remembered_devices_caption") %></p>
 
   <%= render ::Users::AutoLoginTokens::TableComponent.new(rows: @autologin_tokens, current_token: @current_token) %>
 <% end %>

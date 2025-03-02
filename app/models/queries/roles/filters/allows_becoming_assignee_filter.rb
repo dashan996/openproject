@@ -34,6 +34,10 @@ class Queries::Roles::Filters::AllowsBecomingAssigneeFilter <
     :list
   end
 
+  def human_name
+    "Allows becoming assignee" # internal filter
+  end
+
   def where
     permission_ids = if values.first == OpenProject::Database::DB_VALUE_TRUE
                        assignable_permissions

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -31,6 +33,6 @@ require "spec_helper"
 RSpec.describe ReminderNotification do
   describe "Associations" do
     it { is_expected.to belong_to(:reminder) }
-    it { is_expected.to belong_to(:notification).dependent(:destroy) }
+    it { is_expected.to belong_to(:notification) }
   end
 end

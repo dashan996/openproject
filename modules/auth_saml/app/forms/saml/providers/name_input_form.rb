@@ -32,7 +32,7 @@ module Saml
       form do |f|
         f.text_field(
           name: :display_name,
-          label: I18n.t("activemodel.attributes.saml/provider.display_name"),
+          label: I18n.t("activerecord.attributes.saml/provider.display_name"),
           required: true,
           disabled: provider.seeded_from_env?,
           caption: I18n.t("saml.instructions.display_name"),

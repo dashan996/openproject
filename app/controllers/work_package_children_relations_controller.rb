@@ -43,8 +43,16 @@ class WorkPackageChildrenRelationsController < ApplicationController
   end
 
   def create
-    child = WorkPackage.find(params[:work_package][:id])
-    service_result = set_relation(child:, parent: @work_package)
+    service_result = create_service_result
+
+    if service_result.failure?
+      update_via_turbo_stream(
+        component: WorkPackageRelationsTab::AddWorkPackageChildFormComponent.new(work_package: @work_package,
+                                                                                 child: service_result.result,
+                                                                                 base_errors: base_errors(service_result.errors)),
+        status: :bad_request
+      )
+    end
 
     respond_with_relations_tab_update(service_result, relation_to_scroll_to: service_result.result)
   end
@@ -58,9 +66,30 @@ class WorkPackageChildrenRelationsController < ApplicationController
 
   private
 
+  def create_service_result
+    if params[:work_package][:id].present?
+      child = WorkPackage.find(params[:work_package][:id])
+      set_relation(child:, parent: @work_package)
+    else
+      child = WorkPackage.new
+      child.errors.add(:id, :blank)
+      ServiceResult.failure(result: child)
+    end
+  end
+
   def set_relation(child:, parent:)
-    WorkPackages::UpdateService.new(user: current_user, model: child)
-                               .call(parent:)
+    if allowed_to_set_parent?(child)
+      WorkPackages::UpdateService.new(user: current_user, model: child)
+                                 .call(parent:)
+    else
+      child.errors.add(:id, :cannot_add_child_because_of_lack_of_permission)
+      ServiceResult.failure(result: child)
+    end
+  end
+
+  def allowed_to_set_parent?(child)
+    contract = WorkPackages::UpdateContract.new(child, current_user)
+    contract.can_set_parent?
   end
 
   def respond_with_relations_tab_update(service_result, **)
@@ -79,5 +108,15 @@ class WorkPackageChildrenRelationsController < ApplicationController
   def set_work_package
     @work_package = WorkPackage.find(params[:work_package_id])
     @project = @work_package.project
+  end
+
+  def base_errors(errors)
+    if errors[:base].present?
+      errors[:base]
+    elsif errors[:id].present?
+      nil
+    else
+      errors.full_messages
+    end
   end
 end

@@ -34,6 +34,8 @@ mn:
   enumeration_doc_categories: "Баримт бичгийн ангилал"
   documents:
     label_attachment_author: "Хавсралтын зохиогч"
+    label_categories: "Categories"
+    new_category: "New category"
   label_document_added: "Баримт бичиг нэмэгдсэн"
   label_document_new: "New document"
   label_document_plural: "Баримт бичгүүд"

@@ -1,11 +1,27 @@
 ja:
   activerecord:
     attributes:
+      oauth_client:
+        client_id: Client ID
+        client_secret: Client secret
+      project:
+        project_folder_type: Project folder type
       storages/file_link:
-        origin_id: Origin Id
-      storages/project_storage:
+        origin: Origin
         storage: Storage
+      storages/nextcloud_storage:
+        authentication_methods:
+          oauth2_sso: Single-Sign-On through OpenID Connect Identity Provider
+          oauth2_sso_with_two_way_oauth2_fallback: Single-Sign-On with Two-Way OAuth 2.0 as fallback
+          two_way_oauth2: Two-way OAuth 2.0 authorization code flow
+        storage_audience: Storage Audience
+      storages/project_storage:
+        project_folder: Project folder
+        project_folder_mode: Project folder mode
+        storage: Storage
+        storage_url: Storage URL
       storages/storage:
+        authentication_method: Authentication Method
         creator: Creator
         drive: Drive ID
         host: ホスト
@@ -199,15 +215,19 @@ ja:
         manual_management_description: Create and manage folders per project manually on your own. You will need to manually ensure relevant users have access.
         setup_incomplete: Select the type of management of user access and folder creation.
         subtitle: Access management
-        title: Access and project folders
+      access_management_section: Access and project folders
       automatically_managed_folders: Automatically managed folders
       general_information: General information
-      nextcloud_oauth: Nextcloud OAuth
-      oauth_applications: OAuthアプリケーション
+      oauth_configuration: OAuth configuration
       one_drive_oauth: Azure OAuth
       openproject_oauth: OpenProject OAuth
       project_folders: Project folders
       redirect_uri: リダイレクトURI
+      storage_audience: Storage Audience
+      storage_audience_blank: No audience has been configured
+      storage_audience_description: Obtaining tokens for audience "%{audience}".
+      storage_audience_idp: Using first access token received by identity provider, regardless of audience.
+      storage_oauth: Nextcloud OAuth
       storage_provider: Storage provider
     health:
       checked: Last checked %{datetime}
@@ -222,6 +242,9 @@ ja:
         host_not_found: No Nextcloud server found at the configured host url. Please check the configuration.
         missing_dependencies: 'A required dependency is missing on the file storage. Please add the following dependency: %{dependency}.'
         not_configured: The connection could not be validated. Please finish configuration first.
+        oidc_no_token_with_required_audience: There's no OpenID Connect token with the required %{audience} audience.
+        oidc_non_oidc_user: The current user, while provisioned, wasn't provisioned by an OpenID Connect (OIDC) Identity Provider. Please re-run the check with an OIDC provisioned user.
+        oidc_non_provisioned_user: The current user isn't provided by an OpenID Connect Identity Provider. Please re-run the check with a provided user.
         placeholder: Check your connection against the server.
         subtitle: Connection validation
         tenant_id_wrong: The configured directory (tenant) id is invalid. Please check the configuration.
@@ -250,6 +273,7 @@ ja:
       project_folder_bulk: The project folder is the default folder for file uploads for all the projects selected. You can modify this individually in each project settings. Users can nevertheless still upload files to other locations.
     instructions:
       all_available_storages_already_added: All available storages are already added to the project.
+      authentication_method: The way that requests between OpenProject and the Storage are authenticated.
       automatic_folder: This will automatically create a root folder for this project and manage the access permissions for each project member.
       empty_project_folder_validation: Selecting a folder is mandatory to proceed.
       existing_manual_folder: You can designate an existing folder as the root folder for this project. The permissions are however not automatically managed, the administrator needs to manually ensure relevant users have access. The selected folder can be used by multiple projects.
@@ -262,6 +286,8 @@ ja:
         integration: Nextcloud Administration / OpenProject
         oauth_configuration: Copy these values from %{application_link_text}.
         provider_configuration: Please make sure you have administration privileges in your Nextcloud instance and the %{application_link_text} is installed before doing the setup.
+        storage_audience: Please enter the Client ID that the Nextcloud instance uses to communicate with the identity provider.
+        storage_audience_placeholder: e.g. nextcloud
       no_specific_folder: By default, each user will start at their own home folder when they upload a file.
       no_storage_set_up: There are no file storages set up yet.
       not_logged_into_storage: To select a project folder, please first login
@@ -293,6 +319,7 @@ ja:
     label_creator: Creator
     label_delete_storage: Delete storage
     label_edit_storage_access_management: Edit storage access management
+    label_edit_storage_audience: Edit Storage Audience
     label_edit_storage_automatically_managed_folders: Edit storage automatically managed folders
     label_edit_storage_host: Edit storage host
     label_existing_manual_folder: Existing folder with manually managed permissions
@@ -383,8 +410,15 @@ ja:
         name: OneDrive/SharePoint
         name_placeholder: e.g. OneDrive
     show_attachments_toggle:
-      description: 'このオプションをオフにすると、format@@0タブの添付リストが非表示になります。 作業項目の説明に添付されたファイルは、引き続き内部添付ファイルストレージにアップロードされます。 '
+      description: Deactivating this option will hide the attachments list on the work packages files tab. The files attached in the description of a work package will still be uploaded in the internal attachments storage.
       label: Show attachments in the work packages files tab
+    storage_audience:
+      idp:
+        helptext: OpenProject will use the first access token received by the identity provider to authenticate requests to the storage. It will not try to obtain another token.
+        label: Use first access token obtained by identity provider
+      manual:
+        helptext: Allows you to set the audience of the storage. OpenProject will try to obtain a token for the given audience from the identity provider.
+        label: Define storage audience manually
     storage_list_blank_slate:
       description: Add a storage to see them here.
       heading: You don't have any storages yet.

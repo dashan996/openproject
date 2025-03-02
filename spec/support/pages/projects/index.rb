@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -266,19 +268,21 @@ module Pages
 
       def set_advanced_filter(name, human_name, human_operator = nil, values = [], send_keys: false)
         selected_filter = select_filter(name, human_name)
-        select(human_operator, from: "operator") unless boolean_filter?(name)
+        apply_operator(name, human_operator)
 
         within(selected_filter) do
           return unless values.any?
 
           if boolean_filter?(name)
             set_toggle_filter(values)
+          elsif autocomplete_filter?(selected_filter)
+            select(human_operator, from: "operator")
+            set_autocomplete_filter(values)
           elsif name == "created_at"
             select(human_operator, from: "operator")
             set_created_at_filter(human_operator, values, send_keys:)
-          elsif /cf_\d+/.match?(name)
-            select(human_operator, from: "operator")
-            set_custom_field_filter(selected_filter, human_operator, values)
+          elsif date_filter?(selected_filter) && human_operator == "on"
+            set_date_filter(values, send_keys)
           end
         end
       end
@@ -288,8 +292,12 @@ module Pages
 
         within(selected_filter) do
           find('[data-filter-autocomplete="true"]').click
-          visible_user_auto_completer_options
         end
+        visible_user_auto_completer_options
+      end
+
+      def apply_operator(name, human_operator)
+        select(human_operator, from: "operator") unless boolean_filter?(name)
       end
 
       def select_filter(name, human_name)
@@ -347,19 +355,13 @@ module Pages
         end
       end
 
-      def set_custom_field_filter(selected_filter, human_operator, values, send_keys: false)
-        if selected_filter.has_css?('[data-filter-autocomplete="true"]', wait: 0)
-          set_autocomplete_filter(values)
-        elsif selected_filter[:"data-filter-type"] == "list_optional" && values.size == 1
-          set_list_filter(values)
-        elsif selected_filter[:"data-filter-type"] == "date" && human_operator == "on"
-          set_date_filter(values, send_keys)
-        end
-      end
+      def set_autocomplete_filter(values, clear: true)
+        element = find('[data-filter-autocomplete="true"]')
 
-      def set_autocomplete_filter(values)
-        values.each do |query|
-          select_autocomplete find('[data-filter-autocomplete="true"]'),
+        ng_select_clear(element, raise_on_missing: false) if clear
+
+        Array(values).each do |query|
+          select_autocomplete element,
                               query:,
                               results_selector: "body"
         end
@@ -658,6 +660,14 @@ module Pages
 
       def boolean_filter?(filter)
         %w[active member_of favored public templated].include?(filter.to_s)
+      end
+
+      def autocomplete_filter?(filter)
+        filter.has_css?('[data-filter-autocomplete="true"]', wait: 0)
+      end
+
+      def date_filter?(filter)
+        filter[:"data-filter-type"] == "date"
       end
 
       def submenu

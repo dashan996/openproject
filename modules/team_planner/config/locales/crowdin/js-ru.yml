@@ -11,7 +11,7 @@ ru:
       add_assignee: 'Назначенный'
       remove_assignee: 'Удалить ответственного'
       two_weeks: '2-недели'
-      one_week: '1-неделя'
+      one_week: '1 неделя'
       four_weeks: '4-недели'
       eight_weeks: '8 недель'
       work_week: 'Рабочая неделя'

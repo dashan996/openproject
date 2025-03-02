@@ -1,0 +1,66 @@
+This component defines a colored status button with an action menu to select other statuses. The component is optionally marked readonly, resulting in disabling the action menu.
+
+## Overview
+
+<%= embed OpPrimer::StatusButtonComponentPreview, :playground %>
+
+## Anatomy
+
+The component provides two use-cases:
+
+**1. Using colors only**
+
+If you are providing `StatusOption` with only the `color` property set, it will use that to color the button of the component. For any selectable status items, the color will be shown as a small square using the `icon_for_color` helper used in various places of the administration.
+
+**2. Using icons and colors**
+
+If you provide `StatusOption` with `icon` and `color` properties set, the color will be used for the button only, and the icon will be used to provide a leading visual icon. In the action menu dropdown, the icons will also be used as a leading icon. Colors will not be shown in the dropdown.
+
+
+
+## Best practices
+
+**Do**
+
+- Provide colors using the `Color` model.
+
+**Don't**
+
+- Don't use the component if the status is not colored. You can simply use an ActionMenu for this case.
+
+## Used in
+
+The component is used in meetings to signal the status of the meeting, as well as providing options to change it. It will be used in the future for the work package status.
+
+## Examples
+
+For detailed examples have a look at the other [preview examples](/lookbook/inspect/OpenProject/Primer/status_button/playground) of the component.
+
+This is an exemplary playground of the `OpPrimer::StatusButtonComponent`.
+
+<%= embed OpPrimer::StatusButtonComponentPreview, :playground, panels: %i[params source] %>
+
+## Technical notes
+
+The StatusButton component is a composition of a Primer Button and Primer ActionMenu. You provide options of statuses using the `OpPrimer::StatusButtonOption`. In there, you can pass a name, icon, color. All other options will be passed to the `ActionMenu` item.
+
+### Code structure
+
+The status button can be called directly
+
+```html
+  &lt;%=
+    items = [
+        OpPrimer::StatusButtonOption.new(name: "Closed",
+                                         icon: :lock,
+                                         color: Color.new(hexcode: "#00FF00"),
+                                         tag: :a,
+                                         href: :a)
+      ]
+    component = OpPrimer::StatusButtonComponent.new(current_status: items.first,
+                                                    items: items,
+                                                    readonly: false,
+                                                    button_arguments: { size: :medium, title: "foo" })
+    end
+  %&gt;
+```

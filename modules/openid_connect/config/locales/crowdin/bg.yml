@@ -4,16 +4,16 @@ bg:
     description: "Добавя OmniAuth OpenID. Свържете доставчици на стратегии към OpenProject."
   logout_warning: >
     Излезли сте от системата. Съдържанието на всеки изпратен от вас формуляр, може да бъде изгубено. Моля, [влезте отново]!
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
-        name: Име
+        name: Name
         slug: Unique identifier
-        display_name: Показвано име
+        display_name: Display name
         client_id: Client ID
         client_secret: Client secret
-        secret: Тайна
-        scope: Обхват
+        secret: Secret
+        scope: Scope
         grant_types_supported: Supported grant types
         limit_self_registration: Limit self registration
         authorization_endpoint: Authorization endpoint
@@ -29,7 +29,6 @@ bg:
         claims: Claims
         acr_values: ACR values
         redirect_url: Redirect URL
-  activerecord:
     errors:
       models:
         openid_connect/provider:

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -82,10 +84,12 @@ module Meetings
     end
 
     def copied_participants
-      if meeting.allowed_participants.empty?
+      if meeting.allowed_participants.present?
+        meeting.allowed_participants.collect(&:copy_attributes)
+      elsif !user.builtin?
         [{ "user_id" => user.id, "invited" => true }]
       else
-        meeting.allowed_participants.collect(&:copy_attributes)
+        []
       end
     end
 

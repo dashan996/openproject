@@ -37,4 +37,19 @@ class MeetingSeriesMailerPreview < ActionMailer::Preview
 
     MeetingSeriesMailer.template_completed(meeting, user, actor)
   end
+
+  def rescheduled
+    language = params["locale"] || I18n.default_locale
+    actor = FactoryBot.build_stubbed(:user, lastname: "Actor")
+    user = FactoryBot.build_stubbed(:user, language:)
+    meeting = RecurringMeeting.last
+    old_schedule = meeting.full_schedule_in_words
+
+    meeting.start_time = 5.days.from_now
+    meeting.frequency = 2
+    meeting.end_after = "iterations"
+    meeting.iterations = 2
+
+    MeetingSeriesMailer.rescheduled(meeting, user, actor, changes: { old_schedule: })
+  end
 end

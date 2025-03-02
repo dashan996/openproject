@@ -50,10 +50,13 @@ zh-CN:
       meeting_section:
         title: "标题"
       recurring_meeting:
-        frequency: "频率"
-        interval: "周期"
+        frequency: "周期"
+        interval: "间隔"
         start_date: "开始日期："
+        start_time: "开始时间"
+        start_time_hour: "开始时间"
         end_after: "会议系列结束"
+        end_date: "结束日期"
         iterations: "事件"
     errors:
       messages:
@@ -61,6 +64,7 @@ zh-CN:
     models:
       recurring_meeting: "定期会议"
       structured_meeting: "动态会议"
+      meeting: "会议"
       meeting_agenda_item: "议程项目"
       meeting_agenda: "议程"
       meeting_minutes: "会议记录"
@@ -176,15 +180,29 @@ zh-CN:
         立即向上面选定的参加者发送电子邮件邀请。您也可以在之后随时手动发送。
       send_invitation_emails_structured: "立即向所有与会者发送电子邮件邀请。您也可以在之后随时手动发送。"
       open_meeting_link: "打开会议"
+      open_my_meetings_link: "转到我的会议"
       series:
-        title: "[%{project_name}] 会议系列 %{title}"
-        summary: "%{actor} 设立了一个新的系列会议 %{title}"
+        title: "[%{project_name}] 会议系列 '%{title}'"
+        summary: "%{actor} 设置了一个新的会议系列 '%{title}'"
+      series_rescheduled:
+        title: "[%{project_name}] 会议系列 '%{title}' 已重新安排"
+        summary: "%{actor} 已更改会议系列 '%{title}' 的时间表"
+        old_schedule: "旧时间表"
+        new_schedule: "新时间表"
       invited:
-        summary: "%{actor} 已经向您发送了一个 %{title} 会议邀请"
+        summary: "%{actor} 向您发送了会议 '%{title}' 的邀请"
+      cancelled:
+        header: "已取消：会议 '%{title}'"
+        header_occurrence: "已取消：会议事件 '%{title}'"
+        header_series: "已取消：会议系列 '%{title}'"
+        summary_occurrence: "%{actor} 已取消 '%{title}' 的事件。"
+        summary_series: "%{actor} 已取消会议系列 '%{title}'。"
+        summary: "%{actor} 已取消 '%{title}'。"
+        date_time: "预定日期/时间"
       rescheduled:
-        header: " %{title} 会议已经被重新安排"
-        summary: "会议 %{title} 已经被 %{actor} 重新安排"
-        body: "此会议 %{title} 已经被 %{actor} 重新安排。"
+        header: "会议 '%{title}' 已经重新安排"
+        summary: "会议 '%{title}' 已经由 %{actor} 重新安排"
+        body: "会议 '%{title}' 已经由 %{actor} 重新安排。"
         old_date_time: "旧日期/时间"
         new_date_time: "新日期/时间"
     label_mail_all_participants: "发送电子邮件给所有参与者"
@@ -205,13 +223,14 @@ zh-CN:
         confirmation_message_html: >
           此操作不可逆。请谨慎处理。
       occurrence:
-        title: "删除会议事件"
-        heading: "删除此会议事件？"
+        title: "取消会议事件"
+        heading: "取消此会议事件？"
         confirmation_message_html: >
-          该会议是名为 <strong>%{title}</strong> 的会议系列的一部分。这只会删除该会议，而不会删除整个会议系列。要继续吗？
+          任何不在模板中的会议信息都将丢失。 您想要继续吗？
+        confirm_button: "取消事件"
     blankslate:
-      title: "No meetings to display"
-      desc: "There are no meetings that meet the active filter criteria."
+      title: "无会议显示"
+      desc: "没有符合主动筛选条件的会议。"
   meeting_section:
     untitled_title: "无标题章节"
     delete_confirmation: "删除该属性也会删除其在所有项目中的值。您确定要这样做吗？"
@@ -219,9 +238,9 @@ zh-CN:
     empty_text: "拖动项目到此处或创建一个新项目"
   recurring_meeting:
     ended_blankslate:
-      title: "Meeting series ended"
-      message: "This meeting series has come to an end. There are no upcoming meetings. "
-      action: "You can still view past occurrences or edit the meeting series to extend it."
+      title: "结束"
+      message: "本系列会议已经结束，没有即将举行的会议。 "
+      action: "您仍可以查看过去的事件或编辑会议系列来扩展它。"
     occurrence:
       infoline: "本次会议是定期会议系列的一部分。"
       error_no_next: "此会议没有下一个发生时间。"
@@ -229,7 +248,7 @@ zh-CN:
       first_created: >
         第一次会议已成功从模板创建。所有未来的会议将会在上一次发生的时间自动创建。
     template:
-      button_finalize: "完成模板"
+      button_finalize: "打开首次会议"
       blank_title: "您的会议系列模板为空"
       description: >
         此模板将在系列中创建新会议时使用。您可以在此模板中添加议程项目、参与者和附件。
@@ -240,10 +259,12 @@ zh-CN:
       banner_html: >
         您正在编辑会议系列的模板： %{link}。系列会议中的每个新会议都将使用此模板。更改不会影响过往或已创建的会议。
     frequency:
+      x_daily:
+        other: "每 %{count} 天"
+      x_weekly:
+        other: "每 %{count} 周"
       every_weekday: "每个 %{day_of_the_week}"
-      daily: "每日"
       working_days: "每个工作日"
-      weekly: "每周"
     end_after:
       never: "从不"
       specific_date: "在指定日期之后"
@@ -256,33 +277,33 @@ zh-CN:
       weekly_interval: "每 %{interval} 周在 %{weekday}"
       frequency: "%{base} 在 %{time}"
       full: "%{base} 在 %{time}，在 %{end_date} 结束"
-      full_past: "%{base} at %{time}, ended on %{end_date}"
+      full_past: "%{base} 在 %{time}，于 %{end_date}结束"
       never_ending: "%{base} 在 %{time}"
     open:
-      title: "Open"
+      title: "打开"
       subtitle: >
-        Open meetings have agendas that can be edited and show up in individual users’ ‘My meetings’ section. Changes to the meeting series template do not affect already-open meeting occurrences.
+        公开会议的议程可以编辑，并显示在个人用户的 "我的会议 "部分。更改会议系列模板不会影响已经发生的会议事件。
       blankslate:
-        title: "No open meetings at the moment"
-        desc: "You can manually open a planned meeting by clicking on the 'Open' button below"
+        title: "目前没有召开的会议"
+        desc: "您可以点击下面的 \"打开 \"按钮，手动召开计划中的会议"
     planned:
       title: "已计划"
       subtitle: >
         以下会议按经常性会议时间表安排，但尚未开放。 每次计划的会议开始时，下一次会议将自动为您打开。 您也可以手动打开计划的会议来导入模板并开始编辑议程。
       blankslate:
-        title: "No more planned meetings"
+        title: "没有更多的会议计划"
         desc: >
-          There are no additional meetings planned in this series. To schedule additional meetings or extend the series, go to the template and edit meeting details to change the end date, frequency or interval.
+          本系列没有其他会议计划。 如需添加更多会议或延长会议系列，请转至模板并编辑会议详细信息以更改结束日期、频率或间隔。
     delete_dialog:
       title: "删除会议系列"
       heading: "永久删除此会议系列？"
       confirmation_message_html:
         zero: >
-          删除 <strong>%{title}</strong>将删除该系列中的任何会议。此操作不可逆转。请谨慎操作。
+          会议系列 <strong>%{title}</strong> 没有任何会议事件。将为所有人删除该系列。请谨慎操作。
         one: >
-          删除 <strong>%{title}</strong>也会删除该系列中的一次会议。此操作不可逆转。请谨慎操作。
+          删除 <strong>%{title}</strong> 也会删除此系列中的一次事件。此操作不可逆转。请谨慎操作。
         other: >
-          删除 <strong>%{title}</strong>将删除该系列中的所有 %{count} 个会议。此操作不可逆转。请谨慎操作。
+          删除 <strong>%{title}</strong> 将删除此系列中的全部 %{count} 个事件。此操作不可逆转。请谨慎操作。
     scheduled_delete_dialog:
       title: "取消会议事件"
       heading: "取消此会议事件？"
@@ -357,7 +378,7 @@ zh-CN:
   label_meeting_state_closed: "已关闭"
   label_meeting_state_closed_html: "<i>关闭</i>"
   label_meeting_state_agenda_created: "议程已创建"
-  label_meeting_state_planned: "Planned"
+  label_meeting_state_planned: "已计划"
   label_meeting_state_cancelled: "已取消"
   label_meeting_state_skipped: "已跳过"
   label_meeting_reopen_action: "重新开放会议"

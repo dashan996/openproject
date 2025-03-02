@@ -83,7 +83,7 @@ class ServiceResult
     self.result = result
     self.state = state
 
-    initialize_errors(errors)
+    initialize_errors(errors, result)
     @message = message
     @message_type = message_type
 
@@ -223,15 +223,23 @@ class ServiceResult
     @state ||= ::Shared::ServiceState.build
   end
 
-  private
-
-  def initialize_errors(errors)
-    self.errors = errors || new_errors_with_result
+  ##
+  # Required as we create an errors object bound to this ServiceResult.
+  # calling `errors#full_messages` will call `human_attribute_name` here.
+  def self.human_attribute_name(*)
+    ApplicationRecord.human_attribute_name(*)
   end
 
-  def new_errors_with_result
-    ActiveModel::Errors.new(self).tap do |errors|
-      errors.merge!(result) if result.try(:errors).present?
+  private
+
+  def initialize_errors(errors, provided_result)
+    self.errors = errors || new_errors_with_result(provided_result)
+  end
+
+  def new_errors_with_result(provided_result)
+    base = provided_result.respond_to?(:errors) ? provided_result : self
+    ActiveModel::Errors.new(base).tap do |errors|
+      errors.merge!(provided_result) if base != self
     end
   end
 

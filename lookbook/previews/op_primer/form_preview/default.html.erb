@@ -9,10 +9,10 @@
         required: true,
         validation_message: answer.nil? ? "Field is required" : nil,
         caption: if answer.nil?
-          "Fill in the field to make the validation error instantly go away."
-        else
-          "Yay, no more errors!"
-        end,
+                   "Fill in the field to make the validation error instantly go away."
+                 else
+                   "Yay, no more errors!"
+                 end,
         input_width: :auto
       )
     end
@@ -24,12 +24,10 @@
     url: "/foo",
     method: :get,
     data: {
-      "controller": "form-preview",
+      controller: "form-preview",
       "form-preview-url-value": preview_path
     }
   ) do |f|
 %>
   <%= render(form_preview.new(f)) %>
 <% end %>
-
-

@@ -45,8 +45,8 @@ de:
   label_greater: ">"
   label_is_not_project_with_subprojects: "ist nicht (mit Unterprojekten)"
   label_is_project_with_subprojects: "ist (mit Unterprojekten)"
-  label_is_work_package_with_descendants: "ist (einschließlich Abkömmlinge)"
-  label_is_not_work_package_with_descendants: "ist nicht (einschließlich Abkömmlinge)"
+  label_is_work_package_with_descendants: "ist (einschließlich Unterelemente)"
+  label_is_not_work_package_with_descendants: "ist nicht (einschließlich Unterelemente)"
   label_work_package_attributes: "Attribute am Ticket"
   label_less: "<"
   label_logged_by_reporting: "Gebucht von"
@@ -93,7 +93,7 @@ de:
       button: "Stundenzettel als PDF exportieren"
       timesheet: "Stundenzettel"
       time: "Stunden"
-      sum_hours: Sum
+      sum_hours: Summe
     cost_reports:
       title: "Kostenbericht als XLS-Export"
       start_time: "Startzeit"

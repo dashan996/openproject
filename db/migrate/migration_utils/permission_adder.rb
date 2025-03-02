@@ -31,8 +31,13 @@ module Migration
     module PermissionAdder
       module_function
 
-      def add(having, add)
+      def add(having, add) # rubocop:disable Metrics/AbcSize
         added_permission = OpenProject::AccessControl.permission(add)
+
+        if added_permission.blank?
+          OpenProject.logger.warn("Permission #{add} is not a valid permission in use. Skipping...")
+          return
+        end
 
         role_scope = Role
           .joins(:role_permissions)

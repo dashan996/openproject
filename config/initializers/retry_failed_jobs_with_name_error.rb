@@ -38,6 +38,8 @@ Rails.application.configure do
     #
     # Once the migration is over and the worker gets restarted, the job will be
     # retried thanks to this piece of code below.
+    next unless ActiveRecord::Base.connection.table_exists?(:good_jobs)
+
     GoodJob::Job
       .discarded
       .where("error LIKE ?", "NameError: uninitialized constant %Job")
@@ -47,8 +49,6 @@ Rails.application.configure do
       rescue StandardError => e
         Rails.logger.error("Failed to enqueue job for retry #{job.display_name} (job id: #{job.id}): #{e.message}")
       end
-  rescue ActiveRecord::StatementInvalid
-    # will happen when we currently are migrating
   rescue LoadError
     # Ignore LoadError that happens when nulldb://db database adapter is used
   end

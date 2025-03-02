@@ -27,14 +27,14 @@ See COPYRIGHT and LICENSE files for more details.
 
 ++#%>
 
-<%= error_messages_for 'color' %>
+<%= error_messages_for "color" %>
 
 <fieldset class="form--fieldset">
   <div class="form--field -required">
-    <%= f.text_field :name, required: true, container_class: '-slim' %>
+    <%= f.text_field :name, required: true, container_class: "-slim" %>
   </div>
   <div class="form--field -required">
-    <label class="form--label"><%= t('activerecord.attributes.color.hexcode') %></label>
+    <label class="form--label"><%= Color.human_attribute_name(:hexcode) %></label>
     <span class="form--field-container">
       <span class="form--text-field-container -xslim">
         <%= text_field_tag "color_hexcode",
@@ -43,10 +43,10 @@ See COPYRIGHT and LICENSE files for more details.
                            name: "color[hexcode]",
                            maxlength: 7 %>
       </span>
-      <%= icon_for_color(color, class: 'color--preview', data: { target: '#color_hexcode' }) %>
+      <%= icon_for_color(color, class: "color--preview", data: { target: "#color_hexcode" }) %>
     </span>
   </div>
 </fieldset>
 
-<%= styled_button_tag t(:button_save), class: '-primary -with-icon icon-checkmark' %>
-<%= link_to t(:button_cancel), colors_path, class: 'button -with-icon icon-cancel' %>
+<%= styled_button_tag t(:button_save), class: "-primary -with-icon icon-checkmark" %>
+<%= link_to t(:button_cancel), colors_path, class: "button -with-icon icon-cancel" %>

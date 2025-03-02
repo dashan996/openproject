@@ -30,7 +30,6 @@ import { ChangeDetectionStrategy, Component, ElementRef } from '@angular/core';
 import { I18nService } from 'core-app/core/i18n/i18n.service';
 import { EEActiveTrialBase } from 'core-app/features/enterprise/enterprise-active-trial/ee-active-trial.base';
 
-
 @Component({
   selector: 'opce-enterprise-active-saved-trial',
   templateUrl: './ee-active-trial.component.html',
@@ -56,8 +55,14 @@ export class EEActiveSavedTrialComponent extends EEActiveTrialBase {
 
   public reprieveDaysLeft = this.elementRef.nativeElement.dataset.reprieveDaysLeft;
 
-  constructor(readonly elementRef:ElementRef,
-    readonly I18n:I18nService) {
+  public plan:string = this.elementRef.nativeElement.dataset.plan;
+
+  public additionalFeatures:string = this.elementRef.nativeElement.dataset.additionalFeatures;
+
+  constructor(
+    readonly elementRef:ElementRef,
+    readonly I18n:I18nService,
+  ) {
     super(I18n);
   }
 

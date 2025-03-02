@@ -35,7 +35,7 @@ See COPYRIGHT and LICENSE files for more details.
       <% if tab[:name] == 'WorkPackageCustomField' %>
         <div class="op-toast -info">
           <div class="op-toast--content">
-            <p><%= t('text_custom_field_hint_activate_per_project_and_type') %></p>
+            <p><%= t("text_custom_field_hint_activate_per_project_and_type") %></p>
           </div>
         </div>
       <% end %>
@@ -103,7 +103,7 @@ See COPYRIGHT and LICENSE files for more details.
                 <div class="generic-table--sort-header-outer">
                   <div class="generic-table--sort-header">
                     <span>
-                      <%= t('custom_fields.contained_in_type') %>
+                      <%= t("custom_fields.contained_in_type") %>
                     </span>
                   </div>
                 </div>
@@ -114,7 +114,7 @@ See COPYRIGHT and LICENSE files for more details.
                 <div class="generic-table--sort-header-outer">
                   <div class="generic-table--sort-header">
                     <span>
-                      <%=t(:button_sort)%>
+                      <%= t(:button_sort) %>
                     </span>
                   </div>
                 </div>
@@ -146,19 +146,20 @@ See COPYRIGHT and LICENSE files for more details.
                       <%= link_to t(:label_custom_field_add_no_type), types_path %>
                     </span>
                   <% end %>
-                  <%= safe_join type_links, ', '.html_safe %>
+                  <%= safe_join type_links, ", ".html_safe %>
                 </td>
               <% end %>
               <% unless tab[:name] == 'WorkPackageCustomField' %>
-                <td><%= reorder_links('custom_field', { action: 'update', id: custom_field, back_url: custom_fields_path(tab: tab[:name]) }, method: :put) %></td>
+                <td><%= reorder_links("custom_field", { action: "update", id: custom_field, back_url: custom_fields_path(tab: tab[:name]) }, method: :put) %></td>
               <% end %>
               <td class="buttons">
                 <%= link_to(
-                      op_icon('icon icon-delete'),
-                      (custom_field_path(custom_field)),
+                      op_icon("icon icon-delete"),
+                      custom_field_path(custom_field),
                       method: :delete,
                       data: { confirm: I18n.t(:text_are_you_sure) },
-                      title: t(:button_delete)) %>
+                      title: t(:button_delete)
+                    ) %>
               </td>
             </tr>
           <% end %>

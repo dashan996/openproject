@@ -101,19 +101,19 @@ module WorkPackages
     attribute :schedule_manually
     attribute :ignore_non_working_days,
               writable: ->(*) {
-                !automatically_scheduled_parent?
+                leaf_or_manually_scheduled?
               }
 
     attribute :start_date,
               writable: ->(*) {
-                !automatically_scheduled_parent?
+                leaf_or_manually_scheduled?
               } do
       validate_after_soonest_start(:start_date)
     end
 
     attribute :due_date,
               writable: ->(*) {
-                !automatically_scheduled_parent?
+                leaf_or_manually_scheduled?
               } do
       validate_after_soonest_start(:due_date)
     end
@@ -227,7 +227,10 @@ module WorkPackages
     attr_reader :can
 
     def validate_after_soonest_start(date_attribute)
-      if !model.schedule_manually? && before_soonest_start?(date_attribute)
+      return if model.schedule_manually?
+      return if model.children.any?
+
+      if before_soonest_start?(date_attribute)
         message = I18n.t("activerecord.errors.models.work_package.attributes.start_date.violates_relationships",
                          soonest_start: model.soonest_start)
 
@@ -480,7 +483,25 @@ module WorkPackages
     end
 
     def validate_duration_integer
-      errors.add :duration, :not_an_integer if model.duration_before_type_cast != model.duration
+      unless valid_duration?(model.duration_before_type_cast, model.duration)
+        errors.delete(:duration) # delete :greater_than error, because it's not relevant anymore
+        errors.add :duration, :not_an_integer
+      end
+    end
+
+    def valid_duration?(value, duration)
+      # the values don't match (e.g because a float was passed)
+      return false if !value.is_a?(String) && value != duration
+
+      if value.is_a?(String)
+        return true if value == "" && duration.nil?
+
+        # A string is passed, put the transformed value does not match
+        return false if value.to_i.to_s != value.strip
+      end
+
+      # duration is valid
+      true
     end
 
     def validate_duration_matches_dates
@@ -500,11 +521,17 @@ module WorkPackages
     end
 
     def validate_duration_and_dates_are_not_derivable
+      return if dates_derivation_impossible?
+
       %i[start_date due_date duration].each do |field|
         if not_set_but_others_are_present?(field)
           errors.add field, :cannot_be_null
         end
       end
+    end
+
+    def dates_derivation_impossible?
+      model.errors[:duration].any?
     end
 
     def not_set_but_others_are_present?(field)
@@ -627,8 +654,8 @@ module WorkPackages
       @calculated_duration ||= WorkPackages::Shared::Days.for(model).duration(model.start_date, model.due_date)
     end
 
-    def automatically_scheduled_parent?
-      !model.leaf? && !model.schedule_manually?
+    def leaf_or_manually_scheduled?
+      model.leaf? || model.schedule_manually?
     end
   end
 end

@@ -27,6 +27,6 @@ See COPYRIGHT and LICENSE files for more details.
 
 ++#%>
 
-<%= call_hook(:view_common_error_details, { params: params, project: ((defined? @project) ? @project : nil) }) %>
+<%= call_hook(:view_common_error_details, { params: params, project: (defined?(@project) ? @project : nil) }) %>
 
 <% html_title h(status) %>

@@ -54,6 +54,7 @@ export class MultipleLinesUserFieldModule extends ResourcesDisplayField {
       values,
       { hide: false, link: false },
       { hide: false, size: 'medium' },
+      { isActivated: true },
       true,
     );
   }

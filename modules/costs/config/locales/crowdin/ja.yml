@@ -30,6 +30,7 @@ ja:
         overridden_costs: "オーバーライドされたコスト"
         spent: "使用済"
         spent_on: "日付"
+        logged_by: "Logged by"
       cost_type:
         unit: "単位名"
         unit_plural: "単位名"
@@ -58,11 +59,14 @@ ja:
     models:
       cost_type:
         other: "コスト種類"
+      time_entry_activity:
+        other: "Time tracking activities"
       rate: "原価率"
     errors:
       models:
         time_entry:
           invalid_time: "00:00 から 23:59 の間で設定してください。"
+          cannot_log_for_this_work_package: "Cannot log time for this work package."
         work_package:
           is_not_a_valid_target_for_cost_entries: "コストを再割り当てるには、作業項目#%{id}は対象外である。"
           nullify_is_not_valid_for_cost_entries: "コストエントリをプロジェクトに割り当てることはできません。"
@@ -78,6 +82,7 @@ ja:
   button_add_rate: "原価率を追加"
   button_log_costs: "単価を記録"
   button_log_time: "ログ"
+  button_add_activity: "Activity"
   caption_booked_on_project: "プロジェクトの予約"
   caption_default: "デフォルト"
   caption_default_rate_history_for: "%{user} のデフォルト率の履歴"
@@ -91,6 +96,8 @@ ja:
   caption_show_locked: "ロックの種類を表示します。"
   caption_log_time_dialog: "時間を記録"
   description_date_for_new_rate: "新しいレートの日付"
+  description_costs_settings: "Define the desired format for the costs in all projects."
+  description_time_settings: "Define which fields are mandatory to fill when logging time in all projects."
   group_by_others: "どのグループにもない"
   label_between: "次の範囲内"
   label_cost_filter_add: "コストフィルタの追加"
@@ -117,6 +124,8 @@ ja:
   label_kind: "種別"
   label_less_or_equal: "以下"
   label_log_costs: "単価を記録"
+  label_new_time_entry_activity: "New time entry activity"
+  label_time_entry_activity_form_description: "Changes to this time entry activity will be reflected in all projects where it is enabled."
   label_no: "いいえ"
   label_option_plural: "オプション"
   label_overall_costs: "集計コスト"
@@ -129,6 +138,10 @@ ja:
   label_until: "まで"
   label_valid_from: "から有効"
   label_yes: "はい"
+  label_time: "Time"
+  label_cost: "Cost"
+  label_costs: "Costs"
+  label_mandatory_fields: "Mandatory fields"
   placeholder_activity_select_work_package_first: まずワークパッケージを選択してください。
   notice_something_wrong: "エラーが発生しました。再試行してください。"
   notice_successful_restore: "復元処理が成功します。"

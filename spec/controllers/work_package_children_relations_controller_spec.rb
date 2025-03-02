@@ -35,8 +35,8 @@ RSpec.describe WorkPackageChildrenRelationsController do
   shared_let(:task_type) { create(:type_task) }
   shared_let(:milestone_type) { create(:type_milestone) }
   shared_let(:project) { create(:project, types: [task_type, milestone_type]) }
-  shared_let(:work_package) { create(:work_package, project:, type: task_type) }
-  shared_let(:child_work_package) { create(:work_package, parent: work_package, project:, type: task_type) }
+  shared_let(:work_package) { create(:work_package, subject: "work_package", project:, type: task_type) }
+  shared_let(:child_work_package) { create(:work_package, subject: "child", parent: work_package, project:, type: task_type) }
 
   current_user { user }
 
@@ -114,7 +114,7 @@ RSpec.describe WorkPackageChildrenRelationsController do
       expect(WorkPackages::UpdateAncestorsService).to have_received(:new)
         .with(user: user, work_package: child_work_package)
       expect(WorkPackages::SetScheduleService).to have_received(:new)
-        .with(a_hash_including(work_package: [child_work_package]))
+        .with(a_hash_including(work_package: [child_work_package, work_package]))
     end
   end
 end

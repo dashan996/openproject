@@ -57,7 +57,7 @@ module Storages
         when Storage::PROVIDER_TYPE_NEXTCLOUD
           true
         when Storage::PROVIDER_TYPE_ONE_DRIVE
-          storage.oauth_client.present?
+          storage.oauth_client&.persisted?
         else
           false
         end

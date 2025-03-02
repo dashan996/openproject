@@ -64,6 +64,22 @@
           </div>
         </div>
       </div>
+      <div class="attributes-key-value" *ngIf="plan">
+        <div class="attributes-key-value--key" [textContent]="text.label_plan"></div>
+        <div class="attributes-key-value--value-container">
+          <div class="attributes-key-value--value -text">
+            <span [textContent]="plan"></span>
+          </div>
+        </div>
+      </div>
+      <div class="attributes-key-value" *ngIf="additionalFeatures">
+        <div class="attributes-key-value--key" [textContent]="text.label_additional_features"></div>
+        <div class="attributes-key-value--value-container">
+          <div class="attributes-key-value--value -text">
+            <span [textContent]="additionalFeatures"></span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

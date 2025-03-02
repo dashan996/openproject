@@ -44,10 +44,10 @@ module OpenProject::OpenIDConnect
         OpenIDConnect::UserTokens::CreateService.new(user).call(
           access_token: session["omniauth.oidc_access_token"],
           refresh_token: session["omniauth.oidc_refresh_token"],
+          expires_in: session["omniauth.oidc_expires_in"],
           known_audiences: [OpenIDConnect::UserToken::IDP_AUDIENCE],
           clear_previous: true
         )
-
       end
 
       ##
@@ -58,6 +58,7 @@ module OpenProject::OpenIDConnect
 
         session["omniauth.oidc_access_token"] = context.dig(:auth_hash, :credentials, :token)
         session["omniauth.oidc_refresh_token"] = context.dig(:auth_hash, :credentials, :refresh_token)
+        session["omniauth.oidc_expires_in"] = context.dig(:auth_hash, :credentials, :expires_in)
 
         nil
       end

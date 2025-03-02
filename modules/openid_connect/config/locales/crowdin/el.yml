@@ -4,16 +4,16 @@ el:
     description: "Adds OmniAuth OpenID Connect strategy providers to OpenProject."
   logout_warning: >
     Έχετε αποσυνδεθεί. Τα περιεχόμενα οποιασδήποτε φόρμας που υποβάλετε ενδέχεται να χαθούν. Παρακαλούμε [συνδεθείτε].
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
-        name: Όνομα
+        name: Name
         slug: Unique identifier
-        display_name: Εμφανιζόμενο όνομα
+        display_name: Display name
         client_id: Client ID
         client_secret: Client secret
-        secret: Μυστικό
-        scope: Φυσικό Αντικείμενο
+        secret: Secret
+        scope: Scope
         grant_types_supported: Supported grant types
         limit_self_registration: Limit self registration
         authorization_endpoint: Authorization endpoint
@@ -29,7 +29,6 @@ el:
         claims: Claims
         acr_values: ACR values
         redirect_url: Redirect URL
-  activerecord:
     errors:
       models:
         openid_connect/provider:

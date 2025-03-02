@@ -49,6 +49,12 @@ module ::TypesHelper
         partial: "types/form/projects",
         path: edit_tab_type_path(id: @type.id, tab: :projects),
         label: "types.edit.projects.tab"
+      },
+      {
+        name: "export_configuration",
+        path: edit_tab_type_path(id: @type.id, tab: :export_configuration),
+        label: "types.edit.export_configuration.tab",
+        view_component: WorkPackages::Types::ExportConfigurationComponent
       }
     ]
 

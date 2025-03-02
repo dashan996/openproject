@@ -34,6 +34,7 @@ import { EditFieldComponent } from 'core-app/shared/components/fields/edit/edit-
 import { ValueOption } from 'core-app/shared/components/fields/edit/field-types/select-edit-field/select-edit-field.component';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { InjectField } from 'core-app/shared/helpers/angular/inject-field.decorator';
+import { PathHelperService } from 'core-app/core/path-helper/path-helper.service';
 
 @Component({
   templateUrl: './multi-select-edit-field.component.html',
@@ -42,6 +43,8 @@ export class MultiSelectEditFieldComponent extends EditFieldComponent implements
   @ViewChild(NgSelectComponent, { static: true }) public ngSelectComponent:NgSelectComponent;
 
   @InjectField() I18n!:I18nService;
+
+  @InjectField() pathHelperService:PathHelperService;
 
   public availableOptions:any[] = [];
 
@@ -223,4 +226,30 @@ export class MultiSelectEditFieldComponent extends EditFieldComponent implements
       this.currentValueInvalid = !!this.schema.required;
     }
   }
+
+  /**
+   * For multi-select fields that are of type User, we want to show a hover card when hovering over users in the
+   * dropdown. For this to happen we must register a trigger target.
+   */
+  protected getHoverCardTriggerTarget() {
+    if (this.schema?.type === '[]User') {
+      return 'trigger';
+    }
+
+    return '';
+  }
+
+  /**
+   * For multi-select fields that are of type User, we want to show a hover card when hovering over users in the
+   * dropdown. For this to happen we must define a URL for the hover card.
+   */
+  protected getHoverCardUrl(item:{ id?:string }) {
+    if (item && item.id) {
+      return this.pathHelperService.userHoverCardPath(item.id);
+    }
+
+    return '';
+  }
+
+  protected readonly getComputedStyle = getComputedStyle;
 }

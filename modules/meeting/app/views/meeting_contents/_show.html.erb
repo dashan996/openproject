@@ -29,7 +29,10 @@ See COPYRIGHT and LICENSE files for more details.
 
 <%
   tab ||= locals[:tab_contents] if defined? locals
-  content, content_type = tab[:content], tab[:content_type] if tab && tab.present?
+  if tab.present?
+    content = tab[:content]
+    content_type = tab[:content_type]
+  end
 -%>
 
 <div data-controller="meeting-content"
@@ -38,14 +41,14 @@ See COPYRIGHT and LICENSE files for more details.
      data-test-selector="op-meeting--<%= content_type %>">
   <div>
     <%= toolbar title: t(:"label_#{content_type}") do %>
-      <%=raw meeting_content_context_menu content, content_type %>
+      <%= raw meeting_content_context_menu content, content_type %>
     <% end %>
   </div>
 
   <% if can_edit_meeting_content?(content, content_type) -%>
     <div data-meeting-content-target="editor"
          hidden>
-      <%= render(:partial => "meeting_contents/form", :locals => {:content => content, :content_type => content_type}) %>
+      <%= render(partial: "meeting_contents/form", locals: { content: content, content_type: content_type }) %>
     </div>
   <% end -%>
 
@@ -53,7 +56,7 @@ See COPYRIGHT and LICENSE files for more details.
      hidden>
   <% if saved_meeting_content_text_present?(content) -%>
     <div class="wiki op-uc-container">
-      <%= format_text(content.text, :object => @meeting) %>
+      <%= format_text(content.text, object: @meeting) %>
     </div>
   <% else -%>
     <%= no_results_box %>
@@ -63,9 +66,11 @@ See COPYRIGHT and LICENSE files for more details.
 <%# We cannot render attachments for journaled content %>
   <% unless local_assigns[:journaled_version] %>
     <% resource = ::API::V3::MeetingContents::MeetingContentRepresenter.new(content, current_user: current_user, embed_links: true) %>
-    <%= list_attachments(resource,
-                         data: {
-                           'meeting-content-target': "attachments"
-                         }) %>
+    <%= list_attachments(
+          resource,
+          data: {
+            "meeting-content-target": "attachments"
+          }
+        ) %>
   <% end %>
 </div>

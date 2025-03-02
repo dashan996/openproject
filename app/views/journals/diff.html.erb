@@ -31,7 +31,7 @@ See COPYRIGHT and LICENSE files for more details.
 
 <p><%= authoring @journal.created_at, @journal.user, label: :label_updated_time_by %></p>
 
-<%= render partial: 'diff',
+<%= render partial: "diff",
            locals: { diff: @diff } %>
 
 <% if @activity_page -%>

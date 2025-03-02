@@ -144,9 +144,7 @@ module Projects
       contract_klass = model.being_archived? ? ArchiveContract : UnarchiveContract
       contract = contract_klass.new(model, user)
 
-      with_merged_former_errors do
-        contract.validate
-      end
+      validate_and_merge_errors(contract)
     end
   end
 end

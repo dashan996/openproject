@@ -47,6 +47,10 @@ module Queries::Filters::Shared::AnyUserNameAttributeFilter
       User.current.allowed_globally?(:view_user_email)
     end
 
+    def human_name
+      I18n.t(:label_filter_any_name_attribute)
+    end
+
     private
 
     def sql_concat_name

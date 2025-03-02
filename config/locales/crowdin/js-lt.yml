@@ -103,7 +103,6 @@ lt:
     button_settings: "Nustatymai"
     button_uncheck_all: "Atžymėti visus"
     button_update: "Atnaujinti"
-    button_export-pdf: "Atsisiųsti PDF"
     button_export-atom: "Atsisiųsti Atom"
     button_generate_pdf: "Generate PDF"
     button_create: "Kurti"
@@ -222,6 +221,8 @@ lt:
             label_maximum_users: "Maksimalus aktyvių naudotojų skaičius"
             label_starts_at: "Prasideda nuo"
             label_expires_at: "Nustoja galioti"
+            label_plan: "Plan"
+            label_additional_features: "Additional features"
             receive_newsletter: Noriu gauti OpenProject <a target="_blank" href="%{link}">naujienlaiškį</a>.
             taken_domain: Gali būti tik vienas aktyvus bandomasis periodas domenui.
             domain_mismatch: Dabartinės užklausos stoties pavadinimas neatitinka sukonfigūruoto stoties vardo. Prašome patikrinti jūsų sistemos nustatymus.
@@ -357,10 +358,10 @@ lt:
           learn_about: "Sužinokite daugiau apie naujas galimybes"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_2":
+          "15_3":
             standard:
               new_features_html: >
-                The release brings various features and improvements for you, e.g. <br> <ul class="%{list_styling_class}"> <li>Set reminders for work packages to generate date alert notifications.</li> <li>Create new folders directly from the location picker for file storage.</li> <li>Specify a required lag between work packages successors and predecessors.</li> <li>Enable ordering and grouping for work packages on values of custom fields type hierarchy.</li> <li>Export time entries as PDF timesheets.</li> <li>Add a popover displaying user information when hovering.</li> </ul>
+                The release brings various features and improvements for you, e.g. <br> <ul class="%{list_styling_class}"> <li>Schedule recurring meetings to streamline your weekly, biweekly, or custom appointments.</li> <li>Create child work packages directly from the Relations tab.</li> <li>Include total sums in timesheet PDF exports for better insights.</li> <li>Include child work packages in cost reports for more accurate tracking.</li> <li>See dates of previously hidden, permission-restricted relations to make informed scheduling decisions.</li> </ul>
     ical_sharing_modal:
       title: "Prenumeruoti kalendorių"
       inital_setup_error_message: "Gaunant duomenis įvyko klaida."
@@ -854,8 +855,6 @@ lt:
       select_branch: "Parinkti padalinį"
     field_value_enter_prompt: "Įveskite \"%{field}\" reikšmę "
     project_menu_details: "Detalės"
-    scheduling:
-      manual: "Rankinis laiko parinkimas"
     sort:
       sorted_asc: "Pritaikytas didėjantis rikiavimas, "
       sorted_dsc: "Pritaikytas mažėjantis rikiavimas, "
@@ -903,15 +902,6 @@ lt:
       comment_send_failed: "Įvyko klaida. Neįmanoma pateikti komentaro."
       comment_updated: "Komentaras sėkmingai atnaujintas."
       confirm_edit_cancel: "Ar Jūs tikrai norite atšaukti darbo paketo redagavimą?"
-      datepicker_modal:
-        automatically_scheduled_parent: "Suplanuota automatiškai. Datos paskaičiuotos pagal ryšius."
-        manually_scheduled: "Įjungtas rankinis planavimas, visi ryšiai ignoruojami."
-        start_date_limited_by_relations: "Galimos pradžios ir pabaigos datos ribojamos pagal ryšius."
-        changing_dates_affects_follow_relations: "Šių datų keitimas įtakos susijusių darbo paketų datas."
-        click_on_show_relations_to_open_gantt: 'Spauskite „%{button_name}“ GANTT vaizdui.'
-        show_relations: "Rodyti ryšius"
-        ignore_non_working_days:
-          title: "Tik darbo dienos"
       description_filter: "Filtras"
       description_enter_text: "Įveskite tekstą"
       description_options_hide: "Slėpti parinktis"

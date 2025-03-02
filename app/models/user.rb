@@ -36,7 +36,7 @@ class User < Principal
     firstname: [:firstname],
     lastname_firstname: %i[lastname firstname],
     lastname_n_firstname: %i[lastname firstname],
-    lastname_coma_firstname: %i[lastname firstname],
+    lastname_comma_firstname: %i[lastname firstname],
     username: [:login]
   }.freeze
 
@@ -91,6 +91,8 @@ class User < Principal
            inverse_of: :user,
            dependent: :destroy
 
+  has_many :emoji_reactions, dependent: :destroy
+  has_many :reminders, foreign_key: "creator_id", dependent: :destroy, inverse_of: :creator
   has_many :remote_identities, dependent: :destroy
 
   # Users blocked via brute force prevention
@@ -295,7 +297,7 @@ class User < Principal
     when :firstname_lastname then "#{firstname} #{lastname}"
     when :lastname_firstname then "#{lastname} #{firstname}"
     when :lastname_n_firstname then "#{lastname}#{firstname}"
-    when :lastname_coma_firstname then "#{lastname}, #{firstname}"
+    when :lastname_comma_firstname then "#{lastname}, #{firstname}"
     when :firstname then firstname
     when :username then login
 

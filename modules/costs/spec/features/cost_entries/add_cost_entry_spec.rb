@@ -75,6 +75,7 @@ RSpec.describe "Work Package cost fields", :js do
     # Set single value, should update suffix
     select "A", from: "cost_entry_cost_type_id"
     fill_in "cost_entry_units", with: "1"
+
     expect(page).to have_css("#cost_entry_unit_name", text: "A single")
     expect(page).to have_css("#cost_entry_costs", text: "1.00 EUR")
 
@@ -149,7 +150,9 @@ RSpec.describe "Work Package cost fields", :js do
       fill_in "cost_entry_overridden_costs", with: "55.000,55"
       click_on I18n.t(:button_save)
 
-      expect(page).to have_css("#cost_entry_costs", text: "55.000,55 EUR")
+      # Add explicit wait for the updated cost value
+      wait_for { page }.to have_css("#cost_entry_costs", text: "55.000,55 EUR")
+
       entry.reload
       expect(entry.units).to eq(1.42)
       expect(entry.costs).to eq(2.84)

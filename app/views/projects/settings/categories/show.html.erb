@@ -29,23 +29,26 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render Primer::OpenProject::PageHeader.new do |header|
     header.with_title { t(:label_work_package_category_plural) }
-    header.with_breadcrumbs([{ href: project_overview_path(@project.id), text: @project.name  },
-                               { href: project_settings_general_path(@project.id), text: I18n.t("label_project_settings") },
-                               t(:label_work_package_category_plural)
-                             ])
-  end %>
-
+    header.with_breadcrumbs(
+      [{ href: project_overview_path(@project.id), text: @project.name },
+       { href: project_settings_general_path(@project.id), text: I18n.t("label_project_settings") },
+       t(:label_work_package_category_plural)]
+    )
+  end
+%>
 
 <% if current_user.allowed_in_project?(:manage_categories, @project) %>
   <%=
     render(Primer::OpenProject::SubHeader.new) do |subheader|
-      subheader.with_action_button(scheme: :primary,
-                                   aria: { label: t(:label_work_package_category_new) },
-                                   title: t(:label_work_package_category_new),
-                                   tag: :a,
-                                   href: url_for({ controller: '/categories', action: 'new', project_id: @project })) do |button|
+      subheader.with_action_button(
+        scheme: :primary,
+        aria: { label: t(:label_work_package_category_new) },
+        title: t(:label_work_package_category_new),
+        tag: :a,
+        href: url_for({ controller: "/categories", action: "new", project_id: @project })
+      ) do |button|
         button.with_leading_visual_icon(icon: :plus)
-        t('activerecord.models.category')
+        t("activerecord.models.category")
       end
     end
   %>
@@ -87,18 +90,18 @@ See COPYRIGHT and LICENSE files for more details.
           <% for category in @project.categories %>
             <% unless category.new_record? %>
               <tr>
-                <td><%=h(category.name) %></td>
-                <td><%=h(category.assigned_to.name) if category.assigned_to %></td>
+                <td><%= h(category.name) %></td>
+                <td><%= h(category.assigned_to.name) if category.assigned_to %></td>
                 <td class="buttons">
-                  <%= link_to_if_authorized '',
-                                            { controller: '/categories', action: 'edit', id: category },
-                                            class: 'icon icon-edit',
+                  <%= link_to_if_authorized "",
+                                            { controller: "/categories", action: "edit", id: category },
+                                            class: "icon icon-edit",
                                             title: t(:button_edit) %>
-                  <%= link_to_if_authorized '',
-                                            { controller: '/categories', action: 'destroy', id: category },
+                  <%= link_to_if_authorized "",
+                                            { controller: "/categories", action: "destroy", id: category },
                                             data: { confirm: t(:text_are_you_sure) },
                                             method: :delete,
-                                            class: 'icon icon-delete',
+                                            class: "icon icon-delete",
                                             title: t(:button_delete) %>
                 </td>
               </tr>
@@ -111,7 +114,7 @@ See COPYRIGHT and LICENSE files for more details.
   </div>
 <% else %>
   <%= no_results_box action_url: new_project_category_path(@project),
-                     display_action: authorize_for('categories', 'new'),
-                     custom_title: t('projects.settings.categories.no_results_title_text'),
-                     custom_action_text: t('projects.settings.categories.no_results_content_text') %>
+                     display_action: authorize_for("categories", "new"),
+                     custom_title: t("projects.settings.categories.no_results_title_text"),
+                     custom_action_text: t("projects.settings.categories.no_results_content_text") %>
 <% end %>

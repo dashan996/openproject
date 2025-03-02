@@ -254,4 +254,37 @@ RSpec.describe WorkPackage do
       end
     end
   end
+
+  # The combination is speced because it is implemented in a non trivial way.
+  describe "#relations.visible" do
+    let!(:user) { create(:user) }
+    let!(:view_work_packages_role) { create(:project_role, permissions: %i[view_work_packages]) }
+    let!(:no_permission_role) { create(:project_role, permissions: %i[]) }
+    let!(:sharing_role) { create(:work_package_role, permissions: %i[view_work_packages]) }
+
+    let!(:visible_project) { create(:project, members: { user => view_work_packages_role }) }
+    let!(:invisible_project) { create(:project, members: { user => no_permission_role }) }
+
+    let!(:origin) { create(:work_package, project: visible_project) }
+    let!(:visible_work_package) { create(:work_package, project: visible_project) }
+    let!(:another_visible_work_package) { create(:work_package, project: visible_project) }
+    let!(:invisible_work_package) { create(:work_package, project: invisible_project) }
+    let!(:other_work_package) { create(:work_package, project: visible_project) }
+    let!(:shared_work_package) do
+      create(:work_package, project: invisible_project) do |wp|
+        create(:work_package_member, entity: wp, user: user, roles: [sharing_role])
+      end
+    end
+
+    let!(:visible_relation) { create(:relation, from: origin, to: visible_work_package) }
+    let!(:inverted_visible_relation) { create(:relation, to: origin, from: another_visible_work_package) }
+    let!(:invisible_relation) { create(:relation, from: origin, to: invisible_work_package) }
+    let!(:shared_relation) { create(:relation, from: origin, to: shared_work_package) }
+    let!(:other_relation) { create(:relation, from: other_work_package, to: visible_work_package) }
+
+    it "returns all relations from the called on work package visible to the user" do
+      expect(origin.relations.visible(user))
+        .to contain_exactly(visible_relation, inverted_visible_relation, shared_relation)
+    end
+  end
 end

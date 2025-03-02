@@ -4,7 +4,7 @@
       id: "add-work-package-to-meeting-form",
       model: @meeting_agenda_item,
       method: :post,
-      url: work_package_meeting_agenda_items_path(@work_package),
+      url: work_package_meeting_agenda_items_path(@work_package)
     ) do |f|
       flex_layout(mb: 3) do |flex|
         flex.with_row do
@@ -13,7 +13,7 @@
           end
         end
         flex.with_row do
-          render(MeetingAgendaItem::MeetingForm.new(f, wrapper_id: 'add-work-package-to-meeting-dialog'))
+          render(MeetingAgendaItem::MeetingForm.new(f, wrapper_id: "add-work-package-to-meeting-dialog"))
         end
         flex.with_row(mt: 3) do
           render(MeetingAgendaItem::Notes.new(f))

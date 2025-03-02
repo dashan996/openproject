@@ -107,7 +107,7 @@ RSpec.describe Users::HoverCardComponent, type: :component do
 
     context "with the user being member of many groups" do
       let(:groups) do
-        Array.new(8) { create(:group, members: user) }
+        ("A".."H").map { |char| create(:group, lastname: "Group #{char}", members: user) }
       end
 
       it "lists some group names with truncation" do

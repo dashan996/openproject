@@ -4,32 +4,31 @@ es:
     description: "Añade proveedores de estrategia OmniAuth OpenID Connect a OpenProject."
   logout_warning: >
     Se ha cerrado la sesión. Puede que se haya perdido el contenido de cualquier formulario que haya enviado. [Inicie la sesión].
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
-        name: Nombre
-        slug: Identificador único
-        display_name: Nombre para mostrar
-        client_id: ID de cliente
-        client_secret: Secreto del cliente
-        secret: Secreto
-        scope: Ámbito
-        grant_types_supported: Tipos de concesiones admitidos
-        limit_self_registration: Limitar autorregistro
-        authorization_endpoint: Terminal de autorización
-        userinfo_endpoint: Terminal de información de usuario
-        token_endpoint: Terminal de token
-        end_session_endpoint: Terminal de finalización de sesión
-        post_logout_redirect_uri: URI de redirección tras el cierre de sesión
-        jwks_uri: URI de JWKS
-        issuer: Emisor
+        name: Name
+        slug: Unique identifier
+        display_name: Display name
+        client_id: Client ID
+        client_secret: Client secret
+        secret: Secret
+        scope: Scope
+        grant_types_supported: Supported grant types
+        limit_self_registration: Limit self registration
+        authorization_endpoint: Authorization endpoint
+        userinfo_endpoint: User information endpoint
+        token_endpoint: Token endpoint
+        end_session_endpoint: End session endpoint
+        post_logout_redirect_uri: Post logout redirect URI
+        jwks_uri: JWKS URI
+        issuer: Issuer
         tenant: Tenant
-        metadata_url: URL de metadatos
-        icon: Icono personalizado
-        claims: Reclamaciones
-        acr_values: Valores ACR
-        redirect_url: URL de redirección
-  activerecord:
+        metadata_url: Metadata URL
+        icon: Custom icon
+        claims: Claims
+        acr_values: ACR values
+        redirect_url: Redirect URL
     errors:
       models:
         openid_connect/provider:

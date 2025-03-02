@@ -44,15 +44,15 @@ See COPYRIGHT and LICENSE files for more details.
 
   <% if @results.present? %>
 
-    <%= render partial: 'pagination', locals: {pagination_previous_date: @pagination_previous_date, pagination_next_date: @pagination_next_date } %>
+    <%= render partial: "pagination", locals: { pagination_previous_date: @pagination_previous_date, pagination_next_date: @pagination_next_date } %>
 
     <dl id="search-results">
       <% @results.each do |e| %>
         <dt class="<%= e.event_type %>">
 
-          <% event_type = e.event_type == 'meeting' ? 'meetings' : e.event_type %>
-          <% event_type = e.event_type == 'budget' ? 'budget' : event_type %>
-          <% event_type = e.event_type == 'reply' ? 'forums' : event_type %>
+          <% event_type = e.event_type == "meeting" ? "meetings" : e.event_type %>
+          <% event_type = "budget" if e.event_type == "budget" %>
+          <% event_type = "forums" if e.event_type == "reply" %>
           <%= icon_wrapper("icon-context icon-#{event_type}", e.event_name) %>
 
           <% if e.project != @project %>
@@ -72,5 +72,5 @@ See COPYRIGHT and LICENSE files for more details.
   <% end %>
 <% end %>
 
-<%= render partial: 'pagination', locals: {pagination_previous_date: @pagination_previous_date, pagination_next_date: @pagination_next_date } unless params[:work_packages].present? %>
+<%= render partial: "pagination", locals: { pagination_previous_date: @pagination_previous_date, pagination_next_date: @pagination_next_date } if params[:work_packages].blank? %>
 <% html_title(t(:label_search)) -%>

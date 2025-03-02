@@ -28,19 +28,20 @@ See COPYRIGHT and LICENSE files for more details.
 ++#%>
 
 <%=
-  render(Primer::OpenProject::DangerDialog.new(
-    id: "recurring-meetings-end-series-dialog",
-    confirm_button_text: I18n.t(:label_recurring_meeting_series_end_now),
-    title: I18n.t("recurring_meeting.end_series_dialog.title"),
-    form_arguments: {
-      action: end_series_recurring_meeting_path(@series),
-      method: :post
-    }
-  )) do |dialog|
+  render(
+    Primer::OpenProject::DangerDialog.new(
+      id: "recurring-meetings-end-series-dialog",
+      confirm_button_text: I18n.t(:label_recurring_meeting_series_end_now),
+      title: I18n.t("recurring_meeting.end_series_dialog.title"),
+      form_arguments: {
+        action: end_series_project_recurring_meeting_path(@project, @series),
+        method: :post
+      }
+    )
+  ) do |dialog|
     dialog.with_confirmation_message do |message|
       message.with_heading(tag: :h2) { I18n.t(:text_meeting_series_end_early_heading) }
       message.with_description_content(I18n.t(:text_meeting_series_end_early))
-
     end
 
     dialog.with_confirmation_check_box_content(I18n.t("text_permanent_delete_confirmation_checkbox_label"))

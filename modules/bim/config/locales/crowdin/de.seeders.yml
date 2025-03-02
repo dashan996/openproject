@@ -254,33 +254,33 @@ de:
                 item_0:
                   subject: Entwicklung des ersten Entwurfs
                   description: |-
-                    ## Ziel
+                    ## Goal
 
-                    * Erstellen Sie einen nützlichen Überblick über die Ergebnisse
-                    * Prüfen Sie, was getan wurde, und fassen Sie die Ergebnisse
-                    * Vermitteln Sie alle relevanten Ergebnisse mit dem Kunden
-                    * Identifizieren Sie die grundlegenden Randbedingungen des Projekts
+                    *   Create a useful overview of the results
+                    *   Check what has been done and summarize the results
+                    *   Communicate all the relevant results with the customer
+                    *   Identify the fundamental boundary conditions of the project
 
-                    ## Beschreibung
+                    ## Description
 
-                    * Jedes Thema erhält eine eigene Übersicht, die als Ergebniskatalog
-                    * Diese Übersicht informiert alle Teilnehmer über die getroffenen Entscheidungen
-                    * ...
+                    *   Each topic gets its own overview which will be used as a catalogue of results
+                    *   This overview informs all participants about the decisions made
+                    *   ...
                 item_1:
                   subject: Ergebnisse zusammenfassen
                   description: |-
-                    ## Ziel
+                    ## Goal
 
-                    * Erstellen Sie einen nützlichen Überblick über die Ergebnisse
-                    * Prüfen Sie, was getan wurde, und fassen Sie die Ergebnisse
-                    * Vermitteln Sie alle relevanten Ergebnisse mit dem Kunden
-                    * Identifizieren Sie die grundlegenden Randbedingungen des Projekts
+                    *   Create a useful overview of the results
+                    *   Check what has been done and summarize the results
+                    *   Communicate all the relevant results with the customer
+                    *   Identify the fundamental boundary conditions of the project
 
-                    ## Beschreibung
+                    ## Description
 
-                    * Jedes Thema erhält eine eigene Übersicht, die als Ergebniskatalog
-                    * Diese Übersicht informiert alle Teilnehmer über die getroffenen Entscheidungen
-                    * ...
+                    *   Each topic gets its own overview which will be used as a catalogue of results
+                    *   This overview informs all participants about the decisions made
+                    *   ...
             item_3:
               subject: Weitergabe der Vorplanung
               description: Dieser Typ ist hierarchisch ein Elternteil der Typen &quot;Konflikt&quot; und &quot;Anfrage&quot;, stellt also eine allgemeine Notiz dar.

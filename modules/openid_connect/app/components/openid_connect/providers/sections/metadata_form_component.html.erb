@@ -6,9 +6,9 @@
     data: {
       controller: "show-when-value-selected",
       turbo: true,
-      turbo_stream: true,
+      turbo_stream: true
     },
-    method: :put,
+    method: :put
   ) do |form|
     flex_layout do |flex|
       unless edit_mode
@@ -20,15 +20,15 @@
       end
 
       flex.with_row do
-        render(Primer::Beta::Text.new(tag: :p, font_weight: :bold)) {
+        render(Primer::Beta::Text.new(tag: :p, font_weight: :bold)) do
           I18n.t("openid_connect.providers.label_metadata")
-        }
+        end
       end
 
       flex.with_row do
-        render(Primer::Beta::Text.new(tag: :p)) {
-           I18n.t("openid_connect.providers.section_texts.metadata_form_description")
-        }
+        render(Primer::Beta::Text.new(tag: :p)) do
+          I18n.t("openid_connect.providers.section_texts.metadata_form_description")
+        end
       end
 
       flex.with_row do
@@ -38,18 +38,21 @@
       flex.with_row(
         mt: 2,
         hidden: provider.metadata_url.blank?,
-        data: { value: :url, 'show-when-value-selected-target': "effect" }
+        data: { value: :url, "show-when-value-selected-target": "effect" }
       ) do
         render(OpenIDConnect::Providers::MetadataUrlForm.new(form, provider:))
       end
 
       flex.with_row(mt: 4) do
-        render(OpenIDConnect::Providers::SubmitOrCancelForm.new(
-          form,
-          provider:,
-          submit_button_options: { label: button_label },
-          cancel_button_options: { hidden: edit_mode },
-          state: :metadata))
+        render(
+          OpenIDConnect::Providers::SubmitOrCancelForm.new(
+            form,
+            provider:,
+            submit_button_options: { label: button_label },
+            cancel_button_options: { hidden: edit_mode },
+            state: :metadata
+          )
+        )
       end
     end
   end

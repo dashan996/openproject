@@ -91,7 +91,7 @@ class Redmine::MenuManager::TreeNode < Tree::TreeNode
   end
 
   # Will return the position (zero-based) of the current child in
-  # it's parent
+  # its parent
   def position
     parent.children.index(self)
   end

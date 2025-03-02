@@ -1,7 +1,11 @@
 <%=
-  unless deferred
+  if deferred
+    render(
+      WorkPackages::ActivitiesTab::Journals::IndexComponent.new(work_package:, filter:, deferred:)
+    )
+  else
     content_tag("turbo-frame", id: "work-package-activities-tab-content") do
-      flex_layout(classes: "work-packages-activities-tab-index-component", mb: [5, 5, 5, 5, 0]) do |activties_tab_wrapper_container|
+      flex_layout(classes: "work-packages-activities-tab-index-component") do |activties_tab_wrapper_container|
         activties_tab_wrapper_container.with_row(classes: "work-packages-activities-tab-index-component--errors") do
           render(
             WorkPackages::ActivitiesTab::ErrorStreamComponent.new
@@ -18,7 +22,7 @@
                   )
                 )
               end
-              activties_tab_container.with_row(flex_layout: true, mt: 3) do |journals_wrapper_container|
+              activties_tab_container.with_row(flex_layout: true, classes: "work-packages-activities-tab-index-component--content-container", mt: 3) do |journals_wrapper_container|
                 journals_wrapper_container.with_row(
                   classes: "work-packages-activities-tab-index-component--journals-container work-packages-activities-tab-index-component--journals-container_with-initial-input-compensation",
                   data: { "work-packages--activities-tab--index-target": "journalsContainer" }
@@ -30,10 +34,8 @@
                 if adding_comment_allowed?
                   journals_wrapper_container.with_row(
                     classes: "work-packages-activities-tab-index-component--input-container work-packages-activities-tab-index-component--input-container_sort-#{journal_sorting}",
-                    mt: 3,
-                    pt: 2,
-                    pb: 2,
-                    pl: 3,
+                    px: 2,
+                    py: 3,
                     bg: :subtle
                   ) do
                     render(
@@ -47,9 +49,5 @@
         end
       end
     end
-  else
-    render(
-      WorkPackages::ActivitiesTab::Journals::IndexComponent.new(work_package:, filter:, deferred:)
-    )
   end
 %>

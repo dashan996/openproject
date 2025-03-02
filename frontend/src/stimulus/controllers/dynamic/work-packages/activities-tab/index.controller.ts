@@ -516,7 +516,12 @@ export default class IndexController extends Controller {
     this.onSubmitBound = () => { void this.onSubmit(); };
     this.adjustMarginBound = () => { void this.adjustJournalContainerMargin(); };
     this.onBlurEditorBound = () => { void this.onBlurEditor(); };
-    this.onFocusEditorBound = () => { void this.onFocusEditor(); };
+    this.onFocusEditorBound = () => {
+      void this.onFocusEditor();
+      if (this.isMobile()) {
+        void this.scrollInputContainerIntoView(200);
+      }
+    };
 
     const editorElement = this.getCkEditorElement();
     if (editorElement) {
@@ -569,21 +574,14 @@ export default class IndexController extends Controller {
     }
   }
 
-  private scrollInputContainerIntoView(timeout:number = 0) {
+  private scrollInputContainerIntoView(timeout:number = 0, behavior:ScrollBehavior = 'smooth') {
     const inputContainer = this.getInputContainer() as HTMLElement;
     setTimeout(() => {
       if (inputContainer) {
-        if (this.sortingValue === 'desc') {
-          inputContainer.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-          });
-        } else {
-          inputContainer.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-          });
-        }
+        inputContainer.scrollIntoView({
+          behavior,
+          block: this.sortingValue === 'desc' ? 'nearest' : 'start',
+        });
       }
     }, timeout);
   }
@@ -598,9 +596,7 @@ export default class IndexController extends Controller {
     this.addEventListenersToCkEditorInstance();
 
     if (this.isMobile()) {
-      // timeout amount tested on mobile devices for best possible user experience
-      this.scrollInputContainerIntoView(100); // first bring the input container fully into view (before focusing!)
-      this.focusEditor(400); // wait before focusing to avoid interference with the auto scroll
+      this.focusEditor(0);
     } else if (this.sortingValue === 'asc' && journalsContainerAtBottom) {
       // scroll to (new) bottom if sorting is ascending and journals container was already at bottom before showing the form
       this.scrollJournalContainer(true);
@@ -620,18 +616,39 @@ export default class IndexController extends Controller {
   quote(event:Event) {
     event.preventDefault();
     const target = event.currentTarget as HTMLElement;
+    const userId = target.dataset.userIdParam as string;
     const userName = target.dataset.userNameParam as string;
+    const textWrote = target.dataset.textWroteParam as string;
     const content = target.dataset.contentParam as string;
 
-    this.openEditorWithInitialData(this.quotedText(content, userName));
+    const quotedText = this.quotedText(content, userId, userName, textWrote);
+    const formVisible = !this.formRowTarget.classList.contains('d-none');
+    if (formVisible) {
+      this.insertQuoteOnExistingEditor(quotedText);
+    } else {
+      this.openEditorWithInitialData(quotedText);
+    }
   }
 
-  private quotedText(rawComment:string, userName:string) {
+  private quotedText(rawComment:string, userId:string, userName:string, textWrote:string) {
     const quoted = rawComment.split('\n')
       .map((line:string) => `\n> ${line}`)
       .join('');
 
-    return `${userName}\n${quoted}`;
+    // if we ever change CKEditor or how @mentions work this will break
+    return `<mention class="mention" data-id="${userId}" data-type="user" data-text="@${userName}">@${userName}</mention> ${textWrote}:\n\n${quoted}`;
+  }
+
+  insertQuoteOnExistingEditor(quotedText:string) {
+    const ckEditorInstance = this.getCkEditorInstance();
+    if (ckEditorInstance) {
+      const editorData = ckEditorInstance.getData({ trim: false });
+      if (editorData.endsWith('<br>') || editorData.endsWith('\n')) {
+        ckEditorInstance.setData(`${editorData}${quotedText}`);
+      } else {
+        ckEditorInstance.setData(`${editorData}\n\n${quotedText}`);
+      }
+    }
   }
 
   openEditorWithInitialData(quotedText:string) {
@@ -688,11 +705,11 @@ export default class IndexController extends Controller {
   }
 
   async onSubmit(event:Event | null = null) {
+    event?.preventDefault();
+
     if (this.saveInProgress === true) return;
 
     this.setFormSubmitInProgress(true);
-
-    event?.preventDefault();
 
     const formData = this.prepareFormData();
     void this.submitForm(formData)

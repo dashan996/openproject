@@ -57,8 +57,8 @@ RSpec.describe "Datepicker logic on follow relationships", :js, with_settings: {
       # Wait for the datepicker to be initialized
       datepicker.expect_visible
 
-      datepicker.expect_ignore_non_working_days false
-      datepicker.expect_scheduling_mode false
+      datepicker.expect_working_days_only true
+      datepicker.expect_automatic_scheduling_mode
 
       datepicker.show_date "2024-02-05"
       datepicker.expect_disabled Date.parse("2024-02-05")
@@ -67,9 +67,9 @@ RSpec.describe "Datepicker logic on follow relationships", :js, with_settings: {
       datepicker.expect_disabled Date.parse("2024-02-02")
       datepicker.expect_disabled Date.parse("2024-02-01")
 
-      datepicker.toggle_ignore_non_working_days
-      datepicker.expect_ignore_non_working_days true
-      datepicker.show_date "2024-02-05"
+      datepicker.toggle_working_days_only
+      datepicker.expect_working_days_only false
+
       datepicker.expect_disabled Date.parse("2024-02-05")
       datepicker.expect_disabled Date.parse("2024-02-04")
       datepicker.expect_disabled Date.parse("2024-02-03")
@@ -79,7 +79,7 @@ RSpec.describe "Datepicker logic on follow relationships", :js, with_settings: {
   end
 
   context "if the follower is a task" do
-    let!(:follower) { create(:work_package, type:, project:) }
+    let!(:follower) { create(:work_package, type:, project:, schedule_manually: false) }
     let!(:relation) { create(:follows_relation, from: follower, to: predecessor) }
     let(:date_field) { work_packages_page.edit_field(:combinedDate) }
 
@@ -87,7 +87,7 @@ RSpec.describe "Datepicker logic on follow relationships", :js, with_settings: {
   end
 
   context "if the follower is a milestone" do
-    let!(:follower) { create(:work_package, type: milestone_type, project:) }
+    let!(:follower) { create(:work_package, type: milestone_type, project:, schedule_manually: false) }
     let!(:relation) { create(:follows_relation, from: follower, to: predecessor) }
     let(:date_field) { work_packages_page.edit_field(:date) }
 

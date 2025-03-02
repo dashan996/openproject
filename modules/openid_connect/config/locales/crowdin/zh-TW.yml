@@ -4,14 +4,14 @@ zh-TW:
     description: "新增 OmniAuth OpenID 連線部署提供商至 OpenProject。"
   logout_warning: >
     你已被登出，你嘗試送出的內容可能都會遺失。請登入。
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
         name: 名稱
         slug: 唯一識別碼
         display_name: 顯示名稱
         client_id: 客戶端 ID
-        client_secret: 用戶端密鑰
+        client_secret: 客戶端金鑰
         secret: 金鑰
         scope: 範圍
         grant_types_supported: 支援授權類型
@@ -22,14 +22,13 @@ zh-TW:
         end_session_endpoint: 結束會話端點
         post_logout_redirect_uri: 登出後重定向 URI
         jwks_uri: JWKS URI
-        issuer: 簽發者
+        issuer: 發行者
         tenant: 租用戶
         metadata_url: 後設資料 URL
         icon: 自訂圖示
         claims: 要求
         acr_values: ACR 值
         redirect_url: 重新導向網址
-  activerecord:
     errors:
       models:
         openid_connect/provider:

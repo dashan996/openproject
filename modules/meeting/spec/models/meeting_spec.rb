@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -32,7 +33,7 @@ RSpec.describe Meeting do
   shared_let (:user1) { create(:user) }
   shared_let (:user2) { create(:user) }
   let(:project) { create(:project, members: project_members) }
-  let(:meeting) { create(:meeting, project:, author: user1) }
+  let(:meeting) { create(:meeting, :author_participates, project:, author: user1) }
   let(:agenda) do
     meeting.create_agenda text: "Meeting Agenda text"
     meeting.reload_agenda # avoiding stale object errors
@@ -228,6 +229,18 @@ RSpec.describe Meeting do
       expect(meeting).not_to be_valid
       expect(meeting.errors[:duration]).to include("is not a number.")
       expect(meeting.formatted_duration).to be_nil
+    end
+  end
+
+  describe "#destroy" do
+    context "with an attachment" do
+      let!(:meeting) { create(:meeting, project: project) }
+      let!(:attachment) { create(:attachment, container: meeting) }
+
+      it "does not raise an exception (Regression #61632)" do
+        expect { meeting.destroy! }.not_to raise_error
+        expect { meeting.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 end

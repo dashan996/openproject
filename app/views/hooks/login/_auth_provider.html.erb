@@ -31,8 +31,8 @@ See COPYRIGHT and LICENSE files for more details.
   <%
     opts = { script_name: OpenProject::Configuration.rails_relative_url_root }
 
-    if params['back_url']
-      opts[:origin] = params['back_url']
+    if params["back_url"]
+      opts[:origin] = params["back_url"]
     end
   %>
   <a href="<%= omni_auth_start_path(:developer, opts) %>" class="auth-provider auth-provider-developer button">

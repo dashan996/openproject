@@ -118,7 +118,7 @@ module Costs
       # Menu extensions
       menu :admin_menu,
            :admin_costs,
-           { controller: "/costs_settings", action: :show },
+           { controller: "/admin/costs_settings", action: :show },
            if: Proc.new { User.current.admin? },
            caption: :project_module_costs,
            after: :enterprise,
@@ -126,17 +126,24 @@ module Costs
 
       menu :admin_menu,
            :costs_settings,
-           { controller: "/costs_settings", action: :show },
+           { controller: "/admin/costs_settings", action: :show },
            if: Proc.new { User.current.admin? },
-           caption: :label_setting_plural,
+           caption: :label_defaults,
            parent: :admin_costs
 
       menu :admin_menu,
            :cost_types,
-           { controller: "/cost_types", action: "index" },
+           { controller: "/admin/cost_types", action: :index },
            if: ->(*) { User.current.admin? },
            parent: :admin_costs,
            caption: :label_cost_type_plural
+
+      menu :admin_menu,
+           :time_entry_activities,
+           { controller: "/admin/settings/time_entry_activities", action: :index },
+           if: ->(*) { User.current.admin? },
+           parent: :admin_costs,
+           caption: :enumeration_activities
     end
 
     initializer "costs.settings" do

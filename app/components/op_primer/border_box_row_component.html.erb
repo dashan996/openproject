@@ -31,8 +31,9 @@ See COPYRIGHT and LICENSE files for more details.
   render Primer::BaseComponent.new(
     tag: :div,
     id: row_css_id,
-    classes: "#{table.grid_class} #{row_css_class}",
-  ) do %>
+    classes: "#{table.grid_class} #{row_css_class}"
+  ) do
+%>
   <% columns.each do |column| %>
     <%= render(Primer::BaseComponent.new(tag: :div, classes: grid_column_classes(column), **column_args(column))) do %>
       <% label = mobile_label(column) %>

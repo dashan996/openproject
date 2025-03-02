@@ -56,7 +56,10 @@ cs:
         frequency: "Frekvence"
         interval: "Interval"
         start_date: "Začíná v"
+        start_time: "Start time"
+        start_time_hour: "Start time"
         end_after: "Řada schůzek končí"
+        end_date: "End date"
         iterations: "Výskyty"
     errors:
       messages:
@@ -64,6 +67,7 @@ cs:
     models:
       recurring_meeting: "Opakovaná schůzka"
       structured_meeting: "Jednorázová schůzka"
+      meeting: "Meeting"
       meeting_agenda_item: "Pořad jednání"
       meeting_agenda: "Agenda"
       meeting_minutes: "Zápis"
@@ -119,7 +123,7 @@ cs:
   label_template: "Šablona"
   label_recurring_meeting_view: "Zobrazit sérii schůzek"
   label_recurring_meeting_create: "Otevřít"
-  label_recurring_meeting_copy: "Kopírovat jako jednorázový"
+  label_recurring_meeting_copy: "Copy as one-time"
   label_recurring_meeting_cancel: "Zrušit toto opakování"
   label_recurring_meeting_delete: "Odstranit výskyt"
   label_recurring_meeting_restore: "Obnovit tento výskyt"
@@ -182,15 +186,29 @@ cs:
         Send an email invitation immediately to the participants selected above. You can also do this manually at any time later.
       send_invitation_emails_structured: "Send an email invitation immediately to all participants. You can also do this manually at any time later."
       open_meeting_link: "Otevřít schůzku"
+      open_my_meetings_link: "Go to My meetings"
       series:
-        title: "[%{project_name}] Setkání řady %{title}"
-        summary: "%{actor} has set up a new meeting series %{title}"
+        title: "[%{project_name}] Meeting series '%{title}'"
+        summary: "%{actor} has set up a new meeting series '%{title}'"
+      series_rescheduled:
+        title: "[%{project_name}] Meeting series '%{title}' rescheduled"
+        summary: "%{actor} has changed the schedule for meeting series '%{title}'"
+        old_schedule: "Old schedule"
+        new_schedule: "New schedule"
       invited:
-        summary: "%{actor} vám poslal pozvánku na schůzku %{title}"
+        summary: "%{actor} has sent you an invitation for the meeting '%{title}'"
+      cancelled:
+        header: "Cancelled: Meeting '%{title}'"
+        header_occurrence: "Cancelled: Meeting occurrence '%{title}'"
+        header_series: "Cancelled: Meeting series '%{title}'"
+        summary_occurrence: "An occurrence of '%{title}' has been cancelled by %{actor}."
+        summary_series: "Meeting series '%{title}' has been cancelled by %{actor}."
+        summary: "'%{title}' has been cancelled by %{actor}."
+        date_time: "Scheduled date/time"
       rescheduled:
-        header: "Schůzka %{title} byla přeplánována"
-        summary: "Schůzka %{title} byla přeplánována %{actor}"
-        body: "Schůzka %{title} byla přeplánována %{actor}"
+        header: "Meeting '%{title}' has been rescheduled"
+        summary: "Meeting '%{title}' has been rescheduled by %{actor}"
+        body: "The meeting '%{title}' has been rescheduled by %{actor}."
         old_date_time: "Staré datum/čas"
         new_date_time: "Nové datum/čas"
     label_mail_all_participants: "Poslat e-mail všem účastníkům"
@@ -211,10 +229,11 @@ cs:
         confirmation_message_html: >
           This action is not reversible. Please proceed with caution.
       occurrence:
-        title: "Odstranit výskyt schůzky"
-        heading: "Smazat tento výskyt schůzky?"
+        title: "Cancel meeting occurrence"
+        heading: "Cancel this meeting occurrence?"
         confirmation_message_html: >
-          This meeting is part of a series called <strong>%{title}</strong>. This will only delete this particular occurrence and not the entire series. Do you want to continue?
+          Any meeting information not in the template will be lost. Do you want to continue?
+        confirm_button: "Cancel occurrence"
     blankslate:
       title: "No meetings to display"
       desc: "There are no meetings that meet the active filter criteria."
@@ -235,7 +254,7 @@ cs:
       first_created: >
         The first meeting has been successfuly created from template. All future meetings will be created automatically at the time of the previous occurrence.
     template:
-      button_finalize: "Dokončit šablonu"
+      button_finalize: "Open first meeting"
       blank_title: "Vaše šablona série schůzek je prázdná"
       description: >
         This template will be used whenever new meetings in the series get created. You can add agenda items, participants, and attachments to this template.
@@ -246,10 +265,18 @@ cs:
       banner_html: >
         You are currently editing a template of a meeting series: %{link}. Every new occurrence of a meeting in the series will use this template. Changes will not affect past or already created meetings.
     frequency:
+      x_daily:
+        one: "Every day"
+        few: "Every %{count} days"
+        many: "Every %{count} days"
+        other: "Every %{count} days"
+      x_weekly:
+        one: "Every week"
+        few: "Every %{count} weeks"
+        many: "Every %{count} weeks"
+        other: "Every %{count} weeks"
       every_weekday: "Každý %{day_of_the_week}"
-      daily: "Denně"
       working_days: "Každý pracovní den"
-      weekly: "Týdně"
     end_after:
       never: "nikdy"
       specific_date: "po určitém datu"
@@ -284,11 +311,11 @@ cs:
       heading: "Trvale smazat tuto sérii schůzek?"
       confirmation_message_html:
         zero: >
-          Deleting <strong>%{title}</strong> will delete any meetings in this series. This action is not reversible. Please proceed with caution.
+          The meeting series <strong>%{title}</strong> does not have any meeting occurrences. The series will be deleted for everyone. Please proceed with caution.
         one: >
-          Deleting <strong>%{title}</strong> will also delete one meeting in this series. This action is not reversible. Please proceed with caution.
+          Deleting <strong>%{title}</strong> will also delete one occurrence in this series. This action is not reversible. Please proceed with caution.
         other: >
-          Deleting <strong>%{title}</strong> will delete all %{count} meetings in this series. This action is not reversible. Please proceed with caution.
+          Deleting <strong>%{title}</strong> will delete all %{count} occurrences in this series. This action is not reversible. Please proceed with caution.
     scheduled_delete_dialog:
       title: "Zrušit výskyt schůzky"
       heading: "Zrušit výskyt schůzky"

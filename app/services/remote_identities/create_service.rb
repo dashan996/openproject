@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -30,21 +32,21 @@ module RemoteIdentities
   class CreateService
     attr_reader :user, :model
 
-    def self.call(user:, oauth_config:, oauth_token:)
-      new(user:, oauth_config:, oauth_token:).call
+    def self.call(user:, oauth_config:, oauth_client_token:)
+      new(user:, oauth_config:, oauth_client_token:).call
     end
 
-    def initialize(user:, oauth_config:, oauth_token:)
+    def initialize(user:, oauth_config:, oauth_client_token:)
       @user = user
       @oauth_config = oauth_config
-      @oauth_token = oauth_token
+      @oauth_client_token = oauth_client_token
 
       @model = RemoteIdentity.find_or_initialize_by(user:, oauth_client: oauth_config.oauth_client)
       @result = ServiceResult.success(result: @model, errors: @model.errors)
     end
 
     def call
-      @model.origin_user_id = @oauth_config.extract_origin_user_id(@oauth_token)
+      @model.origin_user_id = @oauth_config.extract_origin_user_id(@oauth_client_token)
       if @model.save
         emit_event(@oauth_config.oauth_client.integration)
       else

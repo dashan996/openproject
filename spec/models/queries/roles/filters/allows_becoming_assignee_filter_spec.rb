@@ -35,6 +35,7 @@ RSpec.describe Queries::Roles::Filters::AllowsBecomingAssigneeFilter do
     let(:class_key) { :allows_becoming_assignee }
     let(:type) { :list }
     let(:model) { Role }
+    let(:human_name) { "Allows becoming assignee" }
   end
 
   it_behaves_like "boolean query filter", scope: false do

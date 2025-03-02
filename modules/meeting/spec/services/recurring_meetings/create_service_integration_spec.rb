@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -40,6 +42,31 @@ RSpec.describe RecurringMeetings::CreateService, "integration", type: :model do
 
   subject { instance.call(**params) }
 
+  shared_examples "creates the series" do
+    it "creates the series and template" do
+      expect(service_result).to be_success
+      expect(series).to be_persisted
+
+      expect(series.template).to be_a(StructuredMeeting)
+      expect(series.template).to be_template
+
+      expect(series.meetings.count).to eq(1)
+      expect(series.meetings.first).to be_template
+    end
+  end
+
+  describe "project" do
+    context "when not provided" do
+      let(:params) { { title: "foo" } }
+
+      it "complains about the project, not the base authorization" do
+        expect(subject).not_to be_success
+        expect(subject.errors[:base]).to be_empty
+        expect(subject.errors[:project_id]).to contain_exactly "can't be blank."
+      end
+    end
+  end
+
   context "with a daily schedule" do
     let(:first_start) { Time.zone.tomorrow + 10.hours }
     let(:params) do
@@ -54,16 +81,7 @@ RSpec.describe RecurringMeetings::CreateService, "integration", type: :model do
       }
     end
 
-    it "creates the series and template" do
-      expect(service_result).to be_success
-      expect(series).to be_persisted
-
-      expect(series.template).to be_a(StructuredMeeting)
-      expect(series.template).to be_template
-
-      expect(series.meetings.count).to eq(1)
-      expect(series.meetings.first).to be_template
-    end
+    it_behaves_like "creates the series"
 
     context "when the template cannot be saved" do
       let(:template) { StructuredMeeting.new }
@@ -76,6 +94,51 @@ RSpec.describe RecurringMeetings::CreateService, "integration", type: :model do
       it "does not create the series" do
         expect { subject }.not_to have_enqueued_job(RecurringMeetings::InitNextOccurrenceJob)
         expect(service_result).not_to be_success
+        expect(series).to be_new_record
+      end
+    end
+  end
+
+  describe "start time constraints" do
+    let(:params) do
+      {
+        start_time:,
+        frequency: "daily",
+        interval: 1,
+        end_after: "never",
+        project:,
+        title: "My daily"
+      }
+    end
+
+    context "when start_time is today, but in the past" do
+      let(:start_time) { 1.hour.ago }
+
+      it "adds a validation error for start_time_hour" do
+        expect(service_result).not_to be_success
+        expect(service_result.errors[:start_time_hour]).to include "must be in the future."
+        expect(series).to be_new_record
+      end
+    end
+
+    context "when start_time is today, but in the future" do
+      let(:start_time) { 1.hour.from_now }
+
+      it_behaves_like "creates the series"
+    end
+
+    context "when start_time is tomorrow" do
+      let(:start_time) { 1.day.from_now }
+
+      it_behaves_like "creates the series"
+    end
+
+    context "when start_time is yesterday" do
+      let(:start_time) { 1.day.ago }
+
+      it "adds a validation error for start_date" do
+        expect(service_result).not_to be_success
+        expect(service_result.errors[:start_date]).to include "must be in the future."
         expect(series).to be_new_record
       end
     end

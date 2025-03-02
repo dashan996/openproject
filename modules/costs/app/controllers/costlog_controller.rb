@@ -119,21 +119,21 @@ class CostlogController < ApplicationController
     @user = if @cost_entry.present? && @cost_entry.user_id == user_id
               @cost_entry.user
             else
-              User.find_by_id(user_id)
+              User.find_by(id: user_id)
             end
 
     work_package_id = cost_entry_params.delete(:work_package_id)
     @work_package = if @cost_entry.present? && @cost_entry.work_package_id == work_package_id
                       @cost_entry.work_package
                     else
-                      WorkPackage.find_by_id(work_package_id)
+                      WorkPackage.find_by(id: work_package_id)
                     end
 
     cost_type_id = cost_entry_params.delete(:cost_type_id)
     @cost_type = if @cost_entry.present? && @cost_entry.cost_type_id == cost_type_id
                    @cost_entry.cost_type
                  else
-                   CostType.find_by_id(cost_type_id)
+                   CostType.find_by(id: cost_type_id)
                  end
   end
 
@@ -142,7 +142,7 @@ class CostlogController < ApplicationController
       ce.project = @project
       ce.work_package = @work_package
       ce.user = User.current
-      ce.spent_on = Date.today
+      ce.spent_on = Time.zone.today
       # notice that cost_type is set to default cost_type in the model
     end
   end

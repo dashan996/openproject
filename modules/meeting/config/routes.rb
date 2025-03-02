@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -28,19 +29,41 @@
 
 Rails.application.routes.draw do
   resources :projects, only: %i[] do
-    resources :meetings, only: %i[index new create show destroy] do
+    resources :meetings do
       collection do
+        get :new_dialog
         get "menu" => "meetings/menus#show"
       end
+
       member do
+        get :copy
+        get :check_for_updates
+        get :cancel_edit
+        get :download_ics
+        put :update_title
+        get :details_dialog
+        put :update_details
+        get :participants_dialog
+        put :update_participants
+        put :change_state
+        post :notify
+        get :history
         get :delete_dialog
       end
     end
-    resources :recurring_meetings, only: %i[index new create show destroy] do
+
+    resources :recurring_meetings do
       member do
+        get :details_dialog
+        get :download_ics
         get :delete_dialog
         get :delete_scheduled_dialog
+        post :init
         delete :destroy_scheduled
+        post :template_completed
+        post :notify
+        post :end_series
+        get :end_series_dialog
       end
     end
   end
@@ -61,44 +84,18 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :meetings do
-    resource :menu, only: %[show]
-  end
-
-  resources :recurring_meetings do
-    member do
-      get :details_dialog
-      get :download_ics
-      get :delete_dialog
-      get :delete_scheduled_dialog
-      post :init
-      delete :destroy_scheduled
-      post :template_completed
-      post :notify
-      post :end_series
-      get :end_series_dialog
-    end
+  resources :recurring_meetings, only: %i[index show new create] do
     collection do
       get :humanize_schedule, controller: "recurring_meetings/schedule", action: :humanize_schedule
     end
   end
 
-  resources :meetings do
-    get :new_dialog, on: :collection
-    member do
-      get :check_for_updates
-      get :cancel_edit
-      get :download_ics
-      put :update_title
-      get :details_dialog
-      put :update_details
-      get :participants_dialog
-      put :update_participants
-      put :change_state
-      post :notify
-      get :history
-      get :delete_dialog
+  resources :meetings, only: %i[index show new create] do
+    collection do
+      get :new_dialog
+      get "menu" => "meetings/menus#show"
     end
+
     resources :agenda_items, controller: "meeting_agenda_items" do
       collection do
         get :new, action: :new, as: :new
@@ -154,7 +151,6 @@ Rails.application.routes.draw do
     end
 
     member do
-      get :copy
       match "/:tab" => "meetings#show", :constraints => { tab: /(agenda|minutes)/ },
             :via => :get,
             :as => "tab"

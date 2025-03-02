@@ -36,6 +36,10 @@ class Queries::WorkPackages::Filter::RequiresFilter <
     ::Relation::TYPE_REQUIRES
   end
 
+  def human_name
+    I18n.t(:label_requires)
+  end
+
   private
 
   def relation_filter

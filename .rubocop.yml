@@ -1,17 +1,18 @@
 require:
   - rubocop-openproject
-  - rubocop-rails
-  - rubocop-rspec
   - rubocop-rspec_rails
   - rubocop-capybara
   - rubocop-factory_bot
-  - rubocop-performance
   - ./config/initializers/inflections.rb
 
-<% if File.exist?('.rubocop-local.yml') %>
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
+
+# A rubocop-local.yml file can be added to customized the styles
 inherit_from:
-  - .rubocop-local.yml
-<% end %>
+  - .rubocop-local*.yml
 
 inherit_mode:
   merge:

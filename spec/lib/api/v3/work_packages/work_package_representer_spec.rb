@@ -1233,15 +1233,13 @@ RSpec.describe API::V3::WorkPackages::WorkPackageRepresenter do
         end
 
         before do
-          scope = instance_double(ActiveRecord::Relation)
+          scope = double(ActiveRecord::Relation, # rubocop:disable RSpec/VerifiedDoubles
+                         visible: instance_double(ActiveRecord::Relation,
+                                                  includes: [relation]))
 
           allow(work_package)
-            .to receive(:visible_relations)
-                  .with(current_user)
+            .to receive(:relations)
                   .and_return(scope)
-          allow(scope)
-            .to receive(:includes)
-                  .and_return([relation])
         end
 
         it "embeds a collection" do

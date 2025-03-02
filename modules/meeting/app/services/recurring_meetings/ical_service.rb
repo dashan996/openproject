@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -47,21 +48,23 @@ module RecurringMeetings
       @url_helpers = OpenProject::StaticRouting::StaticUrlHelpers.new
     end
 
-    def generate_series
+    def generate_series(cancelled: false)
       ical_result(series) do
-        series_event
+        series_event(cancelled:)
         occurrences_events
+        calendar_status(cancelled:)
       end
     rescue StandardError => e
       Rails.logger.error("Failed to generate ICS for meeting series #{series.id}: #{e.message}")
       ServiceResult.failure(message: e.message)
     end
 
-    def generate_occurrence(meeting)
+    def generate_occurrence(meeting, cancelled: false)
       # Get the time the meeting was scheduled to take place
       scheduled_meeting = meeting.scheduled_meeting
       ical_result(scheduled_meeting) do
-        occurrence_event(scheduled_meeting.start_time, meeting)
+        occurrence_event(scheduled_meeting.start_time, meeting, cancelled:)
+        calendar_status(cancelled:)
       end
     rescue StandardError => e
       Rails.logger.error("Failed to generate ICS for meeting #{meeting.id}: #{e.message}")
@@ -70,6 +73,14 @@ module RecurringMeetings
 
     private
 
+    def calendar_status(cancelled:)
+      if cancelled
+        calendar.cancel
+      else
+        calendar.request
+      end
+    end
+
     def ical_result(meeting)
       User.execute_as(user) do
         @timezone = Time.zone || Time.zone_default
@@ -77,7 +88,6 @@ module RecurringMeetings
 
         yield
 
-        calendar.publish
         ServiceResult.success(result: calendar.to_ical)
       end
     end
@@ -90,7 +100,7 @@ module RecurringMeetings
       tzinfo.canonical_identifier
     end
 
-    def series_event # rubocop:disable Metrics/AbcSize
+    def series_event(cancelled:) # rubocop:disable Metrics/AbcSize
       calendar.event do |e|
         base_series_attributes(e)
 
@@ -102,16 +112,18 @@ module RecurringMeetings
 
         add_attendees(e, template)
         e.exdate = cancelled_schedules
+
+        set_status(cancelled, e)
       end
     end
 
     def occurrences_events
       upcoming_instantiated_schedules.find_each do |schedule|
-        occurrence_event(schedule.start_time, schedule.meeting)
+        occurrence_event(schedule.start_time, schedule.meeting, cancelled: false)
       end
     end
 
-    def occurrence_event(schedule_start_time, meeting) # rubocop:disable Metrics/AbcSize
+    def occurrence_event(schedule_start_time, meeting, cancelled:) # rubocop:disable Metrics/AbcSize
       calendar.event do |e|
         base_series_attributes(e)
 
@@ -123,6 +135,7 @@ module RecurringMeetings
         e.sequence = meeting.lock_version
 
         add_attendees(e, meeting)
+        set_status(cancelled, e)
       end
     end
 

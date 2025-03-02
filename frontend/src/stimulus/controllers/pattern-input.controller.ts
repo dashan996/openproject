@@ -72,6 +72,7 @@ export default class PatternInputController extends Controller {
     this.contentTarget.innerHTML = this.toHtml(this.patternInitialValue) || ' ';
     this.extractValidTokens();
     this.tagInvalidTokens();
+    this.clearSuggestionsFilter();
   }
 
   // Input field events
@@ -166,8 +167,8 @@ export default class PatternInputController extends Controller {
   }
 
   /**
-    * Sets an internal representation of the cursor position by persisting the current `Range`
-    */
+   * Sets an internal representation of the cursor position by persisting the current `Range`
+   */
   private setRange():void {
     const selection = document.getSelection();
     if (selection?.rangeCount) {
@@ -245,7 +246,7 @@ export default class PatternInputController extends Controller {
       if (!targetNode.textContent) { return; }
 
       let pos = targetOffset - 1;
-      while (pos > -1 && !this.isWhitespace(targetNode.textContent.charAt(pos))) { pos-=1; }
+      while (pos > -1 && !this.isWhitespace(targetNode.textContent.charAt(pos))) { pos -= 1; }
 
       const wordRange = document.createRange();
       wordRange.setStart(targetNode, pos + 1);
@@ -280,15 +281,17 @@ export default class PatternInputController extends Controller {
 
   private clearSuggestionsFilter():void {
     this.suggestionsTarget.innerHTML = '';
+    this.suggestionsTarget.classList.add('d-none');
   }
 
   private filterSuggestions(word:string):void {
     this.clearSuggestionsFilter();
+    this.suggestionsTarget.classList.remove('d-none');
 
     const filtered = this.getFilteredSuggestionsData(word);
 
     // insert the HTML
-    filtered.forEach((group) => {
+    filtered.forEach((group, idx) => {
       const groupHeader = this.suggestionsHeadingTemplateTarget.content?.cloneNode(true) as HTMLElement;
       if (groupHeader) {
         const headerElement = groupHeader.querySelector('h2');
@@ -310,7 +313,9 @@ export default class PatternInputController extends Controller {
       });
 
       const groupDivider = this.suggestionsDividerTemplateTarget.content?.cloneNode(true) as HTMLElement;
-      this.suggestionsTarget.appendChild(groupDivider);
+      if (idx < filtered.length - 1) {
+        this.suggestionsTarget.appendChild(groupDivider);
+      }
     });
   }
 

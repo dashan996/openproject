@@ -256,7 +256,7 @@ ro:
 
                     *   Create a useful overview of the results
                     *   Check what has been done and summarize the results
-                    *   Communicate all the relevant results with the customer
+                    *   Communicate all the relevant results with the customer
                     *   Identify the fundamental boundary conditions of the project
 
                     ## Description
@@ -271,7 +271,7 @@ ro:
 
                     *   Create a useful overview of the results
                     *   Check what has been done and summarize the results
-                    *   Communicate all the relevant results with the customer
+                    *   Communicate all the relevant results with the customer
                     *   Identify the fundamental boundary conditions of the project
 
                     ## Description
@@ -636,16 +636,16 @@ ro:
                 item_1:
                   subject: Construct the building
                   description: |-
-                    ## Goal
+                    ## Obiectiv
 
-                    *   New issues realized on construction site will be handled model based
-                    *   Issues will be documented by using the BCF files and the BIM model
+                    * Probleme noi realizate pe site-ul de construcție vor fi gestionate de modelul
+                    * Problemele vor fi documentate folosind fișierele BCF și modelul BIM
 
-                    ## Description
+                    ## Descriere
 
-                    *   New issues will be documented using BCF files as sticky notes for the model
-                    *   The BCF files will be used to assign, track and correct issues
-                    *   ...
+                    * Probleme noi vor fi documentate folosind fișierele BCF ca note sticky pentru modelul
+                    * Fișierele BCF vor fi folosite pentru atribuire, urmărește și corectează problemele
+                    * ...
                 item_2:
                   subject: Finish construction
             item_12:

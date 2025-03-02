@@ -6,6 +6,7 @@ import { initializeLocale } from 'core-app/core/setup/init-locale';
 import { environment } from './environments/environment';
 import { configureErrorReporter } from 'core-app/core/errors/configure-reporter';
 import { initializeGlobalListeners } from 'core-app/core/setup/globals/global-listeners';
+import { getMetaElement } from 'core-app/core/setup/globals/global-helpers';
 
 (window as any).global = window;
 
@@ -15,10 +16,10 @@ import { initializeGlobalListeners } from 'core-app/core/setup/globals/global-li
 const ASSET_BASE_PATH = '/assets/frontend/';
 
 // Sets the relative base path
-window.appBasePath = jQuery('meta[name=app_base_path]').attr('content') || '';
+window.appBasePath = getMetaElement('app_base_path')?.content || '';
 
 // Get the asset host, if any
-const initializer = document.querySelector<HTMLMetaElement>('meta[name="openproject_initializer"]');
+const initializer = getMetaElement('openproject_initializer');
 const ASSET_HOST = initializer?.dataset.assetHost ? `//${initializer.dataset.assetHost}` : '';
 
 // Ensure to set the asset base for dynamic code loading

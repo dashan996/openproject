@@ -29,12 +29,7 @@
 #++
 #
 module Storages::Admin
-  class AutomaticallyManagedProjectFoldersInfoComponent < ApplicationComponent
-    include OpPrimer::ComponentHelpers
-    include OpTurbo::Streamable
-    include StorageViewInformation
-
-    alias_method :storage, :model
+  class AutomaticallyManagedProjectFoldersInfoComponent < StorageInfoComponent
 
     def self.wrapper_key = :automatically_managed_project_folders_section
 

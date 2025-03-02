@@ -30,26 +30,28 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render(Primer::OpenProject::PageHeader.new) do |header|
     header.with_title { t(:label_message_new) }
-    header.with_breadcrumbs([{ href: project_overview_path(@project.id), text: @project.name },
-                             { href: project_forums_path(@project), text: t(:label_forum_plural) },
-                             { href: url_for(controller: '/forums', action: 'show', project_id: @project, id: @forum), text: @forum.name },
-                             t(:label_message_new)])
+    header.with_breadcrumbs(
+      [{ href: project_overview_path(@project.id), text: @project.name },
+       { href: project_forums_path(@project), text: t(:label_forum_plural) },
+       { href: url_for(controller: "/forums", action: "show", project_id: @project, id: @forum), text: @forum.name },
+       t(:label_message_new)]
+    )
   end
 %>
 <%= labelled_tabular_form_for @message,
                               url: forum_topics_path(@forum),
                               html: {
                                 multipart: true,
-                                id: 'message-form',
-                                class: 'form',
+                                id: "message-form",
+                                class: "form",
                                 data: { turbo: false }
                               } do |f| %>
-  <%= render partial: 'messages/form', locals: { f: f } %>
+  <%= render partial: "messages/form", locals: { f: f } %>
 
-  <hr class="form--separator"/>
+  <hr class="form--separator">
 
-  <%= f.button t(:button_create), class: 'button -primary -with-icon icon-checkmark' %>
-  <%= link_to t(:button_cancel), project_forum_path(@project, @forum), class: 'button -with-icon icon-cancel' %>
+  <%= f.button t(:button_create), class: "button -primary -with-icon icon-checkmark" %>
+  <%= link_to t(:button_cancel), project_forum_path(@project, @forum), class: "button -with-icon icon-cancel" %>
 <% end %>
 
 <div id="preview"></div>

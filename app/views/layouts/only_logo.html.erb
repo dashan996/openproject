@@ -30,18 +30,17 @@ See COPYRIGHT and LICENSE files for more details.
 <html xmlns="http://www.w3.org/1999/xhtml"
       lang="<%= I18n.locale.to_s %>"
       xml:lang="<%= I18n.locale.to_s %>"
-      class="<%= 'in_modal' unless show_decoration %>">
+      class="<%= "in_modal" unless show_decoration %>">
 <head>
-  <%= render partial: 'layouts/common_head' %>
+  <%= render partial: "layouts/common_head" %>
 </head>
 <body
   class="<%= body_css_classes %>"
-  <%= user_theme_data_attributes %>
->
+  <%= user_theme_data_attributes %>>
   <div id="wrapper">
-    <header class="op-app-header<%= ' op-app-header_development' if OpenProject::Configuration.development_highlight_enabled? %>">
+    <header class="op-app-header<%= " op-app-header_development" if OpenProject::Configuration.development_highlight_enabled? %>">
       <div class="op-app-header--center op-logo">
-        <%= link_to(I18n.t('label_home'), home_url, class: 'op-logo--link') %>
+        <%= link_to(I18n.t("label_home"), home_url, class: "op-logo--link") %>
       </div>
     </header>
     <main id="content-wrapper">

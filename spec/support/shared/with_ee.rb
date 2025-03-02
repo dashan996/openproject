@@ -26,22 +26,10 @@
 # See COPYRIGHT and LICENSE files for more details.
 #++
 
-def assert_valid_ee_action(action, example)
-  valid_ee_actions = Authorization::EnterpriseService::GUARDED_ACTIONS
-  return if valid_ee_actions.include?(action)
-
-  spell_checker = DidYouMean::SpellChecker.new(dictionary: valid_ee_actions)
-  suggestions = spell_checker.correct(action).map(&:inspect).join(" ")
-  did_you_mean = " Did you mean #{suggestions} instead?" if suggestions.present?
-
-  raise "Invalid Enterprise action #{action.inspect} at #{example.location}.#{did_you_mean}"
-end
-
 def ee_actions(example)
   return [] unless example.respond_to?(:metadata) && example.metadata[:with_ee]
 
-  actions = example.metadata[:with_ee]
-  actions.each { |action| assert_valid_ee_action(action, example) }
+  example.metadata[:with_ee]
 end
 
 def aggregate_parent_array(example, acc)
@@ -61,11 +49,8 @@ RSpec.configure do |config|
       allowed = aggregate_parent_array(example, allowed.to_set)
 
       allow(EnterpriseToken).to receive(:allows_to?).and_call_original
-      allowed.each do |k|
-        allow(EnterpriseToken)
-          .to receive(:allows_to?)
-          .with(k)
-          .and_return true
+      allowed.each do |enterprise_feature|
+        allow(EnterpriseToken).to receive(:allows_to?).with(enterprise_feature).and_return(true)
       end
 
       # Also disable banners to signal the frontend we're on EE

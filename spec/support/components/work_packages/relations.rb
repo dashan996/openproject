@@ -183,10 +183,7 @@ module Components
         expect(page).to have_text(modal_heading_label)
 
         # Enter the query and select the child
-        autocomplete_field = page.find_test_selector("work-package-relation-form-to-id")
-        select_autocomplete(autocomplete_field,
-                            query: relatable.subject,
-                            results_selector: "body")
+        search_in_autocompleter(relatable)
 
         if description.present?
           fill_in "Description", with: description
@@ -204,6 +201,13 @@ module Components
         new_relation = work_package.reload.relations.last
         target_wp = new_relation.other_work_package(work_package)
         find_row(target_wp)
+      end
+
+      def search_in_autocompleter(relatable)
+        autocomplete_field = page.find_test_selector("work-package-relation-form-to-id")
+        select_autocomplete(autocomplete_field,
+                            query: relatable.subject,
+                            results_selector: "body")
       end
 
       def edit_relation_description(relatable, description)

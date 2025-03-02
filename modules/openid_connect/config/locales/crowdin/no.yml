@@ -4,18 +4,18 @@
     description: "Legger til strategileverandører for OmniAuth OpenID Connect til OpenProject."
   logout_warning: >
     Du har blitt logget ut. Innholdet kan gå tapt. Vennligst [logg in].
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
-        name: Navn
+        name: Name
         slug: Unique identifier
-        display_name: Visningsnavn
+        display_name: Display name
         client_id: Client ID
         client_secret: Client secret
-        secret: Hemmelig nøkkel
-        scope: Omfang
+        secret: Secret
+        scope: Scope
         grant_types_supported: Supported grant types
-        limit_self_registration: Begrens egenregistrering
+        limit_self_registration: Limit self registration
         authorization_endpoint: Authorization endpoint
         userinfo_endpoint: User information endpoint
         token_endpoint: Token endpoint
@@ -29,7 +29,6 @@
         claims: Claims
         acr_values: ACR values
         redirect_url: Redirect URL
-  activerecord:
     errors:
       models:
         openid_connect/provider:

@@ -21,7 +21,7 @@
 #++
 ru:
   js:
-    label_meetings: 'Встречи'
+    label_meetings: 'Совещания'
     work_packages:
       tabs:
         meetings: 'Совещания'

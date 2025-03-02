@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -93,7 +94,7 @@ module Pages::Meetings
     end
 
     def path
-      meeting_path(meeting)
+      project_meeting_path(meeting.project, meeting)
     end
   end
 end

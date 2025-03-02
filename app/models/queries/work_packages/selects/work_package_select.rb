@@ -139,7 +139,12 @@ class Queries::WorkPackages::Selects::WorkPackageSelect
   end
 
   def caption
-    WorkPackage.human_attribute_name(name)
+    case name.to_s
+    when "manual_sorting"
+      Query.human_attribute_name(name)
+    else
+      WorkPackage.human_attribute_name(name)
+    end
   end
 
   protected

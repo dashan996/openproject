@@ -36,53 +36,59 @@ See COPYRIGHT and LICENSE files for more details.
       data: { turbo: true },
       method:
     ) do |form|
-      concat(render(Primer::Alpha::Dialog::Body.new(
-        id: dialog_body_id,
-        test_selector: dialog_body_id,
-        aria: { label: aria_label }
-      )) do
-        flex_layout do |flex|
-          flex.with_row do
-            angular_component_tag 'opce-custom-modal-overlay'
-          end
+      concat(
+        render(
+          Primer::Alpha::Dialog::Body.new(
+            id: dialog_body_id,
+            test_selector: dialog_body_id,
+            aria: { label: aria_label }
+          )
+        ) do
+          flex_layout do |flex|
+            flex.with_row do
+              angular_component_tag "opce-custom-modal-overlay"
+            end
 
-          if new_record?
-            flex.with_row(mb: 3) do
-              render(Storages::Admin::Storages::AddProjectsAutocompleterForm.new(form, project_storage:))
+            if new_record?
+              flex.with_row(mb: 3) do
+                render(Storages::Admin::Storages::AddProjectsAutocompleterForm.new(form, project_storage:))
+              end
+
+              flex.with_row(mb: 3) do
+                render(Primer::Alpha::ActionList::Divider.new(scheme: :subtle))
+              end
+
+              flex.with_row(mb: 2) do
+                render(Primer::Beta::Heading.new(tag: :h4)) { t(:"storages.label_project_folder") }
+              end
             end
 
             flex.with_row(mb: 3) do
-              render(Primer::Alpha::ActionList::Divider.new(scheme: :subtle))
+              render(Primer::Beta::Text.new) { help_text }
             end
 
-            flex.with_row(mb: 2) do
-              render(Primer::Beta::Heading.new(tag: :h4)) { t(:"storages.label_project_folder") }
+            flex.with_row(
+              data: {
+                "application-target": "dynamic",
+                controller: "storages--project-folder-mode-form",
+                "storages--project-folder-mode-form-folder-mode-value": @project_storage.project_folder_mode,
+                "storages--project-folder-mode-form-placeholder-folder-name-value": t(:"storages.label_no_selected_folder"),
+                "storages--project-folder-mode-form-not-logged-in-validation-value": t(:"storages.instructions.not_logged_into_storage"),
+                "storages--project-folder-mode-form-last-project-folders-value": @last_project_folders
+              }
+            ) do
+              render(Storages::Admin::ProjectStorages::ProjectFolderModeForm.new(form, project_storage:))
             end
-          end
-
-          flex.with_row(mb: 3) do
-            render(Primer::Beta::Text.new) { help_text }
-          end
-
-          flex.with_row(
-            data: {
-              "application-target": "dynamic",
-              controller: "storages--project-folder-mode-form",
-              'storages--project-folder-mode-form-folder-mode-value': @project_storage.project_folder_mode,
-              'storages--project-folder-mode-form-placeholder-folder-name-value': t(:"storages.label_no_selected_folder"),
-              'storages--project-folder-mode-form-not-logged-in-validation-value': t(:"storages.instructions.not_logged_into_storage"),
-              'storages--project-folder-mode-form-last-project-folders-value': @last_project_folders
-            }
-          ) do
-            render(Storages::Admin::ProjectStorages::ProjectFolderModeForm.new(form, project_storage:))
           end
         end
-      end)
+      )
 
-      concat(render(Primer::Alpha::Dialog::Footer.new(show_divider: false)) do
-        concat(render(Primer::ButtonComponent.new(data: { 'close-dialog-id': dialog_id })) { cancel_button_text })
-        concat(render(Primer::ButtonComponent.new(scheme: :primary, type: :submit)) { submit_button_text })
-      end)
+      concat(
+        render(Primer::Alpha::Dialog::Footer.new(show_divider: false)) do
+          concat(render(Primer::ButtonComponent.new(data: { "close-dialog-id": dialog_id })) { cancel_button_text })
+          concat(render(Primer::ButtonComponent.new(scheme: :primary, type: :submit)) { submit_button_text })
+        end
+      )
     end
   end
 %>

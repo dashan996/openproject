@@ -35,7 +35,7 @@ export class InAppNotificationBellComponent implements OnInit {
 
   // enable other parts of the application to trigger an immediate update
   // e.g. a stimulus controller
-  // currently used by the new activities tab which does it's own polling
+  // currently used by the new activities tab which does its own polling
   // and receives updates from the backend earlier than the polling in the bell component
   @HostListener('document:ian-update-immediate')
   triggerImmediateUpdate() {

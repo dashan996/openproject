@@ -27,7 +27,7 @@ hu:
     work_packages:
       activity_tab:
         no_results_title_text: No activity to display
-        no_results_description_text: "Choose \"Show everything\" to show all activity and comments"
+        no_results_description_text: 'Choose "Show everything" to show all activity and comments'
         label_activity_show_all: "Show everything"
         label_activity_show_only_comments: "Show comments only"
         label_activity_show_only_changes: "Show changes only"
@@ -128,9 +128,9 @@ hu:
     sync_failed: "Sikertelen szinkronizálás az LDAP-ból: %{message}."
     back_to_index: "Kattintson ide, ha vissza szeretne térni a kapcsolati listához."
     technical_warning_html: |
-      Ehhez az LDAP űrlaphoz az Ön LDAP / Acitive Directory beállításainak ismerete szükséges.
-      <br/>
-      <a href="https://www.openproject.org/help/administration/manage-ldap-authentication/">Részletes útmutatásért kérjük olvassa el a dokumentációt</a>.
+      This LDAP form requires technical knowledge of your LDAP / Active Directory setup.
+      <br>
+      <a href="https://www.openproject.org/help/administration/manage-ldap-authentication/">Please visit our documentation for detailed instructions</a>.
     attribute_texts:
       name: Az LDAP kapcsolat tetszőleges neve
       host: LDAP Kiszolgáló neve vagy IP címe
@@ -138,9 +138,9 @@ hu:
       generic_map: Az LDAP attribútumkulcsa, amely az OpenProject %{attribute} attribútumhoz van leképezve
       admin_map_html: "Opcionális: Az LDAP attribútumkulcsa, amely a <strong> ha van </strong> jelöli az OpenProject felhasználó adminisztrátorát. Hagyja üresen ha kétséges."
       system_user_dn_html: |
-        Írja be az írásvédett hozzáféréshez használt rendszerfelhasználó DN-jét.
-        <br/>
-        Példa: uid = openproject, ou = rendszer, dc = példa, dc = com
+        Enter the DN of the system user used for read-only access.
+        <br>
+        Example: uid=openproject,ou=system,dc=example,dc=com
       system_user_password: Adja meg a rendszergazda bind jelszavát
       base_dn: |
         Írja be annak az alrésznek az alap DN-jét az LDAP-ban, amelyben az OpenProject felhasználókat és csoportokat szeretne keresni.
@@ -178,7 +178,7 @@ hu:
     tls_options:
       verify_peer: "SSL tanúsítvány ellenőrzése"
       verify_peer_description_html: >
-        Enables strict SSL verification of the certificate trusted chain. <br/> <strong>Warning:</strong> Unchecking this option disables SSL verification of the LDAP server certificate. This exposes your connection to Man in the Middle attacks.
+        Enables strict SSL verification of the certificate trusted chain. <br> <strong>Warning:</strong> Unchecking this option disables SSL verification of the LDAP server certificate. This exposes your connection to Man in the Middle attacks.
       tls_certificate_description: "If the LDAP server certificate is not in the trust sources of this system, you can add it manually here. Enter a PEM X509 certifiate string."
   forums:
     show:
@@ -345,6 +345,7 @@ hu:
         placeholder: "Új projektlista"
       delete_modal:
         title: "Projektlista törlése"
+        heading: "Delete this project list?"
         text: "Ez a művelet nem törli a listában szereplő projekteket. Biztos, hogy törölni szeretné ezt a projektlistát?"
     settings:
       change_identifier: Azonosító megváltoztatása
@@ -393,6 +394,8 @@ hu:
         no_results_content_text: Új verzió létrehozása
       storage:
         no_results_title_text: "Ebben a projektben nincs további rögzített lemezterület.\n"
+      work_package_priorities:
+        new_label: "New priority"
   project_stage:
     working_days_count:
       one: "Duration: %{count} working day"
@@ -573,9 +576,10 @@ hu:
         package is automatically set to this value when this status is selected.
         Ignored in work-based mode.
       status_readonly_html: |
-        Jelölje be ezt az opciót, ha ezt az állapotot tartalmazó munkacsomagokat csak olvashatóvá kívánja jelölni. Az állapot kivételével semmilyen attribútum nem módosítható.
-        <br/>
-        <strong>Megjegyzés</strong>: az örökölt értékek (például a gyermekobjektum vagy a kapcsolatok) továbbra is érvényesek.
+        Check this option to mark work packages with this status as read-only.
+        No attributes can be changed with the exception of the status.
+        <br>
+        <strong>Note</strong>: Inherited values (e.g., from children or relations) will still apply.
     index:
       no_results_title_text: Jelenleg nincsenek feladatcsoport státuszok.
       no_results_content_text: Új státusz hozzáadása
@@ -614,6 +618,14 @@ hu:
         pattern:
           label: "Subject pattern"
           caption: "Search for an attribute or add text. To create a space between elements add it as a text."
+      export_configuration:
+        tab: "Generate PDF"
+        intro: "Select which templates from those that are available you would like to enable for this type. The template determines the design and attributes visible in the exported PDF of a work package using this type. The first template on the list is selected by default."
+        pdf_export_templates:
+          label: "PDF Export templates"
+          actions:
+            label_enable_all: "Enable all"
+            label_disable_all: "Disable all"
   versions:
     overview:
       work_packages_in_archived_projects: "A verzió megosztásra kerül az archivált projektekkel, amelyekhez még mindig vannak ehhez a verzióhoz rendelt munkacsomagok. Ezek számításba kerülnek, de nem jelennek meg a kapcsolódó nézetekben."
@@ -628,6 +640,47 @@ hu:
     index:
       no_results_title_text: Jelenleg nincsenek munkafolyamatok.
   work_packages:
+    datepicker_modal:
+      banner:
+        description:
+          automatic_mobile: "Start date derived."
+          click_on_show_relations_to_open_gantt: 'Click on "%{button_name}" for Gantt overview.'
+          manual_mobile: "Ignoring relations."
+          manual_gap_between_predecessors: "There is a gap between this and all predecessors."
+          manual_overlap_with_predecessors: "Overlaps with at least one predecessor."
+          manual_with_children: "This has child work packages but their start dates are ignored."
+        title:
+          automatic_mobile: "Automatically scheduled."
+          automatic_with_children: "The dates are determined by child work packages."
+          automatic_with_predecessor: "The start date is set by a predecessor."
+          manual_mobile: "Manually scheduled."
+          manually_scheduled: "Manually scheduled. Dates not affected by relations."
+      blankslate:
+        title: "No predecessors"
+        description: "To enable automatic scheduling, this work package needs to have at least one predecessor. It will then automatically be scheduled to start after the last predecessor."
+      ignore_non_working_days:
+        title: "Working days only"
+      mode:
+        title: "Scheduling mode"
+        automatic: "Automatic"
+        manual: "Manual"
+      show_relations: "Show relations"
+      tabs:
+        aria_label: "Datepicker tabs"
+        children: "Children"
+        dates: "Dates"
+        predecessors: "Predecessors"
+        successors: "Successors"
+        blankslate:
+          predecessors:
+            title: "No predecessors"
+            description: "This work package does not have any predecessors."
+          successors:
+            title: "No successors"
+            description: "This work package does not have any successors."
+          children:
+            title: "No children"
+            description: "This work package does not have any children."
     x_descendants:
       one: "Egy leszármazott feladatcsoport"
       other: "%{count} munkacsomag leszármazottai"
@@ -777,6 +830,7 @@ hu:
       attachment:
         attachment_content: "Melléklet tartalma"
         attachment_file_name: "Melléklet fájl neve"
+        content_type: "Content-type"
         downloads: "Letöltés"
         file: "Fájl"
         filename: "File"
@@ -784,10 +838,10 @@ hu:
       attribute_help_text:
         attribute_name: "Attribútum"
         help_text: "Súgószöveg"
+      capability:
+        context: "Context"
       changeset:
         repository: "Csomagtároló"
-      color:
-        hexcode: "Hexa kód"
       comment:
         commented: "Hozzászólás" #an object that this comment belongs to
       custom_action:
@@ -820,7 +874,10 @@ hu:
         client_credentials_user_id: "Ügyféladatok Felhasználói azonosító\n"
         scopes: "Hatáskörök"
         confidential: "Bizalmas"
+      emoji_reaction:
+        reactable: "Reacted on"
       enterprise_token:
+        domain: "Domain"
         starts_at: "Érvényes"
         subscriber: "Előfizető"
         encoded_token: "Vállalati támogatás kulcs"
@@ -832,6 +889,7 @@ hu:
         widgets: "Kisalkalmazások"
       journal:
         notes: "Jegyzet"
+        cause_type: "Cause type"
       ldap_auth_source:
         account: "Felhasználói fiók"
         attr_firstname: "Keresztnév attribútum"
@@ -847,10 +905,11 @@ hu:
         tls_certificate_string: "LDAP server SSL certificate"
       member:
         roles: "Szerepkörök"
+      notification:
+        read_ian: "Read in-app"
+        resource: "Resource"
       oauth_client:
         client: "Ügyfél azonosító"
-      planning_element_type_color:
-        hexcode: Hexa kód
       project:
         active_value:
           true: "unarchived"
@@ -863,6 +922,7 @@ hu:
           true: "nyilvános"
           false: "privát"
         queries: "Lekérdezések"
+        enabled_modules: "Enabled modules"
         status_code: "Projekt állapot"
         description: "Leírás"
         status_explanation: "Projekt státuszának leírása"
@@ -883,23 +943,47 @@ hu:
       project_custom_field:
         is_required: "Required for all projects"
         custom_field_section: Szekció
+      project/life_cycle_step:
+        definition: "Definition"
       project/life_cycle_step_definition:
         name: "Name"
         color: "Color"
       query:
+        sums: "Sums"
+        columns: "Columns"
         column_names: "Oszlopok"
         relations_to_type_column: "Kapcsolatok %{type}-hoz"
         relations_of_type_column: "%{type} kapcsolatok"
         group_by: "Csoport szintű eredmények"
+        sort_by: "Sort results by"
         filters: "Szürő"
         timeline_labels: "Idővonal címkék"
+        timeline_visible: "Show Gantt chart"
+        timeline_zoom_level: "Gantt chart zoom level"
+        timestamps: "Baseline timestamps"
+        sort_criteria: "Sort criteria"
+        highlighted_attributes: "Highlighted attributes"
+        highlighting_mode: "Highlight mode"
+        display_representation: "Display mode"
+        show_hierarchies: "Display mode"
+        starred: "Favorite"
+        hidden: "Hidden"
+        manual_sorting: "Manual sort order"
+        ordered_work_packages: "Work packages order"
+        include_subprojects: "Include subprojects"
+        results: "Results"
       relation:
         lag: "Lag"
-        from: "Feladatcsoport"
+        from: "Related work package"
         to: "Kapcsolódó feladatcsoport"
+        relation_type: "Relation type"
       reminder:
+        remindable: "Reminded object"
+        remind_at: "Remind at"
         remind_at_date: "Date"
         remind_at_time: "Time"
+      reminder_notification:
+        notification: "Notification"
       repository:
         url: "URL"
       role:
@@ -909,6 +993,9 @@ hu:
         is_readonly: "Munkacsomag csak olvasható"
         excluded_from_totals: "Exclude from calculation of totals in hierarchy"
         default_done_ratio: "% Complete"
+      token/ical:
+        calendar: "Calendar"
+        ical_token_query_assignment: "Query assignment"
       time_entry:
         activity: "Tevékenység"
         hours: "órák"
@@ -922,6 +1009,7 @@ hu:
         is_default: "Alapértelmezetten aktiválva az új projekteknél"
         is_milestone: "Mérföldkő"
         color: "Szín"
+        patterns: "Patterns"
       user:
         admin: "Adminisztrátor"
         auth_source: "Hitelesítési forrás"
@@ -931,6 +1019,10 @@ hu:
         force_password_change: "Kötelező jelszóváltás a következő bejelentkezéskor"
         language: "Nyelv"
         last_login_on: "Utolsó bejelentkezés"
+        failed_login_count: "Failed login attempts"
+        first_name: "First name"
+        last_name: "Last name"
+        first_login: "First login"
         new_password: "Új jelszó"
         password_confirmation: "Új jelszó újra"
         consented_at: "Ehhez hozzájárult a"
@@ -942,6 +1034,8 @@ hu:
         warn_on_leaving_unsaved: "Figyelmeztess, ha úgy hagyom el a munkacsomagot, hogy nem mentett változások vannak rajta"
         theme: "Mód"
         mode_guideline: "Some modes will overwrite custom theme colours for accessibility and legibility. For the full custom theme, please select Light mode."
+        daily_reminders: "Daily reminders"
+        workdays: "Working days"
       version:
         effective_date: "Befejezési dátum"
         sharing: "Megosztás"
@@ -1219,12 +1313,12 @@ hu:
           typed_dag:
             circular_dependency: "A kapcsolat körkörös függőséget hoz létre."
           attributes:
-            to:
-              error_not_found: "feladatcsoportban \"a\" pozíció nem található, vagy nem látható"
-              error_readonly: "egy létező kapcsolat ',' hivatkozása nem változhat"
-            from:
-              error_not_found: "feladatcsoportban \"a\" pozíció nem található, vagy nem látható"
-              error_readonly: "egy létező kapcsolat ',' hivatkozása nem változhat"
+            to_id:
+              error_not_found: "not found or not visible."
+              error_readonly: "cannot be changed for existing relations."
+            from_id:
+              error_not_found: "not found or not visible."
+              error_readonly: "cannot be changed for existing relations."
             lag:
               greater_than_or_equal_to:
                 zero: "cannot be negative."
@@ -1280,6 +1374,10 @@ hu:
         work_package:
           is_not_a_valid_target_for_time_entries: "A  #%{id} feladatcsoport nem érvényes cél az idő bejegyzések ismételt hozzárendeléséhez."
           attributes:
+            id:
+              format: "%{message}"
+              cannot_add_child_because_of_lack_of_permission: "Cannot add child because you don't have permissions to edit the selected work package."
+              blank: "ID can't be blank."
             assigned_to:
               format: "%{message}\n"
             done_ratio:
@@ -1296,6 +1394,7 @@ hu:
               smaller_than_dates: "kisebb, mint a kezdő és a befejezési dátum közötti intervallum."
               not_available_for_milestones: "nem érhető el mérföldkő típusú munkacsomagokhoz."
               cannot_be_null: "nem állítható nullára, mivel a kezdési és befejezési dátum ismert."
+              not_an_integer: "is not a valid duration."
             parent:
               cannot_be_milestone: "nem lehet egy mérföldkő."
               cannot_be_self_assigned: "nem rendelhető önmagához.\n"
@@ -1394,6 +1493,9 @@ hu:
       forum: "Fórum"
       global_role: "Globális szerepkör"
       group: "Csoport"
+      issue_priority:
+        one: "Priority"
+        other: "Priorities"
       member: "Tag"
       news: "Hírek"
       notification:
@@ -1407,6 +1509,7 @@ hu:
         one: "Project list"
         other: "Project lists"
       query: "Egyéni lekérdezés"
+      reminder: "Reminder"
       role:
         one: "Szerepkör"
         other: "Szerepkörök"
@@ -1471,18 +1574,25 @@ hu:
     assigned_to: "Megbízott"
     assignee: "Megbízott"
     attachments: "Csatolmány"
+    actor: "Actor"
+    action: "Action"
     author: "Szerző"
+    avatar: "Avatar"
     base: "Általános hiba:"
+    body: "Body"
     blocks_ids: "Lezárt munkacsomagok azonosítója"
     category: "Kategória"
     comment: "Komment"
     comments: "Vélemény"
     content: "Tartalom"
     color: "Szín"
+    creator: "Creator"
     created_at: "Létrehozva"
+    custom_field: "Custom field"
     custom_options: "Lehetséges értékek"
     custom_values: "Választható mezők"
     date: "dátum"
+    dates_interval: "Date range"
     default_columns: "Alapértelmezett oszlopok"
     description: "Leírás"
     derived_due_date: "Származtatott befejezési időpont"
@@ -1492,39 +1602,63 @@ hu:
     due_date: "Befejezési dátum"
     estimated_hours: "Munka"
     estimated_time: "Munka"
+    email: "Email"
+    entity_type: "Entity"
     expires_at: "Lejárat ekkor"
     firstname: "Keresztnév"
+    filter: "Filter"
     group: "Csoport"
     groups: "Csoportok"
+    hexcode: "Hex code"
     id: "ID"
     is_default: "Alap érték"
     is_for_all: "Minden projekthez"
     public: "Nyilvános"
+    principal: "User or group"
     #kept for backwards compatibility
     issue: "Feladatcsoport"
+    journal: "Journal"
+    journal_notes: "Comment"
     lastname: "Vezetéknév"
     login: "Felhasználónév"
     mail: "Email"
     name: "Név"
     note: "Note"
+    notes: "Notes"
+    number: "Number"
+    options: "Options"
+    operator: "Operator"
     password: "Jelszó"
     priority: "Fontosság"
     project: "Projekt"
+    project_ids: "Project IDs"
+    reason: "Reason"
     responsible: "Felelős"
+    required: "Required"
+    recipient: "Recipient"
     role: "Szerepkör"
     roles: "Szerepkörök"
+    search: "Search"
     start_date: "Indulási dátum"
     status: "Állapot"
+    state: "State"
     subject: "Tárgy"
+    slug: "Slug"
     summary: "Összegzés"
+    text: "Text"
     title: "Cím"
     type: "Típus"
+    typeahead: "Autocomplete"
     updated_at: "Frissítve"
     updated_on: "Frissítve"
     uploader: "Feltöltő"
     user: "Felhasználó"
+    username: "Username"
+    unit: "Unit"
     value: "Érték"
+    values: "Values"
     version: "Verzió"
+    visible: "Visible"
     work_package: "Feladatcsoport"
   backup:
     failed: "A biztonsági mentés sikertelen"
@@ -1837,6 +1971,8 @@ hu:
   enumeration_activities: "Időnyilvántartási tevékenységek"
   enumeration_work_package_priorities: "Feladatcsoport fontosság"
   enumeration_reported_project_statuses: "Projekt állapot beszámoló"
+  enumeration_caption_order_changed: "Order successfully changed."
+  enumeration_could_not_be_moved: "Enumeration could not be moved."
   error_auth_source_sso_failed: "Single Sign-On (SSO) a '%{value}' felhasználóval sikertelen"
   error_can_not_archive_project: "Ezt a projektet nem lehet archiválni: %{errors}"
   error_can_not_delete_entry: "Bejegyzését nem lehet törölni"
@@ -1926,6 +2062,7 @@ hu:
         input_label_report: "Add columns to attribute table"
         input_caption_report: "By default all attributes added as columns in the work package list are selected. Long text fields are not available in the attribute table, but can be displayed below it."
         input_caption_table: "By default all attributes added as columns in the work package list are selected. Long text fields are not available in table based exports."
+        input_caption_required: "It is not possible to export the view without any column. Please add at least one column."
       pdf:
         export_type:
           label: "PDF export type"
@@ -1996,21 +2133,29 @@ hu:
       days: nap
   pdf_generator:
     page_nr_footer: "Page %{page} of %{total}"
+    template_attributes:
+      label: "Attributes and description"
+      caption: All the attributes present in the current form configuration using the default template.
+    template_contract:
+      label: "Contract"
+      caption: Work package details formatted to the standard German contract form.
     dialog:
       title: Generate PDF
-      submit: Generate
-      header_right:
-        label: Header right
-        caption: Text to be displayed in the right of the header
+      submit: Download
+      templates:
+        label: "Template"
+        none_enabled: "No template has been enabled for this work package type"
       footer_center:
-        label: Footer center
-        caption: Text to be displayed in the center of the footer
+        label: Footer text
+        caption: This text will appear on every page at the center of the footer.
+      footer_right:
+        label: Footer text
+        caption: This text will appear on every page at the right of the footer.
       hyphenation:
         label: Hyphenation
-        caption: Break words between lines to improve text justification and readability.
-      paper_size:
-        label: Paper size
-        caption: The size of the paper to use for the PDF.
+        caption: Break line between words for better layout and justification.
+      hyphenation_language:
+        label: Language and hyphenation
   extraction:
     available:
       pdftotext: "Pdftotext elérhető (opcionális)"
@@ -2092,6 +2237,8 @@ hu:
           Progress calculation automatically <a href="%{href}" target="_blank">set to work-based mode and adjusted with version update</a>.
         progress_calculation_adjusted: >-
           Progress calculation automatically <a href="%{href}" target="_blank">adjusted with version update</a>.
+        scheduling_mode_adjusted: >-
+          Scheduling mode automatically adjusted with version update.
         totals_removed_from_childless_work_packages: >-
           Work and progress totals automatically removed for non-parent work packages with <a href="%{href}" target="_blank">version update</a>. This is a maintenance task and can be safely ignored.
       total_percent_complete_mode_changed_to_work_weighted_average: >-
@@ -2336,6 +2483,7 @@ hu:
   label_missing_or_hidden_custom_option: "(hiányzó érték vagy a hozzáférési jogosultságok hiánya)\n"
   label_descending: "Csökkenő"
   label_details: "Részletek"
+  label_defaults: "Defaults"
   label_development_roadmap: "Fejlesztési ütemterv"
   label_diff: "különbség"
   label_diff_inline: "beágyazott"
@@ -2392,6 +2540,7 @@ hu:
   label_filter: "Szürő"
   label_filter_add: "Szűrő hozzáadása"
   label_filter_by: "Filter by"
+  label_filter_any_name_attribute: "Name attributes"
   label_filter_plural: "Szűrők"
   label_filters_toggle: "Szűrők mutatása/elrejtése"
   label_float: "Mozgó"
@@ -2671,6 +2820,7 @@ hu:
   label_roadmap_overdue: "%{value} késésben"
   label_role_and_permissions: "Szerepkörök és engedélyek"
   label_role_new: "Új szerepkör"
+  label_role_grantable: "Grantable role"
   label_role_plural: "Szerepkörök"
   label_role_search: "Szerep hozzárendelése az új tagokhoz"
   label_scm: "SCM"
@@ -2724,6 +2874,7 @@ hu:
   label_title: "Cím"
   label_projects_menu: "Projektek"
   label_today: "Ma"
+  label_token_version: "Token Version"
   label_top_menu: "Felső menü"
   label_topic_plural: "Témakörök"
   label_total: "Össszesen"
@@ -2836,7 +2987,7 @@ hu:
   label_global_role: "Globális szerepkör"
   label_not_changeable: "(nem módosítható)"
   label_global: "Globális"
-  label_seeded_from_env_warning: This record has been created through a setting / environment variable. It is not editable through UI.
+  label_seeded_from_env_warning: This record has been created through a setting environment variable. It is not editable through UI.
   macro_execution_error: "Hiba a makro %{macro_name} végrehajtásában"
   macro_unavailable: "A %{macro_name} makró nem jeleníthető meg."
   macros:
@@ -3368,6 +3519,12 @@ hu:
     activated: "aktiválva"
     deactivated: "deaktiválva"
   search_input_placeholder: "Keresés ..."
+  setting_after_first_login_redirect_url: "First login redirect"
+  setting_after_first_login_redirect_url_text_html: >
+    Set a path to redirect users after their first login. If empty, redirects to the home page for the onboarding tour. <br/> Example: <code>/my/page</code>
+  setting_after_login_default_redirect_url: "After login redirect"
+  setting_after_login_default_redirect_url_text_html: >
+    Set a default path to redirect users after login, if no back link was provided. Redirects to home page if not set. <br/> Example: <code>/my/page</code>
   setting_apiv3_cors_title: "Cross-Origin Resource Sharing (CORS)"
   setting_apiv3_cors_enabled: "A CORS engedélyezése"
   setting_apiv3_cors_origins: "API V3 Cross-Origin Resource Sharing (CORS) engedélyezett származások"
@@ -3746,6 +3903,7 @@ hu:
   text_unallowed_characters: "Nem engedélyezett karakterek"
   text_user_invited: A felhasználót meghívták és a regisztráció folyamatban van.
   text_user_wrote: "%{value} írta:"
+  text_wrote: "wrote"
   text_warn_on_leaving_unsaved: "A  feladatcsoport  nem mentett szöveget tartalmaz, ami elveszik ha elhagyod ezt az oldalt."
   text_what_did_you_change_click_to_add_comment: "Mit változtattál? Klikkelj egy megjegyzés hozzáadásához."
   text_wiki_destroy_confirmation: "Biztosan törli ezt a wikit és annak tartalmát?"
@@ -4205,3 +4363,29 @@ hu:
   plugin_openproject_auth_saml:
     name: "OmniAuth SAML / Single-Sign On"
     description: "Adds the OmniAuth SAML provider to OpenProject"
+  enterprise_plans:
+    legacy_enterprise: "Enterprise Plan"
+  enterprise_features:
+    baseline_comparison: Baseline Comparison
+    board_view: Board View
+    conditional_highlighting: Conditional Highlighting
+    custom_actions: Custom Actions
+    custom_field_hierarchies: Custom Field Hierarchies
+    customize_life_cycle: Customize Life Cycle
+    date_alerts: Date Alerts
+    define_custom_style: Define Custom Style
+    edit_attribute_groups: Edit Attribute Groups
+    gantt_pdf_export: Gantt PDF Export
+    grid_widget_wp_graph: Grid Widget Work Package Graph
+    ldap_groups: LDAP Groups
+    one_drive_sharepoint_file_storage: OneDrive/SharePoint File Storage
+    placeholder_users: Placeholder Users
+    project_list_sharing: Project List Sharing
+    readonly_work_packages: Readonly Work Packages
+    sso_auth_providers: SSO Auth Providers
+    team_planner_view: Team Planner View
+    two_factor_authentication: Two-Factor Authentication
+    virus_scanning: Attachment Virus Scanning
+    work_package_query_relation_columns: Work Package Query Relation Columns
+    work_package_sharing: Work Package Sharing
+    work_package_subject_generation: Work Package Subject Generation

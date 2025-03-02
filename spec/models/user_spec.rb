@@ -47,6 +47,11 @@ RSpec.describe User do
           status:)
   end
 
+  describe "Associations" do
+    it { is_expected.to have_many(:emoji_reactions).dependent(:destroy) }
+    it { is_expected.to have_many(:reminders).with_foreign_key(:creator_id).dependent(:destroy).inverse_of(:creator) }
+  end
+
   describe "with long but allowed attributes" do
     it "is valid" do
       user.firstname = "a" * 256
@@ -332,7 +337,7 @@ RSpec.describe User do
         it { is_expected.to eq "SmithJohn" }
       end
 
-      context "for lastname_coma_firstname", with_settings: { user_format: :lastname_coma_firstname } do
+      context "for lastname_comma_firstname", with_settings: { user_format: :lastname_comma_firstname } do
         it { is_expected.to eq "Smith, John" }
       end
 
@@ -350,8 +355,8 @@ RSpec.describe User do
 
       let(:user) { described_class.select_for_name(formatter).last }
 
-      context "for lastname_coma_firstname" do
-        let(:formatter) { :lastname_coma_firstname }
+      context "for lastname_comma_firstname" do
+        let(:formatter) { :lastname_comma_firstname }
 
         it { is_expected.to eq "Smith, John" }
       end

@@ -70,6 +70,10 @@ class Principals::DeleteJob < ApplicationJob
   end
 
   def delete_notifications(principal)
+    ::ReminderNotification.joins(:notification)
+                         .where(notifications: { recipient: principal })
+                         .delete_all
+
     ::Notification.where(recipient: principal).delete_all
   end
 

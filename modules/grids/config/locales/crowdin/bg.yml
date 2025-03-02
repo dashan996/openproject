@@ -8,6 +8,7 @@ bg:
         row_count: "Брой редове"
         column_count: "Брой колони"
         widgets: "Джаджи"
+        scope: "Scope"
     errors:
       models:
         grids/grid:

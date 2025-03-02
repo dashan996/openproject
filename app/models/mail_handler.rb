@@ -355,7 +355,10 @@ class MailHandler < ActionMailer::Base
   end
 
   def human_attr_translations(attr)
-    keys = [attr.to_s.humanize]
+    keys = [
+      attr.to_s,
+      attr.to_s.humanize
+    ]
 
     [user&.language, Setting.default_language].compact_blank.each do |lang|
       keys << all_attribute_translations(lang)[attr]

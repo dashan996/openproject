@@ -34,16 +34,15 @@ class API::V3::FileLinks::FileLinksDownloadAPI < API::OpenProjectAPI
 
   helpers do
     def auth_strategy
-      Storages::Peripherals::StorageInteraction::AuthenticationStrategies::OAuthUserToken
-        .strategy
-        .with_user(User.current)
+      storage = @file_link.storage
+      Storages::Peripherals::Registry.resolve("#{storage}.authentication.user_bound").call(user: User.current, storage:)
     end
   end
 
   resources :download do
     get do
       Storages::Peripherals::Registry
-        .resolve("#{@file_link.storage.short_provider_type}.queries.download_link")
+        .resolve("#{@file_link.storage}.queries.download_link")
         .call(storage: @file_link.storage, auth_strategy:, file_link: @file_link)
         .match(
           on_success: ->(url) do

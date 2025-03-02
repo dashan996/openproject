@@ -75,7 +75,7 @@ RSpec.describe OAuthClients::ConnectionManager, :oauth_connection_helpers, :webm
       end
 
       it "raises an error" do
-        expect { subject.code_to_token(code) }.to raise_error(HTTPX::HTTPError)
+        expect { subject.code_to_token(code) }.to raise_error(RuntimeError, /Storages::StorageErrorData.*@status=404/)
       end
     end
   end

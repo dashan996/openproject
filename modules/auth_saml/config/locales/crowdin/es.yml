@@ -1,29 +1,28 @@
 es:
-  activemodel:
+  activerecord:
     attributes:
       saml/provider:
-        display_name: Nombre
-        identifier: Identificador
-        secret: Secreto
-        scope: Ámbito
-        assertion_consumer_service_url: URL de ACS (Assertion consumer service)
-        limit_self_registration: Limitar autorregistro
-        sp_entity_id: ID de la entidad de servicio
-        metadata_url: URL de metadatos del proveedor de identidad
-        name_identifier_format: Formato del identificador del nombre
-        idp_sso_service_url: Terminal de inicio de sesión del proveedor de identidad
-        idp_slo_service_url: Terminal de cierre de sesión del proveedor de identidad
-        idp_cert: Certificado público del proveedor de identidad
-        authn_requests_signed: Firmar solicitudes de autenticación SAML
-        want_assertions_signed: Exigir respuestas firmadas
-        want_assertions_encrypted: Exigir respuestas cifradas
-        certificate: Certificado utilizado por OpenProject para las solicitudes SAML
-        private_key: Clave privada correspondiente para las solicitudes SAML de OpenProject
-        signature_method: Algoritmo de firma
-        digest_method: Algoritmo de resumen
-        format: "Formato"
-        icon: "Icono personalizado"
-  activerecord:
+        display_name: Name
+        identifier: Identifier
+        secret: Secret
+        scope: Scope
+        assertion_consumer_service_url: ACS (Assertion consumer service) URL
+        limit_self_registration: Limit self registration
+        sp_entity_id: Service entity ID
+        metadata_url: Identity provider metadata URL
+        name_identifier_format: Name identifier format
+        idp_sso_service_url: Identity provider login endpoint
+        idp_slo_service_url: Identity provider logout endpoint
+        idp_cert: Public certificate of identity provider
+        authn_requests_signed: Sign SAML AuthnRequests
+        want_assertions_signed: Require signed responses
+        want_assertions_encrypted: Require encrypted responses
+        certificate: Certificate used by OpenProject for SAML requests
+        private_key: Corresponding private key for OpenProject SAML requests
+        signature_method: Signature algorithm
+        digest_method: Digest algorithm
+        format: "Format"
+        icon: "Custom icon"
     errors:
       models:
         saml/provider:

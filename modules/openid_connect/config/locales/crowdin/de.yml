@@ -4,32 +4,31 @@ de:
     description: "Fügt OmniAuth OpenID Connect Strategieanbieter zu OpenProject hinzu."
   logout_warning: >
     Sie wurden abgemeldet. Der Inhalt eines Formulars, das Sie uns übermitteln, kann verloren gehen. Bitte [einloggen].
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
         name: Name
-        slug: Eindeutige Kennung
-        display_name: Angezeigter Name
-        client_id: Client-ID
-        client_secret: Clientschlüssel
+        slug: Unique identifier
+        display_name: Display name
+        client_id: Client ID
+        client_secret: Client secret
         secret: Secret
-        scope: Geltungsbereich
-        grant_types_supported: Unterstützte Grant-Typen
-        limit_self_registration: Selbstregistrierung begrenzen
-        authorization_endpoint: Autorisierungsendpunkt
-        userinfo_endpoint: Endpunkt für Benutzerinformationen
-        token_endpoint: Token-Endpunkt
-        end_session_endpoint: Endpunkt für Sitzungsende
-        post_logout_redirect_uri: Post-Logout Weiterleitungs-URI
+        scope: Scope
+        grant_types_supported: Supported grant types
+        limit_self_registration: Limit self registration
+        authorization_endpoint: Authorization endpoint
+        userinfo_endpoint: User information endpoint
+        token_endpoint: Token endpoint
+        end_session_endpoint: End session endpoint
+        post_logout_redirect_uri: Post logout redirect URI
         jwks_uri: JWKS URI
-        issuer: Aussteller
-        tenant: Mandant
-        metadata_url: Metadaten-URL
-        icon: Benutzerdefiniertes Symbol
+        issuer: Issuer
+        tenant: Tenant
+        metadata_url: Metadata URL
+        icon: Custom icon
         claims: Claims
-        acr_values: ACR-Werte
+        acr_values: ACR values
         redirect_url: Redirect URL
-  activerecord:
     errors:
       models:
         openid_connect/provider:

@@ -27,7 +27,7 @@ bg:
     work_packages:
       activity_tab:
         no_results_title_text: No activity to display
-        no_results_description_text: "Choose \"Show everything\" to show all activity and comments"
+        no_results_description_text: 'Choose "Show everything" to show all activity and comments'
         label_activity_show_all: "Show everything"
         label_activity_show_only_comments: "Show comments only"
         label_activity_show_only_changes: "Show changes only"
@@ -128,9 +128,9 @@ bg:
     sync_failed: "Failed to synchronize from LDAP: %{message}."
     back_to_index: "Click here to go back to the list of connection."
     technical_warning_html: |
-      Този LDAP формуляр изисква технически познания за настройката на LDAP / Active Directory.
-      <br/>
-      <a href="https://www.openproject.org/help/administration/manage-ldap-authentication/"> Моля, посетете нашата документация за подробни инструкции </a>.
+      This LDAP form requires technical knowledge of your LDAP / Active Directory setup.
+      <br>
+      <a href="https://www.openproject.org/help/administration/manage-ldap-authentication/">Please visit our documentation for detailed instructions</a>.
     attribute_texts:
       name: Произволно име на LDAP връзката
       host: LDAP име на хост или IP адрес
@@ -139,7 +139,7 @@ bg:
       admin_map_html: "Optional: The attribute key in LDAP that <strong>if present</strong> marks the OpenProject user an admin. Leave empty when in doubt."
       system_user_dn_html: |
         Enter the DN of the system user used for read-only access.
-        <br/>
+        <br>
         Example: uid=openproject,ou=system,dc=example,dc=com
       system_user_password: Enter the bind password of the system user
       base_dn: |
@@ -179,7 +179,7 @@ bg:
     tls_options:
       verify_peer: "Verify SSL certificate"
       verify_peer_description_html: >
-        Enables strict SSL verification of the certificate trusted chain. <br/> <strong>Warning:</strong> Unchecking this option disables SSL verification of the LDAP server certificate. This exposes your connection to Man in the Middle attacks.
+        Enables strict SSL verification of the certificate trusted chain. <br> <strong>Warning:</strong> Unchecking this option disables SSL verification of the LDAP server certificate. This exposes your connection to Man in the Middle attacks.
       tls_certificate_description: "If the LDAP server certificate is not in the trust sources of this system, you can add it manually here. Enter a PEM X509 certifiate string."
   forums:
     show:
@@ -346,6 +346,7 @@ bg:
         placeholder: "Нов списък с проекти"
       delete_modal:
         title: "Изтриване на списъка с проекти"
+        heading: "Delete this project list?"
         text: "Това действие няма да изтрие нито един проект, който списъкът съдържа. Сигурни ли сте, че искате да изтриете този списък с проекти?"
     settings:
       change_identifier: Промяна на идентификатора
@@ -394,6 +395,8 @@ bg:
         no_results_content_text: Създаване на нова версия
       storage:
         no_results_title_text: There is no additional recorded disk space consumed by this project.
+      work_package_priorities:
+        new_label: "New priority"
   project_stage:
     working_days_count:
       one: "Duration: %{count} working day"
@@ -574,10 +577,10 @@ bg:
         package is automatically set to this value when this status is selected.
         Ignored in work-based mode.
       status_readonly_html: |
-        Отбележете тази опция, за да маркирате работните пакети с този статус като такива само за четене.
-        Не могат да се променят никакви атрибути, с изключение на статуса.
-        <br/>
-        <strong>Забележка</strong>: Наследените стойности (например от деца или връзки) все още ще се прилагат.
+        Check this option to mark work packages with this status as read-only.
+        No attributes can be changed with the exception of the status.
+        <br>
+        <strong>Note</strong>: Inherited values (e.g., from children or relations) will still apply.
     index:
       no_results_title_text: Има в момента няма статуси за работни пакети.
       no_results_content_text: Добавяне на ново състояние
@@ -616,6 +619,14 @@ bg:
         pattern:
           label: "Subject pattern"
           caption: "Search for an attribute or add text. To create a space between elements add it as a text."
+      export_configuration:
+        tab: "Generate PDF"
+        intro: "Select which templates from those that are available you would like to enable for this type. The template determines the design and attributes visible in the exported PDF of a work package using this type. The first template on the list is selected by default."
+        pdf_export_templates:
+          label: "PDF Export templates"
+          actions:
+            label_enable_all: "Enable all"
+            label_disable_all: "Disable all"
   versions:
     overview:
       work_packages_in_archived_projects: "The version is shared with archived projects which still have work packages assigned to this version. These are counted, but will not appear in the linked views."
@@ -630,6 +641,47 @@ bg:
     index:
       no_results_title_text: В момента няма работни потоци.
   work_packages:
+    datepicker_modal:
+      banner:
+        description:
+          automatic_mobile: "Start date derived."
+          click_on_show_relations_to_open_gantt: 'Click on "%{button_name}" for Gantt overview.'
+          manual_mobile: "Ignoring relations."
+          manual_gap_between_predecessors: "There is a gap between this and all predecessors."
+          manual_overlap_with_predecessors: "Overlaps with at least one predecessor."
+          manual_with_children: "This has child work packages but their start dates are ignored."
+        title:
+          automatic_mobile: "Automatically scheduled."
+          automatic_with_children: "The dates are determined by child work packages."
+          automatic_with_predecessor: "The start date is set by a predecessor."
+          manual_mobile: "Manually scheduled."
+          manually_scheduled: "Manually scheduled. Dates not affected by relations."
+      blankslate:
+        title: "No predecessors"
+        description: "To enable automatic scheduling, this work package needs to have at least one predecessor. It will then automatically be scheduled to start after the last predecessor."
+      ignore_non_working_days:
+        title: "Working days only"
+      mode:
+        title: "Scheduling mode"
+        automatic: "Automatic"
+        manual: "Manual"
+      show_relations: "Show relations"
+      tabs:
+        aria_label: "Datepicker tabs"
+        children: "Children"
+        dates: "Dates"
+        predecessors: "Predecessors"
+        successors: "Successors"
+        blankslate:
+          predecessors:
+            title: "No predecessors"
+            description: "This work package does not have any predecessors."
+          successors:
+            title: "No successors"
+            description: "This work package does not have any successors."
+          children:
+            title: "No children"
+            description: "This work package does not have any children."
     x_descendants:
       one: "One descendant work package"
       other: "%{count} work package descendants"
@@ -779,6 +831,7 @@ bg:
       attachment:
         attachment_content: "Attachment content"
         attachment_file_name: "Attachment file name"
+        content_type: "Content-type"
         downloads: "Файлове за изтегляне"
         file: "Файл"
         filename: "Файл"
@@ -786,10 +839,10 @@ bg:
       attribute_help_text:
         attribute_name: "Атрибут"
         help_text: "Help text"
+      capability:
+        context: "Context"
       changeset:
         repository: "Хранилище"
-      color:
-        hexcode: "Шестнадесетичен код"
       comment:
         commented: "Коментирани" #an object that this comment belongs to
       custom_action:
@@ -822,7 +875,10 @@ bg:
         client_credentials_user_id: "Клиентски идентификационни данни Потребителски ИД"
         scopes: "Обхвати"
         confidential: "Поверително"
+      emoji_reaction:
+        reactable: "Reacted on"
       enterprise_token:
+        domain: "Domain"
         starts_at: "Valid since"
         subscriber: "Subscriber"
         encoded_token: "Enterprise support token"
@@ -834,6 +890,7 @@ bg:
         widgets: "Джаджи"
       journal:
         notes: "Бележки"
+        cause_type: "Cause type"
       ldap_auth_source:
         account: "Акаунт"
         attr_firstname: "Лично име атрибут"
@@ -849,10 +906,11 @@ bg:
         tls_certificate_string: "LDAP server SSL certificate"
       member:
         roles: "Роли"
+      notification:
+        read_ian: "Read in-app"
+        resource: "Resource"
       oauth_client:
         client: "№ на клиент"
-      planning_element_type_color:
-        hexcode: Шестнадесетичен код
       project:
         active_value:
           true: "unarchived"
@@ -865,6 +923,7 @@ bg:
           true: "public"
           false: "private"
         queries: "Търсения"
+        enabled_modules: "Enabled modules"
         status_code: "Статус на проекта"
         description: "Описание"
         status_explanation: "Project status description"
@@ -885,23 +944,47 @@ bg:
       project_custom_field:
         is_required: "Required for all projects"
         custom_field_section: Раздел
+      project/life_cycle_step:
+        definition: "Definition"
       project/life_cycle_step_definition:
         name: "Name"
         color: "Color"
       query:
+        sums: "Sums"
+        columns: "Columns"
         column_names: "Колони"
         relations_to_type_column: "Relations to %{type}"
         relations_of_type_column: "%{type} relations"
         group_by: "Групай резултатите по"
+        sort_by: "Sort results by"
         filters: "Филтри"
         timeline_labels: "Timeline labels"
+        timeline_visible: "Show Gantt chart"
+        timeline_zoom_level: "Gantt chart zoom level"
+        timestamps: "Baseline timestamps"
+        sort_criteria: "Sort criteria"
+        highlighted_attributes: "Highlighted attributes"
+        highlighting_mode: "Highlight mode"
+        display_representation: "Display mode"
+        show_hierarchies: "Display mode"
+        starred: "Favorite"
+        hidden: "Hidden"
+        manual_sorting: "Manual sort order"
+        ordered_work_packages: "Work packages order"
+        include_subprojects: "Include subprojects"
+        results: "Results"
       relation:
         lag: "Lag"
-        from: "Работен пакет"
+        from: "Related work package"
         to: "Свързани работени пакети"
+        relation_type: "Relation type"
       reminder:
+        remindable: "Reminded object"
+        remind_at: "Remind at"
         remind_at_date: "Date"
         remind_at_time: "Time"
+      reminder_notification:
+        notification: "Notification"
       repository:
         url: "URL АДРЕС"
       role:
@@ -911,6 +994,9 @@ bg:
         is_readonly: "Work package read-only"
         excluded_from_totals: "Exclude from calculation of totals in hierarchy"
         default_done_ratio: "% Complete"
+      token/ical:
+        calendar: "Calendar"
+        ical_token_query_assignment: "Query assignment"
       time_entry:
         activity: "Активност"
         hours: "Часове"
@@ -924,6 +1010,7 @@ bg:
         is_default: "Активирано за нови проекти по подразбиране"
         is_milestone: "Е крайъгълен камък"
         color: "Цвят"
+        patterns: "Patterns"
       user:
         admin: "Администратор"
         auth_source: "Authentication source"
@@ -933,6 +1020,10 @@ bg:
         force_password_change: "Смяна на паролата при следващото влизане"
         language: "Език"
         last_login_on: "Последно влизане"
+        failed_login_count: "Failed login attempts"
+        first_name: "First name"
+        last_name: "Last name"
+        first_login: "First login"
         new_password: "Нова парола"
         password_confirmation: "Потвърждение"
         consented_at: "Съгласие в"
@@ -944,6 +1035,8 @@ bg:
         warn_on_leaving_unsaved: "Предупреждавайте ме при напускане на работен пакет с незаписани промени"
         theme: "Режим"
         mode_guideline: "Някои режими ще пренапишат цветовете на персонализираната тема за достъпност и четливост. За пълна персонализирана тема изберете режим Light."
+        daily_reminders: "Daily reminders"
+        workdays: "Working days"
       version:
         effective_date: "Крайна дата"
         sharing: "Споделяне"
@@ -1221,12 +1314,12 @@ bg:
           typed_dag:
             circular_dependency: "The relationship creates a circle of relationships."
           attributes:
-            to:
-              error_not_found: "work package in `to` position not found or not visible"
-              error_readonly: "an existing relation's `to` link is immutable"
-            from:
-              error_not_found: "work package in `from` position not found or not visible"
-              error_readonly: "an existing relation's `from` link is immutable"
+            to_id:
+              error_not_found: "not found or not visible."
+              error_readonly: "cannot be changed for existing relations."
+            from_id:
+              error_not_found: "not found or not visible."
+              error_readonly: "cannot be changed for existing relations."
             lag:
               greater_than_or_equal_to:
                 zero: "cannot be negative."
@@ -1282,6 +1375,10 @@ bg:
         work_package:
           is_not_a_valid_target_for_time_entries: "Работен пакет #%{id} не е валидна цел за преразпределяне на времевите записи."
           attributes:
+            id:
+              format: "%{message}"
+              cannot_add_child_because_of_lack_of_permission: "Cannot add child because you don't have permissions to edit the selected work package."
+              blank: "ID can't be blank."
             assigned_to:
               format: "%{message}"
             done_ratio:
@@ -1298,6 +1395,7 @@ bg:
               smaller_than_dates: "е по-малък от интервала между началната и крайната дата."
               not_available_for_milestones: "не е налична за работни пакети, вписани като етап."
               cannot_be_null: "не може да бъде зададена като нула, тъй като началната и крайната дата са известни."
+              not_an_integer: "is not a valid duration."
             parent:
               cannot_be_milestone: "не може да бъде крайъгълен камък."
               cannot_be_self_assigned: "не може да бъде присвоен на себе си."
@@ -1396,6 +1494,9 @@ bg:
       forum: "Форум"
       global_role: "Global role"
       group: "Група"
+      issue_priority:
+        one: "Priority"
+        other: "Priorities"
       member: "Член"
       news: "Новини"
       notification:
@@ -1409,6 +1510,7 @@ bg:
         one: "Project list"
         other: "Project lists"
       query: "Потребителска заявка"
+      reminder: "Reminder"
       role:
         one: "Роля"
         other: "Роли"
@@ -1473,18 +1575,25 @@ bg:
     assigned_to: "Изпълнител"
     assignee: "Изпълнител"
     attachments: "Прикачени файлове"
+    actor: "Actor"
+    action: "Action"
     author: "Автор"
+    avatar: "Avatar"
     base: "Обща грешка:"
+    body: "Body"
     blocks_ids: "ИД на блокираните работни пакети"
     category: "Категория"
     comment: "Коментар"
     comments: "Коментар"
     content: "Съдържание"
     color: "Цвят"
+    creator: "Creator"
     created_at: "Създаден на"
+    custom_field: "Custom field"
     custom_options: "Възможните стойности"
     custom_values: "допълнителни полета"
     date: "Дата"
+    dates_interval: "Date range"
     default_columns: "Колони по подразбиране"
     description: "Описание"
     derived_due_date: "Изведена крайна дата"
@@ -1494,39 +1603,63 @@ bg:
     due_date: "Крайна дата"
     estimated_hours: "Работа"
     estimated_time: "Работа"
+    email: "Email"
+    entity_type: "Entity"
     expires_at: "Expires at"
     firstname: "Собствено име"
+    filter: "Filter"
     group: "Група"
     groups: "Групи"
+    hexcode: "Hex code"
     id: "ID"
     is_default: "Стойност по подразбиране"
     is_for_all: "За всички проекти"
     public: "Публичен"
+    principal: "User or group"
     #kept for backwards compatibility
     issue: "Работен пакет"
+    journal: "Journal"
+    journal_notes: "Comment"
     lastname: "Фамилно име"
     login: "Username"
     mail: "E-mail"
     name: "Име"
     note: "Note"
+    notes: "Notes"
+    number: "Number"
+    options: "Options"
+    operator: "Operator"
     password: "Парола"
     priority: "Приоритет"
     project: "Проект"
+    project_ids: "Project IDs"
+    reason: "Reason"
     responsible: "Accountable"
+    required: "Required"
+    recipient: "Recipient"
     role: "Роля"
     roles: "Роли"
+    search: "Search"
     start_date: "Начална дата"
     status: "Състояние"
+    state: "State"
     subject: "Заглавие"
+    slug: "Slug"
     summary: "Обобщение"
+    text: "Text"
     title: "Заглавие"
     type: "Тип"
+    typeahead: "Autocomplete"
     updated_at: "Актуализиран на"
     updated_on: "Актуализиран на"
     uploader: "Uploader"
     user: "Потребител"
+    username: "Username"
+    unit: "Unit"
     value: "Стойност"
+    values: "Values"
     version: "Версия"
+    visible: "Visible"
     work_package: "Работен пакет"
   backup:
     failed: "Backup failed"
@@ -1839,6 +1972,8 @@ bg:
   enumeration_activities: "Дейности за проследяване на времето"
   enumeration_work_package_priorities: "Приоритети на работни пакети"
   enumeration_reported_project_statuses: "Докладвани статуси на проект"
+  enumeration_caption_order_changed: "Order successfully changed."
+  enumeration_could_not_be_moved: "Enumeration could not be moved."
   error_auth_source_sso_failed: "Неуспешно единично влизане (SSO) за потребител '%{value}'"
   error_can_not_archive_project: "Този проект не може да бъде архивиран: %{errors}"
   error_can_not_delete_entry: "Unable to delete entry"
@@ -1928,6 +2063,7 @@ bg:
         input_label_report: "Add columns to attribute table"
         input_caption_report: "By default all attributes added as columns in the work package list are selected. Long text fields are not available in the attribute table, but can be displayed below it."
         input_caption_table: "By default all attributes added as columns in the work package list are selected. Long text fields are not available in table based exports."
+        input_caption_required: "It is not possible to export the view without any column. Please add at least one column."
       pdf:
         export_type:
           label: "PDF export type"
@@ -1998,21 +2134,29 @@ bg:
       days: d
   pdf_generator:
     page_nr_footer: "Page %{page} of %{total}"
+    template_attributes:
+      label: "Attributes and description"
+      caption: All the attributes present in the current form configuration using the default template.
+    template_contract:
+      label: "Contract"
+      caption: Work package details formatted to the standard German contract form.
     dialog:
       title: Generate PDF
-      submit: Generate
-      header_right:
-        label: Header right
-        caption: Text to be displayed in the right of the header
+      submit: Download
+      templates:
+        label: "Template"
+        none_enabled: "No template has been enabled for this work package type"
       footer_center:
-        label: Footer center
-        caption: Text to be displayed in the center of the footer
+        label: Footer text
+        caption: This text will appear on every page at the center of the footer.
+      footer_right:
+        label: Footer text
+        caption: This text will appear on every page at the right of the footer.
       hyphenation:
         label: Hyphenation
-        caption: Break words between lines to improve text justification and readability.
-      paper_size:
-        label: Paper size
-        caption: The size of the paper to use for the PDF.
+        caption: Break line between words for better layout and justification.
+      hyphenation_language:
+        label: Language and hyphenation
   extraction:
     available:
       pdftotext: "Pdftotext available (optional)"
@@ -2094,6 +2238,8 @@ bg:
           Изчисляването на напредъка автоматично се <a href="%{href}" target="_blank">настройва на режим, базиран на работата, и се коригира при актуализиране на версията</a>.
         progress_calculation_adjusted: >-
           Изчисляването на напредъка <a href="%{href}" target="_blank">се коригира</a> автоматично <a href=" %{href} " target="_blank">при актуализиране на версията</a>.
+        scheduling_mode_adjusted: >-
+          Scheduling mode automatically adjusted with version update.
         totals_removed_from_childless_work_packages: >-
           Автоматично премахване на общите суми за работа и напредък за работни пакети, които не са родителски, при <a href="%{href}" target="_blank">актуализиране на версията</a>. Това е задача по поддръжката и може спокойно да бъде пренебрегната.
       total_percent_complete_mode_changed_to_work_weighted_average: >-
@@ -2338,6 +2484,7 @@ bg:
   label_missing_or_hidden_custom_option: "(missing value or lacking permissions to access)"
   label_descending: "Низходящо"
   label_details: "Подробности"
+  label_defaults: "Defaults"
   label_development_roadmap: "Развитие на пътната карта"
   label_diff: "разл"
   label_diff_inline: "инлайн"
@@ -2394,6 +2541,7 @@ bg:
   label_filter: "Филтри"
   label_filter_add: "Добавяне на филтър"
   label_filter_by: "Filter by"
+  label_filter_any_name_attribute: "Name attributes"
   label_filter_plural: "Филтри"
   label_filters_toggle: "Покажи/скрий филтрите"
   label_float: "Плаващ"
@@ -2673,6 +2821,7 @@ bg:
   label_roadmap_overdue: "%{value} закъснение"
   label_role_and_permissions: "Роли и права"
   label_role_new: "Нова роля"
+  label_role_grantable: "Grantable role"
   label_role_plural: "Роли"
   label_role_search: "Assign role to new members"
   label_scm: "SCM"
@@ -2726,6 +2875,7 @@ bg:
   label_title: "Заглавие"
   label_projects_menu: "Проекти"
   label_today: "днес"
+  label_token_version: "Token Version"
   label_top_menu: "Главно меню"
   label_topic_plural: "Tеми"
   label_total: "Oбщо"
@@ -2838,7 +2988,7 @@ bg:
   label_global_role: "Global role"
   label_not_changeable: "(не може да се променя)"
   label_global: "Глобален"
-  label_seeded_from_env_warning: Този запис е създаден чрез настройка/променлива на средата. Той не може да се редактира чрез потребителския интерфейс.
+  label_seeded_from_env_warning: This record has been created through a setting environment variable. It is not editable through UI.
   macro_execution_error: "Грешка при изпълнението на макроса %{macro_name}"
   macro_unavailable: "Не може да се покаже макрос %{macro_name} ."
   macros:
@@ -3371,6 +3521,12 @@ bg:
     activated: "активиран"
     deactivated: "деактивиран"
   search_input_placeholder: "Търсене ..."
+  setting_after_first_login_redirect_url: "First login redirect"
+  setting_after_first_login_redirect_url_text_html: >
+    Set a path to redirect users after their first login. If empty, redirects to the home page for the onboarding tour. <br/> Example: <code>/my/page</code>
+  setting_after_login_default_redirect_url: "After login redirect"
+  setting_after_login_default_redirect_url_text_html: >
+    Set a default path to redirect users after login, if no back link was provided. Redirects to home page if not set. <br/> Example: <code>/my/page</code>
   setting_apiv3_cors_title: "Cross-Origin Resource Sharing (CORS)"
   setting_apiv3_cors_enabled: "Активирайте CORS"
   setting_apiv3_cors_origins: "API V3 Cross-Origin Resource Sharing (CORS) позволява разрешения"
@@ -3749,6 +3905,7 @@ bg:
   text_unallowed_characters: "Unallowed characters"
   text_user_invited: The user has been invited and is pending registration.
   text_user_wrote: "%{value} написа:"
+  text_wrote: "wrote"
   text_warn_on_leaving_unsaved: "The work package contains unsaved text that will be lost if you leave this page."
   text_what_did_you_change_click_to_add_comment: "What did you change? Click to add comment"
   text_wiki_destroy_confirmation: "Are you sure you want to delete this wiki and all its content?"
@@ -4208,3 +4365,29 @@ bg:
   plugin_openproject_auth_saml:
     name: "OmniAuth SAML / Single-Sign On"
     description: "Adds the OmniAuth SAML provider to OpenProject"
+  enterprise_plans:
+    legacy_enterprise: "Enterprise Plan"
+  enterprise_features:
+    baseline_comparison: Baseline Comparison
+    board_view: Board View
+    conditional_highlighting: Conditional Highlighting
+    custom_actions: Custom Actions
+    custom_field_hierarchies: Custom Field Hierarchies
+    customize_life_cycle: Customize Life Cycle
+    date_alerts: Date Alerts
+    define_custom_style: Define Custom Style
+    edit_attribute_groups: Edit Attribute Groups
+    gantt_pdf_export: Gantt PDF Export
+    grid_widget_wp_graph: Grid Widget Work Package Graph
+    ldap_groups: LDAP Groups
+    one_drive_sharepoint_file_storage: OneDrive/SharePoint File Storage
+    placeholder_users: Placeholder Users
+    project_list_sharing: Project List Sharing
+    readonly_work_packages: Readonly Work Packages
+    sso_auth_providers: SSO Auth Providers
+    team_planner_view: Team Planner View
+    two_factor_authentication: Two-Factor Authentication
+    virus_scanning: Attachment Virus Scanning
+    work_package_query_relation_columns: Work Package Query Relation Columns
+    work_package_sharing: Work Package Sharing
+    work_package_subject_generation: Work Package Subject Generation

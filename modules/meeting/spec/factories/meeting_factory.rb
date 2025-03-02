@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -31,9 +32,16 @@ FactoryBot.define do
     author factory: :user
     project
     start_time { Date.tomorrow + 10.hours }
+    recurring_meeting { nil }
     duration { 1.0 }
     location { "https://some-url.com" }
     m.sequence(:title) { |n| "Meeting #{n}" }
+
+    trait :author_participates do
+      after(:build) do |meeting|
+        meeting.participants.build(user: meeting.author, invited: true)
+      end
+    end
 
     after(:create) do |meeting, evaluator|
       meeting.project = evaluator.project if evaluator.project

@@ -32,17 +32,21 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render(Primer::OpenProject::PageHeader.new) do |header|
     header.with_title { t(:label_color_plural) }
-    header.with_breadcrumbs([{ href: admin_index_path, text: t(:label_administration) },
-                             t(:label_color_plural)])
+    header.with_breadcrumbs(
+      [{ href: admin_index_path, text: t(:label_administration) },
+       t(:label_color_plural)]
+    )
   end
 %>
 <%=
   render(Primer::OpenProject::SubHeader.new) do |subheader|
-    subheader.with_action_button(scheme: :primary,
-                                 aria: { label: I18n.t("colors.index.label_new_color") },
-                                 title: I18n.t("colors.index.label_new_color"),
-                                 tag: :a,
-                                 href: new_color_path) do |button|
+    subheader.with_action_button(
+      scheme: :primary,
+      aria: { label: I18n.t("colors.index.label_new_color") },
+      title: I18n.t("colors.index.label_new_color"),
+      tag: :a,
+      href: new_color_path
+    ) do |button|
       button.with_leading_visual_icon(icon: :plus)
       t("activerecord.attributes.type.color")
     end
@@ -53,11 +57,11 @@ See COPYRIGHT and LICENSE files for more details.
   <div class="color--preview-patch-field">
     <% @colors.each do |color| %>
       <%= content_tag :div,
-          class: 'color--preview-patch',
-          style: "background-color: #{color.hexcode}" do %>
+                      class: "color--preview-patch",
+                      style: "background-color: #{color.hexcode}" do %>
         <%= link_to color.name,
                     edit_color_path(color),
-                    class: color.bright? ? '-bright' : '-dark' %>
+                    class: color.bright? ? "-bright" : "-dark" %>
       <% end %>
     <% end %>
   </div>

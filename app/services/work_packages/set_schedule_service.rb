@@ -27,22 +27,19 @@
 #++
 
 class WorkPackages::SetScheduleService
-  attr_accessor :user, :work_packages, :initiated_by
+  attr_accessor :user, :work_packages, :initiated_by, :switching_to_automatic_mode
 
-  def initialize(user:, work_package:, initiated_by: nil)
+  def initialize(user:, work_package:, initiated_by: nil, switching_to_automatic_mode: [])
     self.user = user
     self.work_packages = Array(work_package)
     self.initiated_by = initiated_by
+    self.switching_to_automatic_mode = switching_to_automatic_mode
   end
 
   def call(changed_attributes = %i(start_date due_date))
     altered = []
 
-    if %i(parent parent_id).intersect?(changed_attributes)
-      altered += schedule_by_parent
-    end
-
-    if %i(start_date due_date parent parent_id).intersect?(changed_attributes)
+    if %i(start_date due_date parent parent_id schedule_manually).intersect?(changed_attributes)
       altered += schedule_following
     end
 
@@ -56,25 +53,6 @@ class WorkPackages::SetScheduleService
   end
 
   private
-
-  # rubocop:disable Metrics/AbcSize
-  def schedule_by_parent
-    work_packages
-      .select { |wp| wp.start_date.nil? && wp.parent }
-      .each do |wp|
-        days = WorkPackages::Shared::Days.for(wp)
-        wp.start_date = days.soonest_working_day(wp.parent.soonest_start)
-        if wp.due_date || wp.duration
-          wp.due_date = [
-            wp.start_date,
-            days.due_date(wp.start_date, wp.duration),
-            wp.due_date
-          ].compact.max
-          assign_cause_for_journaling(wp, :parent)
-        end
-      end
-  end
-  # rubocop:enable Metrics/AbcSize
 
   # Finds all work packages that need to be rescheduled because of a
   # rescheduling of the service's work package and reschedules them.
@@ -95,10 +73,21 @@ class WorkPackages::SetScheduleService
   def schedule_following
     altered = []
 
-    WorkPackages::ScheduleDependency.new(work_packages).in_schedule_order do |scheduled, dependency|
-      reschedule(scheduled, dependency)
+    moved_work_packages = work_packages.flat_map do |work_package|
+      if work_package.parent && work_package.parent_id_changed?
+        [work_package, work_package.parent]
+      else
+        [work_package]
+      end
+    end
 
-      altered << scheduled if scheduled.changed?
+    WorkPackages::ScheduleDependency.new(moved_work_packages, switching_to_automatic_mode:)
+                                    .in_schedule_order do |scheduled, dependency|
+      changes_before = scheduled.changes
+      reschedule(scheduled, dependency)
+      changes_after = scheduled.changes
+
+      altered << scheduled if changes_before != changes_after
     end
 
     altered
@@ -111,8 +100,10 @@ class WorkPackages::SetScheduleService
   def reschedule(scheduled, dependency)
     if dependency.has_descendants?
       reschedule_by_descendants(scheduled, dependency)
-    else
+    elsif dependency.has_direct_or_indirect_predecessors?
       reschedule_by_predecessors(scheduled, dependency)
+    else
+      scheduled.schedule_manually = true
     end
   end
 
@@ -147,7 +138,7 @@ class WorkPackages::SetScheduleService
   def reschedule_by_predecessors(scheduled, dependency)
     return unless dependency.soonest_start_date
 
-    new_start_date = [scheduled.start_date, dependency.soonest_start_date].compact.max
+    new_start_date = dependency.soonest_start_date
     new_due_date = determine_due_date(scheduled, new_start_date)
     set_dates(scheduled, new_start_date, new_due_date)
     assign_cause_for_journaling(scheduled, :predecessor)
@@ -193,7 +184,6 @@ class WorkPackages::SetScheduleService
   def assign_cause_initiated_by_work_package(work_package, _relation)
     # For now we only track a generic cause, and not a specialized reason depending on the relation
     # work_package.journal_cause = case relation
-    #                             when :parent then Journal::CausedByWorkPackageParentChange.new(initiated_by)
     #                             when :children then Journal::CausedByWorkPackageChildChange.new(initiated_by)
     #                             when :predecessor then Journal::CausedByWorkPackagePredecessorChange.new(initiated_by)
     #                             end

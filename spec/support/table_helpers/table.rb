@@ -28,8 +28,9 @@
 
 module TableHelpers
   class Table
-    def initialize(work_packages_by_identifier)
+    def initialize(work_packages_by_identifier, relations)
       @work_packages_by_identifier = work_packages_by_identifier
+      @relations = relations
     end
 
     def work_package(name)
@@ -41,7 +42,51 @@ module TableHelpers
       @work_packages_by_identifier.values
     end
 
+    # Finds a relation by its predecessor and/or successor.
+    #
+    # Example:
+    #
+    #   relation(successor: "succ")
+    #
+    # will return the first created follows/precedes relation having the successor with subject "succ".
+    #
+    # @param predecessor [String, nil] the predecessor's subject name
+    # @param successor [String, nil] the successor's subjectname
+    # @return [Relation, nil] the relation or nil if no relation matches
+    def relation(predecessor: nil, successor: nil)
+      @relations.find do |relation|
+        relation.follows? \
+          && (predecessor.nil? || relation.predecessor.subject == subject_of(predecessor)) \
+          && (successor.nil? || relation.successor.subject == subject_of(successor))
+      end
+    end
+
+    def relations
+      @relations
+    end
+
+    def monday = Date.current.next_occurring(:monday)
+    def tuesday = monday + 1.day
+    def wednesday = monday + 2.days
+    def thursday = monday + 3.days
+    def friday = monday + 4.days
+    def saturday = monday + 5.days
+    def sunday = monday + 6.days
+
     private
+
+    def subject_of(object)
+      case object
+      when nil
+        nil
+      when String
+        object
+      when WorkPackage
+        object.subject
+      else
+        raise "Cannot find subject for #{object.inspect}"
+      end
+    end
 
     def normalize_name(name)
       symbolic_name = name.to_sym

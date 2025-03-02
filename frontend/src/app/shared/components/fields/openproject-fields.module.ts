@@ -106,6 +106,7 @@ import {
 import { CombinedDateEditFieldComponent } from './edit/field-types/combined-date-edit-field.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
+import { ModalWithTurboContentDirective } from 'core-app/shared/components/fields/edit/modal-with-turbo-content/modal-with-turbo-content.directive';
 
 @NgModule({
   imports: [
@@ -169,6 +170,8 @@ import { FormsModule } from '@angular/forms';
     AttributeLabelMacroComponent,
 
     WorkPackageQuickinfoMacroComponent,
+
+    ModalWithTurboContentDirective,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

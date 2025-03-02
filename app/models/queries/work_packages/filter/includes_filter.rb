@@ -36,6 +36,10 @@ class Queries::WorkPackages::Filter::IncludesFilter <
     ::Relation::TYPE_INCLUDES
   end
 
+  def human_name
+    I18n.t(:label_includes)
+  end
+
   private
 
   def relation_filter

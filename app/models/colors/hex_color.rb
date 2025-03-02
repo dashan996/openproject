@@ -8,6 +8,10 @@ module Colors
       { color: contrasting_font_color(light: light_color, dark: dark_color), "background-color": hexcode }
     end
 
+    def color_styles_css
+      color_styles.map { |k, v| "#{k}: #{v};" }.join(" ")
+    end
+
     def contrasting_font_color(light: "#FFFFFF", dark: "#333333")
       bright? ? dark : light
     end

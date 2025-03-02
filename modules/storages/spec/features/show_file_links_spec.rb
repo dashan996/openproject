@@ -49,7 +49,7 @@ RSpec.describe "Showing of file links in work package", :js do
 
   before do
     Storages::Peripherals::Registry.stub(
-      "#{storage}.queries.auth_check",
+      "#{storage}.queries.user",
       ->(_) { authorization_state }
     )
 

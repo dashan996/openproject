@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -54,14 +56,13 @@ class Meeting < ApplicationRecord
   scope :templated, -> { where(template: true) }
   scope :not_templated, -> { where(template: false) }
 
-  scope :cancelled, -> { where(state: :cancelled) }
-  scope :not_cancelled, -> { where.not(id: cancelled) }
+  scope :not_cancelled, -> { where.not.cancelled }
 
   scope :not_recurring, -> { where(recurring_meeting_id: nil) }
-  scope :recurring, -> { where.not(id: not_recurring) }
+  scope :recurring, -> { where.not(recurring_meeting_id: nil) }
 
-  scope :from_tomorrow, -> { where(["start_time >= ?", Date.tomorrow.beginning_of_day]) }
-  scope :from_today, -> { where(["start_time >= ?", Time.zone.today.beginning_of_day]) }
+  scope :from_tomorrow, -> { where(start_time: Date.tomorrow.beginning_of_day..) }
+  scope :from_today, -> { where(start_time: Time.zone.today.beginning_of_day..) }
 
   scope :upcoming, -> { where("start_time + (interval '1 hour' * duration) >= ?", Time.current) }
   scope :past, -> { where("start_time + (interval '1 hour' * duration) < ?", Time.current) }
@@ -157,12 +158,6 @@ class Meeting < ApplicationRecord
 
   def templated?
     !!template
-  end
-
-  def author=(user)
-    super
-    # Don't add the author as participant if we already have some through nested attributes
-    participants.build(user:, invited: true) if new_record? && participants.empty? && user
   end
 
   # Returns true if user or current user is allowed to view the meeting

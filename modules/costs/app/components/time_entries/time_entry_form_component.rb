@@ -58,16 +58,22 @@ module TimeEntries
       }
 
       if time_entry.persisted?
-        base.merge({
-                     url: time_entry_path(time_entry),
-                     method: :patch
-                   })
+        base.deep_merge({
+                          url: time_entry_path(time_entry),
+                          method: :patch,
+                          data: {
+                            refresh_form_url: refresh_form_time_entry_path(time_entry)
+                          }
+                        })
       else
 
-        base.merge({
-                     url: time_entries_path,
-                     method: :post
-                   })
+        base.deep_merge({
+                          url: time_entries_path,
+                          method: :post,
+                          data: {
+                            refresh_form_url: refresh_form_time_entries_path
+                          }
+                        })
       end
     end
   end

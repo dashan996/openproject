@@ -45,6 +45,10 @@ module Queries
           :involved
         end
 
+        def human_name
+          "Involved" # API only
+        end
+
         private
 
         def visibility_checked_sql(operator_string, values, visible_sql)

@@ -3,7 +3,7 @@
     render(Primer::Beta::Text.new(tag: :div, test_selector: 'storage-oauth-client-form')) do
       primer_form_with(
         model: oauth_client,
-        url: finish_setup_admin_settings_storage_oauth_client_path(storage),
+        url: form_url,
         method: :post
       ) do |form|
         flex_layout do |oauth_client_row|

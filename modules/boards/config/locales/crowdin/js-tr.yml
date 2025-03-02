@@ -7,7 +7,7 @@ tr:
       label_unnamed_list: 'Adsız liste'
       label_board_type: 'Yazı tahtası tipi'
       upsale:
-        teaser_text: 'Boards ile iş akışlarınızı otomatikleştirmek ister misiniz? Gelişmiş kartlar bir Enterprise eklentidir. Lütfen ücretli bir plana yükseltin.'
+        teaser_text: 'Panolar ile iş akışlarınızı otomatikleştirmek ister misiniz? Gelişmiş kartlar bir Enterprise eklentidir. Lütfen ücretli bir plana yükseltin.'
         upgrade: 'Şimdi Yükselt'
       lists:
         delete: 'Listeyi silin'
@@ -20,7 +20,7 @@ tr:
         unlock_version: 'Sürümün kilidini aç'
         edit_version: 'Sürümü düzenle'
         show_version: 'Sürümü göster'
-        locked: 'Kilitlendi'
+        locked: 'Kilitli'
         closed: 'Kapalı'
       new_board: 'Yeni yazı tahtası'
       add_list: 'Listeyi panele ekle'

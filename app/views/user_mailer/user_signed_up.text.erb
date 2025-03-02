@@ -31,7 +31,8 @@ See COPYRIGHT and LICENSE files for more details.
 <%= t(:mail_body_register, app_title: Setting.app_title) %>
 <%= @activation_url %>
 
-<%= strip_tags t(:mail_body_register_links_html,
+<%= strip_tags t(
+      :mail_body_register_links_html,
       webinar_link: OpenProject::Static::Links.links[:webinar_videos][:href],
       youtube_link: OpenProject::Configuration.youtube_channel,
       get_started_link: OpenProject::Static::Links.links[:get_started_videos][:href],

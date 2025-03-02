@@ -94,7 +94,10 @@ module WorkPackages::Dialogs
       render_custom_fields(form: f)
 
       # Keep hidden fields for relevant changes
-      work_package.changes.except(:description, :subject, :type_id).each do |attribute, value|
+      work_package.changes
+                  .slice(*writable_attributes)
+                  .except(:description, :subject, :type_id)
+                  .each do |attribute, value|
         f.hidden(name: attribute, value:)
       end
     end
@@ -111,6 +114,11 @@ module WorkPackages::Dialogs
 
     def custom_fields
       @custom_fields ||= work_package.available_custom_fields.select(&:required?)
+    end
+
+    def writable_attributes
+      contract = WorkPackages::CreateContract.new(work_package, User.current)
+      contract.writable_attributes
     end
   end
 end

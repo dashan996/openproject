@@ -103,14 +103,24 @@ module OAuthClients
       else
         rack_access_token = service_result.result
         OAuthClientToken.transaction do
-          oauth_client_token = create_client_token(rack_access_token)
-
+          oauth_client_token = OAuthClientToken.new(
+            user: @user,
+            oauth_client: @oauth_client,
+            access_token: rack_access_token.access_token,
+            token_type: rack_access_token.token_type, # :bearer
+            refresh_token: rack_access_token.refresh_token,
+            expires_in: rack_access_token.raw_attributes[:expires_in],
+            scope: rack_access_token.scope
+          )
           oauth_client_token.save!
-          RemoteIdentities::CreateService.call(user: @user, oauth_config: @config, oauth_token: rack_access_token)
-                                         .on_failure { raise ActiveRecord::Rollback }
+
+          RemoteIdentities::CreateService
+            .call(user: @user, oauth_config: @config, oauth_client_token:)
+            .on_failure { raise ActiveRecord::Rollback }
         end
 
-        ServiceResult.new(success: oauth_client_token.errors.empty?, result: oauth_client_token,
+        ServiceResult.new(success: oauth_client_token.errors.empty?,
+                          result: oauth_client_token,
                           errors: oauth_client_token.errors)
       end
     end
@@ -135,20 +145,6 @@ module OAuthClients
     end
 
     private
-
-    # @param rack_access_token [Rack::OAuth2::Token] - rack token to be used as a base
-    # @return [OAuthClientToken]
-    def create_client_token(rack_access_token)
-      OAuthClientToken.new(
-        user: @user,
-        oauth_client: @oauth_client,
-        access_token: rack_access_token.access_token,
-        token_type: rack_access_token.token_type, # :bearer
-        refresh_token: rack_access_token.refresh_token,
-        expires_in: rack_access_token.raw_attributes[:expires_in],
-        scope: rack_access_token.scope
-      )
-    end
 
     # Check if a OAuthClientToken already exists and return nil otherwise.
     # Don't handle the case of an expired token.

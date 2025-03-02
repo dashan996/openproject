@@ -40,18 +40,17 @@ You can change the view of a cost reports and adapt it to your needs.
 
 ### Filter cost reports
 
-You can select and apply various filters, such as work package, author, start date or target version.
+You can select and apply various filters, such as work package, author, start date, or target version, to refine the displayed data. The **Projects** filter allows selection of multiple projects. Depending on your rights within a project, multiple users can also be selected.
 
-Multiple projects can be selected by adding a **Projects** filter.
-Depending on your rights in the project, multiple users can also be selected. This way you can filter the time and cost entries exactly to your need, depending on the time, work or user you want to see.
+The **Work Package** and **Projects** filters support the inclusion or exclusion of related elements. The **Work Package** filter can include or exclude children work packages, while the **Projects** filter can include or exclude subprojects.
 
-The results will then be displayed in the time and cost report below.
+Filtered results are displayed in the time and cost report below.
 
 ![Time and cost reports filters in OpenProject](openproject_userguide_timeandcosts_module_filter.png)
 
 ### Group by criteria for cost reports
 
-The time and cost reports can be grouped by selected criteria, such as dates, work packages, assignee, or any other field, incl. custom fields.
+The time and cost reports can be grouped by selected criteria, such as dates, work packages, assignee, or any other field, including custom fields.
 
 To add grouping criteria to the columns or rows of the report, select the drop-down field on the right to **add a group-by attribute**.
 
@@ -118,3 +117,10 @@ To prepare the export, first filter and set up the report according to your pref
 A PDF file will be generated, containing the time entries specified by the report.
 
 ![Timesheet PDF export in OpenProject](openproject_userguide_timesheet_pdf_export.png)
+
+> [!TIP]
+>
+> If the exported PDF includes multiple users, an additional page after the cover page will provide an overview table displaying the total hours worked by each user, as well as a sum per user.
+> 
+
+![Timesheet PDF export for multiple users in OpenProject](openproject_userguide_timesheet_pdf_export_multiple_users.png)

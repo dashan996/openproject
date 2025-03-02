@@ -48,7 +48,7 @@ RSpec.describe OpenIDConnect::UserTokens::RefreshService, :webmock do
     {
       status: 200,
       headers: { "Content-Type": "application/json" },
-      body: { access_token: "a-refreshed", refresh_token: "r-refreshed" }.to_json
+      body: { access_token: "a-refreshed", refresh_token: "r-refreshed", expires_in: 20 }.to_json
     }
   end
 
@@ -71,6 +71,25 @@ RSpec.describe OpenIDConnect::UserTokens::RefreshService, :webmock do
 
   it "updates the stored refresh token" do
     expect { subject }.to change { user.oidc_user_tokens.first.refresh_token }.from("r-token").to("r-refreshed")
+  end
+
+  it "updates the stored expiration time", :freeze_time do
+    expect { subject }.to change { user.oidc_user_tokens.first.expires_at }.to(20.seconds.from_now.change(usec: 0))
+  end
+
+  context "when the refresh response has no expires_in" do
+    let(:refresh_response) do
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+        body: { access_token: "a-refreshed", refresh_token: "r-refreshed" }.to_json
+      }
+    end
+
+    it "updates the stored expiration time to nil" do
+      subject
+      expect(user.oidc_user_tokens.first.expires_at).to be_nil
+    end
   end
 
   context "when the refresh response is unexpected JSON" do

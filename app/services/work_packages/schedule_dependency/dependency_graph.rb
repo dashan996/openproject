@@ -47,6 +47,7 @@ class WorkPackages::ScheduleDependency::DependencyGraph
         schedule_order.unshift(dependency)
       end
     end
+    schedule_order.reject! { |dependency| dependency.work_package.destroyed? }
     schedule_order
   end
 

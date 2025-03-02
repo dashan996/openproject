@@ -8,6 +8,7 @@ sl:
         row_count: "Število vrstic"
         column_count: "Število stolpcev"
         widgets: "Gradniki"
+        scope: "Scope"
     errors:
       models:
         grids/grid:

@@ -48,7 +48,7 @@ RSpec.describe API::V3::TimeEntries::TimeEntriesActivityRepresenter, "rendering"
       let(:title) { activity.name }
     end
 
-    # returns the projects where it (and it's children) is active
+    # returns the projects where it (and its children) is active
     it_behaves_like "has a link collection" do
       let(:project1) { build_stubbed(:project) }
       let(:project2) { build_stubbed(:project) }

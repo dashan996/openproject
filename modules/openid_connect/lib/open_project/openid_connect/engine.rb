@@ -55,6 +55,7 @@ module OpenProject::OpenIDConnect
             omniauth.oidc_sid
             omniauth.oidc_access_token
             omniauth.oidc_refresh_token
+            omniauth.oidc_expires_in
           ]
 
           h[:backchannel_logout_callback] = ->(logout_token) do

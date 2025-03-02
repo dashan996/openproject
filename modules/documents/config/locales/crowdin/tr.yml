@@ -21,19 +21,21 @@
 #++
 tr:
   plugin_openproject_documents:
-    name: "OpenProject Documents"
-    description: "An OpenProject plugin to allow creation of documents in projects."
+    name: "OpenProject Belgeler"
+    description: "Projelerde belge oluşturulmasına izin veren bir OpenProject eklentisi."
   activerecord:
     models:
       document: "Belge"
   activity:
     filter:
-      document: "Dökümanlar"
+      document: "Belgeler"
   default_doc_category_tech: "Teknik belgeler"
   default_doc_category_user: "Kullanıcı belgeleri"
   enumeration_doc_categories: "Belge kategorileri"
   documents:
     label_attachment_author: "Ek yazar"
+    label_categories: "Kategoriler"
+    new_category: "Yeni kategori"
   label_document_added: "Belge eklendi"
   label_document_new: "Yeni belge"
   label_document_plural: "Belgeler"

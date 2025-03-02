@@ -272,6 +272,9 @@ RSpec.describe MailHandler do
 
   shared_context "with a new work package with attributes with additional spaces" do
     let(:permissions) { %i[add_work_packages assign_versions work_package_assigned] }
+    let(:role) do
+      create(:project_role, permissions:)
+    end
     let!(:user) do
       create(:user,
              mail: "JSmith@somenet.foo",
@@ -294,6 +297,21 @@ RSpec.describe MailHandler do
     let!(:high_priority) do
       create(:priority_high)
     end
+    let!(:version) { create(:version, name: "alpha", project:) }
+    let!(:original_status) do
+      create(:default_status)
+    end
+    let!(:resolved_status) do
+      create(:status,
+             name: "Resolved") do |status|
+        create(:workflow,
+               old_status: original_status,
+               new_status: status,
+               role:,
+               type: feature_type)
+      end
+    end
+
     let(:submit_options) { {} }
 
     subject do
@@ -1169,6 +1187,57 @@ RSpec.describe MailHandler do
         it "sets the description" do
           expect(subject.description)
             .to eql "This is a html-only email."
+        end
+      end
+
+      context "for a wp with attribute keys" do
+        include_context "with a new work package with attributes with additional spaces"
+        it_behaves_like "work package created"
+
+        subject do
+          submit_email("wp_with_attribute_keys.eml", allow_override: ["category"])
+        end
+
+        it "sets the description" do
+          expect(subject.description).to eq("Some description here")
+          expect(subject.subject).to eq("New ticket with full attributes")
+          expect(subject.type).to eq(feature_type)
+          expect(subject.status).to eq(resolved_status)
+          expect(subject.version).to eq(version)
+          expect(subject.priority).to eq(urgent_priority)
+          expect(subject.assigned_to).to eq(user)
+          expect(subject.responsible).to eq(user)
+          expect(subject.start_date).to eq(Date.parse("2025-01-01"))
+          expect(subject.due_date).to eq(Date.parse("2025-12-31"))
+          expect(subject.estimated_hours).to eq(20)
+          expect(subject.remaining_hours).to eq(10.5)
+          expect(subject.category).to eq(stock_category)
+        end
+
+        context "with the user having a german locale" do
+          before do
+            user.update!(language: "de")
+          end
+
+          subject do
+            submit_email("wp_with_attributes_i18n_de.eml", allow_override: ["category"])
+          end
+
+          it "sets the description" do
+            expect(subject.description).to eq("Beschreibung würde hier stehen.")
+            expect(subject.subject).to eq("Neues Arbeitspaket")
+            expect(subject.type).to eq(feature_type)
+            expect(subject.status).to eq(resolved_status)
+            expect(subject.version).to eq(version)
+            expect(subject.priority).to eq(urgent_priority)
+            expect(subject.assigned_to).to eq(user)
+            expect(subject.responsible).to eq(user)
+            expect(subject.start_date).to eq(Date.parse("2025-01-01"))
+            expect(subject.due_date).to eq(Date.parse("2025-12-31"))
+            expect(subject.estimated_hours).to eq(20)
+            expect(subject.remaining_hours).to eq(10.5)
+            expect(subject.category).to eq(stock_category)
+          end
         end
       end
     end

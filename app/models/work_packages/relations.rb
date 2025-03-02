@@ -29,14 +29,23 @@ module WorkPackages::Relations
 
   included do
     # All relations of the work package in both directions.
-    # Mostly used to have the relations destroyed upon destruction of the work package.
     # rubocop:disable Rails/InverseOf
     has_many :relations,
              ->(work_package) {
                unscope(:where)
                  .of_work_package(work_package)
              },
-             dependent: :destroy
+             dependent: :destroy do
+      def visible(user = User.current)
+        # The work_package_focus_scope in here is used to improve performance by reducing the number of
+        # work packages that have to be checked for whether they are visible.
+        # Since the method looks for relations on the current work package, only work packages
+        # that are on either end of a relation with the current work package need to be considered.
+        # The number should be quite small compared to the total number of work packages.
+        merge(Relation.visible(user,
+                               work_package_focus_scope: Arel::Nodes::UnionAll.new(select(:from_id).arel, select(:to_id).arel)))
+      end
+    end
     # rubocop:enable Rails/InverseOf
 
     # Relations where the current work package follows another one.
@@ -50,6 +59,18 @@ module WorkPackages::Relations
              autosave: true,
              dependent: :nullify,
              inverse_of: :from
+
+    # Relations where the current work package is followed by another one.
+    # In this case,
+    #   * from is the following work package
+    #   * to is self
+    has_many :precedes_relations,
+             -> { where(relation_type: Relation::TYPE_FOLLOWS) },
+             class_name: "Relation",
+             foreign_key: :to_id,
+             autosave: true,
+             dependent: :nullify,
+             inverse_of: :to
 
     # Relations where the current work package blocks another one.
     # In this case,

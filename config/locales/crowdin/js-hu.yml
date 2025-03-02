@@ -103,7 +103,6 @@ hu:
     button_settings: "Beállítások"
     button_uncheck_all: "Az összes kijelölés megszüntetése"
     button_update: "Frissítés"
-    button_export-pdf: "PDF-fájl letöltése"
     button_export-atom: "Atom letöltés"
     button_generate_pdf: "Generate PDF"
     button_create: "Létrehoz"
@@ -222,6 +221,8 @@ hu:
             label_maximum_users: "Maximális aktív felhasználók"
             label_starts_at: "Kezdés ideje:"
             label_expires_at: "Lejárat ekkor"
+            label_plan: "Plan"
+            label_additional_features: "Additional features"
             receive_newsletter: Szeretném megkapni az OpenProject <a target="_blank" href="%{link}"> hírlevelét </a>.
             taken_domain: Csak egy próbaverzió lehet aktív egy domainen
             domain_mismatch: The current request host name does not match the configured host name. Please double check your system settings.
@@ -357,10 +358,10 @@ hu:
           learn_about: "Tudjon meg többet az új funkciókról"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_2":
+          "15_3":
             standard:
               new_features_html: >
-                The release brings various features and improvements for you, e.g. <br> <ul class="%{list_styling_class}"> <li>Set reminders for work packages to generate date alert notifications.</li> <li>Create new folders directly from the location picker for file storage.</li> <li>Specify a required lag between work packages successors and predecessors.</li> <li>Enable ordering and grouping for work packages on values of custom fields type hierarchy.</li> <li>Export time entries as PDF timesheets.</li> <li>Add a popover displaying user information when hovering.</li> </ul>
+                The release brings various features and improvements for you, e.g. <br> <ul class="%{list_styling_class}"> <li>Schedule recurring meetings to streamline your weekly, biweekly, or custom appointments.</li> <li>Create child work packages directly from the Relations tab.</li> <li>Include total sums in timesheet PDF exports for better insights.</li> <li>Include child work packages in cost reports for more accurate tracking.</li> <li>See dates of previously hidden, permission-restricted relations to make informed scheduling decisions.</li> </ul>
     ical_sharing_modal:
       title: "Subscribe to calendar"
       inital_setup_error_message: "An error occured while fetching data."
@@ -852,8 +853,6 @@ hu:
       select_branch: "Branch kiválasztása"
     field_value_enter_prompt: "Adja meg az értéket a %{field} mezőhöz"
     project_menu_details: "Részletek"
-    scheduling:
-      manual: "Kézi ütemezés\n"
     sort:
       sorted_asc: "Növekvő sorrend alkalmazása, "
       sorted_dsc: "Csökkenő rendezés alkalmazva, "
@@ -901,15 +900,6 @@ hu:
       comment_send_failed: "Hiba történt. A megjegyzés elküldése meghiúsult."
       comment_updated: "A megjegyzés sikeresen frissítve."
       confirm_edit_cancel: "Biztosan meg kívánja szakítani a munkacsomag szerkesztést?"
-      datepicker_modal:
-        automatically_scheduled_parent: "Automatically scheduled. Dates are derived from relations."
-        manually_scheduled: "Manual scheduling enabled, all relations ignored."
-        start_date_limited_by_relations: "Available start and finish dates are limited by relations."
-        changing_dates_affects_follow_relations: "Changing these dates will affect dates of related work packages."
-        click_on_show_relations_to_open_gantt: 'Click on "%{button_name}" for GANTT overview.'
-        show_relations: "Show relations"
-        ignore_non_working_days:
-          title: "Working days only"
       description_filter: "Szűrő"
       description_enter_text: "Írjon szöveget"
       description_options_hide: "Beállítások elrejtése"

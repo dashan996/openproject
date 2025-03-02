@@ -46,8 +46,13 @@ RSpec.describe Relations::UpdateContract do
     let(:contract) { described_class.new(relation, current_user) }
 
     context "when an isolated relation is reversed" do
+      let(:relation_from_wp) { create(:work_package) }
+      let(:relation_to_wp) { create(:work_package) }
       let(:relation) do
-        create(:relation, relation_type: Relation::TYPE_BLOCKS)
+        create(:relation,
+               from: relation_from_wp,
+               to: relation_to_wp,
+               relation_type: Relation::TYPE_BLOCKS)
       end
 
       before do

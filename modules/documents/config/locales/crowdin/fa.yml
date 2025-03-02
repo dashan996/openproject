@@ -34,6 +34,8 @@ fa:
   enumeration_doc_categories: "Document categories"
   documents:
     label_attachment_author: "نویسنده پیوست"
+    label_categories: "Categories"
+    new_category: "New category"
   label_document_added: "سند افزوده شد"
   label_document_new: "سند نو"
   label_document_plural: "اسناد"

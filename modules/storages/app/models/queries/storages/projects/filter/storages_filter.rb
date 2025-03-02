@@ -50,6 +50,10 @@ module Queries::Storages::Projects::Filter
       User.current.admin?
     end
 
+    def human_name
+      Storages::Storage.model_name.human
+    end
+
     def apply_to(_query_scope)
       case operator
       when "="

@@ -156,6 +156,7 @@ class EditField
 
     # Also ensure the element is not disabled
     expect_enabled!
+    wait_for_network_idle
   end
 
   def expect_inactive!

@@ -1,0 +1,31 @@
+<%=
+  if @readonly || @items.empty?
+    render(Primer::Beta::Button.new(**button_arguments)) do |button|
+      button_content(button)
+    end
+  else
+    render(Primer::Alpha::ActionMenu.new(**@menu_arguments)) do |menu|
+      menu.with_show_button(**button_arguments) do |button|
+        button_content(button)
+      end
+
+      @items.each do |option|
+        menu.with_item(**option.item_arguments) do |item|
+          item.with_leading_visual_icon(icon: option.icon) if option.icon
+
+          flex_layout(align_items: :center) do |flex|
+            if option.icon.nil? && option.color
+              flex.with_column(mr: 1) do
+                helpers.icon_for_color(option.color, style: "display: block")
+              end
+            end
+
+            flex.with_column do
+              render(Primer::Beta::Text.new) { option.name }
+            end
+          end
+        end
+      end
+    end
+  end
+%>

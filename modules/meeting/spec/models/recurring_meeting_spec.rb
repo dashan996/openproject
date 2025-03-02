@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "spec_helper"
 require_module_spec_helper
 

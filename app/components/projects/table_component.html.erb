@@ -26,15 +26,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 See COPYRIGHT and LICENSE files for more details.
 
 ++#%>
-<%= component_wrapper(tag: 'turbo-frame') do %>
+<%= component_wrapper(tag: "turbo-frame") do %>
   <div class="project-list-page--table" data-controller="table-action-menu" data-application-target="dynamic">
     <div class="generic-table--flex-container">
       <div class="generic-table--container <%= container_class %>">
         <div class="generic-table--results-container">
-          <table class="generic-table" data-controller="table-highlighting" <%= table_id ? "id=\"#{table_id}\"".html_safe : '' %>>
+          <table class="generic-table" data-controller="table-highlighting" <%= table_id ? "id=\"#{table_id}\"".html_safe : "" %>>
             <colgroup>
               <% columns.each do |column| %>
-                <col <%= "opHighlightCol" unless column.attribute == :hierarchy %> >
+                <col <%= "opHighlightCol" unless column.attribute == :hierarchy %>>
               <% end %>
               <col>
             </colgroup>
@@ -46,11 +46,11 @@ See COPYRIGHT and LICENSE files for more details.
                       <div class="generic-table--sort-header-outer generic-table--sort-header-outer_no-highlighting">
                         <div class="generic-table--sort-header">
                           <%= content_tag :a,
-                                        helpers.op_icon("icon-hierarchy"),
-                                        href: href_only_when_not_sort_lft,
-                                        class: "spot-link #{deactivate_class_on_lft_sort}",
-                                        data: { "turbo-stream": true },
-                                        title: t(:label_sort_by, value: %("#{t(:label_project_hierarchy)}")) %>
+                                          helpers.op_icon("icon-hierarchy"),
+                                          href: href_only_when_not_sort_lft,
+                                          class: "spot-link #{deactivate_class_on_lft_sort}",
+                                          data: { "turbo-stream": true },
+                                          title: t(:label_sort_by, value: %("#{t(:label_project_hierarchy)}")) %>
                         </div>
                       </div>
                     </th>

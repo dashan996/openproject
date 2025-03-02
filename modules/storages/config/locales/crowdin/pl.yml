@@ -1,11 +1,27 @@
 pl:
   activerecord:
     attributes:
+      oauth_client:
+        client_id: Client ID
+        client_secret: Client secret
+      project:
+        project_folder_type: Project folder type
       storages/file_link:
-        origin_id: Identyfikator pochodzenia
+        origin: Origin
+        storage: Storage
+      storages/nextcloud_storage:
+        authentication_methods:
+          oauth2_sso: Single-Sign-On through OpenID Connect Identity Provider
+          oauth2_sso_with_two_way_oauth2_fallback: Single-Sign-On with Two-Way OAuth 2.0 as fallback
+          two_way_oauth2: Two-way OAuth 2.0 authorization code flow
+        storage_audience: Storage Audience
       storages/project_storage:
+        project_folder: Project folder
+        project_folder_mode: Project folder mode
         storage: Magazyn danych
+        storage_url: Storage URL
       storages/storage:
+        authentication_method: Authentication Method
         creator: Twórca
         drive: Identyfikator dysku
         host: Host
@@ -74,7 +90,7 @@ pl:
         confirmation_text: Potwierdź, że rozumiesz i chcesz usunąć ten magazyn plików z tego projektu.
         heading_text: Usuń projekt z %{storage}
         text: To działanie jest nieodwracalne i spowoduje usunięcie wszystkich linków do plików i folderów tego magazynu z pakietów roboczych tego projektu.
-        title: Remove project from storage
+        title: Usuń projekt z magazynu
       label: Usuń projekt
   services:
     attributes:
@@ -199,15 +215,19 @@ pl:
         manual_management_description: Samodzielnie ręcznie twórz foldery każdego projektu i zarządzaj nimi. Trzeba będzie ręcznie zapewnić dostęp odpowiednim użytkownikom.
         setup_incomplete: Wybierz typ zarządzania dostępem użytkowników i tworzeniem folderów.
         subtitle: Zarządzanie dostępem
-        title: Dostęp i foldery projektu
+      access_management_section: Dostęp i foldery projektu
       automatically_managed_folders: Automatycznie zarządzane foldery
       general_information: Informacje ogólne
-      nextcloud_oauth: Nextcloud OAuth
-      oauth_applications: Aplikacje OAuth
+      oauth_configuration: Konfiguracja OAuth
       one_drive_oauth: Azure OAuth
       openproject_oauth: OpenProject OAuth
       project_folders: Foldery projektu
       redirect_uri: Przekieruj URI
+      storage_audience: Storage Audience
+      storage_audience_blank: No audience has been configured
+      storage_audience_description: Obtaining tokens for audience "%{audience}".
+      storage_audience_idp: Using first access token received by identity provider, regardless of audience.
+      storage_oauth: Nextcloud OAuth
       storage_provider: Dostawca magazynu
     health:
       checked: Ostatnio sprawdzono %{datetime}
@@ -222,6 +242,9 @@ pl:
         host_not_found: Nie znaleziono serwera Nextcloud pod skonfigurowanym adresem URL hosta. Sprawdź konfigurację.
         missing_dependencies: 'Brakuje wymaganej zależności magazynu plików. Dodaj następującą zależność: %{dependency}.'
         not_configured: Nie można zweryfikować połączenia. Najpierw zakończ konfigurację.
+        oidc_no_token_with_required_audience: There's no OpenID Connect token with the required %{audience} audience.
+        oidc_non_oidc_user: The current user, while provisioned, wasn't provisioned by an OpenID Connect (OIDC) Identity Provider. Please re-run the check with an OIDC provisioned user.
+        oidc_non_provisioned_user: Bieżący użytkownik nie jest dostarczany przez dostawcę tożsamości OpenID Connect. Ponownie uruchom sprawdzanie z dostarczonym użytkownikiem.
         placeholder: Sprawdź połączenie z serwerem.
         subtitle: Weryfikacja połączenia
         tenant_id_wrong: Skonfigurowany katalog (dzierżawca) jest nieprawidłowy. Sprawdź konfigurację.
@@ -250,6 +273,7 @@ pl:
       project_folder_bulk: Folder projektu jest domyślnym folderem do przesyłania plików dla wszystkich wybranych projektów. Możesz to zmienić indywidualnie w ustawieniach poszczególnych projektów. Użytkownicy mogą jednak przesyłać pliki do innych lokalizacji.
     instructions:
       all_available_storages_already_added: Wszystkie dostępne magazyny zostały już dodane do projektu.
+      authentication_method: The way that requests between OpenProject and the Storage are authenticated.
       automatic_folder: Spowoduje to automatyczne utworzenie katalogu głównego dla tego projektu i zarządzanie uprawnieniami dostępu każdego członka projektu.
       empty_project_folder_validation: Wybranie folderu jest obowiązkowe w celu kontynuacji.
       existing_manual_folder: Możesz wyznaczyć istniejący folder jako folder główny tego projektu. Uprawnienia nie są jednak zarządzane automatycznie, administrator musi ręcznie upewnić się, że odpowiedni użytkownicy mają dostęp. Wybrany folder może być używany przez wiele projektów.
@@ -262,6 +286,8 @@ pl:
         integration: Administracja Nextcloud / OpenProject
         oauth_configuration: Skopiuj te wartości z %{application_link_text}.
         provider_configuration: Przed wykonaniem konfiguracji upewnij się, że masz uprawnienia administracyjne w swoim wystąpieniu Nextcloud oraz zainstalowaną aplikację %{application_link_text}.
+        storage_audience: Please enter the Client ID that the Nextcloud instance uses to communicate with the identity provider.
+        storage_audience_placeholder: e.g. nextcloud
       no_specific_folder: Domyślnie każdy użytkownik rozpocznie we własnym folderze domowym po przesłaniu pliku.
       no_storage_set_up: Nie ma jeszcze skonfigurowanych magazynów plików.
       not_logged_into_storage: Aby wybrać folder projektu, najpierw się zaloguj
@@ -293,6 +319,7 @@ pl:
     label_creator: Twórca
     label_delete_storage: Usuń magazyn
     label_edit_storage_access_management: Edytuj zarządzania dostępem do magazynu
+    label_edit_storage_audience: Edit Storage Audience
     label_edit_storage_automatically_managed_folders: Edytuj automatycznie zarządzane foldery magazynu
     label_edit_storage_host: Edytuj hosta magazynu
     label_existing_manual_folder: Istniejący folder z ręcznie zarządzanymi uprawnieniami
@@ -382,8 +409,15 @@ pl:
         name: OneDrive/SharePoint
         name_placeholder: np. OneDrive
     show_attachments_toggle:
-      description: 'Wyłączenie tej opcji spowoduje ukrycie listy załączników na karcie plików pakietów roboczych. Pliki załączone w opisie pakietu roboczego będą nadal przesyłane do wewnętrznego magazynu załączników.'
+      description: Deactivating this option will hide the attachments list on the work packages files tab. The files attached in the description of a work package will still be uploaded in the internal attachments storage.
       label: Pokaż załączniki na karcie plików pakietów roboczych
+    storage_audience:
+      idp:
+        helptext: OpenProject will use the first access token received by the identity provider to authenticate requests to the storage. It will not try to obtain another token.
+        label: Use first access token obtained by identity provider
+      manual:
+        helptext: Allows you to set the audience of the storage. OpenProject will try to obtain a token for the given audience from the identity provider.
+        label: Define storage audience manually
     storage_list_blank_slate:
       description: Dodaj magazyn, aby zobaczyć go tutaj.
       heading: Nie masz jeszcze żadnych magazynów.

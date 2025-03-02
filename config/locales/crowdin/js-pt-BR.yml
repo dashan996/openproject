@@ -103,7 +103,6 @@ pt-BR:
     button_settings: "Configurações"
     button_uncheck_all: "Desmarcar todos"
     button_update: "Atualizar"
-    button_export-pdf: "Baixar PDF"
     button_export-atom: "Baixar Atom"
     button_generate_pdf: "Gerar PDF"
     button_create: "Criar"
@@ -221,6 +220,8 @@ pt-BR:
             label_maximum_users: "Máximo de usuários ativos"
             label_starts_at: "Começa em"
             label_expires_at: "Expira em"
+            label_plan: "Plan"
+            label_additional_features: "Additional features"
             receive_newsletter: Quero receber o <a target="_blank" href="%{link}">boletim informativo</a> do OpenProject.
             taken_domain: Pode haver somente uma avaliação ativa por domínio.
             domain_mismatch: O nome do host da solicitação atual não corresponde ao nome do host configurado. Verifique novamente as configurações de seu sistema.
@@ -356,10 +357,10 @@ pt-BR:
           learn_about: "Saiba mais sobre os novos recursos"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_2":
+          "15_3":
             standard:
               new_features_html: >
-                A versão traz vários recursos e melhorias para você, como: <br> <ul class="%{list_styling_class}"> <li>Definir lembretes para pacotes de trabalho para gerar notificações de alerta com base em datas.</li> <li>Criar novas pastas diretamente no seletor de local para armazenamento de arquivos.</li> <li>Especificar um intervalo necessário entre sucessores e predecessores de pacotes de trabalho.</li> <li>Habilitar a ordenação e o agrupamento de pacotes de trabalho com base nos valores de campos personalizados do tipo hierarquia.</li> <li>Exportar entradas de tempo como planilhas de horas em PDF.</li> <li>Adicionar um popover exibindo informações do usuário ao passar o mouse.</li> </ul>
+                A atualização traz diversas melhorias e novas funcionalidades para você, como:<br> <ul class="%{list_styling_class}"> <li>Agendar reuniões recorrentes para facilitar seus compromissos semanais, quinzenais ou personalizados.</li> <li>Criar pacotes de trabalho filhos diretamente na aba Relações.</li> <li>Incluir totais nas exportações em PDF das planilhas de horas para obter mais insights.</li> <li>Incluir pacotes de trabalho filhos nos relatórios de custos para um acompanhamento mais preciso.</li> <li>Visualizar datas de relações anteriormente ocultas, com restrição de permissão, para tomar decisões de agendamento mais informadas.</li> </ul>
     ical_sharing_modal:
       title: "Assinar calendário"
       inital_setup_error_message: "Ocorreu um erro ao buscar dados."
@@ -624,11 +625,11 @@ pt-BR:
       date_alerts:
         milestone_date: "Data de marco"
         overdue: "Atrasado"
-        overdue_since: "since %{difference_in_days}."
-        property_today: "is today."
-        property_is: "is in %{difference_in_days}."
-        property_was: "was %{difference_in_days} ago."
-        property_is_deleted: "is deleted."
+        overdue_since: "desde %{difference_in_days}."
+        property_today: "é hoje."
+        property_is: "está em %{difference_in_days}."
+        property_was: "há %{difference_in_days}."
+        property_is_deleted: "foi excluído."
         upsale:
           title: "Alertas de data"
           description: "Com os alertas de data, você receberá uma notificação das futuras datas de início e conclusão, assim você nunca perderá ou esquecerá prazos importante. "
@@ -851,8 +852,6 @@ pt-BR:
       select_branch: "Selecionar ramificação"
     field_value_enter_prompt: "Insira um valor para '%{field}'"
     project_menu_details: "Detalhes"
-    scheduling:
-      manual: "Planejamento manual"
     sort:
       sorted_asc: "Ordenação crescente aplicada, "
       sorted_dsc: "Ordenação decrescente aplicada, "
@@ -900,15 +899,6 @@ pt-BR:
       comment_send_failed: "Ocorreu um erro. Não foi possível enviar o comentário."
       comment_updated: "O comentário foi atualizado com sucesso."
       confirm_edit_cancel: "Tem certeza que deseja cancelar a edição do pacote de trabalho?"
-      datepicker_modal:
-        automatically_scheduled_parent: "Planejado automaticamente. As datas são derivadas das relações."
-        manually_scheduled: "Planejamento manual habilitado, todas as relações são ignoradas."
-        start_date_limited_by_relations: "As datas de início e de conclusão disponíveis são limitadas pelas relações."
-        changing_dates_affects_follow_relations: "A alteração dessas datas afetará as datas de pacotes de trabalho relacionados."
-        click_on_show_relations_to_open_gantt: 'Clique em "%{button_name}" para ter uma visão geral do GANTT.'
-        show_relations: "Mostrar relações"
-        ignore_non_working_days:
-          title: "Apenas dias úteis"
       description_filter: "Filtro"
       description_enter_text: "Inserir texto"
       description_options_hide: "Ocultar opções"

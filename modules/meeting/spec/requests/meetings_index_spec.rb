@@ -38,6 +38,7 @@ RSpec.describe "Meeting index",
 
   shared_let(:past) do
     create(:structured_meeting,
+           :author_participates,
            title: "an earlier meeting",
            start_time: DateTime.parse("2025-01-29T06:00:00Z"),
            project:,
@@ -46,6 +47,7 @@ RSpec.describe "Meeting index",
 
   shared_let(:today) do
     create(:structured_meeting,
+           :author_participates,
            title: "meeting starting soon",
            start_time: DateTime.parse("2025-01-29T10:00:00Z"),
            project:,
@@ -54,6 +56,7 @@ RSpec.describe "Meeting index",
 
   shared_let(:tomorrow) do
     create(:structured_meeting,
+           :author_participates,
            title: "meeting starting tomorrow",
            start_time: DateTime.parse("2025-01-30T10:00:00Z"),
            project:,
@@ -62,6 +65,7 @@ RSpec.describe "Meeting index",
 
   shared_let(:saturday) do
     create(:structured_meeting,
+           :author_participates,
            title: "weekend meeting on saturday",
            start_time: DateTime.parse("2025-02-01T10:00:00Z"),
            project:,
@@ -70,6 +74,7 @@ RSpec.describe "Meeting index",
 
   shared_let(:sunday) do
     create(:structured_meeting,
+           :author_participates,
            title: "weekend meeting on sunday",
            start_time: DateTime.parse("2025-02-02T10:00:00Z"),
            project:,
@@ -78,6 +83,7 @@ RSpec.describe "Meeting index",
 
   shared_let(:next_monday) do
     create(:structured_meeting,
+           :author_participates,
            title: "meeting on next monday",
            start_time: DateTime.parse("2025-02-03T10:00:00Z"),
            project:,
@@ -86,6 +92,7 @@ RSpec.describe "Meeting index",
 
   shared_let(:next_friday) do
     create(:structured_meeting,
+           :author_participates,
            title: "meeting on next friday",
            start_time: DateTime.parse("2025-02-07T10:00:00Z"),
            project:,
@@ -93,9 +100,10 @@ RSpec.describe "Meeting index",
   end
 
   let(:request) { get "/projects/#{project.id}/meetings" }
+  let(:current_time) { "2025-01-29T8:00:00Z".to_datetime }
 
   subject do
-    Timecop.freeze("2025-01-29T8:00:00Z".to_datetime) do
+    Timecop.freeze(current_time) do
       request
     end
 
@@ -129,6 +137,22 @@ RSpec.describe "Meeting index",
       later = page.find("[data-test-selector='meetings-table-later']")
       expect(later).to have_text "meeting on next monday"
       expect(later).to have_text "meeting on next friday"
+    end
+
+    context "when we request after 10am" do
+      let(:current_time) { "2025-01-29T14:00:00Z".to_datetime }
+
+      it "does not include times for next monday in earlier groups (Regression #61486)" do
+        expect(subject).to have_http_status(:ok)
+        content = page.find_by_id("content")
+        expect(content).to have_text "Tomorrow"
+        expect(content).to have_text "Later this week"
+        expect(content).to have_text "Next week and later"
+        expect(content).to have_no_text "an earlier meeting"
+
+        later = page.find("[data-test-selector='meetings-table-later']")
+        expect(later).to have_text "meeting on next monday"
+      end
     end
 
     context "when some meeting groups are empty" do

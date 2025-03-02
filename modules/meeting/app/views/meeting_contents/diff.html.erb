@@ -32,8 +32,8 @@ See COPYRIGHT and LICENSE files for more details.
             link_to: link_to(@meeting, @meeting) do %>
   <% if authorize_for(@content_type.pluralize, :history) %>
     <li class="toolbar-item">
-      <%= link_to({controller: "/#{@content_type.pluralize}", action: 'history', meeting_id: @meeting }, class: 'button') do %>
-        <%= op_icon('button--icon icon-wiki') %>
+      <%= link_to({ controller: "/#{@content_type.pluralize}", action: "history", meeting_id: @meeting }, class: "button") do %>
+        <%= op_icon("button--icon icon-wiki") %>
         <span class="button--text"><%= t(:label_history) %></span>
       <% end %>
     </li>
@@ -48,7 +48,7 @@ See COPYRIGHT and LICENSE files for more details.
 <em>(<%= link_to_user(@diff.content_to.user) %>, <%= format_time(@diff.content_to.created_at) %>)</em>
 </p>
 
-<hr />
+<hr>
 
 <div class="text-diff">
 <%= simple_format_without_paragraph @diff.to_html %>

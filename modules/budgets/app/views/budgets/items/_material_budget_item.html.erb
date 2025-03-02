@@ -30,13 +30,13 @@ See COPYRIGHT and LICENSE files for more details.
 <%-
   templated ||= false
   index ||= "INDEX"
-  new_or_existing = material_budget_item.new_record? ? 'new' : 'existing'
+  new_or_existing = material_budget_item.new_record? ? "new" : "existing"
   id_or_index = material_budget_item.new_record? ? index : material_budget_item.id
   prefix = "budget[#{new_or_existing}_material_budget_item_attributes][]"
   id_prefix = "budget_#{new_or_existing}_material_budget_item_attributes_#{id_or_index}"
   name_prefix = "budget[#{new_or_existing}_material_budget_item_attributes][#{id_or_index}]"
 
-  error_messages = error_messages_for 'material_budget_item'
+  error_messages = error_messages_for "material_budget_item"
 -%>
 
 <% unless error_messages.blank? %>
@@ -58,12 +58,11 @@ See COPYRIGHT and LICENSE files for more details.
                                    # but show the appearance of a decimal field on mobile
                                    inputmode: :decimal,
                                    placeholder: t(:label_example_placeholder, decimal: unitless_currency_number(1000.50)),
-                                   class: 'budget-item-value form--text-field',
+                                   class: "budget-item-value form--text-field",
                                    data: {
-                                     :'request-key' => 'units',
-                                     :'action' => 'keyup->costs--budget-subform#valueChanged'
-                                   }
-          %>
+                                     "request-key": "units",
+                                     action: "keyup->costs--budget-subform#valueChanged"
+                                   } %>
         </div>
       </div>
     </td>
@@ -77,10 +76,10 @@ See COPYRIGHT and LICENSE files for more details.
                            {},
                            {
                              index: id_or_index,
-                             class: 'form--select budget-item-value',
+                             class: "form--select budget-item-value",
                              data: {
-                               :'request-key' => 'cost_type_id',
-                               :'action' => 'change->costs--budget-subform#valueChanged'
+                               "request-key": "cost_type_id",
+                               action: "change->costs--budget-subform#valueChanged"
                              }
                            } %>
     </td>
@@ -99,19 +98,18 @@ See COPYRIGHT and LICENSE files for more details.
         <a id="<%= id_prefix %>_costs" class="costs--edit-planned-costs-btn icon-context icon-edit" role="button" title="<%= t(:help_click_to_edit) %>">
           <%= number_to_currency(cost_value) %>
         </a>
-        <%= render partial: '/budgets/items/budget_override_cost_form',
+        <%= render partial: "/budgets/items/budget_override_cost_form",
                    locals: {
                      field_name: "#{name_prefix}[amount]",
-                     cost_value: cost_value,
-                   }
-        %>
+                     cost_value: cost_value
+                   } %>
       </td>
     <% end %>
     <td class="delete form--td budget-table--fields buttons">
       <a class="delete-budget-item no-decoration-on-hover"
          title="<%= t(:button_delete) %>"
          data-action="costs--budget-subform#deleteRow">
-        <%= op_icon('icon-context icon-delete') %>
+        <%= op_icon("icon-context icon-delete") %>
         <span class="hidden-for-sighted"><%= t(:button_delete) %></span>
       </a>
     </td>

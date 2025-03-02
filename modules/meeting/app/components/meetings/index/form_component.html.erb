@@ -8,12 +8,12 @@
         turbo: true,
         controller: [
           "show-when-value-selected",
-          @meeting.is_a?(RecurringMeeting) ? "recurring-meetings--form" : nil,
+          @meeting.is_a?(RecurringMeeting) ? "recurring-meetings--form" : nil
         ].compact.join(" "),
         "application-target": "dynamic"
       },
       html: {
-        id: 'meeting-form'
+        id: "meeting-form"
       },
       url: {
         controller: form_controller,
@@ -61,18 +61,21 @@
                   not_value: "working_days",
                   set_visibility: "true",
                   "show-when-value-selected-target": "effect"
-                }) do
+                }
+              ) do
                 render(RecurringMeeting::Interval.new(f))
               end
             end
           end
 
           modal_body.with_row(mt: 1) do
-            render(Primer::Beta::Text.new(
-              id: "recurring-meeting-frequency-schedule",
-              font_size: :small,
-              color: :subtle,
-            )) { @meeting.human_frequency_schedule }
+            render(
+              Primer::Beta::Text.new(
+                id: "recurring-meeting-frequency-schedule",
+                font_size: :small,
+                color: :subtle
+              )
+            ) { @meeting.human_frequency_schedule }
           end
 
           modal_body.with_row(mt: 3) do
@@ -83,24 +86,28 @@
 
               frequency_row.with_column(
                 flex: 1,
-                hidden: @meeting.frequency_working_days?,
+                hidden: @meeting.frequency_working_days?
               ) do
                 flex_layout do |end_after|
-                  end_after.with_row(hidden: !@meeting.end_after_specific_date?,
-                                     data: {
-                                       value: "specific_date",
-                                       target_name: "end_after",
-                                       "show-when-value-selected-target": "effect" }
+                  end_after.with_row(
+                    hidden: !@meeting.end_after_specific_date?,
+                    data: {
+                      value: "specific_date",
+                      target_name: "end_after",
+                      "show-when-value-selected-target": "effect"
+                    }
                   ) do
                     render(RecurringMeeting::SpecificDate.new(f, meeting: @meeting))
                   end
 
-                  end_after.with_row(hidden: !@meeting.end_after_iterations?,
-                                     data: {
-                                       value: "iterations",
-                                       target_name: "end_after",
-                                       "show-when-value-selected-target": "effect"
-                                     }) do
+                  end_after.with_row(
+                    hidden: !@meeting.end_after_iterations?,
+                    data: {
+                      value: "iterations",
+                      target_name: "end_after",
+                      "show-when-value-selected-target": "effect"
+                    }
+                  ) do
                     render(RecurringMeeting::Iterations.new(f))
                   end
                 end

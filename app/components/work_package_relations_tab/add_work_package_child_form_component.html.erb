@@ -1,7 +1,7 @@
 <%= component_wrapper do %>
   <%= primer_form_with(
     id: FORM_ID,
-    model: WorkPackage.new,
+    model: @child,
     **submit_url_options,
     data: {
       turbo: true,
@@ -23,12 +23,12 @@
             my_form.work_package_autocompleter(
               name: :id,
               label: WorkPackage.model_name.human,
+              required: true,
               visually_hide_label: false,
               autocomplete_options: {
                 resource: 'work_packages',
                 searchKey: 'subjectOrId',
                 url:,
-                relations: true, # Activates relations fetch mode in the autocomplete
                 openDirectly: false,
                 focusDirectly: true,
                 dropdownPosition: 'bottom',

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Components
   class Datepicker
     include Capybara::DSL
@@ -39,16 +41,21 @@ module Components
     ##
     # Clear all values
     def clear!
-      set_field(container.find_field("startDate"), "", wait_for_changes_to_be_applied: false)
-      set_field(container.find_field("endDate"), "", wait_for_changes_to_be_applied: false)
+      set_field(container.find_field("work_package[start_date]"), "", wait_for_changes_to_be_applied: false)
+      set_field(container.find_field("work_package[due_date]"), "", wait_for_changes_to_be_applied: false)
     end
 
     def expect_visible
       expect(container).to have_css(".flatpickr-calendar .flatpickr-current-month", wait: 10)
+
+      # For whatever reason, the stimulus controller in the WorkPackage Datepicker needs some time to be loaded.
+      # So please, do not remove this line.
+      wait_for_network_idle
     end
 
     def expect_not_visible
       expect(container).to have_no_css(".flatpickr-calendar .flatpickr-current-month", wait: 10)
+      wait_for_network_idle
     end
 
     ##
@@ -108,8 +115,12 @@ module Components
       select_day date.day
     end
 
-    def save!(text: I18n.t(:button_apply))
-      container.find('[data-test-selector="op-datepicker-modal"] .button', text:).click
+    def save!
+      container.click_button save_button_label
+    end
+
+    def expect_save_button_disabled
+      expect(container).to have_button(save_button_label, disabled: true)
     end
 
     ##
@@ -147,38 +158,45 @@ module Components
     end
 
     ##
-    # Expect the given date to be non working
+    # Expect the given date to be visible
+    def expect_visible_day(date)
+      label = date.strftime("%B %-d, %Y")
+      expect(page).to have_css(".flatpickr-day[aria-label='#{label}']")
+    end
+
+    ##
+    # Expect the given date to be visible and a non-working day
     def expect_non_working(date)
       label = date.strftime("%B %-d, %Y")
-      expect(page).to have_css(".flatpickr-day.flatpickr-non-working-day[aria-label='#{label}']",
-                               wait: 20)
+      expect(page).to have_css(".flatpickr-day.flatpickr-non-working-day[aria-label='#{label}']")
     end
 
     ##
-    # Expect the given date to be non working
+    # Expect the given date to be visible and a working day
     def expect_working(date)
       label = date.strftime("%B %-d, %Y")
-      expect(page).to have_css(".flatpickr-day:not(.flatpickr-non-working-day)[aria-label='#{label}']",
-                               wait: 20)
+      expect(page).to have_css(".flatpickr-day:not(.flatpickr-non-working-day)[aria-label='#{label}']")
     end
 
     ##
-    # Expect the given date to be non working
+    # Expect the given date to be visible and disabled
     def expect_disabled(date)
       label = date.strftime("%B %-d, %Y")
-      expect(page).to have_css(".flatpickr-day.flatpickr-disabled[aria-label='#{label}']",
-                               wait: 20)
+      expect(page).to have_css(".flatpickr-day.flatpickr-disabled[aria-label='#{label}']")
     end
 
     ##
-    # Expect the given date to be non working
+    # Expect the given date to be visible and enabled
     def expect_not_disabled(date)
       label = date.strftime("%B %-d, %Y")
-      expect(page).to have_css(".flatpickr-day:not(.flatpickr-disabled)[aria-label='#{label}']",
-                               wait: 20)
+      expect(page).to have_css(".flatpickr-day:not(.flatpickr-disabled)[aria-label='#{label}']")
     end
 
     protected
+
+    def save_button_label
+      I18n.t(:button_apply)
+    end
 
     def focus_field(field)
       field.click

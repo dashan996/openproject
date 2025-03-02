@@ -53,11 +53,7 @@ class TypesController < ApplicationController
     if params[:tab].blank?
       redirect_to tab: :settings
     else
-      type = ::Type
-             .includes(:projects,
-                       :custom_fields)
-             .find(params[:id])
-
+      type = ::Type.includes(:projects, :custom_fields).find(params[:id])
       render_edit_tab(type)
     end
   end
@@ -82,14 +78,8 @@ class TypesController < ApplicationController
     UpdateTypeService
       .new(@type, current_user)
       .call(permitted_type_params) do |call|
-      call.on_success do
-        redirect_to_type_tab_path(@type, t(:notice_successful_update))
-      end
-
-      call.on_failure do |result|
-        flash[:error] = result.errors.full_messages.join("\n")
-        render_edit_tab(@type, status: :unprocessable_entity)
-      end
+      call.on_success { redirect_to_type_tab_path(@type, t(:notice_successful_update)) }
+      call.on_failure { render_edit_tab(@type, status: :unprocessable_entity) }
     end
   end
 

@@ -252,32 +252,32 @@ uk:
                 item_0:
                   subject: Розробка першої чернетки
                   description: |-
-                    ## Ціль
+                    ## Goal
 
-                    *   Створення корисного огляду результатів
-                    *   Перевірка поточних результатів і їх підсумування
-                    *   Інформування клієнта про всі важливі результати
-                    *   Визначення фундаментальних граничних умов проєкту
+                    *   Create a useful overview of the results
+                    *   Check what has been done and summarize the results
+                    *   Communicate all the relevant results with the customer
+                    *   Identify the fundamental boundary conditions of the project
 
-                    ## Опис
+                    ## Description
 
-                    *   Кожен розділ містить власний огляд, що використовуватиметься для каталогізації результатів
-                    *   З цього огляду всі учасники дізнаються про ухвалені рішення
+                    *   Each topic gets its own overview which will be used as a catalogue of results
+                    *   This overview informs all participants about the decisions made
                     *   ...
                 item_1:
                   subject: Підсумування результатів
                   description: |-
-                    ## Ціль
+                    ## Goal
 
-                    *   Створення корисного огляду результатів
-                    *   Перевірка поточних результатів і їх підсумування
-                    *   Інформування клієнта про всі важливі результати
-                    *   Визначення фундаментальних граничних умов проєкту
+                    *   Create a useful overview of the results
+                    *   Check what has been done and summarize the results
+                    *   Communicate all the relevant results with the customer
+                    *   Identify the fundamental boundary conditions of the project
 
-                    ## Опис
+                    ## Description
 
-                    *   Кожен розділ містить власний огляд, що використовуватиметься для каталогізації результатів
-                    *   З цього огляду всі учасники дізнаються про ухвалені рішення
+                    *   Each topic gets its own overview which will be used as a catalogue of results
+                    *   This overview informs all participants about the decisions made
                     *   ...
             item_3:
               subject: Виконання попереднього планування

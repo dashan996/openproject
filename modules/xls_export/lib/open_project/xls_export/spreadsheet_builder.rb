@@ -5,7 +5,7 @@ require "spreadsheet"
 # by adding row after row, but can be used for random access to the
 # rows as well
 #
-# Multiple Worksheets are possible, the currently active worksheet and it's
+# Multiple Worksheets are possible, the currently active worksheet and its
 # associated column widths are always accessible through the @sheet and @column_widths
 # instance variables, the other worksheets are accessible through the #worksheet method.
 # If a worksheet with an index larger than the number of worksheets is requested,

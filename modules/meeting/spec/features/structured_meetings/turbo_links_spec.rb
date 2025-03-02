@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -64,7 +65,7 @@ RSpec.describe "Structured meetings links caught by turbo",
 
   it "can link to the other meeting" do
     click_link_or_button "Meeting link"
-    expect(page).to have_current_path meeting_path(meeting2)
+    expect(page).to have_current_path project_meeting_path(project, meeting2)
     expect(page).to have_css("#content", text: "Other meeting", visible: :visible)
   end
 end

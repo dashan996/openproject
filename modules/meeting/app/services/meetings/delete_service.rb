@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -31,10 +33,25 @@ module Meetings
     protected
 
     def after_validate(_, call)
-      schedule = model.scheduled_meeting
-      schedule.update_column(:cancelled, true) if schedule.present?
+      send_cancellation_mail(model)
+      cancel_scheduled_meeting(model)
 
       call
+    end
+
+    def send_cancellation_mail(meeting)
+      meeting.participants.where(invited: true).find_each do |participant|
+        MeetingMailer
+          .cancelled(meeting, participant.user, User.current)
+          .deliver_now
+      end
+    end
+
+    def cancel_scheduled_meeting(meeting)
+      schedule = meeting.scheduled_meeting
+      return if schedule.nil?
+
+      schedule.update_column(:cancelled, true)
     end
   end
 end

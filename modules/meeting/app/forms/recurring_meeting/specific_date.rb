@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -32,8 +33,7 @@ class RecurringMeeting::SpecificDate < ApplicationForm
       name: :end_date,
       type: "date",
       value: @value,
-      placeholder: Meeting.human_attribute_name(:end_date),
-      label: Meeting.human_attribute_name(:end_date),
+      label: I18n.t("activerecord.attributes.recurring_meeting.end_date"),
       required: false,
       autofocus: false
     )

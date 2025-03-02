@@ -39,6 +39,7 @@ module Pages
     include OpenProject::StaticRouting::UrlHelpers
     include Toasts::Expectations
     include Flash::Expectations
+    include RSpec::Wait
     include WaitHelpers
 
     def current_page?

@@ -33,11 +33,11 @@ See COPYRIGHT and LICENSE files for more details.
       <legend class="form--fieldset-legend"><%= I18n.t(:label_custom_export_logo) %></legend>
       <% if @custom_style.id && @custom_style.export_logo.present? %>
         <div>
-          <%= tag('img', src: custom_style_export_logo_path(digest: @custom_style.digest, filename: @custom_style.export_logo_identifier), class: 'custom-export-logo-preview') %>
+          <%= tag("img", src: custom_style_export_logo_path(digest: @custom_style.digest, filename: @custom_style.export_logo_identifier), class: "custom-export-logo-preview") %>
           <%= link_to t(:button_delete),
                       custom_style_export_logo_delete_path,
                       method: :delete,
-                      class: 'icon icon-delete confirm-form-submit' %>
+                      class: "icon icon-delete confirm-form-submit" %>
         </div>
       <% end %>
       <div class="grid-block">
@@ -48,7 +48,7 @@ See COPYRIGHT and LICENSE files for more details.
             </div>
           </div>
           <div class="form--field-instructions">
-            <%= t('text_custom_export_logo_instructions') %>
+            <%= t("text_custom_export_logo_instructions") %>
           </div>
         </div>
       </div>
@@ -65,11 +65,11 @@ See COPYRIGHT and LICENSE files for more details.
 
       <% if @custom_style.id && @custom_style.export_cover.present? %>
         <div>
-          <%= tag('img', src: custom_style_export_cover_path(digest: @custom_style.digest, filename: @custom_style.export_cover_identifier), class: 'custom-export-cover-preview') %>
+          <%= tag("img", src: custom_style_export_cover_path(digest: @custom_style.digest, filename: @custom_style.export_cover_identifier), class: "custom-export-cover-preview") %>
           <%= link_to t(:button_delete),
                       custom_style_export_cover_delete_path,
                       method: :delete,
-                      class: 'icon icon-delete confirm-form-submit' %>
+                      class: "icon icon-delete confirm-form-submit" %>
         </div>
       <% end %>
       <div class="grid-block">
@@ -80,7 +80,7 @@ See COPYRIGHT and LICENSE files for more details.
             </div>
           </div>
           <div class="form--field-instructions">
-            <%= t('text_custom_export_cover_instructions') %>
+            <%= t("text_custom_export_cover_instructions") %>
           </div>
         </div>
       </div>
@@ -96,17 +96,19 @@ See COPYRIGHT and LICENSE files for more details.
         <label class="form--label"><%= I18n.t(:label_custom_export_cover_text_color) %>:</label>
         <span class="form--field-container">
           <div class="form--field-affix">
-            <% design_color_name = 'export_cover_text_color' %>
-            <% design_color_hex = @custom_style.export_cover_text_color.present? ? @custom_style.export_cover_text_color : '' %>
-            <%= icon_for_color(OpenStruct.new(variable: design_color_name,
-                                              hexcode: design_color_hex),
-                               data: { target: "#" + design_color_name }) %>
+            <% design_color_name = "export_cover_text_color" %>
+            <% design_color_hex = @custom_style.export_cover_text_color.presence || "" %>
+            <%= icon_for_color(
+                  Color.new(
+                    hexcode: design_color_hex
+                  ),
+                  data: { target: "#" + design_color_name }
+                ) %>
           </div>
           <span class="form--text-field-container">
             <%= styled_text_field_tag design_color_name,
                                       design_color_hex,
-                                      placeholder: '#000'
-            %>
+                                      placeholder: "#000" %>
           </span>
         </span>
         <div class="form--field-instructions">

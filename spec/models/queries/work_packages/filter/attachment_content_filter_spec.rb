@@ -59,6 +59,7 @@ RSpec.describe Queries::WorkPackages::Filter::AttachmentContentFilter do
     it_behaves_like "basic query filter" do
       let(:type) { :text }
       let(:class_key) { :attachment_content }
+      let(:human_name) { "Attachment content" }
 
       describe "#available?" do
         it "is available" do

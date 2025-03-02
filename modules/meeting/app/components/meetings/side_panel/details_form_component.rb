@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -36,10 +37,11 @@ module Meetings
       super
 
       @meeting = meeting
+      @project = meeting.project
     end
 
     def render?
-      User.current.allowed_in_project?(:edit_meetings, @meeting.project)
+      User.current.allowed_in_project?(:edit_meetings, @project)
     end
 
     private

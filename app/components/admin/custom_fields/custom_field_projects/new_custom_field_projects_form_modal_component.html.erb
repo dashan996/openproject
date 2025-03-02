@@ -30,22 +30,28 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   component_wrapper do
     primer_form_with(
-      model: ,
+      model:,
       url:,
       data: { turbo: true },
       method: :post
     ) do |form|
-      concat(render(Primer::Alpha::Dialog::Body.new(
-        id: dialog_body_id, test_selector: dialog_body_id, aria: { label: title },
-        classes: "Overlay-body_autocomplete_height"
-      )) do
-        render(Projects::CustomFields::CustomFieldMappingForm.new(form, project_mapping: @custom_field_project_mapping))
-      end)
+      concat(
+        render(
+          Primer::Alpha::Dialog::Body.new(
+            id: dialog_body_id, test_selector: dialog_body_id, aria: { label: title },
+            classes: "Overlay-body_autocomplete_height"
+          )
+        ) do
+          render(Projects::CustomFields::CustomFieldMappingForm.new(form, project_mapping: @custom_field_project_mapping))
+        end
+      )
 
-      concat(render(Primer::Alpha::Dialog::Footer.new(show_divider: false)) do
-        concat(render(Primer::ButtonComponent.new(data: { 'close-dialog-id': dialog_id })) { cancel_button_text })
-        concat(render(Primer::ButtonComponent.new(scheme: :primary, type: :submit)) { submit_button_text })
-      end)
+      concat(
+        render(Primer::Alpha::Dialog::Footer.new(show_divider: false)) do
+          concat(render(Primer::ButtonComponent.new(data: { "close-dialog-id": dialog_id })) { cancel_button_text })
+          concat(render(Primer::ButtonComponent.new(scheme: :primary, type: :submit)) { submit_button_text })
+        end
+      )
     end
   end
 %>

@@ -103,7 +103,6 @@ it:
     button_settings: "Impostazioni"
     button_uncheck_all: "Deseleziona tutti"
     button_update: "Aggiorna"
-    button_export-pdf: "Scarica PDF"
     button_export-atom: "Scarica Atom"
     button_generate_pdf: "Genera PDF"
     button_create: "Crea"
@@ -222,6 +221,8 @@ it:
             label_maximum_users: "Numero massimo di utenti attivi"
             label_starts_at: "Comincia alle"
             label_expires_at: "Scade il"
+            label_plan: "Plan"
+            label_additional_features: "Additional features"
             receive_newsletter: Voglio ricevere la <a target="_blank" href="%{link}">newsletter</a> di OpenProject.
             taken_domain: Puoi avere solo una prova attiva per ogni dominio.
             domain_mismatch: Il nome host della richiesta attuale non corrisponde al nome host configurato. Controlla le impostazioni di sistema.
@@ -357,10 +358,10 @@ it:
           learn_about: "Scopri di più sulle nuove funzionalità"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_2":
+          "15_3":
             standard:
               new_features_html: >
-                Questa versione offre diverse funzionalità e miglioramenti, ad esempio <br> <ul class="%{list_styling_class}"> <li>Impostare dei promemoria per le macro-attività per generare notifiche di avviso di data.</li> <li>Creare nuove cartelle direttamente dal selettore di posizione per l'archiviazione dei file.</li> <li>Specificare un ritardo necessario tra i successori e i predecessori delle macro-attività.</li> <li>Abilitare l'ordinamento e il raggruppamento per le macro-attività in base ai valori della gerarchia di tipo dei campi personalizzati.</li> <li>Esportare le voci temporali come fogli presenze in PDF.</li> <li>Aggiungere un pop-up che mostra le informazioni dell'utente quando ci si passa su il mouse.</li> </ul>
+                Questa versione offre diverse funzionalità e miglioramenti, ad esempio <br> <ul class="%{list_styling_class}"> <li>Pianificazione di riunioni ricorrenti per semplificare gli appuntamenti settimanali, quindicinali o personalizzati.</li> <li>Creazione di macro-attività figlie direttamente dalla scheda Relazioni.</li> <li>Inclusione di somme totali nelle esportazioni PDF delle schede attività per informazioni più approfondite.</li> <li>Inclusione delle macro-attività figlie nei report sui costi per un monitoraggio più accurato.</li> <li>Visualizzazione delle date delle relazioni precedentemente nascoste e con autorizzazioni limitate per prendere decisioni di pianificazione informate.</li> </ul>
     ical_sharing_modal:
       title: "Iscriviti al calendario"
       inital_setup_error_message: "Si è verificato un errore recuperando i dati."
@@ -625,11 +626,11 @@ it:
       date_alerts:
         milestone_date: "Data inizio"
         overdue: "In ritardo"
-        overdue_since: "since %{difference_in_days}."
-        property_today: "is today."
-        property_is: "is in %{difference_in_days}."
-        property_was: "was %{difference_in_days} ago."
-        property_is_deleted: "is deleted."
+        overdue_since: "da %{difference_in_days}."
+        property_today: "è oggi."
+        property_is: "tra %{difference_in_days}."
+        property_was: "era %{difference_in_days} fa."
+        property_is_deleted: "eliminato."
         upsale:
           title: "Avvisi data"
           description: "Con gli avvisi sulle date, sarai avvisato delle prossime date di inizio o di fine in modo da non perdere mai o dimenticare una scadenza importante."
@@ -852,8 +853,6 @@ it:
       select_branch: "Selezionare ramo"
     field_value_enter_prompt: "Inserisci un valore per '%{field}'"
     project_menu_details: "Dettagli"
-    scheduling:
-      manual: "Programmazione manuale"
     sort:
       sorted_asc: "Ordinamento crescente applicato, "
       sorted_dsc: "Ordinamento decrescente applicato, "
@@ -901,15 +900,6 @@ it:
       comment_send_failed: "Si è verificato un errore. Impossibile inviare il commento."
       comment_updated: "Il commento è stato aggiornato correttamente."
       confirm_edit_cancel: "Sei sicuro di voler annullare la modifica della macro-attività?"
-      datepicker_modal:
-        automatically_scheduled_parent: "Pianificato automaticamente. Le date derivano dalle relazioni."
-        manually_scheduled: "Programmazione manuale abilitata, tutte le relazioni sono ignorate."
-        start_date_limited_by_relations: "Le date di inizio e di fine disponibili sono limitate dalle relazioni."
-        changing_dates_affects_follow_relations: "La modifica di queste date influenzerà le date delle relative macro-attività."
-        click_on_show_relations_to_open_gantt: 'Clicca su "%{button_name}" per la panoramica GANTT.'
-        show_relations: "Visualizza relazioni"
-        ignore_non_working_days:
-          title: "Solo giorni lavorativi"
       description_filter: "Filtro"
       description_enter_text: "Inserisci testo"
       description_options_hide: "Nascondi opzioni"

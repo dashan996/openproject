@@ -35,7 +35,7 @@ RSpec.describe Storages::Admin::OAuthClientInfoComponent, type: :component do # 
       it "returns false, does not render view component" do
         storage = build_stubbed(:nextcloud_storage,
                                 oauth_client: build_stubbed(:oauth_client))
-        component = described_class.new(storage:, oauth_client: storage.oauth_client)
+        component = described_class.new(storage)
         expect(component.edit_icon_button_options)
           .to include(icon: :sync,
                       data: { turbo_confirm:
@@ -49,7 +49,7 @@ RSpec.describe Storages::Admin::OAuthClientInfoComponent, type: :component do # 
     context "without oauth client" do
       it "returns true, renders view component" do
         storage = build_stubbed(:nextcloud_storage)
-        component = described_class.new(storage:, oauth_client: nil)
+        component = described_class.new(storage)
 
         edit_icon_button_data_options = component.edit_icon_button_options
         expect(edit_icon_button_data_options).to include(icon: :pencil, data: { turbo_stream: true })

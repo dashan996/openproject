@@ -33,13 +33,10 @@ module Storages::Admin
     include OpTurbo::Streamable
     include OpPrimer::ComponentHelpers
 
-    attr_reader :storage
-    alias_method :oauth_application, :model
+    alias_method :storage, :model
+    delegate :oauth_application, to: :storage
 
-    def initialize(oauth_application:, storage:, **)
-      super(oauth_application, **)
-      @storage = storage
-    end
+    options in_wizard: false
 
     def self.wrapper_key = :storage_openproject_oauth_section
 
@@ -56,14 +53,16 @@ module Storages::Admin
       {
         scheme: :primary,
         tag: :a,
-        href: submit_button_path
-      }.merge(options.fetch(:submit_button_options, {}))
+        href: submit_button_path,
+        data: { turbo_stream: true, turbo_frame: "page-content" }
+      }
     end
 
     private
 
     def submit_button_path
-      options[:submit_button_path] || show_oauth_application_admin_settings_storage_path(storage)
+      query = { continue_wizard: storage.id } if in_wizard
+      show_oauth_application_admin_settings_storage_path(storage, query)
     end
   end
 end

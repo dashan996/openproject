@@ -32,20 +32,24 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render Primer::OpenProject::PageHeader.new do |header|
     header.with_title { I18n.t(:label_ldap_auth_source_plural) }
-    header.with_breadcrumbs([{ href: admin_index_path, text: t(:label_administration) },
-                             { href: admin_settings_authentication_path, text: t(:label_authentication) },
-                             I18n.t(:label_ldap_auth_source_plural)])
+    header.with_breadcrumbs(
+      [{ href: admin_index_path, text: t(:label_administration) },
+       { href: admin_settings_authentication_path, text: t(:label_authentication) },
+       I18n.t(:label_ldap_auth_source_plural)]
+    )
   end
 %>
 
 <%=
   render(Primer::OpenProject::SubHeader.new) do |subheader|
-    subheader.with_action_button(scheme: :primary,
-                                 aria: { label: I18n.t(:label_ldap_auth_source_new) },
-                                 title: I18n.t(:label_ldap_auth_source_new),
-                                 tag: :a,
-                                 test_selector: "op-admin-ldap-connection--button-new",
-                                 href: new_ldap_auth_source_path) do |button|
+    subheader.with_action_button(
+      scheme: :primary,
+      aria: { label: I18n.t(:label_ldap_auth_source_new) },
+      title: I18n.t(:label_ldap_auth_source_new),
+      tag: :a,
+      test_selector: "op-admin-ldap-connection--button-new",
+      href: new_ldap_auth_source_path
+    ) do |button|
       button.with_leading_visual_icon(icon: :plus)
       t(:label_ldap_auth_source)
     end

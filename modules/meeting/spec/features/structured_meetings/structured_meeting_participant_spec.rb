@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -56,7 +57,10 @@ RSpec.describe "Structured meetings participants",
   end
 
   shared_let(:meeting) do
-    create(:structured_meeting, project:, author: user)
+    create(:structured_meeting,
+           :author_participates,
+           project:,
+           author: user)
   end
 
   let(:current_user) { user }

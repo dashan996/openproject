@@ -28,12 +28,14 @@
       end
 
       flex.with_row(mt: 4) do
-        render(Saml::Providers::SubmitOrCancelForm.new(
-          form,
-          provider:,
-          submit_button_options: { label: button_label },
-          cancel_button_options: { hidden: edit_mode }
-        ))
+        render(
+          Saml::Providers::SubmitOrCancelForm.new(
+            form,
+            provider:,
+            submit_button_options: { label: button_label },
+            cancel_button_options: { hidden: edit_mode }
+          )
+        )
       end
     end
   end

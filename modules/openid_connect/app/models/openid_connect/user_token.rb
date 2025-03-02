@@ -37,5 +37,6 @@ module OpenIDConnect
     belongs_to :user
 
     scope :idp, -> { where(audience: IDP_AUDIENCE) }
+    scope :with_audience, ->(audience) { where("audiences ? :aud", aud: audience) }
   end
 end

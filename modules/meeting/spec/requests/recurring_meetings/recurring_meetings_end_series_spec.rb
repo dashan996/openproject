@@ -50,7 +50,7 @@ RSpec.describe "Recurring meetings complete template",
   let(:current_user) { user }
   let(:show_page) { Pages::RecurringMeeting::Show.new(recurring_meeting).with_capybara_page(page) }
   let(:request) do
-    post end_series_recurring_meeting_path(recurring_meeting)
+    post end_series_project_recurring_meeting_path(project, recurring_meeting)
   end
 
   subject do
@@ -189,7 +189,7 @@ RSpec.describe "Recurring meetings complete template",
 
     it "does not authorize" do
       subject
-      expect(response).to have_http_status(:not_found)
+      expect(response).to have_http_status(:forbidden)
     end
   end
 end

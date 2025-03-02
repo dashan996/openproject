@@ -6,13 +6,17 @@
         panel.with_section(Meetings::SidePanel::StateComponent.new(meeting: @meeting))
       end
 
-      desktop_grid_row_arguments = { display: [:none, nil, :"table_cell"] }
+      desktop_grid_row_arguments = { display: [:none, nil, :table_cell] }
 
-      panel.with_section(Meetings::SidePanel::ParticipantsComponent.new(meeting: @meeting),
-                         grid_row_arguments: desktop_grid_row_arguments.merge({classes: "meetings-side-panel--participants-section"}))
+      panel.with_section(
+        Meetings::SidePanel::ParticipantsComponent.new(meeting: @meeting),
+        grid_row_arguments: desktop_grid_row_arguments.merge({ classes: "meetings-side-panel--participants-section" })
+      )
 
-      panel.with_section(Meetings::SidePanel::AttachmentsComponent.new(meeting: @meeting),
-                         grid_row_arguments: desktop_grid_row_arguments)
+      panel.with_section(
+        Meetings::SidePanel::AttachmentsComponent.new(meeting: @meeting),
+        grid_row_arguments: desktop_grid_row_arguments
+      )
     end
   end
 %>

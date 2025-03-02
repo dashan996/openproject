@@ -139,7 +139,7 @@ RSpec.describe "Authentication Stages", :skip_2fa_stage do
     # after the stage is finished it must redirect to the complete endpoint
     visit "/login/dummy_step/success"
 
-    expect(current_path).to eql "/my/page" # after which the user will actually be logged in
+    expect(page).to have_current_path(home_path) # after which the user will actually be logged in
 
     visit "/my/account"
 
@@ -241,7 +241,7 @@ RSpec.describe "Authentication Stages", :skip_2fa_stage do
       # after the stage is finished it must redirect to the complete endpoint
       visit "/login/two_step/success"
 
-      expect(current_path).to eql "/my/page" # after which the user will actually be logged in
+      expect(page).to have_current_path(home_path) # after which the user will actually be logged in
 
       visit "/my/account"
 

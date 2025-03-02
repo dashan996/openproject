@@ -73,7 +73,7 @@ RSpec.describe "Omniauth authentication" do
       fill_in("email", with: user.mail)
       click_link_or_button "Sign In"
 
-      expect(current_url).to eql my_page_url
+      expect(current_url).to eql home_url
     end
 
     it "signs in user" do
@@ -128,7 +128,7 @@ RSpec.describe "Omniauth authentication" do
       fill_in("email", with: user.mail)
       click_link_or_button "Sign In"
 
-      expect(current_url).to eq my_page_url
+      expect(current_url).to eq home_url
     end
   end
 
@@ -214,7 +214,7 @@ RSpec.describe "Omniauth authentication" do
 
         click_link_or_button "Sign In"
 
-        expect(page).to have_current_path my_page_path
+        expect(page).to have_current_path home_path
       end
     end
 

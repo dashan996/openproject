@@ -27,14 +27,16 @@ See COPYRIGHT and LICENSE files for more details.
 
 ++#%>
 
-<% html_title t(:label_administration), t(:'menus.admin.aggregation') -%>
+<% html_title t(:label_administration), t(:"menus.admin.aggregation") -%>
 
 <%=
   render(Primer::OpenProject::PageHeader.new) do |header|
-    header.with_title { t(:'menus.admin.aggregation') }
-    header.with_breadcrumbs([{ href: admin_index_path, text: t(:label_administration) },
-                             { href: admin_settings_aggregation_path, text: t(:"menus.admin.mails_and_notifications") },
-                             t(:'menus.admin.aggregation')])
+    header.with_title { t(:"menus.admin.aggregation") }
+    header.with_breadcrumbs(
+      [{ href: admin_index_path, text: t(:label_administration) },
+       { href: admin_settings_aggregation_path, text: t(:"menus.admin.mails_and_notifications") },
+       t(:"menus.admin.aggregation")]
+    )
   end
 %>
 
@@ -43,16 +45,20 @@ See COPYRIGHT and LICENSE files for more details.
     <%= setting_number_field :journal_aggregation_time_minutes,
                              unit: t(:label_minute_plural),
                              min: 0,
-                             container_class: '-xslim' %>
+                             container_class: "-xslim" %>
     <span class="form--field-instructions">
-      <%= t(:'admin.journal_aggregation.explanation.text',
-            webhook_link: link_to(t(:'admin.journal_aggregation.explanation.link'),
-                                  admin_outgoing_webhooks_path,
-                                  target: '_blank')).html_safe %>
-      <br/>
+      <%= t(
+            :"admin.journal_aggregation.explanation.text",
+            webhook_link: link_to(
+              t(:"admin.journal_aggregation.explanation.link"),
+              admin_outgoing_webhooks_path,
+              target: "_blank"
+            )
+          ).html_safe %>
+      <br>
       <%= t(:text_hint_disable_with_0) %>
     </span>
   </div>
 
-  <%= styled_button_tag t(:button_save), class: '-primary -with-icon icon-checkmark' %>
+  <%= styled_button_tag t(:button_save), class: "-primary -with-icon icon-checkmark" %>
 <% end %>

@@ -31,6 +31,7 @@ require "spec_helper"
 RSpec.describe Queries::WorkPackages::Filter::DuplicatesFilter do
   it_behaves_like "filter by work package id" do
     let(:class_key) { :duplicates }
+    let(:human_name) { "duplicates" }
 
     it_behaves_like "filter for relation" do
       let(:relation_type) { :duplicates }

@@ -39,7 +39,7 @@ RSpec.describe RecurringMeetings::DeleteDialogComponent, type: :component do
   let(:user) { build_stubbed(:user) }
 
   subject do
-    render_inline(described_class.new(recurring_meeting:, project:))
+    render_inline(described_class.new(recurring_meeting:))
     page
   end
 
@@ -48,14 +48,6 @@ RSpec.describe RecurringMeetings::DeleteDialogComponent, type: :component do
   end
 
   describe "dialog form" do
-    context "without a current project" do
-      let(:project) { nil }
-
-      it "renders the correct form action" do
-        expect(subject).to have_element "form", action: recurring_meeting_path(recurring_meeting)
-      end
-    end
-
     context "with a current project" do
       let(:project) { build_stubbed(:project) }
 
@@ -71,23 +63,14 @@ RSpec.describe RecurringMeetings::DeleteDialogComponent, type: :component do
 
   context "with a meeting series that ends - with several remaining meetings" do
     it "shows a confirmation message with a count of the remaining meetings" do
-      expect(subject).to have_text "will delete all 6 meetings in this series"
+      expect(subject).to have_text "does not have any meeting occurrences"
     end
   end
 
-  context "with a meeting series that ends - with one remaining meeting" do
-    let(:recurring_meeting) { build_stubbed(:recurring_meeting, project:, end_after: :iterations, iterations: 1) }
-
+  context "with a meeting series that has an occurrence" do
     it "shows a confirmation message mentioning one remaining meeting" do
-      expect(subject).to have_text "will also delete one meeting in this series"
-    end
-  end
-
-  context "with a meeting series that never ends" do
-    let(:recurring_meeting) { build_stubbed(:recurring_meeting, project:, end_after: :never) }
-
-    it "shows a confirmation message without a count" do
-      expect(subject).to have_text "will delete any meetings in this series"
+      allow(recurring_meeting).to receive(:instantiated_meetings).and_return([meeting])
+      expect(subject).to have_text "will also delete one occurrence in this series"
     end
   end
 end

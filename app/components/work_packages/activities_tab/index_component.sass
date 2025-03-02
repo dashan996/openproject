@@ -1,5 +1,8 @@
-@mixin activities-tab-component($breakpoint, $input-container-padding-right: 10px, $input-container-margin-bottom: 20px)
+@mixin activities-tab-component($breakpoint, $input-container-padding-right: 10px)
     overflow-y: hidden
+    &--content-container
+        row-gap: var(--Layout-row-gap)
+
     &--errors
         position: absolute
         width: calc(100% - 22px)
@@ -22,13 +25,12 @@
             margin-bottom: 180px
             @media screen and (max-width: $breakpoint)
                 margin-bottom: -16px
-                
+
     &--input-container
         z-index: 10
         border-radius: var(--borderRadius-medium)
         border: none
-        padding-right: 16px
-        margin-bottom: $input-container-margin-bottom
+        margin-bottom: 16px
         @media screen and (min-width: $breakpoint)
             position: absolute
             min-height: 60px
@@ -37,12 +39,13 @@
             right: 0
             border-radius: 0px
             border-top: var(--borderWidth-thin, 1px) solid var(--borderColor-default)
-            padding-right: $input-container-padding-right
-            margin-bottom: 0px
+            padding-right: $input-container-padding-right !important
+            margin-bottom: 0 !important
 
         &_sort-desc
             @media screen and (max-width: $breakpoint)
                 order: -1
+                margin-bottom: 0
 
 .work-packages-activities-tab-index-component
     @include activities-tab-component($breakpoint-xl)
@@ -53,4 +56,4 @@
 
 .work-packages-activities-tab-index-component--within-split-screen
     .work-packages-activities-tab-index-component
-        @include activities-tab-component($breakpoint-sm, 10px, 10px)
+        @include activities-tab-component($breakpoint-sm)

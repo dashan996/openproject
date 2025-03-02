@@ -28,9 +28,17 @@ You will then be able to name the value, activate it and choose if it should be 
 ## Edit or remove enumeration value
 
 1. To **edit** an existing configuration simply click on the name.
+
 2. If the enumeration is activated, it will have the check mark in the column **Active**.
+
 3. The **default value** is identified by the check mark in the respective column.
+
+   > [!TIP]
+   >
+   > Values for **Time tracking activities** cannot be set as default values. 
+
 4. You can move the enumerations in the list of possible values up or down with the sort.
+
 5. To remove an enumeration click on the respective **delete icon**.
 
 ![Edit, sort or remove enumerations in OpenProject administration](openproject_system_admin_guide_enumerations_sort_delete.png)

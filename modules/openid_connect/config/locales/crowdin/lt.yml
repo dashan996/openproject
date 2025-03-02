@@ -4,18 +4,18 @@ lt:
     description: "Pridėti OmniAuth OpenID Connect strategijos tiekėjus į OpenProject."
   logout_warning: >
     Jūs atsijungėte. Bet kurios siunčiamos formos turinys gali būti prarastas. Prašome [prisijungti].
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
-        name: Vardas
+        name: Name
         slug: Unique identifier
-        display_name: Rodomas vardas
+        display_name: Display name
         client_id: Client ID
         client_secret: Client secret
-        secret: Paslaptis
-        scope: Apimtis
+        secret: Secret
+        scope: Scope
         grant_types_supported: Supported grant types
-        limit_self_registration: Riboti savarankišką registraciją
+        limit_self_registration: Limit self registration
         authorization_endpoint: Authorization endpoint
         userinfo_endpoint: User information endpoint
         token_endpoint: Token endpoint
@@ -29,7 +29,6 @@ lt:
         claims: Claims
         acr_values: ACR values
         redirect_url: Redirect URL
-  activerecord:
     errors:
       models:
         openid_connect/provider:

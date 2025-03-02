@@ -103,7 +103,6 @@ uk:
     button_settings: "Налаштування"
     button_uncheck_all: "Зняти усі відмітки"
     button_update: "Оновити"
-    button_export-pdf: "Завантажити PDF"
     button_export-atom: "Завантажити Atom"
     button_generate_pdf: "Згенерувати PDF"
     button_create: "Створити"
@@ -222,6 +221,8 @@ uk:
             label_maximum_users: "Максимальна кількість активних користувачів"
             label_starts_at: "Починається о"
             label_expires_at: "Закінчується о"
+            label_plan: "Plan"
+            label_additional_features: "Additional features"
             receive_newsletter: Я хочу отримувати розсилку новин <a target="_blank" href="%{link}">OpenProject</a>.
             taken_domain: Може бути лише одна активна пробна версія на домен.
             domain_mismatch: Ім’я хосту поточного запиту не відповідає налаштованому імені хосту. Перевірте свої системні налаштування.
@@ -357,10 +358,10 @@ uk:
           learn_about: "Дізнатися більше про нові функції"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_2":
+          "15_3":
             standard:
               new_features_html: >
-                Цей випуск включає багато нових функцій і покращень. <br> <ul class="%{list_styling_class}"> <li>Установлюйте нагадування для пакетів робіт, щоб отримувати завчасні сповіщення.</li> <li>Створюйте нові папки безпосередньо під час вибору місця зберігання файлу в сховищі.</li> <li>Указуйте обов’язковий проміжок часу між нащадками й попередниками пакетів робіт.</li> <li>Дозвольте впорядковувати й групувати пакети робіт за значеннями ієрархії користувацьких полів.</li> <li>Експортуйте записи часу у вигляді таблиць обліку часу в PDF.</li> <li>Налаштуйте появу спливних вікон з інформацією про користувача в разі наведення вказівника миші.</li> </ul>
+                Цей випуск включає багато нових функцій і покращень. <br> <ul class="%{list_styling_class}"> <li>Плануйте повторювані наради, щоб оптимізувати зустрічі, що повторюються щотижня, раз на два тижні або з власним інтервалом.</li> <li>Створюйте дочірні пакети робіт безпосередньо на вкладці «Зв’язки».</li> <li>Включайте підсумки в експортовані PDF-файли табелів робочого часу, щоб отримувати корисніші дані.</li> <li>Включайте дочірні пакети робіт у звіти про витрати для точнішого відстеження руху коштів.</li> <li>Переглядайте дати раніше прихованих зв’язків або тих, доступ до яких обмежено дозволами, щоб ухвалювати зваженіші рішення щодо планування.</li> </ul>
     ical_sharing_modal:
       title: "Підписатися на календар"
       inital_setup_error_message: "Під час отримання даних сталася помилка."
@@ -625,11 +626,11 @@ uk:
       date_alerts:
         milestone_date: "Дата віхи"
         overdue: "Прострочено"
-        overdue_since: "since %{difference_in_days}."
-        property_today: "is today."
-        property_is: "is in %{difference_in_days}."
-        property_was: "was %{difference_in_days} ago."
-        property_is_deleted: "is deleted."
+        overdue_since: "%{difference_in_days}."
+        property_today: "сьогодні."
+        property_is: "через %{difference_in_days}."
+        property_was: "%{difference_in_days} тому."
+        property_is_deleted: "видалено."
         upsale:
           title: "Оповіщення про дати"
           description: "Завдяки оповіщенням про дати ви завжди знатимете про заплановані дати початку або завершення, тож ніколи не пропускатимете важливі терміни та не забуватимете про них."
@@ -854,8 +855,6 @@ uk:
       select_branch: "Виберіть гілку"
     field_value_enter_prompt: "Введіть значення для «%{field}»"
     project_menu_details: "Детальніше"
-    scheduling:
-      manual: "Ручне планування"
     sort:
       sorted_asc: "Застосовується сортування за зростанням,"
       sorted_dsc: "Застосовується сортування за спаданням,"
@@ -903,15 +902,6 @@ uk:
       comment_send_failed: "Сталася помилка. Не вдалося додати коментар."
       comment_updated: "Коментар був успішно оновлений."
       confirm_edit_cancel: "Ви дійсно бажаєте скасувати редагування пакету робіт?"
-      datepicker_modal:
-        automatically_scheduled_parent: "Автоматично заплановано. Дати отримано зі зв’язків."
-        manually_scheduled: "Увімкнено ручне планування; усі зв’язки ігноруються."
-        start_date_limited_by_relations: "Доступні дати початку й завершення обмежені зв’язками."
-        changing_dates_affects_follow_relations: "Змінення цих дат вплине на дати пов’язаних пакетів робіт."
-        click_on_show_relations_to_open_gantt: 'Натисніть кнопку «%{button_name}», щоб перейти в режим GANTT.'
-        show_relations: "Показати зв’язки"
-        ignore_non_working_days:
-          title: "Лише робочі дні"
       description_filter: "Фільтр"
       description_enter_text: "Введіть текст"
       description_options_hide: "Сховати опції"

@@ -30,7 +30,9 @@ See COPYRIGHT and LICENSE files for more details.
 
 <div data-turbo="true">
   <%= render(Settings::ProjectCustomFields::HeaderComponent.new) %>
-  <%= render(Settings::ProjectCustomFieldSections::IndexComponent.new(
-    project_custom_field_sections: @project_custom_field_sections
-  )) %>
+  <%= render(
+        Settings::ProjectCustomFieldSections::IndexComponent.new(
+          project_custom_field_sections: @project_custom_field_sections
+        )
+      ) %>
 </div>

@@ -67,13 +67,15 @@ RSpec.describe "Structured meetings global CRUD", :js do
   let(:show_page) { Pages::StructuredMeeting::Show.new(meeting) }
   let(:meetings_page) { Pages::Meetings::Index.new(project: nil) }
 
-  before do |test|
+  before do
     login_as current_user
     meetings_page.visit!
     expect(page).to have_current_path(meetings_page.path) # rubocop:disable RSpec/ExpectInHook
     meetings_page.click_on "add-meeting-button"
     meetings_page.click_on "One-time"
+  end
 
+  it "can delete a meeting and get back to the index page" do
     meetings_page.set_project project
 
     meetings_page.set_title "Some title"
@@ -81,16 +83,8 @@ RSpec.describe "Structured meetings global CRUD", :js do
     meetings_page.set_start_date "2013-03-28"
     meetings_page.set_start_time "13:30"
     meetings_page.set_duration "1.5"
-
-    if test.metadata[:checked]
-      expect(page).to have_unchecked_field "send_notifications" # rubocop:disable RSpec/ExpectInHook
-      check "send_notifications"
-    end
-
     meetings_page.click_create
-  end
 
-  it "can delete a meeting and get back to the index page" do
     show_page.trigger_dropdown_menu_item "Delete meeting"
     show_page.expect_modal "Delete meeting"
 
@@ -98,8 +92,29 @@ RSpec.describe "Structured meetings global CRUD", :js do
       click_on "Delete"
     end
 
-    expect(page).to have_current_path meetings_path
+    expect(page).to have_current_path project_meetings_path(project)
 
     expect_flash(type: :success, message: "Successful deletion.")
+  end
+
+  it "keeps the current selected project when hitting a validation error (Regression #59972)" do
+    meetings_page.set_project project
+    meetings_page.click_create
+    wait_for_network_idle
+
+    expect(page).to have_text "Title can't be blank."
+
+    within("[data-test-selector='project_id']") do
+      expect(page).to have_text project.name
+    end
+
+    meetings_page.set_title "Some title"
+    meetings_page.click_create
+    wait_for_network_idle
+
+    expect(page).to have_css("h1", text: "Some title")
+    meeting = Meeting.last
+    expect(meeting.title).to eq "Some title"
+    expect(meeting.project).to eq project
   end
 end

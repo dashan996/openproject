@@ -103,7 +103,6 @@ zh-TW:
     button_settings: "設定"
     button_uncheck_all: "取消全選"
     button_update: "更新"
-    button_export-pdf: "下載 PDF"
     button_export-atom: "下載 Atom"
     button_generate_pdf: "產生PDF檔案"
     button_create: "建立"
@@ -221,6 +220,8 @@ zh-TW:
             label_maximum_users: "使用者帳號上限"
             label_starts_at: "開始於"
             label_expires_at: "過期於"
+            label_plan: "Plan"
+            label_additional_features: "Additional features"
             receive_newsletter: 我想要接收 OpenProject <a target="_blank" href="%{link}">簡報</a>。
             taken_domain: 每個域名只能有一個活動的試用。
             domain_mismatch: 當前請求的主機名與配置的主機名不匹配。請仔細檢查您的系統設置。
@@ -355,10 +356,10 @@ zh-TW:
           learn_about: "瞭解更多新功能的資訊"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_2":
+          "15_3":
             standard:
               new_features_html: >
-                該版本為您帶來了各種功能和改進，例如<br> <ul class="%{list_styling_class}"> <li>為工作項目設定提醒，產生日期提示通知。</li> <li>直接從選擇位置建立新資料夾，以儲存檔案。</li> <li>指定工作項目與前後項之間所需的間隔時間。</li> <li>根據自訂欄位類型層級的值，啟用工作項目的排序和群組。</li> <li>匯出時間項目為 PDF 工時表。</li> <li>新增在滑鼠懸停時會顯示使用者資訊的彈出視窗。</li> </ul>
+                該版本為您帶來了各種功能和改進，例如<br> <ul class="%{list_styling_class}"> <li>排定定期會議，簡化您每週、每兩週或自訂的會議。</li> <li>直接從「關係」標籤建立子工作項目。</li> <li>在時間表 PDF 匯出中包含總和，以獲得更好的洞察力。</li> <li>在成本報告中包含子工作項目，以進行更精確的追蹤。</li> <li>查看先前隱藏的、受權限的關係的日期，以做出明智的排程決策。</li> </ul>
     ical_sharing_modal:
       title: "訂閱日曆"
       inital_setup_error_message: "更新資料時發生錯誤"
@@ -849,8 +850,6 @@ zh-TW:
       select_branch: "選擇分支"
     field_value_enter_prompt: "輸入'%{field}'的值"
     project_menu_details: "詳細資料"
-    scheduling:
-      manual: "手動排程"
     sort:
       sorted_asc: "已套用升冪排序， "
       sorted_dsc: "已套用降冪排序， "
@@ -898,15 +897,6 @@ zh-TW:
       comment_send_failed: "發生錯誤。無法留言。"
       comment_updated: "留言已成功更新。"
       confirm_edit_cancel: "是否確定取消編輯中的工作項目"
-      datepicker_modal:
-        automatically_scheduled_parent: "自動安排。日期來源於關係。"
-        manually_scheduled: "手動排程，忽略所有關聯。"
-        start_date_limited_by_relations: "因關聯工作項目原因，可選的起迄日期將被限制。"
-        changing_dates_affects_follow_relations: "更改這些日期將影響「關聯」的工作項目日期"
-        click_on_show_relations_to_open_gantt: '點選"%{button_name}" 依甘特圖查看'
-        show_relations: "顯示關聯"
-        ignore_non_working_days:
-          title: "工作日"
       description_filter: "篩選條件"
       description_enter_text: "輸入文字"
       description_options_hide: "隱藏選項"

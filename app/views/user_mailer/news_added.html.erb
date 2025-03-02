@@ -28,6 +28,6 @@ See COPYRIGHT and LICENSE files for more details.
 ++#%>
 
 <h1><%= link_to @news.title, news_url(@news) %></h1>
-<em><%= @news.author.name if @news.author %></em>
+<em><%= @news.author&.name %></em>
 
-<%= format_text @news.description, only_path: false  %>
+<%= format_text @news.description, only_path: false %>

@@ -28,20 +28,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   ++# %>
 
   <%= component_wrapper do
-    primer_form_with(**form_options) do |form|
-      flex_layout(classes: "time-entry-dialog-form-spacing") do |body|
-        body.with_row do
-          render(TimeEntries::UserForm.new(form, visible: show_user))
+        primer_form_with(**form_options) do |form|
+          flex_layout(classes: "time-entry-dialog-form-spacing") do |body|
+            body.with_row(display: show_user ? :block : :none) do
+              render(TimeEntries::UserForm.new(form, visible: show_user))
+            end
+            body.with_row { render(TimeEntries::DaysAndHoursForm.new(form)) }
+            body.with_row(display: show_work_package ? :block : :none) do
+              render(
+                TimeEntries::WorkPackageForm.new(form, visible: show_work_package)
+              )
+            end
+            body.with_row { render(TimeEntries::ActivityForm.new(form)) }
+            body.with_row { render(TimeEntries::CommentsForm.new(form)) }
+            body.with_row { render(TimeEntries::CustomFieldsForm.new(form)) }
+          end
         end
-        body.with_row { render(TimeEntries::DaysAndHoursForm.new(form)) }
-        body.with_row do
-          render(
-            TimeEntries::WorkPackageForm.new(form, visible: show_work_package),
-          )
-        end
-        body.with_row { render(TimeEntries::ActivityForm.new(form)) }
-        body.with_row { render(TimeEntries::CommentsForm.new(form)) }
-        body.with_row { render(TimeEntries::CustomFieldsForm.new(form)) }
-      end
-    end
-  end %>
+      end %>

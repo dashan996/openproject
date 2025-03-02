@@ -36,7 +36,7 @@ module OpenIDConnect
         @jwt_parser = jwt_parser
       end
 
-      def call(access_token:, refresh_token: nil, known_audiences: [], clear_previous: false)
+      def call(access_token:, refresh_token: nil, known_audiences: [], clear_previous: false, expires_in: nil)
         if access_token.blank?
           Rails.logger.error("Could not associate token to user: No access token")
           return
@@ -49,14 +49,15 @@ module OpenIDConnect
 
         @user.oidc_user_tokens.destroy_all if clear_previous
 
-        token = prepare_token(access_token:, refresh_token:, known_audiences:)
+        token = prepare_token(access_token:, refresh_token:, known_audiences:, expires_in:)
         token.save! if token.audiences.any?
       end
 
       private
 
-      def prepare_token(access_token:, refresh_token:, known_audiences:)
-        @user.oidc_user_tokens.build(access_token:, refresh_token:).tap do |token|
+      def prepare_token(access_token:, refresh_token:, expires_in:, known_audiences:)
+        expires_at = expires_in&.seconds&.from_now
+        @user.oidc_user_tokens.build(access_token:, refresh_token:, expires_at:).tap do |token|
           token.audiences = merge_audiences(known_audiences, discover_audiences(access_token).value_or([]))
         end
       end

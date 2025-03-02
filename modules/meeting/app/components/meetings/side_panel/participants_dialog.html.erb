@@ -1,23 +1,24 @@
 <%=
-  render(Primer::Alpha::Dialog.new(
-    id: "edit-participants-dialog",
-    size: :medium_portrait,
-    title: Meeting.human_attribute_name(:participants
-    ))) do |d|
+  render(
+    Primer::Alpha::Dialog.new(
+      id: "edit-participants-dialog",
+      size: :medium_portrait,
+      title: Meeting.human_attribute_name(:participants)
+    )
+  ) do |d|
     d.with_header(variant: :large)
 
     d.with_body do
-      component_wrapper(class: 'Overlay-form') do
+      component_wrapper(class: "Overlay-form") do
         primer_form_with(
           id: "edit_participants_form",
           model: @meeting,
           method: :put,
-          url: update_participants_meeting_path(@meeting),
+          url: update_participants_project_meeting_path(@project, @meeting),
           data: { turbo: true, turbo_stream: true },
-          class: 'Overlay-form'
-        ) do |f|
+          class: "Overlay-form"
+        ) do |_f|
           flex_layout do |form_container|
-
             form_container.with_row do
               flex_layout(justify_content: :flex_end) do |header|
                 header.with_column(style: "width: 90px;", text_align: :center) do
@@ -47,12 +48,14 @@
 
                         existing_participant_container.with_row do
                           flex_layout(align_items: :center) do |existing_participant|
-                            existing_participant.with_column(flex: 1, classes: 'ellipsis') do
-                              render(Users::AvatarComponent.new(
-                                user: participant.user,
-                                classes: 'op-principal_flex',
-                                hover_card: { active: true, target: :custom }
-                              ))
+                            existing_participant.with_column(flex: 1, classes: "ellipsis") do
+                              render(
+                                Users::AvatarComponent.new(
+                                  user: participant.user,
+                                  classes: "op-principal_flex",
+                                  hover_card: { active: true, target: :custom }
+                                )
+                              )
                             end
                             existing_participant.with_column(style: "width: 90px;", text_align: :center) do
                               styled_check_box_tag "meeting[participants_attributes][][invited]",
@@ -87,12 +90,14 @@
                       end
                     else
                       flex_layout(align_items: :center) do |new_participant|
-                        new_participant.with_column(flex: 1, classes: 'ellipsis') do
-                          render(Users::AvatarComponent.new(
-                            user:,
-                            classes: 'op-principal_flex',
-                            hover_card: { active: true, target: :custom }
-                          ))
+                        new_participant.with_column(flex: 1, classes: "ellipsis") do
+                          render(
+                            Users::AvatarComponent.new(
+                              user:,
+                              classes: "op-principal_flex",
+                              hover_card: { active: true, target: :custom }
+                            )
+                          )
                         end
 
                         new_participant.with_column(style: "width: 90px;", text_align: :center) do
@@ -120,7 +125,7 @@
             end
 
             form_container.with_row do
-              helpers.angular_component_tag 'opce-custom-modal-overlay'
+              helpers.angular_component_tag "opce-custom-modal-overlay"
             end
           end
         end
@@ -130,14 +135,17 @@
     if @meeting.editable?
       d.with_footer do
         component_collection do |footer|
-          footer.with_component(Primer::ButtonComponent.new(data: { 'close-dialog-id': "edit-participants-dialog" })) do
+          footer.with_component(Primer::ButtonComponent.new(data: { "close-dialog-id": "edit-participants-dialog" })) do
             t("button_cancel")
           end
-          footer.with_component(Primer::ButtonComponent.new(
-            scheme: :primary,
-            form: "edit_participants_form",
-            data: { turbo: true },
-            type: :submit)) do
+          footer.with_component(
+            Primer::ButtonComponent.new(
+              scheme: :primary,
+              form: "edit_participants_form",
+              data: { turbo: true },
+              type: :submit
+            )
+          ) do
             t("button_save")
           end
         end

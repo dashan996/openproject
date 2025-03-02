@@ -37,10 +37,35 @@ module Storages
             ::Storages::Peripherals::StorageInteraction::AuthenticationStrategies::BasicAuth.strategy
           end
 
-          UserBound = ->(user:) do
-            ::Storages::Peripherals::StorageInteraction::AuthenticationStrategies::OAuthUserToken
-              .strategy
-              .with_user(user)
+          class UserBound
+            class << self
+              include TaggedLogging
+
+              def call(user:, storage:)
+                with_tagged_logger do
+                  sso_preferred = storage.authenticate_via_idp? && oidc_provider_for(user)
+
+                  if sso_preferred
+                    ::Storages::Peripherals::StorageInteraction::AuthenticationStrategies::SsoUserToken
+                      .strategy
+                      .with_user(user)
+                  elsif storage.authenticate_via_storage?
+                    ::Storages::Peripherals::StorageInteraction::AuthenticationStrategies::OAuthUserToken
+                      .strategy
+                      .with_user(user)
+                  else
+                    error "No user-bound authentication strategy applicable for file storage #{storage.id}."
+                    ::Storages::Peripherals::StorageInteraction::AuthenticationStrategies::Failure.strategy
+                  end
+                end
+              end
+
+              private
+
+              def oidc_provider_for(user)
+                user.authentication_provider.is_a?(OpenIDConnect::Provider)
+              end
+            end
           end
         end
       end

@@ -44,9 +44,14 @@ RSpec.describe OpenIDConnect::UserTokens::ExchangeService, :webmock do
     {
       status: 200,
       headers: { "Content-Type": "application/json" },
-      body: { access_token: "#{access_token}-exchanged", refresh_token: "#{refresh_token}-exchanged" }.to_json
+      body: {
+        access_token: "#{access_token}-exchanged",
+        refresh_token: "#{refresh_token}-exchanged",
+        expires_in: 45
+      }.to_json
     }
   end
+  let(:expected_expires_at) { 45.seconds.from_now.change(usec: 0) }
 
   before do
     user.oidc_user_tokens.create!(access_token: idp_access_token, audiences: [OpenIDConnect::UserToken::IDP_AUDIENCE])
@@ -63,10 +68,11 @@ RSpec.describe OpenIDConnect::UserTokens::ExchangeService, :webmock do
 
     it { is_expected.to be_success }
 
-    it "creates a new user token", :aggregate_failures do
+    it "creates a new user token", :aggregate_failures, :freeze_time do
       expect { subject }.to change(user.oidc_user_tokens, :count).from(2).to(3)
       expect(user.oidc_user_tokens.last.access_token).to eq("the-access-token-exchanged")
       expect(user.oidc_user_tokens.last.refresh_token).to be_nil
+      expect(user.oidc_user_tokens.last.expires_at).to eq(expected_expires_at)
     end
 
     it "returns the new user token" do
@@ -79,19 +85,56 @@ RSpec.describe OpenIDConnect::UserTokens::ExchangeService, :webmock do
         .with(body: hash_including(subject_token: idp_access_token))
     end
 
+    context "when the response has no expires_in" do
+      let(:exchange_response) do
+        {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+          body: {
+            access_token: "#{access_token}-exchanged",
+            refresh_token: "#{refresh_token}-exchanged"
+          }.to_json
+        }
+      end
+
+      it "creates a new user token without expiration", :aggregate_failures do
+        expect { subject }.to change(user.oidc_user_tokens, :count).from(2).to(3)
+        expect(user.oidc_user_tokens.last.expires_at).to be_nil
+      end
+    end
+
     context "when exchanging token for an existing user token" do
       let(:audience) { existing_audience }
 
       it { is_expected.to be_success }
 
-      it "creates a new user token", :aggregate_failures do
+      it "updates the existing user token", :aggregate_failures, :freeze_time do
         expect { subject }.not_to change(user.oidc_user_tokens, :count)
         expect(user.oidc_user_tokens.last.access_token).to eq("the-access-token-exchanged")
         expect(user.oidc_user_tokens.last.refresh_token).to be_nil
+        expect(user.oidc_user_tokens.last.expires_at).to eq(expected_expires_at)
       end
 
       it "returns the updated user token" do
         expect(result.value!).to eq(user.oidc_user_tokens.last)
+      end
+
+      context "and when the response has no expires_in" do
+        let(:exchange_response) do
+          {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+            body: {
+              access_token: "#{access_token}-exchanged",
+              refresh_token: "#{refresh_token}-exchanged"
+            }.to_json
+          }
+        end
+
+        it "updates the existing user token without expiration", :aggregate_failures do
+          expect { subject }.not_to change(user.oidc_user_tokens, :count)
+          expect(user.oidc_user_tokens.last.expires_at).to be_nil
+        end
       end
     end
 

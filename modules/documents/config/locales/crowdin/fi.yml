@@ -34,6 +34,8 @@ fi:
   enumeration_doc_categories: "Tiedostoluokat"
   documents:
     label_attachment_author: "Liitteen laatija"
+    label_categories: "Categories"
+    new_category: "New category"
   label_document_added: "Asiakirja lisätty"
   label_document_new: "Uusi asiakirja"
   label_document_plural: "Asiakirjat"

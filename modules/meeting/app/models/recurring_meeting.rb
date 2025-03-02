@@ -106,7 +106,12 @@ class RecurringMeeting < ApplicationRecord
   end
 
   def human_frequency
-    I18n.t("recurring_meeting.frequency.#{frequency}")
+    case frequency
+    when "working_days"
+      I18n.t("recurring_meeting.frequency.working_days")
+    else
+      I18n.t("recurring_meeting.frequency.x_#{frequency}", count: interval)
+    end
   end
 
   def human_day_of_week
@@ -186,7 +191,11 @@ class RecurringMeeting < ApplicationRecord
   end
 
   def next_occurrence(from_time: Time.current)
-    schedule.next_occurrence(from_time)
+    schedule.next_occurrence(from_time)&.to_time
+  end
+
+  def previous_occurrence(from_time: Time.current)
+    schedule.previous_occurrence(from_time)&.to_time
   end
 
   def remaining_occurrences
@@ -210,11 +219,18 @@ class RecurringMeeting < ApplicationRecord
   end
 
   def upcoming_instantiated_meetings
-    scheduled_meetings
+    @upcoming_instantiated_meetings ||= scheduled_meetings
       .includes(:meeting)
       .not_cancelled
       .joins(:meeting)
       .where("meetings.start_time + (interval '1 hour' * meetings.duration) >= ?", Time.current)
+      .order(start_time: :asc)
+  end
+
+  def ongoing_meetings
+    upcoming_instantiated_meetings
+      .includes(:meeting)
+      .where(meetings: { start_time: ..Time.current })
       .order(start_time: :asc)
   end
 
@@ -223,6 +239,10 @@ class RecurringMeeting < ApplicationRecord
       .upcoming
       .cancelled
       .order(start_time: :asc)
+  end
+
+  def instantiated_meetings
+    meetings.not_templated
   end
 
   private

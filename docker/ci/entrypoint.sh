@@ -107,7 +107,7 @@ setup_tests() {
 	execute_quiet "cp docker/ci/database.yml config/"
 	create_db_cluster
 
-  execute "gem install bundler --version '${BUNDLER_VERSION}' --no-document"
+  execute "gem install bundler --no-document"
 
   run_background execute "BUNDLE_JOBS=8 bundle install --quiet && bundle clean --force && echo BUNDLE DONE"
 	run_background execute "JOBS=8 time npm install --quiet && npm prune --quiet && echo NPM DONE"

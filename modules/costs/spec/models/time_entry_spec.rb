@@ -484,6 +484,23 @@ RSpec.describe TimeEntry do
         end
       end
     end
+
+    describe "comments" do
+      it "allows blank values" do
+        time_entry.comments = ""
+        expect(time_entry).to be_valid
+      end
+
+      it "allows values with a length of 1000 characters" do
+        time_entry.comments = "a" * 1000
+        expect(time_entry).to be_valid
+      end
+
+      it "does not allow values with a length of >1000 characters" do
+        time_entry.comments = "a" * 1001
+        expect(time_entry).not_to be_valid
+      end
+    end
   end
 
   describe "#start_timestamp" do

@@ -48,7 +48,7 @@ class WorkPackages::BulkController < ApplicationController
 
     if @call.success?
       flash[:notice] = t(:notice_successful_update)
-      redirect_back_or_default(controller: "/work_packages", action: :index, project_id: @project)
+      redirect_back_or_default({ controller: "/work_packages", action: :index, project_id: @project })
     else
       flash[:error] = bulk_error_message(@work_packages, @call)
       setup_edit

@@ -134,7 +134,6 @@ module API
                                            writable: default_writable_property(property),
                                            attribute_group: nil,
                                            show_if: true)
-
           getter = ->(*) do
             schema_with_allowed_collection_getter(type,
                                                   name_source,
@@ -266,7 +265,6 @@ module API
                      current_user:,
                      self_link: nil,
                      form_embedded: false)
-
         self.form_embedded = form_embedded
         self.self_link = self_link
 
@@ -357,7 +355,6 @@ module API
                                                 attribute_group,
                                                 values_callback,
                                                 allowed_values_getter)
-
         wrapped_link_factory = if link_factory
                                  ->(value) { instance_exec(value, &link_factory) }
                                else

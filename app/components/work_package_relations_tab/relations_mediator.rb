@@ -29,7 +29,19 @@
 #++
 
 class WorkPackageRelationsTab::RelationsMediator
-  RelationGroup = Data.define(:type, :visible_relations, :ghost_relations)
+  RelationGroup = Data.define(:type, :visible_relations, :ghost_relations) do
+    def count
+      visible_relations.count + ghost_relations.count
+    end
+
+    def any?
+      visible_relations.any? || ghost_relations.any?
+    end
+
+    def children_type?
+      type == "children"
+    end
+  end
 
   attr_reader :work_package
 
@@ -38,7 +50,7 @@ class WorkPackageRelationsTab::RelationsMediator
   end
 
   def visible_relations
-    @visible_relations ||= work_package.relations.includes(:to, :from).visible
+    @visible_relations ||= work_package.relations.visible.includes(:to, :from)
   end
 
   def visible_children
@@ -59,8 +71,20 @@ class WorkPackageRelationsTab::RelationsMediator
 
     # Group visible and invisible relations by type
     all_relation_types.map do |type|
+      relation_group(type)
+    end
+  end
+
+  def relation_group(type)
+    if type == "children"
       RelationGroup.new(
-        type: type,
+        type:,
+        visible_relations: visible_children,
+        ghost_relations: ghost_children
+      )
+    else
+      RelationGroup.new(
+        type:,
         visible_relations: filter_relations_by_type(visible_relations, type),
         ghost_relations: filter_relations_by_type(ghost_relations, type)
       )

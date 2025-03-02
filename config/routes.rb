@@ -136,8 +136,21 @@ Rails.application.routes.draw do
       get "edit/:tab" => "types#edit", as: "edit_tab"
       match "update/:tab" => "types#update", as: "update_tab", via: %i[post patch]
       put :subject_configuration,
-          controller: "work_packages/types/subject_configuration",
+          controller: "work_packages/types/subject_configuration_tab",
           action: "update_subject_configuration"
+    end
+
+    resources :pdf_export_template, only: %i[],
+                                    controller: "work_packages/types/pdf_export_template",
+                                    path: "pdf_export_template" do
+      member do
+        post :toggle
+        put :drop
+      end
+      collection do
+        put :enable_all
+        put :disable_all
+      end
     end
 
     collection do
@@ -447,9 +460,6 @@ Rails.application.routes.draw do
         delete "enterprise/delete_trial_key" => "enterprises#delete_trial_key"
       end
     end
-    resources :enumerations do
-      post "move/:id", action: "move", on: :collection
-    end
 
     delete "design/logo" => "custom_styles#logo_delete", as: "custom_style_logo_delete"
     delete "design/export_logo" => "custom_styles#export_logo_delete", as: "custom_style_export_logo_delete"
@@ -468,10 +478,10 @@ Rails.application.routes.draw do
 
     resources :groups, except: %i[show] do
       member do
-        # this should be put into it's own resource
+        # this should be put into its own resource
         post "/members" => "groups#add_users", as: "members_of"
         delete "/members/:user_id" => "groups#remove_user", as: "member_of"
-        # this should be put into it's own resource
+        # this should be put into its own resource
         patch "/memberships/:membership_id" => "groups#edit_membership", as: "membership_of"
         put "/memberships/:membership_id" => "groups#edit_membership"
         delete "/memberships/:membership_id" => "groups#destroy_membership"
@@ -525,6 +535,13 @@ Rails.application.routes.draw do
       # It is important to have this named something else than "work_packages".
       # Otherwise the angular ui-router will also recognize that as a WorkPackage page and apply according classes.
       resource :work_packages_general, controller: "/admin/settings/work_packages_general", only: %i[show update]
+      resources :work_package_priorities, except: [:show] do
+        member do
+          put :move
+          get :reassign
+        end
+      end
+
       resource :progress_tracking, controller: "/admin/settings/progress_tracking", only: %i[show update]
       resource :projects, controller: "/admin/settings/projects_settings", only: %i[show update]
       resource :new_project, controller: "/admin/settings/new_project_settings", only: %i[show update]
@@ -643,6 +660,18 @@ Rails.application.routes.draw do
                controller: "work_packages/progress",
                as: :work_package_progress
     end
+
+    resource :datepicker_dialog_content,
+             only: %i[show new edit update],
+             controller: "work_packages/date_picker",
+             on: :member,
+             as: "datepicker_dialog_content"
+    collection do
+      resource :datepicker_dialog_content,
+               only: :create,
+               controller: "work_packages/date_picker"
+    end
+
     resources :relations_tab, only: %i[index], controller: "work_package_relations_tab"
     resources :relations, only: %i[new create edit update destroy], controller: "work_package_relations"
 

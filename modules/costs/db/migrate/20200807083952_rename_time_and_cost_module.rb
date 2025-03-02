@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -26,8 +28,8 @@
 # See COPYRIGHT and LICENSE files for more details.
 #++
 
-require Rails.root.to_s + "/db/migrate/migration_utils/module_renamer"
-require Rails.root.to_s + "/db/migrate/migration_utils/setting_renamer"
+require Rails.root.join("db/migrate/migration_utils/module_renamer").to_s
+require Rails.root.join("db/migrate/migration_utils/setting_renamer").to_s
 
 class RenameTimeAndCostModule < ActiveRecord::Migration[6.0]
   def up

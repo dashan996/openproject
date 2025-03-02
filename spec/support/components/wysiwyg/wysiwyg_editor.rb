@@ -67,6 +67,10 @@ module Components
       expect(editor_element.text).to eq(value)
     end
 
+    def expect_include_value(value)
+      expect(editor_element.text).to include(value)
+    end
+
     def expect_supports_macros
       expect(container)
           .to have_css(".ck-button", visible: :all, text: "Macros")

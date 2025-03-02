@@ -31,6 +31,7 @@ require "spec_helper"
 RSpec.describe Queries::WorkPackages::Filter::FollowsFilter do
   it_behaves_like "filter by work package id" do
     let(:class_key) { :follows }
+    let(:human_name) { "follows" }
 
     it_behaves_like "filter for relation" do
       let(:relation_type) { :follows }

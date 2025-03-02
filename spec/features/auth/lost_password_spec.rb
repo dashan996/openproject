@@ -65,7 +65,7 @@ RSpec.describe "Lost password" do
     login_with user.login, new_password
 
     expect(page)
-      .to have_current_path(my_page_path)
+      .to have_current_path(home_path)
   end
 
   context "when user has an auth source" do

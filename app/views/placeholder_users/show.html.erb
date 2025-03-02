@@ -41,12 +41,12 @@ See COPYRIGHT and LICENSE files for more details.
     <%= call_hook :view_account_left_middle, placeholder_user: @placeholder_user %>
 
     <% unless @memberships.empty? %>
-      <h3><%=t(:label_project_plural)%></h3>
+      <h3><%= t(:label_project_plural) %></h3>
       <ul>
         <% for membership in @memberships %>
           <li>
             <%= link_to_project(membership.project) %>
-            (<%=h membership.roles.sort.collect(&:to_s).join(', ') %>, <%= format_date(membership.created_at) %>)
+            (<%= h membership.roles.sort.collect(&:to_s).join(", ") %>, <%= format_date(membership.created_at) %>)
           </li>
         <% end %>
       </ul>

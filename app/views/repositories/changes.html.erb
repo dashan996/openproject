@@ -28,19 +28,22 @@ See COPYRIGHT and LICENSE files for more details.
 ++#%>
 
 <%= call_hook(:view_repositories_show_contextual, { repository: @repository, project: @project }) %>
-<%= render partial: 'repository_header', locals: { empty: false } %>
+<%= render partial: "repository_header", locals: { empty: false } %>
 
 <div class="repository-breadcrumbs">
-  <%= render partial: 'breadcrumbs',
+  <%= render partial: "breadcrumbs",
              locals: { path: @path, revision: @rev }.merge(kind: (@entry ? @entry.kind : nil)) %>
 </div>
 
-
-<p><%= render partial: 'link_to_functions' %></p>
+<p><%= render partial: "link_to_functions" %></p>
 
 <%= render_properties(@properties) %>
 
-<%= render(partial: 'revisions',
-           locals: {project: @project, path: @path, revisions: @changesets, entry: @entry }) unless @changesets.empty? %>
+<%= unless @changesets.empty?
+      render(
+        partial: "revisions",
+        locals: { project: @project, path: @path, revisions: @changesets, entry: @entry }
+      )
+    end %>
 
 <% html_title(t(:label_change_plural)) -%>

@@ -36,6 +36,10 @@ class Queries::WorkPackages::Filter::BlocksFilter <
     ::Relation::TYPE_BLOCKS
   end
 
+  def human_name
+    I18n.t("work_package_relations_tab.relations.label_blocks_singular")
+  end
+
   private
 
   def relation_filter

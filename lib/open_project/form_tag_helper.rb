@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -165,9 +167,7 @@ module OpenProject
                   "form--#{selector.tr('_', '-')}-container"
                 end
 
-      classes << (" " + options.fetch(:container_class, ""))
-
-      classes.strip
+      "#{classes} #{options[:container_class]}".strip
     end
   end
 end

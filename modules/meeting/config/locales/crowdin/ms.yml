@@ -53,7 +53,10 @@ ms:
         frequency: "Frekuensi"
         interval: "Selang waktu"
         start_date: "Bermula pada"
+        start_time: "Start time"
+        start_time_hour: "Start time"
         end_after: "Meeting series ends"
+        end_date: "End date"
         iterations: "Kejadian"
     errors:
       messages:
@@ -61,6 +64,7 @@ ms:
     models:
       recurring_meeting: "Mesyuarat berulang"
       structured_meeting: "Mesyuarat sekali"
+      meeting: "Meeting"
       meeting_agenda_item: "Item agenda"
       meeting_agenda: "Agenda"
       meeting_minutes: "Minit mesyuarat"
@@ -116,7 +120,7 @@ ms:
   label_template: "templat"
   label_recurring_meeting_view: "Lihat siri mesyuarat"
   label_recurring_meeting_create: "Open"
-  label_recurring_meeting_copy: "Salin sebagai one-off"
+  label_recurring_meeting_copy: "Copy as one-time"
   label_recurring_meeting_cancel: "Batalkan kejadian ini"
   label_recurring_meeting_delete: "Padam kejadian"
   label_recurring_meeting_restore: "Pulihkan kejadian ini"
@@ -176,15 +180,29 @@ ms:
         Hantar jemputan e-mel segera kepada peserta yang dipilih di atas. Anda juga boleh melakukan ini secara manual pada bila-bila masa kemudian.
       send_invitation_emails_structured: "Hantar jemputan e-mel dengan segera kepada semua peserta. Anda juga boleh melakukan ini secara manual pada bila-bila masa kemudian."
       open_meeting_link: "Buka mesyuarat"
+      open_my_meetings_link: "Go to My meetings"
       series:
-        title: "[%{project_name}] Meeting series %{title}"
-        summary: "%{actor} has set up a new meeting series %{title}"
+        title: "[%{project_name}] Meeting series '%{title}'"
+        summary: "%{actor} has set up a new meeting series '%{title}'"
+      series_rescheduled:
+        title: "[%{project_name}] Meeting series '%{title}' rescheduled"
+        summary: "%{actor} has changed the schedule for meeting series '%{title}'"
+        old_schedule: "Old schedule"
+        new_schedule: "New schedule"
       invited:
-        summary: "%{actor} telah menghantar anda jemputan ke mesyuarat %{title}"
+        summary: "%{actor} has sent you an invitation for the meeting '%{title}'"
+      cancelled:
+        header: "Cancelled: Meeting '%{title}'"
+        header_occurrence: "Cancelled: Meeting occurrence '%{title}'"
+        header_series: "Cancelled: Meeting series '%{title}'"
+        summary_occurrence: "An occurrence of '%{title}' has been cancelled by %{actor}."
+        summary_series: "Meeting series '%{title}' has been cancelled by %{actor}."
+        summary: "'%{title}' has been cancelled by %{actor}."
+        date_time: "Scheduled date/time"
       rescheduled:
-        header: "Mesyuarat %{title} telah dijadualkan semula"
-        summary: "Mesyuarat %{title} telah dijadualkan semula oleh %{actor}"
-        body: "Mesyuarat %{title} telah dijadualkan semula oleh %{actor}"
+        header: "Meeting '%{title}' has been rescheduled"
+        summary: "Meeting '%{title}' has been rescheduled by %{actor}"
+        body: "The meeting '%{title}' has been rescheduled by %{actor}."
         old_date_time: "Tarikh/masa lama"
         new_date_time: "Tarikh/masa baharu"
     label_mail_all_participants: "Hantar e-mel kepada semua peserta"
@@ -205,10 +223,11 @@ ms:
         confirmation_message_html: >
           This action is not reversible. Please proceed with caution.
       occurrence:
-        title: "Delete meeting occurrence"
-        heading: "Delete this meeting occurrence?"
+        title: "Cancel meeting occurrence"
+        heading: "Cancel this meeting occurrence?"
         confirmation_message_html: >
-          This meeting is part of a series called <strong>%{title}</strong>. This will only delete this particular occurrence and not the entire series. Do you want to continue?
+          Any meeting information not in the template will be lost. Do you want to continue?
+        confirm_button: "Cancel occurrence"
     blankslate:
       title: "No meetings to display"
       desc: "There are no meetings that meet the active filter criteria."
@@ -229,7 +248,7 @@ ms:
       first_created: >
         Mesyuarat pertama telah berjaya dibuat daripada templat. Semua mesyuarat akan datang akan dibuat secara automatik pada masa kejadian sebelumnya.
     template:
-      button_finalize: "Selesaikan templat"
+      button_finalize: "Open first meeting"
       blank_title: "Templat siri mesyuarat anda kosong"
       description: >
         Templat ini akan digunakan apabila mesyuarat baharu dalam siri dibuat. Anda boleh menambah item agenda, peserta dan lampiran pada templat ini.
@@ -240,10 +259,12 @@ ms:
       banner_html: >
         Anda sedang mengedit templat siri mesyuarat: %{link}. Setiap kejadian baharu mesyuarat dalam siri ini akan menggunakan templat ini. Perubahan tidak akan menjejaskan mesyuarat yang lalu atau yang telah dibuat.
     frequency:
+      x_daily:
+        other: "Every %{count} days"
+      x_weekly:
+        other: "Every %{count} weeks"
       every_weekday: "Setiap %{day_of_the_week}"
-      daily: "Harian"
       working_days: "Setiap hari bekerja"
-      weekly: "Mingguan"
     end_after:
       never: "never"
       specific_date: "after a specific date"
@@ -278,11 +299,11 @@ ms:
       heading: "Permanently delete this meeting series?"
       confirmation_message_html:
         zero: >
-          Deleting <strong>%{title}</strong> will delete any meetings in this series. This action is not reversible. Please proceed with caution.
+          The meeting series <strong>%{title}</strong> does not have any meeting occurrences. The series will be deleted for everyone. Please proceed with caution.
         one: >
-          Deleting <strong>%{title}</strong> will also delete one meeting in this series. This action is not reversible. Please proceed with caution.
+          Deleting <strong>%{title}</strong> will also delete one occurrence in this series. This action is not reversible. Please proceed with caution.
         other: >
-          Deleting <strong>%{title}</strong> will delete all %{count} meetings in this series. This action is not reversible. Please proceed with caution.
+          Deleting <strong>%{title}</strong> will delete all %{count} occurrences in this series. This action is not reversible. Please proceed with caution.
     scheduled_delete_dialog:
       title: "Cancel meeting occurrence"
       heading: "Cancel this meeting occurrence?"

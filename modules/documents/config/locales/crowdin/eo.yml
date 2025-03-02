@@ -34,6 +34,8 @@ eo:
   enumeration_doc_categories: "Kategorioj de dokumentoj"
   documents:
     label_attachment_author: "Aŭtoro de la kunsendaĵo"
+    label_categories: "Categories"
+    new_category: "New category"
   label_document_added: "Dokumento aldonita"
   label_document_new: "Nova dokumento"
   label_document_plural: "Dokumentoj"

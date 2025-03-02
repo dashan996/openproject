@@ -47,6 +47,6 @@ module MailNotificationHelper
 
   def status_colors(status)
     color_id = selected_color(status)
-    Color.find(color_id).color_styles.map { |k, v| "#{k}:#{v};" }.join(" ") if color_id
+    Color.find(color_id).color_styles_css if color_id
   end
 end

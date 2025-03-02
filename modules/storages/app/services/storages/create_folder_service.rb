@@ -37,7 +37,7 @@ module Storages
     end
 
     def call(storage:, user:, name:, parent_id:)
-      auth_strategy = Peripherals::Registry.resolve("#{storage}.authentication.user_bound").call(user: user)
+      auth_strategy = Peripherals::Registry.resolve("#{storage}.authentication.user_bound").call(user:, storage:)
 
       Peripherals::Registry
         .resolve("#{storage}.commands.create_folder")

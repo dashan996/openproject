@@ -178,12 +178,16 @@ RSpec.describe WorkPackage::PDFExport::WorkPackageToPdf do
            author: another_user,
            assigned_to: another_user)
       .tap do |wp|
-        allow(wp)
-          .to receive(:attachments)
-                .and_return attachments
-      end
+      allow(wp)
+        .to receive(:attachments)
+              .and_return attachments
+    end
   end
-  let(:options) { {} }
+  let(:options) do
+    {
+      footer_text_right: project.name
+    }
+  end
   let(:exporter) do
     described_class.new(work_package, options)
   end

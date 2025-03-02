@@ -30,6 +30,7 @@ es:
         overridden_costs: "Reemplazado los costos"
         spent: "Pasado"
         spent_on: "Fecha"
+        logged_by: "Logged by"
       cost_type:
         unit: "Nombre de la unidad"
         unit_plural: "Nombre de la unidad pluralizado"
@@ -46,24 +47,28 @@ es:
       user:
         default_rates: "tasa de morosidad"
       time_entry:
-        project: Project
-        user: User
-        work_package: Work package
+        project: Proyecto
+        user: Usuario
+        work_package: Paquete de trabajo
         hours: Horas
-        comments: Comment
+        comments: Comentario
         activity: Actividad
         spent_on: Fecha
-        start_time: Start time
-        end_time: Finish time
+        start_time: Hora de inicio
+        end_time: Hora de finalización
     models:
       cost_type:
         one: "Tipo de costo"
         other: "Tipos de costos"
+      time_entry_activity:
+        one: "Time tracking activity"
+        other: "Time tracking activities"
       rate: "Proporción"
     errors:
       models:
         time_entry:
-          invalid_time: "must be between 00:00 and 23:59."
+          invalid_time: "debe estar entre las 00:00 y las 23:59."
+          cannot_log_for_this_work_package: "Cannot log time for this work package."
         work_package:
           is_not_a_valid_target_for_cost_entries: "Paquete de trabajo #%{id} no es un objetivo válido para reasignar las entradas de costo."
           nullify_is_not_valid_for_cost_entries: "Las entradas de costo  no pueden ser asignadas a un proyecto."
@@ -78,7 +83,8 @@ es:
     fixed_date: "Fecha fija"
   button_add_rate: "Añadir tasa"
   button_log_costs: "Registrar costos unitarios"
-  button_log_time: "Log"
+  button_log_time: "Registro"
+  button_add_activity: "Activity"
   caption_booked_on_project: "Reservados en proyecto"
   caption_default: "Por defecto"
   caption_default_rate_history_for: "Historial de morosidad para %{user}"
@@ -90,8 +96,10 @@ es:
   caption_save_rate: "Guardar tasa"
   caption_set_rate: "Ajustar tasa actual"
   caption_show_locked: "Mostrar tipos de bloqueados"
-  caption_log_time_dialog: "Log time"
+  caption_log_time_dialog: "Tiempo registrado"
   description_date_for_new_rate: "Fecha para la nueva tarifa"
+  description_costs_settings: "Define the desired format for the costs in all projects."
+  description_time_settings: "Define which fields are mandatory to fill when logging time in all projects."
   group_by_others: "no en cualquier grupo"
   label_between: "entre"
   label_cost_filter_add: "Agregar filtro para entrada de costo"
@@ -118,6 +126,8 @@ es:
   label_kind: "Tipo"
   label_less_or_equal: "<="
   label_log_costs: "Registrar costos unitarios"
+  label_new_time_entry_activity: "New time entry activity"
+  label_time_entry_activity_form_description: "Changes to this time entry activity will be reflected in all projects where it is enabled."
   label_no: "No"
   label_option_plural: "Opciones"
   label_overall_costs: "Costos totales"
@@ -130,12 +140,16 @@ es:
   label_until: "hasta"
   label_valid_from: "Válido desde"
   label_yes: "Sí"
-  placeholder_activity_select_work_package_first: Work package selection is required first
+  label_time: "Hora"
+  label_cost: "Cost"
+  label_costs: "Costs"
+  label_mandatory_fields: "Mandatory fields"
+  placeholder_activity_select_work_package_first: Primero debe seleccionar el paquete de trabajo
   notice_something_wrong: "Algo salió mal. Por favor intentelo nuevamente."
   notice_successful_restore: "Restauración exitosa."
   notice_successful_lock: "Bloqueado correctamente."
   notice_cost_logged_successfully: "Costo unitario registrado correctamente."
-  notice_different_time_zones: "This user has a different time zone (%{tz}). Time will be logged using their time zone."
+  notice_different_time_zones: "Este usuario tiene una zona horaria diferente (%{tz}). La hora se registrará utilizando su zona horaria."
   permission_edit_cost_entries: "Editar los costos unitarios reservados"
   permission_edit_own_cost_entries: "Editar los costos unitarios propios reservados"
   permission_edit_hourly_rates: "Editar las tasas por hora"
@@ -166,4 +180,4 @@ es:
   api_v3:
     errors:
       validation:
-        start_time_different_date: "Date part of startTime (%{start_time}) must be the same as the spentOn (%{spent_on}) date."
+        start_time_different_date: "La parte de fecha de startTime (%{start_time}) debe ser la misma que la fecha de spentOn (%{spent_on})."

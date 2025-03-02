@@ -33,7 +33,7 @@ module OpenIDConnect
         f.hidden(name: :oidc_provider, value: provider.oidc_provider)
         f.text_field(
           name: :display_name,
-          label: I18n.t("activemodel.attributes.openid_connect/provider.display_name"),
+          label: I18n.t("activerecord.attributes.openid_connect/provider.display_name"),
           required: true,
           disabled: provider.seeded_from_env?,
           caption: I18n.t("openid_connect.instructions.display_name"),
@@ -41,7 +41,7 @@ module OpenIDConnect
         )
         f.text_field(
           name: :tenant,
-          label: I18n.t("activemodel.attributes.openid_connect/provider.tenant"),
+          label: I18n.t("activerecord.attributes.openid_connect/provider.tenant"),
           required: true,
           disabled: provider.seeded_from_env?,
           value: provider.tenant || "common",

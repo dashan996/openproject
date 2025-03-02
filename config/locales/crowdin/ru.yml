@@ -27,7 +27,7 @@ ru:
     work_packages:
       activity_tab:
         no_results_title_text: Нет деятельности для отображения
-        no_results_description_text: "Выберите \"Показать всё\" для отображения всей деятельности и комментариев"
+        no_results_description_text: 'Выберите "Показать всё" для отображения всей деятельности и комментариев'
         label_activity_show_all: "Показать всё"
         label_activity_show_only_comments: "Показать только комментарии"
         label_activity_show_only_changes: "Показать только изменения"
@@ -114,7 +114,7 @@ ru:
   attribute_help_texts:
     note_public: "Любой текст и изображения, которые вы добавляете в это поле, видны всем аутентифицированным пользователям!"
     text_overview: "В этом представлении можно создать пользовательскую текстовую справку для атрибутов представления. При ее наличии, она будет показана по клику по значку справки возле атрибута."
-    label_plural: "Атрибут текстов справки"
+    label_plural: "Справка по атрибуту"
     show_preview: "Предпросмотр текста"
     add_new: "Добавить текст справки"
     edit: "Редактировать текст справки для %{attribute_caption}"
@@ -128,9 +128,9 @@ ru:
     sync_failed: "Не удалось синхронизировать с LDAP: %{message}."
     back_to_index: "Нажмите здесь, чтобы вернуться к списку подключений."
     technical_warning_html: |
-      Эта LDAP форма требует технических знаний по LDAP / Active Directory.
-      <br/>
-      <a href="https://www.openproject.org/help/administration/manage-ldap-authentication/">Пожалуйста, ознакомьтесь с документацией для подробных инструкций</a>.
+      This LDAP form requires technical knowledge of your LDAP / Active Directory setup.
+      <br>
+      <a href="https://www.openproject.org/help/administration/manage-ldap-authentication/">Please visit our documentation for detailed instructions</a>.
     attribute_texts:
       name: Произвольное имя подключения LDAP
       host: Имя хоста или IP-адрес LDAP
@@ -138,9 +138,9 @@ ru:
       generic_map: Ключ атрибута в LDAP, сопоставленный с атрибутом OpenProject `%{attribute}`
       admin_map_html: "Необязательно: Ключ атрибута в LDAP, который <strong>при представлении</strong> помечает пользователя администратором. Оставьте пустым, если сомневаетесь."
       system_user_dn_html: |
-        Введите DN пользователя системы, используемого для доступа только для чтения.
-        <br/>
-        Пример: uid=openproject,ou=system,dc=example,dc=com
+        Enter the DN of the system user used for read-only access.
+        <br>
+        Example: uid=openproject,ou=system,dc=example,dc=com
       system_user_password: Введите привязочный пароль системного пользователя
       base_dn: |
         Введите базовый DN поддерева в LDAP, в котором бы OpenProject искал пользователей и групп.
@@ -178,7 +178,7 @@ ru:
     tls_options:
       verify_peer: "Проверка SSL сертификата"
       verify_peer_description_html: >
-        Включает строгую проверку SSL цепочки доверенных сертификатов. <br/> <strong>Предупреждение:</strong> Отключение этой опции отключает проверку SSL сертификата сервера LDAP. Это раскрывает вашу связь с Человеком во время средних атак.
+        Enables strict SSL verification of the certificate trusted chain. <br> <strong>Warning:</strong> Unchecking this option disables SSL verification of the LDAP server certificate. This exposes your connection to Man in the Middle attacks.
       tls_certificate_description: "Если сертификат сервера LDAP отсутствует в источниках доверия этой системы, вы можете добавить его вручную. Введите строку сертификации PEM X509."
   forums:
     show:
@@ -230,7 +230,7 @@ ru:
             description: Добавьте элементы в этот список, чтобы создать подпункты внутри другого списка
         delete_dialog:
           title: "Удалить элемент пользовательского поля"
-          heading: "Delete custom field item?"
+          heading: "Удалить элемент пользовательского поля?"
           description: "Это действие необратимо удалит элемент и все его подпункты. Все присвоенные значения будут удалены навсегда. Если это поле является обязательным, удаление элементов может привести к тому, что существующие рабочие пакеты работ станут недействительными."
         placeholder:
           label: "Название элемента"
@@ -345,9 +345,10 @@ ru:
         placeholder: "Список новых проектов"
       delete_modal:
         title: "Удалить список проектов"
+        heading: "Удалить этот список проектов?"
         text: "Это действие не приведет к удалению ни одного проекта, содержащегося в списке. Вы уверены, что хотите удалить этот список проектов?"
     settings:
-      change_identifier: Идентификатор изменений
+      change_identifier: Изменить идентификатор
       actions:
         label_enable_all: "Включить всё"
         label_disable_all: "Выключить всё"
@@ -393,6 +394,8 @@ ru:
         no_results_content_text: Создать новую версию
       storage:
         no_results_title_text: Для этого проекта дополнительного дискового пространства не требуется.
+      work_package_priorities:
+        new_label: "Новый приоритет"
   project_stage:
     working_days_count:
       one: "Продолжительность: %{count} рабочий день"
@@ -488,7 +491,7 @@ ru:
   my:
     access_token:
       create_dialog:
-        title: Token generated
+        title: Токен сгенерирован
         header: Токен %{type} создан
         warning: Обратите внимание, что это единственный раз, когда Вы увидите этот токен, поэтому обязательно скопируйте его сейчас.
       errors:
@@ -565,10 +568,10 @@ ru:
     react_with: "Реакция %{reaction}"
     and_user: "и %{user}"
     and_others:
-      one: и еще 1
+      one: и ещё 1
       few: и еще %{count}
       many: и еще %{count}
-      other: и еще %{count}
+      other: и ещё %{count}
     reaction_by: "%{reaction} от"
   reportings:
     index:
@@ -585,14 +588,13 @@ ru:
         Отметьте эту опцию, чтобы исключить пакеты работ с этим статусом из итогов Работы,
         Оставшейся работы и % Завершения в иерархии.
       status_percent_complete_text: |-
-        В <a href="%{href}">режиме расчета прогресса на основе статуса</a>% Завершения работы
-        автоматически устанавливается на это значение, когда выбран этот статус.
+        В <a href="%{href}">режиме расчета прогресса на основе статуса</a> % завершения пакета работ автоматически устанавливается на это значение, когда выбран этот статус.
         Игнорируется в режиме, основанном на работе.
       status_readonly_html: |
-        Установите этот флажок, чтобы пометить пакеты работ как доступные только для чтения.
-        Никакие атрибуты не могут быть изменены за исключением статуса.
-        <br/>
-        <strong>Примечание</strong>: Будут применены унаследованные значения (например, от дочерних или родительских пакетов работ).
+        Check this option to mark work packages with this status as read-only.
+        No attributes can be changed with the exception of the status.
+        <br>
+        <strong>Note</strong>: Inherited values (e.g., from children or relations) will still apply.
     index:
       no_results_title_text: В данный момент статусы пакетов работ отсутствуют.
       no_results_content_text: Добавить новый статус
@@ -631,6 +633,14 @@ ru:
         pattern:
           label: "Шаблон темы"
           caption: "Поиск атрибута или добавление текста. Чтобы создать пробел между элементами, добавьте его в виде текста."
+      export_configuration:
+        tab: "Создать PDF"
+        intro: "Select which templates from those that are available you would like to enable for this type. The template determines the design and attributes visible in the exported PDF of a work package using this type. The first template on the list is selected by default."
+        pdf_export_templates:
+          label: "Шаблоны экспорта в PDF"
+          actions:
+            label_enable_all: "Включить всё"
+            label_disable_all: "Выключить всё"
   versions:
     overview:
       work_packages_in_archived_projects: "Эта версия используется совместно с архивными проектами, в которых все еще есть рабочие пакеты, назначенные на эту версию. Они учитываются, но не отображаются в связанных представлениях."
@@ -645,6 +655,47 @@ ru:
     index:
       no_results_title_text: В данный момент рабочих потоков нет.
   work_packages:
+    datepicker_modal:
+      banner:
+        description:
+          automatic_mobile: "Start date derived."
+          click_on_show_relations_to_open_gantt: 'Click on "%{button_name}" for Gantt overview.'
+          manual_mobile: "Ignoring relations."
+          manual_gap_between_predecessors: "There is a gap between this and all predecessors."
+          manual_overlap_with_predecessors: "Overlaps with at least one predecessor."
+          manual_with_children: "This has child work packages but their start dates are ignored."
+        title:
+          automatic_mobile: "Automatically scheduled."
+          automatic_with_children: "The dates are determined by child work packages."
+          automatic_with_predecessor: "The start date is set by a predecessor."
+          manual_mobile: "Manually scheduled."
+          manually_scheduled: "Manually scheduled. Dates not affected by relations."
+      blankslate:
+        title: "No predecessors"
+        description: "To enable automatic scheduling, this work package needs to have at least one predecessor. It will then automatically be scheduled to start after the last predecessor."
+      ignore_non_working_days:
+        title: "Working days only"
+      mode:
+        title: "Scheduling mode"
+        automatic: "Automatic"
+        manual: "Manual"
+      show_relations: "Show relations"
+      tabs:
+        aria_label: "Datepicker tabs"
+        children: "Children"
+        dates: "Dates"
+        predecessors: "Predecessors"
+        successors: "Successors"
+        blankslate:
+          predecessors:
+            title: "No predecessors"
+            description: "This work package does not have any predecessors."
+          successors:
+            title: "No successors"
+            description: "This work package does not have any successors."
+          children:
+            title: "No children"
+            description: "This work package does not have any children."
     x_descendants:
       one: "Один пакет работ, являющийся потомком"
       few: "Пакетов работ, являющихся потомками: %{count}"
@@ -796,6 +847,7 @@ ru:
       attachment:
         attachment_content: "Вложенный контент"
         attachment_file_name: "Название вложенного файла"
+        content_type: "Тип содержимого"
         downloads: "Загрузки"
         file: "Файл"
         filename: "Файл"
@@ -803,10 +855,10 @@ ru:
       attribute_help_text:
         attribute_name: "Атрибут"
         help_text: "Текст справки"
+      capability:
+        context: "Контекст"
       changeset:
         repository: "Репозиторий"
-      color:
-        hexcode: "Hex-код"
       comment:
         commented: "Прокомментировано" #an object that this comment belongs to
       custom_action:
@@ -839,7 +891,10 @@ ru:
         client_credentials_user_id: "ID пользователя клиента"
         scopes: "Области"
         confidential: "Конфиденциально"
+      emoji_reaction:
+        reactable: "Реакция на"
       enterprise_token:
+        domain: "Доменное имя"
         starts_at: "Действует с"
         subscriber: "Подписчик"
         encoded_token: "Маркер поддержки корпоративной версии"
@@ -851,6 +906,7 @@ ru:
         widgets: "Виджеты"
       journal:
         notes: "Примечания"
+        cause_type: "Cause type"
       ldap_auth_source:
         account: "Аккаунт"
         attr_firstname: "Атрибут имени"
@@ -866,22 +922,24 @@ ru:
         tls_certificate_string: "SSL-сертификат сервера LDAP"
       member:
         roles: "Роль"
+      notification:
+        read_ian: "Читайте в приложении"
+        resource: "Ресурс"
       oauth_client:
         client: "ID клиента"
-      planning_element_type_color:
-        hexcode: Шестнадцатеричный код
       project:
         active_value:
           true: "Разархивирован"
           false: "Архивирован"
         identifier: "Идентификатор"
-        latest_activity_at: "Последняя активность"
+        latest_activity_at: "Последние действия"
         parent: "Подпроект"
         public_value:
           title: "Видимость"
           true: "публичный"
           false: "приватный"
         queries: "Запросы"
+        enabled_modules: "Включенные модули"
         status_code: "Статус проекта"
         description: "Описание"
         status_explanation: "Описание статуса проекта"
@@ -902,23 +960,47 @@ ru:
       project_custom_field:
         is_required: "Требуется для всех проектов"
         custom_field_section: Раздел
+      project/life_cycle_step:
+        definition: "Definition"
       project/life_cycle_step_definition:
         name: "Имя"
         color: "Цвет"
       query:
+        sums: "Sums"
+        columns: "Columns"
         column_names: "Столбцы"
         relations_to_type_column: "Отношения к %{type}"
         relations_of_type_column: "%{type} отношения"
         group_by: "Результаты группы по"
+        sort_by: "Sort results by"
         filters: "Фильтры"
         timeline_labels: "Временные метки"
+        timeline_visible: "Show Gantt chart"
+        timeline_zoom_level: "Gantt chart zoom level"
+        timestamps: "Baseline timestamps"
+        sort_criteria: "Sort criteria"
+        highlighted_attributes: "Highlighted attributes"
+        highlighting_mode: "Highlight mode"
+        display_representation: "Display mode"
+        show_hierarchies: "Display mode"
+        starred: "Favorite"
+        hidden: "Hidden"
+        manual_sorting: "Manual sort order"
+        ordered_work_packages: "Work packages order"
+        include_subprojects: "Include subprojects"
+        results: "Results"
       relation:
         lag: "Задержка"
-        from: "Пакет работ"
+        from: "Связанный пакет работ"
         to: "Похожий пакет работ"
+        relation_type: "Relation type"
       reminder:
+        remindable: "Reminded object"
+        remind_at: "Remind at"
         remind_at_date: "Дата"
         remind_at_time: "Время"
+      reminder_notification:
+        notification: "Notification"
       repository:
         url: "URL"
       role:
@@ -927,7 +1009,10 @@ ru:
         is_closed: "Пакет работ закрыт"
         is_readonly: "Пакет работ только для просмотра"
         excluded_from_totals: "Исключить из расчета итогов в иерархии"
-        default_done_ratio: "% Завершения"
+        default_done_ratio: "% завершения"
+      token/ical:
+        calendar: "Calendar"
+        ical_token_query_assignment: "Query assignment"
       time_entry:
         activity: "Деятельность"
         hours: "Часы"
@@ -941,6 +1026,7 @@ ru:
         is_default: "В новых проектах активируется по умолчанию"
         is_milestone: "Это веха"
         color: "Цвет"
+        patterns: "Patterns"
       user:
         admin: "Администратор"
         auth_source: "Источник аутентификации"
@@ -950,6 +1036,10 @@ ru:
         force_password_change: "Принудительное изменение пароля при следующем входе"
         language: "Язык"
         last_login_on: "Последний вход в систему"
+        failed_login_count: "Failed login attempts"
+        first_name: "First name"
+        last_name: "Last name"
+        first_login: "First login"
         new_password: "Новый пароль"
         password_confirmation: "Подтверждение"
         consented_at: "Согласен с"
@@ -961,6 +1051,8 @@ ru:
         warn_on_leaving_unsaved: "При покидании рабочего пакета предупреждать о не сохраненных изменениях"
         theme: "Режим"
         mode_guideline: "Некоторые режимы перезаписывают пользовательские цвета темы для удобства и удобочитаемости. Для полной пользовательской темы выберите светлый режим."
+        daily_reminders: "Daily reminders"
+        workdays: "Working days"
       version:
         effective_date: "Дата окончания"
         sharing: "Совместное использование"
@@ -973,10 +1065,10 @@ ru:
         begin_insertion: "Начало вставки"
         begin_deletion: "Начало удаления"
         children: "Вложенные элементы"
-        derived_done_ratio: "Всего % завершено"
+        derived_done_ratio: "Общий % завершения"
         derived_remaining_hours: "Всего оставшихся работ"
         derived_remaining_time: "Всего оставшихся работ"
-        done_ratio: "% Завершения"
+        done_ratio: "% завершения"
         duration: "Продолжительность"
         end_insertion: "Завершение вставки"
         end_deletion: "Завершение удаления"
@@ -990,7 +1082,7 @@ ru:
         parent_issue: "Родитель"
         parent_work_package: "Родитель"
         priority: "Приоритет"
-        progress: "% Завершения"
+        progress: "% завершения"
         readonly: "Только для чтения"
         remaining_hours: "Оставшиеся часы"
         remaining_time: "Оставшиеся часы"
@@ -1238,16 +1330,16 @@ ru:
           typed_dag:
             circular_dependency: "Зацикливание зависимостей."
           attributes:
-            to:
-              error_not_found: "рабочий пакет в позиции `до` не найден или не отображается"
-              error_readonly: "в существующих отношениях связь `до` неизменна"
-            from:
-              error_not_found: "рабочий пакет в позиции `от` не найден или не отображается"
-              error_readonly: "в существующих отношениях связь `от` неизменна"
+            to_id:
+              error_not_found: "не найден или невидим."
+              error_readonly: "не может быть изменен для существующих отношений."
+            from_id:
+              error_not_found: "не найден или невидим."
+              error_readonly: "не может быть изменен для существующих отношений."
             lag:
               greater_than_or_equal_to:
-                zero: "cannot be negative."
-              less_than_or_equal_to: "is too high."
+                zero: "не может быть отрицательным."
+              less_than_or_equal_to: "слишком высокий."
         repository:
           not_available: "SCM поставщик не доступен"
           not_whitelisted: "не допускается конфигурацией."
@@ -1299,13 +1391,17 @@ ru:
         work_package:
           is_not_a_valid_target_for_time_entries: "Пакет работ #%{id} не допустимым для переназначения времени записи."
           attributes:
+            id:
+              format: "%{message}"
+              cannot_add_child_because_of_lack_of_permission: "Cannot add child because you don't have permissions to edit the selected work package."
+              blank: "ID не может быть пустым."
             assigned_to:
               format: "%{message}"
             done_ratio:
-              does_not_match_work_and_remaining_work: "не соответствует Работа и Остаток работы"
-              cannot_be_set_when_work_is_zero: "невозможно установить, если значение Работа равно 0h"
-              must_be_set_when_remaining_work_is_set: "требуется, если установлен параметр Оставшаяся работа."
-              must_be_set_when_work_and_remaining_work_are_set: "требуется, когда установлены значения Работа и Остаток работы."
+              does_not_match_work_and_remaining_work: "не соответствует Предполагаемому времени и Оставшимся часам"
+              cannot_be_set_when_work_is_zero: "невозможно установить, если Предполагаемое время равно 0ч"
+              must_be_set_when_remaining_work_is_set: "требуется, если установлен параметр Оставшиеся часы."
+              must_be_set_when_work_and_remaining_work_are_set: "требуется, когда установлены значения Предполагаемое время и Оставшиеся часы."
               inclusion: "должно быть между 0 и 100."
             due_date:
               not_start_date: "не совпадает с датой начала, хотя это требуется для вех."
@@ -1315,6 +1411,7 @@ ru:
               smaller_than_dates: "меньше интервала между датой начала и датой окончания."
               not_available_for_milestones: "не доступен для пакетов работ с типом Веха."
               cannot_be_null: "не может быть нулевым, поскольку известны дата начала и дата окончания."
+              not_an_integer: "is not a valid duration."
             parent:
               cannot_be_milestone: "не может быть вехой"
               cannot_be_self_assigned: "не может быть присвоено самому себе."
@@ -1336,16 +1433,16 @@ ru:
             estimated_hours:
               not_a_number: "не является допустимой продолжительностью."
               cant_be_inferior_to_remaining_work: "не может быть меньше, чем Остаток работы."
-              must_be_set_when_remaining_work_and_percent_complete_are_set: "требуется, если установлены значения Оставшаяся работа и % Завершения."
+              must_be_set_when_remaining_work_and_percent_complete_are_set: "требуется, если установлены параметры Оставшиеся часы и % завершения."
             remaining_hours:
               not_a_number: "не является допустимой продолжительностью."
-              cant_exceed_work: "не может быть выше, чем Работа."
-              must_be_set_when_work_is_set: "требуется, если установлен параметр «Работа»."
-              must_be_set_when_work_and_percent_complete_are_set: "требуется, если установлены значения Работа и % Завершения."
+              cant_exceed_work: "не может быть больше, чем Предполагаемое время."
+              must_be_set_when_work_is_set: "требуется, если установлен параметр Предполагаемое время."
+              must_be_set_when_work_and_percent_complete_are_set: "требуется, если установлены параметры Предполагаемое время и % завершения."
               must_be_set_to_zero_hours_when_work_is_set_and_percent_complete_is_100p: >-
-                должно быть равно 0h, если установлено 100% для Работа и % Завершения.
+                должно быть равно 0ч, если установлен параметр Предполагаемое время и % завершения установлен в 100%.
               must_be_empty_when_work_is_empty_and_percent_complete_is_100p: >-
-                должен быть пустым, если Работа пусто, а % Завершения равен 100%.
+                должно быть пустым, если параметр Предполагаемое время не установлен, а % завершения равен 100%.
           readonly_status: "Пакет работ находится в статусе доступном только для чтения, поэтому его атрибуты не могут быть изменены."
         type:
           attributes:
@@ -1417,6 +1514,11 @@ ru:
       forum: "Форум"
       global_role: "Глобальная роль"
       group: "Группа"
+      issue_priority:
+        one: "Приоритет"
+        few: "Priorities"
+        many: "Priorities"
+        other: "Приоритеты"
       member: "Участник"
       news: "Новости"
       notification:
@@ -1434,6 +1536,7 @@ ru:
         many: "Списки проектов"
         other: "Списки проектов"
       query: "Настраиваемый запрос"
+      reminder: "Напоминание"
       role:
         one: "Роль"
         few: "Роль"
@@ -1510,60 +1613,91 @@ ru:
     assigned_to: "Назначенный"
     assignee: "Назначенный"
     attachments: "Вложения"
+    actor: "Actor"
+    action: "Действие"
     author: "Автор"
+    avatar: "Аватар"
     base: "Общая ошибка:"
+    body: "Сообщение"
     blocks_ids: "Идентификаторы заблокированных рабочих пакетов"
     category: "Категория"
     comment: "Комментарий"
     comments: "Комментарий"
     content: "Содержание"
     color: "Цвет"
+    creator: "Автор"
     created_at: "Создано"
+    custom_field: "Настраиваемое поле"
     custom_options: "Возможные значения"
     custom_values: "Настраиваемые поля"
     date: "Дата"
+    dates_interval: "Период"
     default_columns: "Столбцы по умолчанию"
     description: "Описание"
     derived_due_date: "Дата окончания производства"
-    derived_estimated_hours: "Общая работа"
+    derived_estimated_hours: "Общее Предполагаемое время"
     derived_start_date: "Дата начала производства"
     display_sums: "Отображение суммы"
     due_date: "Дата окончания"
     estimated_hours: "Предполагаемое время"
     estimated_time: "Предполагаемое время"
+    email: "Эл. почта"
+    entity_type: "Entity"
     expires_at: "Истекает в"
     firstname: "Имя"
+    filter: "Фильтр"
     group: "Группа"
     groups: "Группы"
+    hexcode: "Шестнадцатеричный код"
     id: "ID"
     is_default: "Значение по умолчанию"
     is_for_all: "Для всех проектов"
     public: "Общий"
+    principal: "Пользователь или группа"
     #kept for backwards compatibility
     issue: "Пакет работ"
+    journal: "Журнал"
+    journal_notes: "Комментарий"
     lastname: "Фамилия"
     login: "Имя пользователя"
     mail: "Электронная почта"
     name: "Имя"
     note: "Заметка"
+    notes: "Примечания"
+    number: "Number"
+    options: "Параметры"
+    operator: "Оператор"
     password: "Пароль"
     priority: "Приоритет"
     project: "Проект"
+    project_ids: "ID проектов"
+    reason: "Reason"
     responsible: "Ответственный"
+    required: "Required"
+    recipient: "Recipient"
     role: "Роль"
     roles: "Роли"
+    search: "Search"
     start_date: "Дата начала"
     status: "Статус"
+    state: "State"
     subject: "Тема"
+    slug: "Slug"
     summary: "Сводка"
+    text: "Text"
     title: "Заголовок"
     type: "Тип"
+    typeahead: "Autocomplete"
     updated_at: "Обновлено"
     updated_on: "Обновлено"
     uploader: "Кто загрузил"
     user: "Пользователь"
+    username: "Username"
+    unit: "Unit"
     value: "Значение"
+    values: "Values"
     version: "Этапы"
+    visible: "Visible"
     work_package: "Пакет работ"
   backup:
     failed: "Сбой резервного копирования"
@@ -1914,6 +2048,8 @@ ru:
   enumeration_activities: "Отслеживание времени"
   enumeration_work_package_priorities: "Приоритеты пакета работ"
   enumeration_reported_project_statuses: "Перечень отчетов о статусах проекта"
+  enumeration_caption_order_changed: "Order successfully changed."
+  enumeration_could_not_be_moved: "Enumeration could not be moved."
   error_auth_source_sso_failed: "Сбой единого входа (SSO) для пользователя «%{value}»"
   error_can_not_archive_project: "Этот проект невозможно заархивировать: %{errors}"
   error_can_not_delete_entry: "Не удается удалить содержимое"
@@ -2003,6 +2139,7 @@ ru:
         input_label_report: "Добавить столбцы в таблицу атрибутов"
         input_caption_report: "По умолчанию выбраны все атрибуты, добавленные в качестве колонок в список пакетов работ. Длинные текстовые поля недоступны в таблице атрибутов, но могут быть отображены под ней."
         input_caption_table: "По умолчанию выбраны все атрибуты, добавленные в список пакетов работ. Длинные текстовые поля не доступны в экспорте на основе таблиц."
+        input_caption_required: "It is not possible to export the view without any column. Please add at least one column."
       pdf:
         export_type:
           label: "Тип экспорта PDF"
@@ -2073,21 +2210,29 @@ ru:
       days: д
   pdf_generator:
     page_nr_footer: "Страница %{page} из %{total}"
+    template_attributes:
+      label: "Атрибуты и описание"
+      caption: Все атрибуты, представленные в текущей форме настроек, используют шаблон по умолчанию.
+    template_contract:
+      label: "Договор"
+      caption: Подробности пакета работ отформатированы в стандартной договорной форме Германии.
     dialog:
       title: Создать PDF
-      submit: Создать
-      header_right:
-        label: Заголовок справа
-        caption: Текст, отображаемый справа от заголовка
+      submit: Скачать
+      templates:
+        label: "Шаблон"
+        none_enabled: "Для этого типа пакета работ не был определен шаблон"
       footer_center:
-        label: Нижний колонтитул по центру
-        caption: Текст, отображаемый в центре нижнего колонтитула
+        label: Текст нижнего колонтитула
+        caption: Этот текст появится на каждой странице в центре нижнего колонтитула.
+      footer_right:
+        label: Текст нижнего колонтитула
+        caption: Этот текст появится на каждой странице с правой стороны нижнего колонтитула.
       hyphenation:
         label: Расстановка переносов
-        caption: Разрыв слов между строками для улучшения выравнивания и читаемости текста.
-      paper_size:
-        label: Размер бумаги
-        caption: Размер бумаги, используемый в PDF.
+        caption: Break line between words for better layout and justification.
+      hyphenation_language:
+        label: Language and hyphenation
   extraction:
     available:
       pdftotext: "Pdftotext доступно (опционально)"
@@ -2141,8 +2286,8 @@ ru:
       status_changed: "Статус '%{status_name}'"
       system_update: "Обновление системы OpenProject:"
       work_package_duplicate_closed: "Дубликат пакета работ обновлён:"
-      total_percent_complete_mode_changed_to_work_weighted_average: "Вычисление % Завершения теперь взвешивается по Работе."
-      total_percent_complete_mode_changed_to_simple_average: "Вычисление % Завершения теперь основано на среднем арифметическом % Завершения."
+      total_percent_complete_mode_changed_to_work_weighted_average: "Вычисление общего % завершения теперь осуществляется по средневзвешенным значениям Предполагаемого времени."
+      total_percent_complete_mode_changed_to_simple_average: "Вычисление общего % завершения теперь осуществляется по среднему арифметическому значений % завершения."
     cause_descriptions:
       work_package_predecessor_changed_times: внесением изменений в предшественника %{link}
       work_package_parent_changed_times: внесением изменений в родительский %{link}
@@ -2161,7 +2306,7 @@ ru:
       progress_mode_changed_to_status_based: Расчет прогресса установлен в режим "На основе статуса"
       status_excluded_from_totals_set_to_false_message: теперь включено в иерархию итогов
       status_excluded_from_totals_set_to_true_message: теперь исключено из иерархии итогов
-      status_percent_complete_changed: "% Завершения изменен с %{old_value}% на %{new_value}%"
+      status_percent_complete_changed: "% завершения изменен с %{old_value}% на %{new_value}%"
       system_update:
         file_links_journal: >
           Теперь на вкладке Активность появится активность, связанная со ссылками файлов (файлы, хранящиеся во внешних хранилищах). Ниже описывается деятельность по уже существующим ссылкам:
@@ -2169,6 +2314,8 @@ ru:
           Расчет прогресса автоматически <a href="%{href}" target="_blank">устанавливается в режим "На основе трудозатрат" и корректируется при обновлении версии</a>.
         progress_calculation_adjusted: >-
           Расчет прогресса автоматически <a href="%{href}" target="_blank">корректируется при обновлении версии</a>.
+        scheduling_mode_adjusted: >-
+          Scheduling mode automatically adjusted with version update.
         totals_removed_from_childless_work_packages: >-
           При <a href="%{href}" target="_blank">обновлении версии</a> автоматически удаляются итоги работы и прогресса для неродительских пакетов работ. Это задача по обслуживанию, и её можно смело игнорировать.
       total_percent_complete_mode_changed_to_work_weighted_average: >-
@@ -2269,7 +2416,7 @@ ru:
   label_add_subtask: "Добавить подзадачу"
   label_added: "Добавлено"
   label_added_by: "Добавлено %{author}"
-  label_added_by_on: "Added by %{author} on %{date}"
+  label_added_by_on: "Добавлено %{author} %{date}"
   label_added_time_by: "Добавлено %{author} %{age} назад"
   label_additional_workflow_transitions_for_assignee: "Дополнительные переходы допускается, если пользователь является правопреемником"
   label_additional_workflow_transitions_for_author: "Дополнительные переходы допускаются, если пользователь является автором"
@@ -2413,6 +2560,7 @@ ru:
   label_missing_or_hidden_custom_option: "(отсутствует значение или недостаточно прав для доступа)"
   label_descending: "По убыванию"
   label_details: "Детали"
+  label_defaults: "По умолчанию"
   label_development_roadmap: "Дорожная карта разработки"
   label_diff: "отличия"
   label_diff_inline: "Встроенный"
@@ -2469,6 +2617,7 @@ ru:
   label_filter: "Фильтры"
   label_filter_add: "Добавить фильтр"
   label_filter_by: "Фильтровать по"
+  label_filter_any_name_attribute: "Name attributes"
   label_filter_plural: "Фильтры"
   label_filters_toggle: "Показать/скрыть фильтры"
   label_float: "Плавающий"
@@ -2748,6 +2897,7 @@ ru:
   label_roadmap_overdue: "%{value} запаздывание"
   label_role_and_permissions: "Роли и разрешения"
   label_role_new: "Новая роль"
+  label_role_grantable: "Grantable role"
   label_role_plural: "Роли"
   label_role_search: "Назначить роль для новых участников"
   label_scm: "SCM"
@@ -2801,6 +2951,7 @@ ru:
   label_title: "Заголовок"
   label_projects_menu: "Проекты"
   label_today: "Сегодня"
+  label_token_version: "Token Version"
   label_top_menu: "Верхнее меню"
   label_topic_plural: "Темы"
   label_total: "Всего"
@@ -2913,7 +3064,7 @@ ru:
   label_global_role: "Глобальная роль"
   label_not_changeable: "(неизменяемая)"
   label_global: "Глобальная"
-  label_seeded_from_env_warning: Эта запись была создана с помощью параметра / переменной среды. Она не может редактироваться через пользовательский интерфейс.
+  label_seeded_from_env_warning: This record has been created through a setting environment variable. It is not editable through UI.
   macro_execution_error: "Ошибка при выполнении макроса %{macro_name}"
   macro_unavailable: "Макрос %{macro_name} не может быть отображен."
   macros:
@@ -3447,6 +3598,12 @@ ru:
     activated: "активирован"
     deactivated: "деактивирован"
   search_input_placeholder: "Поиск ..."
+  setting_after_first_login_redirect_url: "First login redirect"
+  setting_after_first_login_redirect_url_text_html: >
+    Set a path to redirect users after their first login. If empty, redirects to the home page for the onboarding tour. <br/> Example: <code>/my/page</code>
+  setting_after_login_default_redirect_url: "After login redirect"
+  setting_after_login_default_redirect_url_text_html: >
+    Set a default path to redirect users after login, if no back link was provided. Redirects to home page if not set. <br/> Example: <code>/my/page</code>
   setting_apiv3_cors_title: "Совместное использование ресурсов между источниками (Cross-Origin Resource Sharing, CORS)"
   setting_apiv3_cors_enabled: "Включить CORS"
   setting_apiv3_cors_origins: "Разделение ресурсов (CORS) разрешено в API V3"
@@ -3508,11 +3665,11 @@ ru:
   setting_disable_password_login: "Отключить аутентификацию по паролю"
   setting_diff_max_lines_displayed: "Максимальное количество отображаемых строк diff(разницы)"
   setting_omniauth_direct_login_provider: "Прямая аутентификация у провайдера SSO"
-  setting_display_subprojects_work_packages: "Отображать пакеты работ подпроектов в основном проекте по-умолчанию"
+  setting_display_subprojects_work_packages: "Отображать пакеты работ подпроектов в основном проекте по умолчанию"
   setting_duration_format: "Формат длительности"
   setting_duration_format_hours_only: "Только часы"
   setting_duration_format_days_and_hours: "Дни и часы"
-  setting_duration_format_instructions: "Это определяет, как будут отображаться Работа, Оставшаяся работа и Затраченное время."
+  setting_duration_format_instructions: "Это определяет, как будут отображаться Предполагаемое время, Оставшиеся часы и Затраченное время."
   setting_emails_footer: "содержимое  нижней части почтовых сообщений"
   setting_emails_header: "Заголовок письма"
   setting_email_login: "Использовать email как логин"
@@ -3530,12 +3687,12 @@ ru:
   setting_work_package_done_ratio: "Режим расчета прогресса"
   setting_work_package_done_ratio_field: "На основе трудозатрат"
   setting_work_package_done_ratio_field_caption_html: >-
-    <i>% Завершено</i> может быть свободно установлен на любое значение. Если Вы опционально введете значение для параметра <i>Предполагаемое время</i>, то автоматически будет выведено значение <i>Оставшиеся часы</i>.
+    <i>% завершения</i> может быть свободно установлен на любое значение. Если Вы опционально введете значение для параметра <i>Предполагаемое время</i>, то автоматически будет выведено значение <i>Оставшиеся часы</i>.
   setting_work_package_done_ratio_status: "На основе статуса"
   setting_work_package_done_ratio_status_caption_html: >-
-    С каждым статусом связано значение <i>% Завершения</i>. Изменение статуса приведет к изменению <i>% Завершения</i>.
+    С каждым статусом связано значение <i>% завершения</i>. Изменение статуса приведет к изменению <i>% завершения</i>.
   setting_work_package_done_ratio_explanation_html: >
-    В режиме <b>На основе трудозатрат</b> для параметра % Завершено можно свободно установить любое значение. Если вы дополнительно введете значение «Предполагаемое время», «Оставшиеся часы» будут получены автоматически. В режиме <b>На основе статуса</b> с каждым статусом связано значение % Завершено. Изменение статуса приведет к изменению % Завершено.
+    В режиме <b>На основе трудозатрат</b> для параметра % завершения можно свободно установить любое значение. Если вы дополнительно введете значение параметра Предполагаемое время, то Оставшиеся часы будут получены автоматически. В режиме <b>На основе статуса</b> с каждым статусом связано значение % завершения. Изменение статуса приведет к изменению % завершения.
   setting_work_package_properties: "Свойства пакета работ"
   setting_work_package_startdate_is_adddate: "Использовать текущую дату как дату начала для новых пакетов работ"
   setting_work_packages_projects_export_limit: "Ограничение экспорта пакетов работ / проектов"
@@ -3554,10 +3711,10 @@ ru:
   setting_password_min_length: "Минимальная длина"
   setting_password_min_adhered_rules: "Минимальное количество необходимых классов"
   setting_per_page_options: "Количество объектов на страницу"
-  setting_percent_complete_on_status_closed: "% Завершено, когда статус закрыт"
+  setting_percent_complete_on_status_closed: "% завершения, когда статус Закрыто"
   setting_percent_complete_on_status_closed_no_change: "Без изменений"
   setting_percent_complete_on_status_closed_no_change_caption_html: >-
-    Значение <i>% Завершено</i> не изменится, даже если пакет работ будет закрыт.
+    Значение <i>% завершения</i> не изменится, даже если пакет работ будет закрыт.
   setting_percent_complete_on_status_closed_set_100p: "Автоматически устанавливается на 100%"
   setting_percent_complete_on_status_closed_set_100p_caption: >-
     Закрытый пакет работ считается завершенным.
@@ -3584,13 +3741,13 @@ ru:
   setting_sys_api_enabled: "Разрешить веб-сервис управления репозиторием"
   setting_sys_api_description: "Веб-сервис управления репозиторием обеспечивает интеграцию и авторизацию пользователя для доступа к репозиторию."
   setting_time_format: "Время"
-  setting_total_percent_complete_mode: "Расчёт общего % Завершено по всей иерархии"
+  setting_total_percent_complete_mode: "Расчет общего % завершения полной иерархии"
   setting_total_percent_complete_mode_work_weighted_average: "Взвешенное по работе"
   setting_total_percent_complete_mode_work_weighted_average_caption_html: >-
-    <i>Общий % Завершено</i> будет рассчитан как средневзвешенное значение по  <i>Предполагаемому времени</i> каждого пакета работ в иерархии. Пакеты работ без <i>Предполагаемого времени</i> будут игнорироваться.
+    <i>Общий % завершения</i> будет рассчитан как средневзвешенное значение по  <i>Предполагаемому времени</i> каждого пакета работ в иерархии. Пакеты работ без <i>Предполагаемого времени</i> будут игнорироваться.
   setting_total_percent_complete_mode_simple_average: "Среднее арифметическое"
   setting_total_percent_complete_mode_simple_average_caption_html: >-
-    <i>Предполагаемое время</i> игнорируется, и <i>Общий % Завершено</i> будет средним арифметическим от значений <i>% Завершено</i> пакетов работ в иерархии.
+    <i>Предполагаемое время</i> игнорируется, и <i>Общий % завершения</i> будет средним арифметическим значением от <i>% завершения</i> пакетов работ в иерархии.
   setting_accessibility_mode_for_anonymous: "Разрешить режим доступа людей с ограниченными возможностями для анонимных пользователей"
   setting_user_format: "Формат имени пользователя"
   setting_user_default_timezone: "Часовой пояс пользователя по умолчанию"
@@ -3825,6 +3982,7 @@ ru:
   text_unallowed_characters: "Запрещенные символы"
   text_user_invited: Пользователь был приглашен и подлежит регистрации.
   text_user_wrote: "%{value} написал:"
+  text_wrote: "написал"
   text_warn_on_leaving_unsaved: "Не сохраненный текст текущего пакета работ будет потерян, если вы покинете эту страницу."
   text_what_did_you_change_click_to_add_comment: "Что вы изменили? Кликните для добавления комментария"
   text_wiki_destroy_confirmation: "Вы уверены, что хотите удалить этот wiki и все его содержимое?"
@@ -3961,21 +4119,21 @@ ru:
       modal:
         work_based_help_text: "Каждое поле автоматически рассчитывается от двух других, когда это возможно."
         status_based_help_text: "% Выполнения определяется статусом пакета работ."
-        migration_warning_text: "В режиме расчета прогресса \"На основе трудозатрат\" процент завершения невозможно установить вручную, он привязан к трудозатратам. Существующее значение сохранено, но его нельзя изменить. Пожалуйста, сначала введите трудозатраты."
+        migration_warning_text: "В режиме расчета прогресса \"На основе трудозатрат\" % завершения невозможно установить вручную, он привязан к трудозатратам. Существующее значение сохранено, но его нельзя изменить. Пожалуйста, сначала введите трудозатраты."
       derivation_hints:
         done_ratio:
-          cleared_because_remaining_work_is_empty: "Очищено, потому что Оставшаяся работа пуста."
-          cleared_because_work_is_0h: "Очищено, потому что Работа равна 0h."
+          cleared_because_remaining_work_is_empty: "Очищено, потому что параметр Оставшиеся часы не установлен."
+          cleared_because_work_is_0h: "Очищено, потому что параметр Предполагаемое время установлен в 0ч."
           derived: "Получено из Работы и Оставшейся работы."
         estimated_hours:
-          cleared_because_remaining_work_is_empty: "Очищено, потому что оставшаяся работа пуста."
-          derived: "Получено из Оставшейся работы и % Завершения."
-          same_as_remaining_work: "Установите то же значение, что и Оставшаяся работа."
+          cleared_because_remaining_work_is_empty: "Очищено, потому что параметр Оставшиеся часы не установлен."
+          derived: "Получено из параметров Оставшиеся часы и % завершения."
+          same_as_remaining_work: "Установите то же значение, что и для параметра Оставшиеся часы."
         remaining_hours:
-          cleared_because_work_is_empty: "Очищено, потому что Работа пуста."
-          cleared_because_percent_complete_is_empty: "Очищено, потому что % Завершения пуст."
+          cleared_because_work_is_empty: "Очищено, потому что параметр Предполагаемое время не установлен."
+          cleared_because_percent_complete_is_empty: "Очищено, потому что % завершения не установлен."
           decreased_by_delta_like_work: "Уменьшилось на %{delta}, в соответствии с уменьшением объема работ."
-          derived: "Получено из Работы и % Завершения."
+          derived: "Получено из параметров Предполагаемое время и % завершения."
           increased_by_delta_like_work: "Увеличилось на %{delta}, в соответствии с увеличением объема работ."
           same_as_work: "Установите то же значение, что и для Работы."
     permissions:
@@ -4287,3 +4445,29 @@ ru:
   plugin_openproject_auth_saml:
     name: "OmniAuth SAML / Однозначный вход"
     description: "Добавляет поставщика OmniAuth SAML в OpenProject"
+  enterprise_plans:
+    legacy_enterprise: "Enterprise Plan"
+  enterprise_features:
+    baseline_comparison: Baseline Comparison
+    board_view: Board View
+    conditional_highlighting: Conditional Highlighting
+    custom_actions: Custom Actions
+    custom_field_hierarchies: Custom Field Hierarchies
+    customize_life_cycle: Customize Life Cycle
+    date_alerts: Date Alerts
+    define_custom_style: Define Custom Style
+    edit_attribute_groups: Edit Attribute Groups
+    gantt_pdf_export: Gantt PDF Export
+    grid_widget_wp_graph: Grid Widget Work Package Graph
+    ldap_groups: LDAP Groups
+    one_drive_sharepoint_file_storage: OneDrive/SharePoint File Storage
+    placeholder_users: Placeholder Users
+    project_list_sharing: Project List Sharing
+    readonly_work_packages: Readonly Work Packages
+    sso_auth_providers: SSO Auth Providers
+    team_planner_view: Team Planner View
+    two_factor_authentication: Two-Factor Authentication
+    virus_scanning: Attachment Virus Scanning
+    work_package_query_relation_columns: Work Package Query Relation Columns
+    work_package_sharing: Work Package Sharing
+    work_package_subject_generation: Work Package Subject Generation

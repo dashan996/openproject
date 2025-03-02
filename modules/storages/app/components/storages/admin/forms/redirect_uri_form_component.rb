@@ -29,19 +29,15 @@
 #++
 #
 module Storages::Admin::Forms
-  class RedirectUriFormComponent < ApplicationComponent
-    include OpPrimer::ComponentHelpers
-    include OpTurbo::Streamable
-
-    attr_reader :storage
-    alias_method :oauth_client, :model
-
-    def initialize(oauth_client:, storage:, **)
-      super(oauth_client, **)
-      @storage = storage
-    end
-
+  class RedirectUriFormComponent < StorageFormComponent
     def self.wrapper_key = :storage_redirect_uri_section
+
+    delegate :oauth_client, to: :storage
+
+    def form_url
+      query = { continue_wizard: storage.id } if in_wizard
+      finish_setup_admin_settings_storage_oauth_client_path(storage, query)
+    end
 
     def cancel_button_path
       storage.persisted? ? edit_admin_settings_storage_path(storage) : admin_settings_storages_path

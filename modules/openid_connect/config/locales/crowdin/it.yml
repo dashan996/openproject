@@ -4,32 +4,31 @@ it:
     description: "Aggiunge i provider di strategia OmniAuth OpenID Connect a OpenProject."
   logout_warning: >
     Sei stato disconnesso. Il contenuto di qualsiasi modulo che invii potrebbe essere perso. Per favore [accedi].
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
-        name: Nome
-        slug: Identificatore univoco
-        display_name: Visualizza nome
-        client_id: ID Client
-        client_secret: Chiave segreta del client
-        secret: Parola chiave
-        scope: Ambito
-        grant_types_supported: Tipi di autorizzazioni supportate
-        limit_self_registration: Limita registrazione autonoma
-        authorization_endpoint: Endpoint di autorizzazione
-        userinfo_endpoint: Informazioni sull'endpoint dell'utente
-        token_endpoint: Token dell'endpoint
-        end_session_endpoint: Endpoint di fine sessione
-        post_logout_redirect_uri: URI di reindirizzamento post logout
-        jwks_uri: URI JWKS
-        issuer: Emittente
+        name: Name
+        slug: Unique identifier
+        display_name: Display name
+        client_id: Client ID
+        client_secret: Client secret
+        secret: Secret
+        scope: Scope
+        grant_types_supported: Supported grant types
+        limit_self_registration: Limit self registration
+        authorization_endpoint: Authorization endpoint
+        userinfo_endpoint: User information endpoint
+        token_endpoint: Token endpoint
+        end_session_endpoint: End session endpoint
+        post_logout_redirect_uri: Post logout redirect URI
+        jwks_uri: JWKS URI
+        issuer: Issuer
         tenant: Tenant
-        metadata_url: URL dei metadati
-        icon: Icona personalizzata
-        claims: Rivendicazioni
-        acr_values: Valori ACR
-        redirect_url: URL di reindirizzamento
-  activerecord:
+        metadata_url: Metadata URL
+        icon: Custom icon
+        claims: Claims
+        acr_values: ACR values
+        redirect_url: Redirect URL
     errors:
       models:
         openid_connect/provider:

@@ -10,7 +10,8 @@ RSpec.describe "Manual scheduling", :js do
     create(:work_package,
            project:,
            type:,
-           subject: "Parent")
+           subject: "Parent",
+           schedule_manually: false)
   end
 
   let!(:child) do
@@ -51,12 +52,12 @@ RSpec.describe "Manual scheduling", :js do
       start_date.expect_active!
 
       # Expect not to be scheduled manually
-      start_date.expect_scheduling_mode manually: false
+      start_date.expect_automatic_scheduling_mode
 
       # Expect not editable
       start_date.within_modal do
-        expect(page).to have_css('input[name="startDate"][disabled]')
-        expect(page).to have_css('input[name="endDate"][disabled]')
+        expect(page).to have_css('input[name="work_package[start_date]"][disabled]')
+        expect(page).to have_css('input[name="work_package[due_date]"][disabled]')
         expect(page).to have_css("#{test_selector('op-datepicker-modal--action')}:not([disabled])", text: "Cancel")
         expect(page).to have_css("#{test_selector('op-datepicker-modal--action')}:not([disabled])", text: "Save")
       end
@@ -65,8 +66,8 @@ RSpec.describe "Manual scheduling", :js do
 
       # Expect editable
       start_date.within_modal do
-        expect(page).to have_css('input[name="startDate"]:not([disabled])')
-        expect(page).to have_css('input[name="endDate"]:not([disabled])')
+        expect(page).to have_css('input[name="work_package[start_date]"]:not([disabled])')
+        expect(page).to have_css('input[name="work_package[due_date]"]:not([disabled])')
         expect(page).to have_css("#{test_selector('op-datepicker-modal--action')}:not([disabled])", text: "Cancel")
         expect(page).to have_css("#{test_selector('op-datepicker-modal--action')}:not([disabled])", text: "Save")
       end
@@ -85,12 +86,12 @@ RSpec.describe "Manual scheduling", :js do
       due_date.cancel_by_click
 
       start_date.activate!
-      start_date.expect_scheduling_mode manually: false
+      start_date.expect_automatic_scheduling_mode
 
       # Expect not editable
       start_date.within_modal do
-        expect(page).to have_css("input[name=startDate][disabled]")
-        expect(page).to have_css("input[name=endDate][disabled]")
+        expect(page).to have_css('input[name="work_package[start_date]"][disabled]')
+        expect(page).to have_css('input[name="work_package[due_date]"][disabled]')
         expect(page).to have_css("#{test_selector('op-datepicker-modal--action')}:not([disabled])", text: "Cancel")
         expect(page).to have_css("#{test_selector('op-datepicker-modal--action')}:not([disabled])", text: "Save")
       end
@@ -100,8 +101,8 @@ RSpec.describe "Manual scheduling", :js do
 
       # Expect not editable
       start_date.within_modal do
-        fill_in "startDate", with: "2020-07-20"
-        fill_in "endDate", with: "2020-07-25"
+        fill_in "work_package[start_date]", with: "2020-07-20"
+        fill_in "work_package[due_date]", with: "2020-07-25"
       end
 
       # Wait for the debounce to be done
@@ -116,9 +117,5 @@ RSpec.describe "Manual scheduling", :js do
       expect(parent.start_date.iso8601).to eq("2020-07-20")
       expect(parent.due_date.iso8601).to eq("2020-07-25")
     end
-  end
-
-  context "with a user allowed to view only" do
-    let(:role) { create(:project_role, permissions: %i[view_work_packages]) }
   end
 end

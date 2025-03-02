@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -32,6 +34,15 @@ module ActiveRecord
 
     def self.human_attribute_name(attr, options = {})
       attr = attr.to_s.delete_suffix("_id")
+
+      options[:default] ||= :"activerecord.models.#{attr}"
+
+      if Rails.env.local?
+        def attr.humanize(*)
+          raise ArgumentError, "I18n translation missing for attribute #{self}"
+        end
+      end
+
       super
     end
   end

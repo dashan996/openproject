@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -43,6 +44,7 @@ module RecurringMeetings
     def set_default_attributes(_params)
       model.change_by_system do
         model.author = user
+        model.duration ||= 1
       end
     end
   end

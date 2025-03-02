@@ -56,6 +56,7 @@ import {
   ProjectAutocompleterTemplateComponent,
 } from 'core-app/shared/components/autocompleter/project-autocompleter/project-autocompleter-template.component';
 import { addFiltersToPath } from 'core-app/core/apiv3/helpers/add-filters-to-path';
+import { TOpAutocompleterResource } from 'core-app/shared/components/autocompleter/op-autocompleter/typings';
 
 export const projectsAutocompleterSelector = 'op-project-autocompleter';
 
@@ -108,6 +109,8 @@ export class ProjectAutocompleterComponent extends OpAutocompleterComponent<IPro
   getOptionsFn = this.getAvailableProjects.bind(this);
 
   dataLoaded = false;
+
+  resource:TOpAutocompleterResource = 'projects';
 
   projects:IProjectAutocompleteItem[];
 

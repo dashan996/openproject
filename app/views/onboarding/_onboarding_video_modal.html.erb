@@ -30,13 +30,13 @@ See COPYRIGHT and LICENSE files for more details.
 <div class="modal-delivery-element">
   <div class="spot-modal--header">
     <span class="spot-icon spot-icon_user"></span>
-    <span id="spotModalTitle"><%= I18n.t('onboarding.welcome', app_title: Setting.app_title) %></span>
+    <span id="spotModalTitle"><%= I18n.t("onboarding.welcome", app_title: Setting.app_title) %></span>
   </div>
   <div class="spot-divider"></div>
   <div class="onboarding--main spot-modal--body spot-container">
     <div class="onboarding--video-block">
       <div class="onboarding--video-text">
-        <span><%= I18n.t('onboarding.text_getting_started_description') %></span>
+        <span><%= I18n.t("onboarding.text_getting_started_description") %></span>
       </div>
       <div class="onboarding--video iframe-target-wrapper">
       </div>
@@ -48,8 +48,7 @@ See COPYRIGHT and LICENSE files for more details.
       <button
         class="button button_no-margin spot-action-bar--action spot-modal--cancel-button"
         dynamic-content-modal-close-button
-        title=<%= t(:button_close) %>
-      ><%= t(:button_close) %></button>
+        title=<%= t(:button_close) %>><%= t(:button_close) %></button>
     </div>
   </div>
 </div>

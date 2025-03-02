@@ -29,7 +29,7 @@ See COPYRIGHT and LICENSE files for more details.
 
 <%= toolbar title: t(:label_meeting),
             link_to: link_to(@meeting),
-            html: { class: 'meeting--main-toolbar -with-dropdown' } do %>
+            html: { class: "meeting--main-toolbar -with-dropdown" } do %>
   <% unless User.current.anonymous? %>
     <li class="toolbar-item hidden-for-tablet">
       <div class="button">
@@ -39,8 +39,8 @@ See COPYRIGHT and LICENSE files for more details.
   <% end %>
   <% if authorize_for(:meetings, :edit) %>
     <li class="toolbar-item">
-      <%= link_to({ :controller => '/meetings', :action => 'edit', :id => @meeting }, class: 'button', :accesskey => accesskey(:edit)) do %>
-        <%= op_icon('button--icon icon-edit') %>
+      <%= link_to(edit_project_meeting_path(@project, @meeting), class: "button", accesskey: accesskey(:edit)) do %>
+        <%= op_icon("button--icon icon-edit") %>
         <span class="button--text"><%= t(:button_edit) %></span>
       <% end %>
     </li>
@@ -52,40 +52,43 @@ See COPYRIGHT and LICENSE files for more details.
       aria-haspopup="true"
       title="<%= t(:label_more) %>"
       class="button"
-      data-test-selector="meetings-more-dropdown-menu"
-    >
-      <%= op_icon('button--icon icon-show-more') %>
+      data-test-selector="meetings-more-dropdown-menu">
+      <%= op_icon("button--icon icon-show-more") %>
     </a>
     <ul style="display:none;" class="menu-drop-down-container">
       <% if authorize_for(:meetings, :notify) %>
         <li>
-          <%= link_to t('meeting.label_mail_all_participants'),
-                      notify_meeting_path(@meeting),
-                      class: 'icon-context icon-mail1',
+          <%= link_to t("meeting.label_mail_all_participants"),
+                      notify_project_meeting_path(@project, @meeting),
+                      class: "icon-context icon-mail1",
                       method: :post %>
         </li>
       <% end %>
       <% if authorize_for(:meetings, :icalendar) %>
         <li>
           <%= link_to t(:label_icalendar_download),
-                      download_ics_meeting_path(@meeting),
-                      class: 'icon-context icon-calendar2' %>
+                      download_ics_project_meeting_path(@project, @meeting),
+                      class: "icon-context icon-calendar2" %>
         </li>
       <% end %>
       <% if authorize_for(:meetings, :copy) %>
         <li>
-          <%= link_to(t(:button_copy),
-                      copy_meeting_path(@meeting),
-                      class: 'icon-context icon-copy') %>
+          <%= link_to(
+                t(:button_copy),
+                copy_project_meeting_path(@project, @meeting),
+                class: "icon-context icon-copy"
+              ) %>
         </li>
       <% end %>
       <% if authorize_for(:meetings, :destroy) %>
         <li>
-          <%= link_to(t(:button_delete),
-                      polymorphic_path([@project, @meeting]),
-                      class: 'icon-context icon-delete',
-                      method: :delete,
-                      data: { confirm: t(:text_are_you_sure) }) %>
+          <%= link_to(
+                t(:button_delete),
+                project_meeting_path(@project, @meeting),
+                class: "icon-context icon-delete",
+                method: :delete,
+                data: { confirm: t(:text_are_you_sure) }
+              ) %>
         </li>
       <% end %>
     </ul>
@@ -105,7 +108,7 @@ See COPYRIGHT and LICENSE files for more details.
     </div>
     <div class="grid-content small-6">
       <p>
-        <strong><%= Meeting.human_attribute_name(:location) %></strong>: <%= auto_link(h(@meeting.location), link: :all, html: { target: '_blank' }) %>
+        <strong><%= Meeting.human_attribute_name(:location) %></strong>: <%= auto_link(h(@meeting.location), link: :all, html: { target: "_blank" }) %>
       </p>
     </div>
     <div class="grid-content small-12">
@@ -121,8 +124,25 @@ See COPYRIGHT and LICENSE files for more details.
   </div>
 </div>
 
-<%= render_tabs [{ :name => 'agenda', :action => :create_meeting_agendas, :partial => 'meeting_contents/show', :path => meeting_agenda_path(@meeting), :label => :label_meeting_agenda, :content => @meeting.agenda || @meeting.build_agenda, :content_type => "meeting_agenda" },
-                 { :name => 'minutes', :action => :create_meeting_minutes, :partial => 'meeting_contents/show', :path => meeting_minutes_path(@meeting), :label => :label_meeting_minutes, :content => @meeting.minutes || @meeting.build_minutes, :content_type => "meeting_minutes" }] %>
+<%= render_tabs(
+      [
+        { name: "agenda",
+          action: :create_meeting_agendas,
+          partial: "meeting_contents/show",
+          path: meeting_agenda_path(@meeting),
+          label: :label_meeting_agenda,
+          content: @meeting.agenda || @meeting.build_agenda,
+          content_type: "meeting_agenda" },
+        {
+          name: "minutes",
+          action: :create_meeting_minutes,
+          partial: "meeting_contents/show",
+          path: meeting_minutes_path(@meeting),
+          label: :label_meeting_minutes, content: @meeting.minutes || @meeting.build_minutes,
+          content_type: "meeting_minutes"
+        }
+      ]
+    ) %>
 
 <% if @meeting.journals.changing.present? %>
   <div id="history">

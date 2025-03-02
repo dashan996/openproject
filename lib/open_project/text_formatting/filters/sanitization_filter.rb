@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -75,7 +77,7 @@ module OpenProject::TextFormatting
 
       # Transformer to fix task lists in sanitization
       # Replace to do lists in tables with their markdown equivalent
-      def todo_list_transformer
+      def todo_list_transformer # rubocop:disable Metrics/AbcSize,Metrics/PerceivedComplexity
         lambda { |env|
           name = env[:node_name]
           table = env[:node]
@@ -99,7 +101,7 @@ module OpenProject::TextFormatting
             # both Foo and Bar are contained by labels
             if checkbox.nil?
               # In case we don't have a checkbox, add the content of the label
-              # or it's parent in case of links directly to the node
+              # or its parent in case of links directly to the node
               to_add = li_node == parent ? label.children : parent
               li_node.add_child to_add
             else

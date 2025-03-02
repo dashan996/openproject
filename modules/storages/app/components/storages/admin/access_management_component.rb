@@ -29,13 +29,7 @@
 #++
 #
 module Storages::Admin
-  class AccessManagementComponent < ApplicationComponent
-    include OpPrimer::ComponentHelpers
-    include OpTurbo::Streamable
-    include StorageViewInformation
-
-    alias_method :storage, :model
-
+  class AccessManagementComponent < StorageInfoComponent
     def self.wrapper_key = :access_management_section
 
     private

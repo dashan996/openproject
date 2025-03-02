@@ -33,12 +33,14 @@ class API::V3::Storages::StorageOpenAPI < API::OpenProjectAPI
 
   using Storages::Peripherals::ServiceResultRefinements
 
+  helpers do
+    def auth_strategy
+      Storages::Peripherals::Registry.resolve("#{@storage}.authentication.user_bound").call(user: current_user, storage: @storage)
+    end
+  end
+
   resources :open do
     get do
-      auth_strategy = Storages::Peripherals::StorageInteraction::AuthenticationStrategies::OAuthUserToken
-                        .strategy
-                        .with_user(current_user)
-
       Storages::Peripherals::Registry
         .resolve("#{@storage}.queries.open_storage")
         .call(storage: @storage, auth_strategy:)

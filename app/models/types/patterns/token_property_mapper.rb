@@ -103,7 +103,7 @@ module Types
       end
 
       def work_package_cfs_for(type)
-        all_work_package_cfs.where(type: type)
+        all_work_package_cfs.merge(type.custom_fields)
       end
 
       def all_work_package_cfs

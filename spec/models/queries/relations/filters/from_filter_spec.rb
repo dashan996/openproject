@@ -38,7 +38,7 @@ RSpec.describe Queries::Relations::Filters::FromFilter do
     let(:class_key) { :from_id }
     let(:type) { :integer }
     # The name is not very good but as long as the filter is not displayed in the UI ...
-    let(:human_name) { "Work package" }
+    let(:human_name) { "Related work package" }
 
     describe "#allowed_values" do
       it "is nil" do

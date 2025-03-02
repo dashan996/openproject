@@ -28,11 +28,13 @@ See COPYRIGHT and LICENSE files for more details.
 ++#%>
 
 <%=
-  render(Primer::OpenProject::FeedbackDialog.new(
-           id:,
-           title: I18n.t("my.access_token.create_dialog.title"),
-           size: :large
-         )) do |dialog|
+  render(
+    Primer::OpenProject::FeedbackDialog.new(
+      id:,
+      title: I18n.t("my.access_token.create_dialog.title"),
+      size: :large
+    )
+  ) do |dialog|
     dialog.with_feedback_message do |message|
       message.with_heading(tag: :h2) { I18n.t("my.access_token.create_dialog.header", type: "API") }
     end
@@ -41,15 +43,18 @@ See COPYRIGHT and LICENSE files for more details.
       flex_layout do |flex|
         flex.with_row(mb: 2) do
           render(Primer::OpenProject::InputGroup.new) do |input_group|
-            input_group.with_text_input(name: :openproject_api_access_token,
-                                        label: Token::API.model_name.human,
-                                        visually_hide_label: false,
-                                        value: @token_value)
+            input_group.with_text_input(
+              name: :openproject_api_access_token,
+              label: Token::API.model_name.human,
+              visually_hide_label: false,
+              value: @token_value
+            )
             input_group.with_trailing_action_clipboard_copy_button(
               value: @token_value,
               aria: {
-                label: I18n.t('button_copy_to_clipboard')
-              })
+                label: I18n.t("button_copy_to_clipboard")
+              }
+            )
           end
         end
         flex.with_row do

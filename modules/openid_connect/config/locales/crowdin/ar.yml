@@ -4,16 +4,16 @@ ar:
     description: "يضيف مزودي استراتيجية OmniAuth OpenID Connect إلى OpenProject."
   logout_warning: >
     لقد تم تسجيل خروجك. قد يتم فقدان محتويات أي نموذج تقوم بإرساله. يرجى [تسجيل الدخول].
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
-        name: الاسم
+        name: Name
         slug: Unique identifier
-        display_name: اسم العرض
+        display_name: Display name
         client_id: Client ID
         client_secret: Client secret
-        secret: السر
-        scope: النطاق
+        secret: Secret
+        scope: Scope
         grant_types_supported: Supported grant types
         limit_self_registration: Limit self registration
         authorization_endpoint: Authorization endpoint
@@ -29,7 +29,6 @@ ar:
         claims: Claims
         acr_values: ACR values
         redirect_url: Redirect URL
-  activerecord:
     errors:
       models:
         openid_connect/provider:

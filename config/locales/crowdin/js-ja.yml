@@ -104,7 +104,6 @@ ja:
     button_settings: "設定"
     button_uncheck_all: "全てを選択解除"
     button_update: "更新"
-    button_export-pdf: "PDFファイルをダウンロード"
     button_export-atom: "Atomをダウンロード"
     button_generate_pdf: "Generate PDF"
     button_create: "作成"
@@ -223,6 +222,8 @@ ja:
             label_maximum_users: "アクティブなユーザーの最大数"
             label_starts_at: "開始"
             label_expires_at: "有効期限"
+            label_plan: "Plan"
+            label_additional_features: "Additional features"
             receive_newsletter: OpenProject <a target="_blank" href="%{link}">ニュースレター</a> を受け取りたい。
             taken_domain: 有効なトライアルはドメインごとに1つしかありません。
             domain_mismatch: The current request host name does not match the configured host name. Please double check your system settings.
@@ -358,10 +359,10 @@ ja:
           learn_about: "新機能の詳細はこちら"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_2":
+          "15_3":
             standard:
               new_features_html: >
-                このリリースでは、様々な機能や改善が提供されます。例：<br> <ul class="%{list_styling_class}"> <li>作業パッケージのリマインダーを設定し、日付アラート通知を生成。</li> <li>ファイル保存のために、ロケーションピッカーから直接新しいフォルダを作成。</li> <li>ワークパッケージの後継者と前任者間の必要なタイムラグを指定。</li> <li>カスタムフィールドタイプの階層の値でワークパッケージの順序付けとグループ化を有効にする。</li> <li>時間エントリをPDFタイムシートとしてエクスポート。</li> <li>ホバー時にユーザー情報を表示するポップオーバーを追加。</li> </ul>
+                The release brings various features and improvements for you, e.g. <br> <ul class="%{list_styling_class}"> <li>Schedule recurring meetings to streamline your weekly, biweekly, or custom appointments.</li> <li>Create child work packages directly from the Relations tab.</li> <li>Include total sums in timesheet PDF exports for better insights.</li> <li>Include child work packages in cost reports for more accurate tracking.</li> <li>See dates of previously hidden, permission-restricted relations to make informed scheduling decisions.</li> </ul>
     ical_sharing_modal:
       title: "Subscribe to calendar"
       inital_setup_error_message: "An error occured while fetching data."
@@ -852,8 +853,6 @@ ja:
       select_branch: "分岐を選択する"
     field_value_enter_prompt: "'%{field}'の値を入力"
     project_menu_details: "詳細"
-    scheduling:
-      manual: "手動スケジュール"
     sort:
       sorted_asc: "昇順の並べ替えを適用しました。 "
       sorted_dsc: "降順の並べ替えを適用しました。 "
@@ -901,15 +900,6 @@ ja:
       comment_send_failed: "エラーが発生しました。コメントを投稿できませんでした。"
       comment_updated: "正常にコメントを更新しました。"
       confirm_edit_cancel: "作業項目の編集をキャンセルしてもよろしいですか？"
-      datepicker_modal:
-        automatically_scheduled_parent: "Automatically scheduled. Dates are derived from relations."
-        manually_scheduled: "Manual scheduling enabled, all relations ignored."
-        start_date_limited_by_relations: "Available start and finish dates are limited by relations."
-        changing_dates_affects_follow_relations: "Changing these dates will affect dates of related work packages."
-        click_on_show_relations_to_open_gantt: 'Click on "%{button_name}" for GANTT overview.'
-        show_relations: "Show relations"
-        ignore_non_working_days:
-          title: "Working days only"
       description_filter: "フィルタ"
       description_enter_text: "テキスト"
       description_options_hide: "オプションを非表示"

@@ -1,29 +1,28 @@
 zh-CN:
-  activemodel:
+  activerecord:
     attributes:
       saml/provider:
         display_name: 名称
         identifier: 标识符
         secret: 密钥
         scope: 范围
-        assertion_consumer_service_url: ACS (断言消费服务) URL
-        limit_self_registration: 限制自注册
+        assertion_consumer_service_url: ACS（断言消费者服务）URL
+        limit_self_registration: 限制自行注册
         sp_entity_id: 服务实体 ID
         metadata_url: 身份提供商元数据URL
         name_identifier_format: 名称标识符格式
-        idp_sso_service_url: 身份供应商登录终端
-        idp_slo_service_url: 身份供应商注销终端
+        idp_sso_service_url: 身份供应商登录端点
+        idp_slo_service_url: 身份供应商注销端点
         idp_cert: 身份提供商公共证书
-        authn_requests_signed: 签名 SAML 认证请求
+        authn_requests_signed: 签署 SAML AuthnRequests
         want_assertions_signed: 需要签名回复
-        want_assertions_encrypted: 需要加密响应
-        certificate: OpenProject 用于 SAML 请求的证书
+        want_assertions_encrypted: 需要加密回复
+        certificate: OpenProject 为 SAML 请求使用的证书
         private_key: OpenProject SAML 请求的相应私钥
         signature_method: 签名算法
         digest_method: 摘要算法
         format: "格式"
         icon: "自定义图标"
-  activerecord:
     errors:
       models:
         saml/provider:

@@ -84,7 +84,7 @@ module Meetings
       return @current_item if defined?(@current_item)
 
       @current_item = Meetings::Menu
-                        .new(project: @project, params:)
+                        .new(project: @project, params: params.merge(current_href: request.path))
                         .selected_menu_item
     end
   end

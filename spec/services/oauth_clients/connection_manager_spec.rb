@@ -98,7 +98,7 @@ RSpec.describe OAuthClients::ConnectionManager, :webmock, type: :model do
 
     subject { instance.code_to_token(code) }
 
-    context "with happy path" do
+    context "with happy path", :storage_server_helpers do
       before do
         # Simulate a successful authorization returning the tokens
         response_body = {
@@ -110,6 +110,8 @@ RSpec.describe OAuthClients::ConnectionManager, :webmock, type: :model do
         }.to_json
         stub_request(:any, File.join(host, "/index.php/apps/oauth2/api/v1/token"))
           .to_return(status: 200, body: response_body, headers: { "content-type" => "application/json; charset=utf-8" })
+
+        stub_nextcloud_user_query(host)
       end
 
       it "returns a valid ClientToken object and issues an appropriate event" do

@@ -56,4 +56,43 @@ module WorkPackage::PDFExport::Export::ExportCommon
   def get_subject_column_cell(work_package, value)
     make_link_anchor(work_package.id, escape_tags(value))
   end
+
+  def get_column_value(work_package, column_name)
+    formatter = formatter_for(column_name, :pdf)
+    formatter.format(work_package)
+  end
+
+  def get_formatted_value(value, column_name)
+    return "" if value.nil?
+
+    formatter = formatter_for(column_name, :pdf)
+    formatter.format_value(value, {})
+  end
+
+  def with_sums_table?
+    query.display_sums?
+  end
+
+  def wants_report?
+    options[:pdf_export_type] == "report"
+  end
+
+  def wants_gantt?
+    options[:pdf_export_type] == "gantt"
+  end
+
+  def get_total_sums
+    query.display_sums? ? (query.results.all_total_sums || {}) : {}
+  end
+
+  def get_group_sums(group)
+    @group_sums ||= query.results.all_group_sums
+    @group_sums[group] || {}
+  end
+
+  def get_groups
+    query.results.work_package_count_by_group
+         .select { |_, count| count > 0 }
+         .map { |group, _| group }
+  end
 end

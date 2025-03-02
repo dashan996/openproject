@@ -8,6 +8,7 @@ zh-CN:
         row_count: "行数"
         column_count: "列数"
         widgets: "小部件"
+        scope: "范围"
     errors:
       models:
         grids/grid:

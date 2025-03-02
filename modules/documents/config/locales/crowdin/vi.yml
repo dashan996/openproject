@@ -34,6 +34,8 @@ vi:
   enumeration_doc_categories: "Danh mục tài liệu"
   documents:
     label_attachment_author: "Tác giả tài liệu đính kèm"
+    label_categories: "Categories"
+    new_category: "New category"
   label_document_added: "Tài liệu đã được thêm"
   label_document_new: "Tài liệu mới"
   label_document_plural: "Tài liệu"

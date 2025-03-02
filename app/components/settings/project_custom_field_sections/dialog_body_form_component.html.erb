@@ -12,7 +12,7 @@
 
         collection.with_component(Primer::Alpha::Dialog::Footer.new) do
           component_collection do |modal_footer|
-            modal_footer.with_component(Primer::ButtonComponent.new(data: { 'close-dialog-id': "project-custom-field-section-dialog#{@project_custom_field_section.id}" })) do
+            modal_footer.with_component(Primer::ButtonComponent.new(data: { "close-dialog-id": "project-custom-field-section-dialog#{@project_custom_field_section.id}" })) do
               t("button_cancel")
             end
 

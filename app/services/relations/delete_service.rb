@@ -26,4 +26,21 @@
 # See COPYRIGHT and LICENSE files for more details.
 #++
 
-class Relations::DeleteService < BaseServices::Delete; end
+class Relations::DeleteService < BaseServices::Delete
+  include Relations::Concerns::Rescheduling
+
+  def after_perform(_result)
+    result = super
+    if result.success? && deleted_relation.follows?
+      reschedule_result = reschedule_successor(deleted_relation)
+      result.merge!(reschedule_result)
+    end
+    result
+  end
+
+  private
+
+  def deleted_relation
+    model
+  end
+end

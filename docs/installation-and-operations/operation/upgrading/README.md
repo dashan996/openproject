@@ -80,7 +80,6 @@ The necessary steps are the same as setting up the package source for the first 
 | [Debian 12 Bookworm](../../installation/packaged/#debian-12)             |
 | [Debian 11 Bullseye](../../installation/packaged/#debian-11)             |
 | [CentOS/RHEL 9.x](../../installation/packaged/#centos-9--rhel-9)         |
-| [CentOS/RHEL 8.x](../../installation/packaged/#centos-8--rhel-8)         |
 | [Suse Linux Enterprise Server 15](../../installation/packaged/#sles-15)  |
 
 After following the steps to update the package source, updating the openproject package and running `openproject configure`, your system will be up to date.

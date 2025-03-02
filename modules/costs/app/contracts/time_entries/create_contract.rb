@@ -37,6 +37,7 @@ module TimeEntries
       return if allowed_to_log_for_others?
       return if allowed_to_log_to_himself?
 
+      errors.add :work_package, :cannot_log_for_this_work_package
       errors.add :base, :error_unauthorized
     end
 

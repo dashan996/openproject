@@ -31,10 +31,10 @@ See COPYRIGHT and LICENSE files for more details.
 
 <% tabs = types_tabs %>
 
-<%= render ::Types::EditPageHeaderComponent.new(type: @type, tabs: tabs) %>
+<%= render ::Types::EditPageHeaderComponent.new(type: @type, tabs:) %>
 
 <%=
-  selected_tab = selected_tab(tabs, @default_tab)
+  selected_tab = selected_tab(tabs)
 
   if selected_tab.key?(:view_component)
     render selected_tab[:view_component].new(@type)
@@ -47,6 +47,3 @@ See COPYRIGHT and LICENSE files for more details.
     end
   end
 %>
-
-<!-- Remove those once all tab contents are using view components -->
-<%= error_messages_for "type" %>

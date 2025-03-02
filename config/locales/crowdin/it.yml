@@ -27,7 +27,7 @@ it:
     work_packages:
       activity_tab:
         no_results_title_text: Nessuna attività da visualizzare
-        no_results_description_text: "Scegli \"Mostra tutto\" per mostrare tutte le attività e i commenti"
+        no_results_description_text: 'Scegli "Mostra tutto" per mostrare tutte le attività e i commenti'
         label_activity_show_all: "Mostra tutto"
         label_activity_show_only_comments: "Mostra solo commenti"
         label_activity_show_only_changes: "Mostra solo le modifiche"
@@ -128,8 +128,9 @@ it:
     sync_failed: "Sincronizzazione da LDAP non riuscita: %{message}."
     back_to_index: "Clicca qui per tornare all'elenco delle connessioni."
     technical_warning_html: |
-      Questo form LDAP richiede una conoscenza tecnica dell'attuale setup LDAP / Active Directory. <br/>
-      <a href="https://www.openproject.org/help/administration/manage-ldap-authentication/">Per favore visita la nostra documentazione per istruzioni dettagliate</a>.
+      This LDAP form requires technical knowledge of your LDAP / Active Directory setup.
+      <br>
+      <a href="https://www.openproject.org/help/administration/manage-ldap-authentication/">Please visit our documentation for detailed instructions</a>.
     attribute_texts:
       name: Nome della connessione LDAP
       host: Nome host LDAP o indirizzo IP
@@ -137,9 +138,9 @@ it:
       generic_map: L'attributo chiave LDAP mappato nell'attributo OpenProject '%{attribute}'
       admin_map_html: "Opzionale: L'attributo chiave LDAP che <strong>se presente</strong> indica l'utente OpenProject come amministratore. Lasciare vuoto se non sicuri."
       system_user_dn_html: |
-        Inserire il nome dominio del sistema utilizzato dall'utente per l'accesso in sola lettura.
-        <br/>
-        Esempio: uid=openproject,ou=system,dc=example,dc=com
+        Enter the DN of the system user used for read-only access.
+        <br>
+        Example: uid=openproject,ou=system,dc=example,dc=com
       system_user_password: Inserire la password associata all'utente di sistema
       base_dn: |
         Inserire il nome dominio del ramo LDAP che si vuole far scansionare da OpenProject per la ricerca di utenti e gruppi.
@@ -176,7 +177,7 @@ it:
     tls_options:
       verify_peer: "Verifica certificato SSL"
       verify_peer_description_html: >
-        Abilita la rigorosa verifica della catena attendibile del certificato SSL. <br/> <strong>Attenzione:</strong> Deselezionare questa opzione disabilita la verifica del certificato SSL del server LDAP. Questo espone la tua connessione ad attacchi di tipo Man in the Middle.
+        Enables strict SSL verification of the certificate trusted chain. <br> <strong>Warning:</strong> Unchecking this option disables SSL verification of the LDAP server certificate. This exposes your connection to Man in the Middle attacks.
       tls_certificate_description: "Se il certificato del server LDAP non è nelle fonti di fiducia di questo sistema, è possibile aggiungerlo manualmente qui. Inserisci una stringa certificata PEM X509."
   forums:
     show:
@@ -227,9 +228,9 @@ it:
             title: Questo elemento non ha alcun livello gerarchico sotto
             description: Aggiungi elementi a questo elenco per creare sottoelementi all'interno di un altro
         delete_dialog:
-          title: "Delete custom field item"
-          heading: "Delete custom field item?"
-          description: "This action will irreversibly remove the item and all its sub-items. Any assigned values will be permanently deleted. If this field is required, removing items may cause existing work packages to become invalid."
+          title: "Elimina elemento campo personalizzato"
+          heading: "Eliminare l'elemento campo personalizzato?"
+          description: "Questa azione rimuoverà in modo irreversibile l'elemento e tutte le sue sottovoci. Tutti i valori assegnati saranno eliminati in modo permanente. Se questo campo è obbligatorio, la rimozione degli elementi può causare l'invalidità delle macro-attività esistenti."
         placeholder:
           label: "Etichetta elemento"
           short: "Abbreviazione"
@@ -250,7 +251,7 @@ it:
     confirm_destroy_option: "L'eliminazione di un'opzione eliminerà tutte le sue occorrenze (ad es. nelle macro-attività). Procedere all'eliminazione?"
     reorder_alphabetical: "Riordina i valori alfabeticamente"
     reorder_confirmation: "Attenzione: l'ordine corrente dei valori disponibili sarà perso. Continuare?"
-    placeholder_version_select: "Work package or project selection is required first"
+    placeholder_version_select: "Prima è necessario selezionare la macro-attività o il progetto"
     instructions:
       is_required: "Contrassegna il campo personalizzato come obbligatorio. Ciò renderà obbligatorio compilare il campo durante la creazione di nuove risorse o l'aggiornamento di risorse esistenti."
       is_required_for_project: "Spunta la casella per abilitare questo attributo e renderlo necessario in tutti i progetti. Non può essere disattivato per i singoli progetti."
@@ -289,7 +290,7 @@ it:
       label: "Etichetta"
       short: "Abbreviazione"
       parent: "Genitore"
-      blueprint: "Pattern blueprint"
+      blueprint: "Schema del modello"
   global_search:
     placeholder: "Cerca in %{app_title}"
     overwritten_tabs:
@@ -343,6 +344,7 @@ it:
         placeholder: "Nuovo elenco progetti"
       delete_modal:
         title: "Elimina elenco progetti"
+        heading: "Delete this project list?"
         text: "Questa azione non eliminerà alcun progetto contenuto nell'elenco. Vuoi davvero eliminare questo elenco di progetti?"
     settings:
       change_identifier: Cambia identificatore
@@ -391,6 +393,8 @@ it:
         no_results_content_text: Crea una nuova versione
       storage:
         no_results_title_text: Nessuno spazio su disco registrato aggiuntivo consumato da questo progetto.
+      work_package_priorities:
+        new_label: "New priority"
   project_stage:
     working_days_count:
       one: "Durata: %{count} giorno lavorativo"
@@ -472,7 +476,7 @@ it:
   my:
     access_token:
       create_dialog:
-        title: Token generated
+        title: Token generato
         header: Il token %{type} è stato generato
         warning: 'Nota: Questa è l''unica volta in cui vedrai questo token, assicurati di copiarlo subito.'
       errors:
@@ -570,10 +574,10 @@ it:
         Nella <a href="%{href}">modalità di calcolo dell'avanzamento basata sullo stato</a>, la % di completamento di una macro-attività viene impostata automaticamente su questo valore quando viene selezionato questo stato.
         Ignorato nella modalità basata sul lavoro.
       status_readonly_html: |
-        Seleziona questa opzione per contrassegnare i pacchetti di lavoro con questo stato come di sola lettura.
-        Nessun attributo può essere modificato ad eccezione dello stato.
-        <br/>
-        <strong> Nota </strong>: i valori ereditati (ad esempio, dai figli o dalle relazioni) verranno comunque applicati.
+        Check this option to mark work packages with this status as read-only.
+        No attributes can be changed with the exception of the status.
+        <br>
+        <strong>Note</strong>: Inherited values (e.g., from children or relations) will still apply.
     index:
       no_results_title_text: Al momento non vi sono relazioni sullo stato delle macro-attività.
       no_results_content_text: Aggiungi un nuovo stato
@@ -612,6 +616,14 @@ it:
         pattern:
           label: "Schema dell'oggetto"
           caption: "Cerca un attributo o aggiungi testo. Per creare uno spazio tra gli elementi aggiungilo come testo."
+      export_configuration:
+        tab: "Generate PDF"
+        intro: "Select which templates from those that are available you would like to enable for this type. The template determines the design and attributes visible in the exported PDF of a work package using this type. The first template on the list is selected by default."
+        pdf_export_templates:
+          label: "PDF Export templates"
+          actions:
+            label_enable_all: "Enable all"
+            label_disable_all: "Disable all"
   versions:
     overview:
       work_packages_in_archived_projects: "La versione è condivisa con progetti archiviati che hanno ancora macro-attività assegnate a questa versione. Queste vengono conteggiate, ma non appariranno nelle viste collegate."
@@ -626,6 +638,47 @@ it:
     index:
       no_results_title_text: Al momento non vi sono flussi di lavoro.
   work_packages:
+    datepicker_modal:
+      banner:
+        description:
+          automatic_mobile: "Start date derived."
+          click_on_show_relations_to_open_gantt: 'Click on "%{button_name}" for Gantt overview.'
+          manual_mobile: "Ignoring relations."
+          manual_gap_between_predecessors: "There is a gap between this and all predecessors."
+          manual_overlap_with_predecessors: "Overlaps with at least one predecessor."
+          manual_with_children: "This has child work packages but their start dates are ignored."
+        title:
+          automatic_mobile: "Automatically scheduled."
+          automatic_with_children: "The dates are determined by child work packages."
+          automatic_with_predecessor: "The start date is set by a predecessor."
+          manual_mobile: "Manually scheduled."
+          manually_scheduled: "Manually scheduled. Dates not affected by relations."
+      blankslate:
+        title: "No predecessors"
+        description: "To enable automatic scheduling, this work package needs to have at least one predecessor. It will then automatically be scheduled to start after the last predecessor."
+      ignore_non_working_days:
+        title: "Working days only"
+      mode:
+        title: "Scheduling mode"
+        automatic: "Automatic"
+        manual: "Manual"
+      show_relations: "Show relations"
+      tabs:
+        aria_label: "Datepicker tabs"
+        children: "Children"
+        dates: "Dates"
+        predecessors: "Predecessors"
+        successors: "Successors"
+        blankslate:
+          predecessors:
+            title: "No predecessors"
+            description: "This work package does not have any predecessors."
+          successors:
+            title: "No successors"
+            description: "This work package does not have any successors."
+          children:
+            title: "No children"
+            description: "This work package does not have any children."
     x_descendants:
       one: "Una macro-attività discendente"
       other: "%{count} macro-attività discendenti"
@@ -649,7 +702,7 @@ it:
         title: "Flusso di lavoro mancante per la condivisione di macro-attività"
         message: "Nessun flusso di lavoro è configurato per il ruolo \"Editor di macro-attività\". Senza un flusso di lavoro, la condivisione con l'utente non può alterare lo stato della macro-attività. I flussi di lavoro possono essere copiati. Seleziona un tipo di origine (ad esempio \"Attività\") e un ruolo di origine (ad esempio \"Membro\"). Quindi seleziona i tipi obiettivo. Per cominciare, potresti selezionare tutti i tipi come obiettivi. Infine, seleziona il ruolo \"Editor di macro-attività\" come destinazione e premi \"Copia\". Dopo aver creato le impostazioni predefinite, perfeziona i flussi di lavoro come fai per ogni altro ruolo."
         link_message: "Configura i flussi di lavoro nell'amministrazione."
-    templated_subject_hint: Automatically generated through type %{type}
+    templated_subject_hint: Generato automaticamente attraverso il tipo %{type}
     summary:
       reports:
         category:
@@ -734,8 +787,8 @@ it:
       required_description: "Contrassegna questa macro-attività come obbligatoria per quella correlata"
       label_parent_singular: "genitore"
       label_parent_plural: "genitore"
-      ghost_relation_title: "Related work package"
-      ghost_relation_description: "This is not visible to you due to permissions."
+      ghost_relation_title: "Macro-attività correlata"
+      ghost_relation_description: "Non puoi visualizzare a causa delle autorizzazioni."
   label_invitation: Invito
   account:
     delete: "Cancella account"
@@ -775,6 +828,7 @@ it:
       attachment:
         attachment_content: "Contenuto allegato"
         attachment_file_name: "Nome del file allegato"
+        content_type: "Content-type"
         downloads: "Scaricati"
         file: "File"
         filename: "File"
@@ -782,10 +836,10 @@ it:
       attribute_help_text:
         attribute_name: "Attributo"
         help_text: "Testo guida"
+      capability:
+        context: "Context"
       changeset:
         repository: "Archivio"
-      color:
-        hexcode: "Codice esadecimale"
       comment:
         commented: "Commentato" #an object that this comment belongs to
       custom_action:
@@ -818,7 +872,10 @@ it:
         client_credentials_user_id: "ID utente delle credenziali client"
         scopes: "Ambiti"
         confidential: "Confidenziale"
+      emoji_reaction:
+        reactable: "Reacted on"
       enterprise_token:
+        domain: "Domain"
         starts_at: "Valido dal"
         subscriber: "Iscritto"
         encoded_token: "Token di assistenza Enterprise"
@@ -830,6 +887,7 @@ it:
         widgets: "Widget"
       journal:
         notes: "Note"
+        cause_type: "Cause type"
       ldap_auth_source:
         account: "Account"
         attr_firstname: "Attributo nome"
@@ -845,10 +903,11 @@ it:
         tls_certificate_string: "Certificato SSL del server LDAP"
       member:
         roles: "Ruoli"
+      notification:
+        read_ian: "Read in-app"
+        resource: "Resource"
       oauth_client:
         client: "ID Client"
-      planning_element_type_color:
-        hexcode: Codice esadecimale
       project:
         active_value:
           true: "Rimosso dall'archivio"
@@ -861,6 +920,7 @@ it:
           true: "pubblico"
           false: "privato"
         queries: "Interrogazioni"
+        enabled_modules: "Enabled modules"
         status_code: "Stato del progetto"
         description: "Descrizione"
         status_explanation: "Descrizione dello stato del progetto"
@@ -881,23 +941,47 @@ it:
       project_custom_field:
         is_required: "Richiesto per tutti i progetti"
         custom_field_section: Sezione
+      project/life_cycle_step:
+        definition: "Definition"
       project/life_cycle_step_definition:
         name: "Nome"
         color: "Colore"
       query:
+        sums: "Sums"
+        columns: "Columns"
         column_names: "Colonne"
         relations_to_type_column: "Relazioni con %{type}"
         relations_of_type_column: "relazioni %{type}"
         group_by: "Raggruppa i risultati per"
+        sort_by: "Sort results by"
         filters: "Filtri"
         timeline_labels: "Etichette di sequenza temporale"
+        timeline_visible: "Show Gantt chart"
+        timeline_zoom_level: "Gantt chart zoom level"
+        timestamps: "Baseline timestamps"
+        sort_criteria: "Sort criteria"
+        highlighted_attributes: "Highlighted attributes"
+        highlighting_mode: "Highlight mode"
+        display_representation: "Display mode"
+        show_hierarchies: "Display mode"
+        starred: "Favorite"
+        hidden: "Hidden"
+        manual_sorting: "Manual sort order"
+        ordered_work_packages: "Work packages order"
+        include_subprojects: "Include subprojects"
+        results: "Results"
       relation:
         lag: "Ritardo"
-        from: "Macro-attività"
+        from: "Macro-attività correlata"
         to: "Macro-attività correlata"
+        relation_type: "Relation type"
       reminder:
+        remindable: "Reminded object"
+        remind_at: "Remind at"
         remind_at_date: "Data"
         remind_at_time: "Ora"
+      reminder_notification:
+        notification: "Notification"
       repository:
         url: "URL"
       role:
@@ -907,6 +991,9 @@ it:
         is_readonly: "Pacchetto di lavoro di sola lettura"
         excluded_from_totals: "Escludi dal calcolo dei totali nella gerarchia"
         default_done_ratio: "% completamento"
+      token/ical:
+        calendar: "Calendar"
+        ical_token_query_assignment: "Query assignment"
       time_entry:
         activity: "Attività"
         hours: "Ore"
@@ -920,6 +1007,7 @@ it:
         is_default: "Attivato nei nuovi progetti per impostazione predefinita"
         is_milestone: "È un traguardo"
         color: "Colore"
+        patterns: "Patterns"
       user:
         admin: "Amministratore"
         auth_source: "Origine dell'autenticazione"
@@ -929,6 +1017,10 @@ it:
         force_password_change: "Richiedi la modifica della password al prossimo login"
         language: "Linguaggio"
         last_login_on: "Ultimo accesso"
+        failed_login_count: "Failed login attempts"
+        first_name: "First name"
+        last_name: "Last name"
+        first_login: "First login"
         new_password: "Nuova password"
         password_confirmation: "Conferma"
         consented_at: "Consenso a"
@@ -940,6 +1032,8 @@ it:
         warn_on_leaving_unsaved: "Avvisami quando sto lasciando una macro-attività non salvata"
         theme: "Modalità"
         mode_guideline: "Alcune modalità sovrascrivono i colori del tema personalizzato per ragioni di accessibilità e leggibilità. Per usare il tema personalizzato completo, seleziona la modalità Chiaro."
+        daily_reminders: "Daily reminders"
+        workdays: "Working days"
       version:
         effective_date: "Data di fine"
         sharing: "Condivisione"
@@ -1217,16 +1311,16 @@ it:
           typed_dag:
             circular_dependency: "La relazione crea un riferimento circolare."
           attributes:
-            to:
-              error_not_found: "impossibile trovare o visualizzare la macro-attività in posizione \"a\""
-              error_readonly: "impossibile modificare il collegamento ad una relazione esistente \"a\""
-            from:
-              error_not_found: "impossibile trovare o visualizzare la macro-attività in posizione \"da\""
-              error_readonly: "impossibile modificare il collegamento ad una relazione esistente \"da\""
+            to_id:
+              error_not_found: "non trovato o non visibile."
+              error_readonly: "non può essere modificato per le relazioni esistenti."
+            from_id:
+              error_not_found: "non trovato o non visibile."
+              error_readonly: "non può essere modificato per le relazioni esistenti."
             lag:
               greater_than_or_equal_to:
-                zero: "cannot be negative."
-              less_than_or_equal_to: "is too high."
+                zero: "non può essere negativo."
+              less_than_or_equal_to: "è troppo alto."
         repository:
           not_available: "Il gestore SCM non è disponibile"
           not_whitelisted: "non è consentito dalla configurazione."
@@ -1278,6 +1372,10 @@ it:
         work_package:
           is_not_a_valid_target_for_time_entries: "La macro-attività #%{id} non può essere utilizzata per riassegnare la cronologia."
           attributes:
+            id:
+              format: "%{message}"
+              cannot_add_child_because_of_lack_of_permission: "Cannot add child because you don't have permissions to edit the selected work package."
+              blank: "ID can't be blank."
             assigned_to:
               format: "%{message}"
             done_ratio:
@@ -1294,6 +1392,7 @@ it:
               smaller_than_dates: "è inferiore all'intervallo tra la data di inizio e quella di fine."
               not_available_for_milestones: "non è disponibile per le macro-attività con pietre miliari digitate."
               cannot_be_null: "non può essere impostato a nulla poiché le date d'inizio e di fine sono note."
+              not_an_integer: "is not a valid duration."
             parent:
               cannot_be_milestone: "non può essere un traguardo."
               cannot_be_self_assigned: "non può essere assegnato a se stesso."
@@ -1392,6 +1491,9 @@ it:
       forum: "Forum"
       global_role: "Ruolo globale"
       group: "Gruppo"
+      issue_priority:
+        one: "Priority"
+        other: "Priorities"
       member: "Membro"
       news: "Notizie"
       notification:
@@ -1405,6 +1507,7 @@ it:
         one: "Elenco di progetti"
         other: "Elenchi di progetti"
       query: "Query personalizzata"
+      reminder: "Reminder"
       role:
         one: "Ruolo"
         other: "Ruoli"
@@ -1469,18 +1572,25 @@ it:
     assigned_to: "Assegnatario"
     assignee: "Assegnatario"
     attachments: "Allegati"
+    actor: "Actor"
+    action: "Action"
     author: "Autore"
+    avatar: "Avatar"
     base: "Errore Generale:"
+    body: "Body"
     blocks_ids: "ID delle macro-attività bloccate"
     category: "Categoria"
     comment: "Commento"
     comments: "Commento"
     content: "Contenuto"
     color: "Colore"
+    creator: "Creator"
     created_at: "Creato il"
+    custom_field: "Custom field"
     custom_options: "Valori possibili"
     custom_values: "Campo personalizzato"
     date: "Data"
+    dates_interval: "Date range"
     default_columns: "Colonne predefinite"
     description: "Descrizione"
     derived_due_date: "Data di fine derivata"
@@ -1490,39 +1600,63 @@ it:
     due_date: "Data di fine"
     estimated_hours: "Lavoro"
     estimated_time: "Lavoro"
+    email: "Email"
+    entity_type: "Entity"
     expires_at: "Scade il"
     firstname: "Nome"
+    filter: "Filter"
     group: "Gruppo"
     groups: "Gruppi"
+    hexcode: "Hex code"
     id: "ID"
     is_default: "Valore predefinito"
     is_for_all: "Per tutti progetti"
     public: "Pubblico"
+    principal: "User or group"
     #kept for backwards compatibility
     issue: "Macro-attività"
+    journal: "Journal"
+    journal_notes: "Comment"
     lastname: "Cognome"
     login: "Nome utente"
     mail: "Email"
     name: "Nome"
     note: "Nota"
+    notes: "Notes"
+    number: "Number"
+    options: "Options"
+    operator: "Operator"
     password: "Password"
     priority: "Priorità"
     project: "Progetto"
+    project_ids: "Project IDs"
+    reason: "Reason"
     responsible: "Responsabile"
+    required: "Required"
+    recipient: "Recipient"
     role: "Ruolo"
     roles: "Ruoli"
+    search: "Search"
     start_date: "Data di inizio"
     status: "Stato"
+    state: "State"
     subject: "Soggetto"
+    slug: "Slug"
     summary: "Sommario"
+    text: "Text"
     title: "Titolo"
     type: "Tipo"
+    typeahead: "Autocomplete"
     updated_at: "Aggiornato il"
     updated_on: "Aggiornato il"
     uploader: "Caricatore"
     user: "Utente"
+    username: "Username"
+    unit: "Unit"
     value: "Valore"
+    values: "Values"
     version: "Versione"
+    visible: "Visible"
     work_package: "Macro-attività"
   backup:
     failed: "Backup fallito"
@@ -1583,7 +1717,7 @@ it:
   button_create_and_continue: "Crea e continua"
   button_decline: "Rifiuto"
   button_delete: "Cancella"
-  button_delete_permanently: "Delete permanently"
+  button_delete_permanently: "Elimina definitivamente"
   button_delete_watcher: "Eliminare osservatore %{name}"
   button_download: "Scarica"
   button_duplicate: "Duplica"
@@ -1787,8 +1921,8 @@ it:
         one: "ora"
         other: "ora"
       day:
-        one: "day"
-        other: "days"
+        one: "giorno"
+        other: "giorni"
   description_active: "Attivo?"
   description_attachment_toggle: "Mostra/Nascondi allegati"
   description_autocomplete: >
@@ -1835,6 +1969,8 @@ it:
   enumeration_activities: "Attività di monitoraggio dei tempi"
   enumeration_work_package_priorities: "Priorità della macro-attività"
   enumeration_reported_project_statuses: "Stato di progetto segnalato"
+  enumeration_caption_order_changed: "Order successfully changed."
+  enumeration_could_not_be_moved: "Enumeration could not be moved."
   error_auth_source_sso_failed: "Single Sign-On (SSO) per l'utente '%{value}' non riuscita"
   error_can_not_archive_project: "Questo progetto non può essere archiviato: %{errors}"
   error_can_not_delete_entry: "Impossibile eliminare la voce"
@@ -1924,6 +2060,7 @@ it:
         input_label_report: "Aggiungi colonne alla tabella degli attributi"
         input_caption_report: "Per impostazione predefinita, tutti gli attributi aggiunti come colonne nell'elenco della macro-attività sono selezionati. I campi di testo lunghi non sono disponibili nella tabella degli attributi, ma possono essere visualizzati sotto di essa."
         input_caption_table: "Per impostazione predefinita, tutti gli attributi aggiunti come colonne nell'elenco della macro-attività sono selezionati. I campi di testo lunghi non sono disponibili nelle esportazioni basate su tabelle."
+        input_caption_required: "It is not possible to export the view without any column. Please add at least one column."
       pdf:
         export_type:
           label: "Tipo di esportazione PDF"
@@ -1994,21 +2131,29 @@ it:
       days: g
   pdf_generator:
     page_nr_footer: "Pagina %{page} di %{total}"
+    template_attributes:
+      label: "Attributes and description"
+      caption: All the attributes present in the current form configuration using the default template.
+    template_contract:
+      label: "Contract"
+      caption: Work package details formatted to the standard German contract form.
     dialog:
       title: Genera PDF
-      submit: Genera
-      header_right:
-        label: Intestazione a destra
-        caption: Testo da visualizzare a destra dell'intestazione
+      submit: Download
+      templates:
+        label: "Template"
+        none_enabled: "No template has been enabled for this work package type"
       footer_center:
-        label: Piè di pagina centrale
-        caption: Testo da visualizzare al centro del piè di pagina
+        label: Footer text
+        caption: This text will appear on every page at the center of the footer.
+      footer_right:
+        label: Footer text
+        caption: This text will appear on every page at the right of the footer.
       hyphenation:
         label: Sillabazione
-        caption: Suddividi le parole tra le righe per migliorare la giustificazione e la leggibilità del testo.
-      paper_size:
-        label: Dimensione del foglio
-        caption: Il formato della carta da utilizzare per il PDF.
+        caption: Break line between words for better layout and justification.
+      hyphenation_language:
+        label: Language and hyphenation
   extraction:
     available:
       pdftotext: "Pdfatesto disponibile (opzionale)"
@@ -2090,6 +2235,8 @@ it:
           Il calcolo dei progressi è <a href="%{href}" target="_blank">impostato automaticamente in modalità basata sul lavoro e modificato con l'aggiornamento della versione</a>.
         progress_calculation_adjusted: >-
           Il calcolo dei progressi è <a href="%{href}" target="_blank">modificato con l'aggiornamento della versione</a>.
+        scheduling_mode_adjusted: >-
+          Scheduling mode automatically adjusted with version update.
         totals_removed_from_childless_work_packages: >-
           I totali di lavoro e avanzamento vengono rimossi automaticamente per le macro-attività non principali con l'<a href="%{href}" target="_blank">aggiornamento della versione</a>. Questa è un'attività di manutenzione e può essere tranquillamente ignorata.
       total_percent_complete_mode_changed_to_work_weighted_average: >-
@@ -2190,7 +2337,7 @@ it:
   label_add_subtask: "Aggiungi sotto-attività"
   label_added: "aggiunto"
   label_added_by: "Aggiunto da %{author}"
-  label_added_by_on: "Added by %{author} on %{date}"
+  label_added_by_on: "Aggiunto da %{author} il %{date}"
   label_added_time_by: "Aggiunto da %{author} %{age} fa"
   label_additional_workflow_transitions_for_assignee: "Transizioni aggiuntive consentite quando l'utente è l'assegnatario"
   label_additional_workflow_transitions_for_author: "Transizioni aggiuntive consentite quando l'utente è l'autore"
@@ -2334,6 +2481,7 @@ it:
   label_missing_or_hidden_custom_option: "(valore mancante o assenza di permessi di accesso)"
   label_descending: "Decrescente"
   label_details: "Dettagli"
+  label_defaults: "Defaults"
   label_development_roadmap: "Tabella di marcia di sviluppo"
   label_diff: "diff"
   label_diff_inline: "inline"
@@ -2390,6 +2538,7 @@ it:
   label_filter: "Filtri"
   label_filter_add: "Aggiungi filtro"
   label_filter_by: "Filtra per"
+  label_filter_any_name_attribute: "Name attributes"
   label_filter_plural: "Filtri"
   label_filters_toggle: "Mostra/nascondi filtri"
   label_float: "Virgola mobile"
@@ -2638,7 +2787,7 @@ it:
   label_relation: "Relazione"
   label_relation_actions: "Azioni di relazione"
   label_relation_delete: "Eliminare la relazione"
-  label_relation_edit: "Edit relation"
+  label_relation_edit: "Modifica relazione"
   label_relation_new: "Nuova relazione"
   label_release_notes: "Note di rilascio"
   label_remaining_work: "Lavoro residuo"
@@ -2669,6 +2818,7 @@ it:
   label_roadmap_overdue: "%{value} in ritardo"
   label_role_and_permissions: "Ruoli e permessi"
   label_role_new: "Nuovo ruolo"
+  label_role_grantable: "Grantable role"
   label_role_plural: "Ruoli"
   label_role_search: "Assegna ruolo ai nuovi membri"
   label_scm: "SCM"
@@ -2722,6 +2872,7 @@ it:
   label_title: "Titolo"
   label_projects_menu: "Progetti"
   label_today: "oggi"
+  label_token_version: "Token Version"
   label_top_menu: "Top Menu"
   label_topic_plural: "Argomenti"
   label_total: "Totale"
@@ -2834,7 +2985,7 @@ it:
   label_global_role: "Ruolo globale"
   label_not_changeable: "(non modificabile)"
   label_global: "Globale"
-  label_seeded_from_env_warning: Questo record è stato creato tramite un'impostazione/variabile d'ambiente. Non è modificabile tramite l'interfaccia utente.
+  label_seeded_from_env_warning: This record has been created through a setting environment variable. It is not editable through UI.
   macro_execution_error: "Errore nell'esecuzione della macro %{macro_name}"
   macro_unavailable: "Non può essere visualizzata la macro %{macro_name}."
   macros:
@@ -3104,7 +3255,7 @@ it:
     text_getting_started_description: "Fai una rapida panoramica della gestione dei progetti e della collaborazione in team con OpenProject. Puoi riavviare questo video dal menu di aiuto."
     welcome: "Benvenuto in %{app_title}"
     select_language: "Per favore seleziona la tua lingua"
-  permission_add_work_package_notes: "Add comments"
+  permission_add_work_package_notes: "Aggiungi commenti"
   permission_add_work_packages: "Aggiungere macro-attività (work package)"
   permission_add_messages: "Postare messaggi"
   permission_add_project: "Crea progetti"
@@ -3134,11 +3285,11 @@ it:
   permission_delete_timelines: "Elimina cronologie"
   permission_delete_wiki_pages: "Eliminare pagine wiki"
   permission_delete_wiki_pages_attachments: "Elimina allegati"
-  permission_edit_work_package_notes: "Moderate comments"
-  permission_edit_work_package_notes_explanation: "Caution: Users with this permission are able to edit anyone's comment."
+  permission_edit_work_package_notes: "Modera i commenti"
+  permission_edit_work_package_notes_explanation: "Attenzione: gli utenti con questa autorizzazione possono modificare i commenti di chiunque."
   permission_edit_work_packages: "Modificare macro-attività"
   permission_edit_messages: "Modificare messaggi"
-  permission_edit_own_work_package_notes: "Edit own comments"
+  permission_edit_own_work_package_notes: "Modifica i commenti propri"
   permission_edit_own_messages: "Modificare i propri messaggi"
   permission_edit_own_time_entries: "Modificare i propri registri di orario effettuato"
   permission_edit_project: "Modificare un progetto"
@@ -3367,6 +3518,12 @@ it:
     activated: "attivato"
     deactivated: "disattivato"
   search_input_placeholder: "Ricerca..."
+  setting_after_first_login_redirect_url: "First login redirect"
+  setting_after_first_login_redirect_url_text_html: >
+    Set a path to redirect users after their first login. If empty, redirects to the home page for the onboarding tour. <br/> Example: <code>/my/page</code>
+  setting_after_login_default_redirect_url: "After login redirect"
+  setting_after_login_default_redirect_url_text_html: >
+    Set a default path to redirect users after login, if no back link was provided. Redirects to home page if not set. <br/> Example: <code>/my/page</code>
   setting_apiv3_cors_title: "Condivisione incrociata delle risorse (CORS - Cross-Origin Resource Sharing)"
   setting_apiv3_cors_enabled: "Abilita CORS"
   setting_apiv3_cors_origins: "Origini di condivisione CORS (Cross-Origin Resource Sharing) API V3 consentite"
@@ -3727,7 +3884,7 @@ it:
   text_notice_security_badge_displayed_html: >
     Nota: se abilitata questa opzione visualizzerà un badge con lo stato dell'installazione nel pannello di amministrazione di <a href="%{information_panel_path}">%{information_panel_label}</a> e sulla home page. Verrà visualizzata solo agli amministratori. <br/> il badge controllerà la tua attuale versione di OpenProject con l'ultima versione rilasciata per avvisarti di eventuali aggiornamenti o risoluzioni di vulnerabilità note. Per ulteriori informazioni sulle funzionalità offerte dal controllo, su quali dati è necessario fornire per ottenere gli aggiornamenti disponibili e su come disabilitare questo controllo, visita <a href="%{more_info_url}">la documentazione sulla configurazione</a>.
   text_own_membership_delete_confirmation: "Stai per rimuovere qualcuno o tutti i tuoi permessi e potresti non essere più in grado di modificare questo progetto dopo questo passo.\nSei sicuro di voler continuare?"
-  text_permanent_delete_confirmation_checkbox_label: "I understand that this deletion cannot be reversed"
+  text_permanent_delete_confirmation_checkbox_label: "Sono consapevole che questa cancellazione non può essere annullata"
   text_plugin_assets_writable: "Cartella del pool di plugin installati scrivibile"
   text_powered_by: "Offerto da %{link}"
   text_project_identifier_info: "Solo le lettere minuscole (a-z), numeri, trattini e trattini bassi sono consentiti, devi iniziare con una lettera maiuscola."
@@ -3745,6 +3902,7 @@ it:
   text_unallowed_characters: "Caratteri non consentiti"
   text_user_invited: L'utente è stato invitato ed è in attesa di registrazione.
   text_user_wrote: "%{value} ha scritto:"
+  text_wrote: "ha scritto"
   text_warn_on_leaving_unsaved: "La macro-attività corrente contiene testo non salvato che andrà perso se abbandoni questa pagina."
   text_what_did_you_change_click_to_add_comment: "Cosa hai modificato? Clicca per aggiungere un commento"
   text_wiki_destroy_confirmation: "Sei sicuro di che voler cancellare questo wiki e tutti i suoi contenuti?"
@@ -4204,3 +4362,29 @@ it:
   plugin_openproject_auth_saml:
     name: "OmniAuth SAML / Single-Sign On"
     description: "Aggiunge il provider OmniAuth SAML a OpenProject"
+  enterprise_plans:
+    legacy_enterprise: "Enterprise Plan"
+  enterprise_features:
+    baseline_comparison: Baseline Comparison
+    board_view: Board View
+    conditional_highlighting: Conditional Highlighting
+    custom_actions: Custom Actions
+    custom_field_hierarchies: Custom Field Hierarchies
+    customize_life_cycle: Customize Life Cycle
+    date_alerts: Date Alerts
+    define_custom_style: Define Custom Style
+    edit_attribute_groups: Edit Attribute Groups
+    gantt_pdf_export: Gantt PDF Export
+    grid_widget_wp_graph: Grid Widget Work Package Graph
+    ldap_groups: LDAP Groups
+    one_drive_sharepoint_file_storage: OneDrive/SharePoint File Storage
+    placeholder_users: Placeholder Users
+    project_list_sharing: Project List Sharing
+    readonly_work_packages: Readonly Work Packages
+    sso_auth_providers: SSO Auth Providers
+    team_planner_view: Team Planner View
+    two_factor_authentication: Two-Factor Authentication
+    virus_scanning: Attachment Virus Scanning
+    work_package_query_relation_columns: Work Package Query Relation Columns
+    work_package_sharing: Work Package Sharing
+    work_package_subject_generation: Work Package Subject Generation

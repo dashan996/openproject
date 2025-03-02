@@ -29,19 +29,13 @@
 #++
 #
 module Storages::Admin::Forms
-  class OAuthClientFormComponent < ApplicationComponent
-    include OpPrimer::ComponentHelpers
-    include OpTurbo::Streamable
-
-    attr_reader :storage
-    alias_method :oauth_client, :model
-
-    def initialize(oauth_client:, storage:, **)
-      super(oauth_client, **)
-      @storage = storage
-    end
-
+  class OAuthClientFormComponent < StorageFormComponent
     def self.wrapper_key = :storage_oauth_client_section
+
+    def form_url
+      query = { continue_wizard: storage.id } if in_wizard
+      admin_settings_storage_oauth_client_path(storage, query)
+    end
 
     def form_method
       options[:form_method] || default_form_method
@@ -57,6 +51,10 @@ module Storages::Admin::Forms
     end
 
     private
+
+    def oauth_client
+      options[:oauth_client] || storage.oauth_client
+    end
 
     def one_drive_integration_link(target: "_blank")
       href = ::OpenProject::Static::Links[:storage_docs][:one_drive_oauth_application][:href]
@@ -74,6 +72,10 @@ module Storages::Admin::Forms
 
     def default_form_method
       first_time_configuration? ? :post : :patch
+    end
+
+    def data_attributes
+      { turbo_frame: "page-content" }
     end
   end
 end

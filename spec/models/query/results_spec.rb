@@ -48,7 +48,7 @@ RSpec.describe Query::Results do
   end
   let(:role_dev) do
     create(:project_role,
-           permissions: [:view_work_packages])
+           permissions: %i[view_work_packages work_package_assigned])
   end
   let(:user1) do
     create(:user,

@@ -31,36 +31,37 @@ See COPYRIGHT and LICENSE files for more details.
 
 <%
   breadcrumb_items = if @project
-                       [{href: project_overview_path(@project.identifier), text: @project.name},
-                        {href: projects_budgets_path(@project.identifier), text: I18n.t(:label_budget_plural)}]
+                       [{ href: project_overview_path(@project.identifier), text: @project.name },
+                        { href: projects_budgets_path(@project.identifier), text: I18n.t(:label_budget_plural) }]
                      else
-                        [{ href: home_path, text: organization_name}]
+                       [{ href: home_path, text: organization_name }]
                      end
 %>
 
 <%=
   render Primer::OpenProject::PageHeader.new do |header|
     header.with_title { t(:caption_default_rate_history_for, user: @user.name) }
-    header.with_breadcrumbs([*(breadcrumb_items),
-                             t(:caption_default_rate_history_for, user: @user.name)])
+    header.with_breadcrumbs(
+      [*breadcrumb_items,
+       t(:caption_default_rate_history_for, user: @user.name)]
+    )
   end
 %>
 
-
 <%- default_rate = @user.current_default_rate -%>
-<% if default_rate%>
-<p><strong><%= t(:label_current_default_rate) %>:</strong> <%= number_to_currency(default_rate.rate)%></p>
+<% if default_rate %>
+<p><strong><%= t(:label_current_default_rate) %>:</strong> <%= number_to_currency(default_rate.rate) %></p>
 <% end %>
 
 <%= labelled_tabular_form_for @user,
-                              url: {action: 'update', project_id: @project},
-                              data: { controller: 'subform', 'application-target': 'dynamic' },
+                              url: { action: "update", project_id: @project },
+                              data: { controller: "subform", "application-target": "dynamic" },
                               method: :put do |f| %>
   <%= back_url_hidden_field_tag %>
-  <%= error_messages_for 'user' %>
+  <%= error_messages_for "user" %>
   <%- @rates.each do |rate| -%>
     <%- @rate = rate -%>
-    <%= error_messages_for 'rate' %>
+    <%= error_messages_for "rate" %>
   <%- end -%>
   <div class="generic-table--container">
     <div class="generic-table--results-container">
@@ -96,7 +97,7 @@ See COPYRIGHT and LICENSE files for more details.
         <tbody id="rates_body" class="subform-container" data-subform-target="table">
           <%= render partial: "hourly_rates/rate", object: HourlyRate.new(valid_from: Date.current), locals: { templated: true } %>
           <%- @rates.each_with_index do |rate, index| -%>
-            <%= render partial: 'rate', object: rate, locals: {index: index} %>
+            <%= render partial: "rate", object: rate, locals: { index: index } %>
           <%- end -%>
         </tbody>
       </table>
@@ -105,11 +106,11 @@ See COPYRIGHT and LICENSE files for more details.
   </div>
   <div class="wp-inline-create-button">
     <a href="#" class="add-row-button wp-inline-create--add-link" data-action="subform#addRow">
-      <%= op_icon('icon icon-add') %>
+      <%= op_icon("icon icon-add") %>
         <%= t(:button_add_rate) %>
     </a>
   </div>
   <div class="generic-table--action-buttons">
-    <%= styled_button_tag t(:button_save), class: '-with-icon icon-checkmark' %>
+    <%= styled_button_tag t(:button_save), class: "-with-icon icon-checkmark" %>
   </div>
 <% end %>

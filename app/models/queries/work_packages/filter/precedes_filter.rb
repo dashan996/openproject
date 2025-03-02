@@ -36,6 +36,10 @@ class Queries::WorkPackages::Filter::PrecedesFilter <
     ::Relation::TYPE_PRECEDES
   end
 
+  def human_name
+    I18n.t(:label_precedes)
+  end
+
   private
 
   def relation_filter

@@ -42,9 +42,7 @@ module Views
       if (strategy_class = Constants::Views.contract_strategy(model.type))
         strategy = strategy_class.new(model, user)
 
-        with_merged_former_errors do
-          strategy.valid?
-        end
+        validate_and_merge_errors(strategy)
       end
 
       errors.empty?

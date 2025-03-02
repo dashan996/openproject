@@ -48,11 +48,26 @@ class WorkPackageRelationsTab::WorkPackageRelationFormComponent < ApplicationCom
 
   def related_work_package
     @related_work_package ||= begin
-      related = @relation.to
       # We cannot rely on the related WorkPackage being the "to",
       # depending on the relation it can also be "from"
-      related.id == @work_package.id ? @relation.from : related
+      relation_to_matches_wp? ? @relation.from : @relation.to
     end
+  end
+
+  def displayable_field_value
+    return nil if related_work_package.nil?
+
+    if relation_to_matches_wp?
+      "#{related_work_package.type.name.upcase} ##{related_work_package.id} - #{related_work_package.subject}"
+    end
+  end
+
+  def direction
+    relation_to_matches_wp? ? :from_id : :to_id
+  end
+
+  def relation_to_matches_wp?
+    @relation.to == @work_package
   end
 
   def submit_url_options
@@ -66,6 +81,6 @@ class WorkPackageRelationsTab::WorkPackageRelationFormComponent < ApplicationCom
   end
 
   def show_lag?
-    @relation.relation_type == Relation::TYPE_PRECEDES || @relation.relation_type == Relation::TYPE_FOLLOWS
+    [Relation::TYPE_PRECEDES, Relation::TYPE_FOLLOWS].include?(@relation.relation_type)
   end
 end

@@ -32,6 +32,8 @@ module Storages
   module Peripherals
     module OAuthConfigurations
       class ConfigurationInterface
+        using ServiceResultRefinements
+
         def scope = raise ::Storages::Errors::SubclassResponsibility
 
         def basic_rack_oauth_client = raise ::Storages::Errors::SubclassResponsibility
@@ -40,6 +42,19 @@ module Storages
 
         def authorization_uri(state: nil)
           basic_rack_oauth_client.authorization_uri(scope:, state:)
+        end
+
+        def extract_origin_user_id(oauth_client_token)
+          auth_strategy = Registry
+                            .resolve("#{@storage}.authentication.user_bound")
+                            .call(user: oauth_client_token.user, storage: @storage)
+          Registry
+            .resolve("#{@storage}.queries.user")
+            .call(auth_strategy:, storage: @storage)
+            .match(
+              on_success: ->(user) { user[:id] },
+              on_failure: ->(error) { raise "UserQuery responed with #{error}" }
+            )
         end
       end
     end

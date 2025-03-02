@@ -1,7 +1,7 @@
 <%=
   flex_layout(data: { turbo: true }) do |show_page|
     show_page.with_row do
-      render(Meetings::HeaderComponent.new(meeting: @meeting, project: @project))
+      render(Meetings::HeaderComponent.new(meeting: @meeting))
     end
 
     show_page.with_row do
@@ -19,8 +19,10 @@
             agenda.with_row(mt: 3, display: [:block, nil, :none]) do
               resource = ::API::V3::Meetings::MeetingRepresenter.new(@meeting, current_user: User.current, embed_links: false)
               concat render(Primer::Beta::Heading.new(tag: :h4)) { I18n.t(:label_attachment_plural) }
-              concat helpers.list_attachments(resource,
-                                              inputs: { allowUploading: true })
+              concat helpers.list_attachments(
+                resource,
+                inputs: { allowUploading: true }
+              )
             end
           end
         end

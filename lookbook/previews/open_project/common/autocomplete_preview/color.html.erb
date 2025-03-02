@@ -9,7 +9,7 @@
       f.color_select_list(
         name: :id,
         label: Color.model_name.human,
-        caption: 'Caption: The dropdown might be offset due to the iFrame around it. This will not happen in production.'
+        caption: "Caption: The dropdown might be offset due to the iFrame around it. This will not happen in production."
       )
     end
   end
@@ -17,11 +17,10 @@
   model = Status.new
 %>
 
-
 <%= primer_form_with(
       model:,
-      url: '/abc',
-      id: 'asdf') do |f|
-  render(the_form.new(f))
-end
-%>
+      url: "/abc",
+      id: "asdf"
+    ) do |f|
+      render(the_form.new(f))
+    end %>

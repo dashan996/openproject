@@ -31,21 +31,23 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render(Primer::OpenProject::PageHeader.new) do |header|
     header.with_title { t(:label_experimental) }
-    header.with_breadcrumbs([{ href: admin_index_path, text: t("label_administration") },
-                             { href: admin_settings_general_path, text: t(:label_system_settings) },
-                             t(:label_experimental)])
+    header.with_breadcrumbs(
+      [{ href: admin_index_path, text: t("label_administration") },
+       { href: admin_settings_general_path, text: t(:label_system_settings) },
+       t(:label_experimental)]
+    )
   end
 %>
 
 <%= styled_form_tag(admin_settings_experimental_path, method: :patch) do %>
   <section class="form--section">
     <fieldset class="form--fieldset">
-      <legend class="form--fieldset-legend"><%= t('settings.experimental.feature_flags') %></legend>
+      <legend class="form--fieldset-legend"><%= t("settings.experimental.feature_flags") %></legend>
 
       <div class="op-toast -warning -with-bottom-spacing">
         <div class="op-toast--content">
           <p>
-            <%= t('settings.experimental.warning_toast') %>
+            <%= t("settings.experimental.warning_toast") %>
 
           </p>
         </div>
@@ -62,7 +64,7 @@ See COPYRIGHT and LICENSE files for more details.
     </fieldset>
   </section>
   <%= styled_button_tag t(:button_save),
-                        class: '-primary -with-icon icon-checkmark',
+                        class: "-primary -with-icon icon-checkmark",
                         data: {
                           confirm: t("settings.experimental.save_confirmation")
                         } %>

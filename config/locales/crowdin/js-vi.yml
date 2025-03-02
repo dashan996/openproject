@@ -103,7 +103,6 @@ vi:
     button_settings: "Cài đặt"
     button_uncheck_all: "Bỏ chọn tất cả"
     button_update: "Cập Nhật"
-    button_export-pdf: "Tải xuống PDF"
     button_export-atom: "Tải xuống Atom"
     button_generate_pdf: "Generate PDF"
     button_create: "Tạo"
@@ -222,6 +221,8 @@ vi:
             label_maximum_users: "Số người dùng hoạt động tối đa"
             label_starts_at: "Bắt đầu từ"
             label_expires_at: "Hết hạn vào"
+            label_plan: "Plan"
+            label_additional_features: "Additional features"
             receive_newsletter: Tôi muốn nhận <a target="_blank" href="%{link}">bản tin</a> của OpenProject.
             taken_domain: Chỉ có thể có một bản dùng thử hoạt động cho mỗi miền.
             domain_mismatch: Tên máy chủ yêu cầu hiện tại không khớp với tên máy chủ đã cấu hình. Vui lòng kiểm tra lại cài đặt hệ thống của bạn.
@@ -357,10 +358,10 @@ vi:
           learn_about: "Tìm hiểu thêm về các tính năng mới"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_2":
+          "15_3":
             standard:
               new_features_html: >
-                The release brings various features and improvements for you, e.g. <br> <ul class="%{list_styling_class}"> <li>Set reminders for work packages to generate date alert notifications.</li> <li>Create new folders directly from the location picker for file storage.</li> <li>Specify a required lag between work packages successors and predecessors.</li> <li>Enable ordering and grouping for work packages on values of custom fields type hierarchy.</li> <li>Export time entries as PDF timesheets.</li> <li>Add a popover displaying user information when hovering.</li> </ul>
+                The release brings various features and improvements for you, e.g. <br> <ul class="%{list_styling_class}"> <li>Schedule recurring meetings to streamline your weekly, biweekly, or custom appointments.</li> <li>Create child work packages directly from the Relations tab.</li> <li>Include total sums in timesheet PDF exports for better insights.</li> <li>Include child work packages in cost reports for more accurate tracking.</li> <li>See dates of previously hidden, permission-restricted relations to make informed scheduling decisions.</li> </ul>
     ical_sharing_modal:
       title: "Đăng ký lịch"
       inital_setup_error_message: "Đã xảy ra lỗi khi lấy dữ liệu."
@@ -851,8 +852,6 @@ vi:
       select_branch: "Chọn nhánh"
     field_value_enter_prompt: "Nhập giá trị cho '%{field}'"
     project_menu_details: "Chi tiết"
-    scheduling:
-      manual: "Lên lịch thủ công"
     sort:
       sorted_asc: "Sắp xếp tăng dần đã được áp dụng, "
       sorted_dsc: "Sắp xếp giảm dần đã được áp dụng, "
@@ -900,15 +899,6 @@ vi:
       comment_send_failed: "Đã xảy ra lỗi. Không thể gửi bình luận."
       comment_updated: "Bình luận đã được cập nhật thành công."
       confirm_edit_cancel: "Bạn có chắc chắn muốn hủy chỉnh sửa gói công việc không?"
-      datepicker_modal:
-        automatically_scheduled_parent: "Lên lịch tự động. Ngày được suy ra từ các mối quan hệ."
-        manually_scheduled: "Lên lịch thủ công đã được kích hoạt, tất cả các mối quan hệ bị bỏ qua."
-        start_date_limited_by_relations: "Ngày bắt đầu và kết thúc có sẵn bị giới hạn bởi các mối quan hệ."
-        changing_dates_affects_follow_relations: "Thay đổi những ngày này sẽ ảnh hưởng đến ngày của các gói công việc liên quan."
-        click_on_show_relations_to_open_gantt: 'Nhấp vào "%{button_name}" để xem tổng quan GANTT.'
-        show_relations: "Hiển thị các mối quan hệ"
-        ignore_non_working_days:
-          title: "Chỉ ngày làm việc"
       description_filter: "Lọc"
       description_enter_text: "Nhập văn bản"
       description_options_hide: "Ẩn tùy chọn"

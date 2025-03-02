@@ -30,33 +30,34 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render Primer::OpenProject::PageHeader.new do |header|
     header.with_title { t(:label_repository) }
-    header.with_breadcrumbs([{ href: project_overview_path(@project.id), text: @project.name  },
-                             { href: project_settings_general_path(@project.id), text: I18n.t("label_project_settings") },
-                             t(:label_repository)])
+    header.with_breadcrumbs(
+      [{ href: project_overview_path(@project.id), text: @project.name },
+       { href: project_settings_general_path(@project.id), text: I18n.t("label_project_settings") },
+       t(:label_repository)]
+    )
   end
 %>
 
 <% is_creation_form = @repository.nil? || @repository.new_record? %>
 <%= form_for :repository,
-             url: { controller: '/repositories',
-                    action: is_creation_form ? 'create' : 'update',
+             url: { controller: "/repositories",
+                    action: is_creation_form ? "create" : "update",
                     project_id: @project },
-             method: is_creation_form ? 'POST' : 'PUT',
+             method: is_creation_form ? "POST" : "PUT",
              builder: TabularFormBuilder,
-             html: { class: 'form' } do |f| %>
+             html: { class: "form" } do |f| %>
 
   <fieldset
     class="form--fieldset -with-control"
     data-controller="repository-settings"
-    data-application-target="dynamic"
-  >
+    data-application-target="dynamic">
     <legend class="form--fieldset-legend">
       <%= t(:label_available_project_repositories) %>
     </legend>
 
-    <%= error_messages_for 'repository' %>
+    <%= error_messages_for "repository" %>
     <div class="form--field -required">
-      <%= label_tag('scm_vendor', t('repositories.scm_vendor'), class: "form--label") %>
+      <%= label_tag("scm_vendor", t("repositories.scm_vendor"), class: "form--label") %>
       <div class="form--field-container">
         <div class="form--select-container -middle">
           <%= scm_vendor_tag(@repository) %>

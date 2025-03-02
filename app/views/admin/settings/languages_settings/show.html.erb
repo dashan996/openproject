@@ -32,9 +32,11 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render(Primer::OpenProject::PageHeader.new) do |header|
     header.with_title { t(:label_languages) }
-    header.with_breadcrumbs([{ href: admin_index_path, text: t("label_administration") },
-                             { href: admin_settings_general_path, text: t(:label_system_settings) },
-                             t(:label_languages)])
+    header.with_breadcrumbs(
+      [{ href: admin_index_path, text: t("label_administration") },
+       { href: admin_settings_general_path, text: t(:label_system_settings) },
+       t(:label_languages)]
+    )
   end
 %>
 
@@ -47,7 +49,6 @@ See COPYRIGHT and LICENSE files for more details.
   </section>
 
   <%= styled_button_tag t(:button_save),
-                        class: '-primary -with-icon icon-checkmark',
-                        disabled: !Setting.available_languages_writable?
-  %>
+                        class: "-primary -with-icon icon-checkmark",
+                        disabled: !Setting.available_languages_writable? %>
 <% end %>

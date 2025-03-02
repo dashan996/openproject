@@ -35,11 +35,11 @@ module WorkPackage::PDFExport::Export::Markdown
     include MarkdownToPDF::Core
     include MarkdownToPDF::Parser
 
-    def initialize(styling_yml, pdf)
+    def initialize(styling_yml, pdf, hyphenation_language)
       @styles = MarkdownToPDF::Styles.new(styling_yml)
       init_options({ auto_generate_header_ids: false })
       pdf_init_md2pdf_fonts(pdf)
-      # @hyphens = Hyphen.new('en', false)
+      @hyphens = Hyphen.new(hyphenation_language, true) if hyphenation_language.present?
     end
 
     def draw_markdown(markdown, pdf, image_loader)
@@ -60,7 +60,9 @@ module WorkPackage::PDFExport::Export::Markdown
     end
 
     def hyphenate(text)
-      text # @hyphens.hyphenate(text)
+      return text if @hyphens.nil?
+
+      @hyphens.hyphenate(text)
     end
 
     def handle_mention_html_tag(tag, node, opts)
@@ -99,7 +101,7 @@ module WorkPackage::PDFExport::Export::Markdown
   end
 
   def write_markdown!(work_package, markdown, styling_yml)
-    md2pdf = MD2PDFExport.new(styling_yml, pdf)
+    md2pdf = MD2PDFExport.new(styling_yml, pdf, hyphenation_language)
     md2pdf.draw_markdown(markdown, pdf, ->(src) {
       with_images? ? attachment_image_filepath(work_package, src) : nil
     })

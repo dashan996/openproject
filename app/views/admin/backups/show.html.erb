@@ -41,14 +41,14 @@ See COPYRIGHT and LICENSE files for more details.
 
     <div class="wiki">
       <ul>
-        <% Token::Backup.all.includes(:user).each do |token| %>
+        <% Token::Backup.includes(:user).each do |token| %>
           <li>
             <% if current_user.allowed_globally?(:manage_user) %>
               <%= link_to token.user.name, edit_user_path(token.user) %>
             <% else %>
               <%= token.user.name %>
             <% end %>
-            <%= token.user == current_user ? "(#{I18n.t(:you)})" : '' %>
+            <%= token.user == current_user ? "(#{I18n.t(:you)})" : "" %>
           </li>
         <% end %>
       </ul>
@@ -58,9 +58,9 @@ See COPYRIGHT and LICENSE files for more details.
 
 <% if @backup_token.present? %>
 <%= angular_component_tag "opce-backup", data: {
-  'job-status-id': @job_status_id,
-  'last-backup-date': @last_backup_date,
-  'last-backup-attachment-id': @last_backup_attachment_id,
-  'may-include-attachments': @may_include_attachments
-} %>
+      "job-status-id": @job_status_id,
+      "last-backup-date": @last_backup_date,
+      "last-backup-attachment-id": @last_backup_attachment_id,
+      "may-include-attachments": @may_include_attachments
+    } %>
 <% end %>

@@ -38,8 +38,12 @@ module Storages
           case strategy.key
           when :noop
             AuthenticationStrategies::Noop.new
+          when :failure
+            AuthenticationStrategies::Failure.new
           when :basic_auth
             AuthenticationStrategies::BasicAuth.new
+          when :sso_user_token
+            AuthenticationStrategies::SsoUserToken.new(strategy.user)
           when :oauth_user_token
             AuthenticationStrategies::OAuthUserToken.new(strategy.user)
           when :oauth_client_credentials
@@ -55,10 +59,10 @@ module Storages
         # - :failed_authorization If a user token is available, which is invalid and not refreshable
         # - :error If an unexpected error occurred
         def self.authorization_state(storage:, user:)
-          auth_strategy = AuthenticationStrategies::OAuthUserToken.strategy.with_user(user)
+          auth_strategy = Registry.resolve("#{storage}.authentication.user_bound").call(user:, storage:)
 
           Registry
-            .resolve("#{storage}.queries.auth_check")
+            .resolve("#{storage}.queries.user")
             .call(storage:, auth_strategy:)
             .match(
               on_success: ->(*) { :connected },

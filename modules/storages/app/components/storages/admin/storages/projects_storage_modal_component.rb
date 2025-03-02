@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -32,8 +34,8 @@ module Storages
       class ProjectsStorageModalComponent < ApplicationComponent
         include OpTurbo::Streamable
 
-        DIALOG_ID = "storages--projects-storage-modal".freeze
-        DIALOG_BODY_ID = "storages--projects-storage-modal-body".freeze
+        DIALOG_ID = "storages--projects-storage-modal"
+        DIALOG_BODY_ID = "storages--projects-storage-modal-body"
 
         def initialize(project_storage:, last_project_folders:, **)
           @project_storage = project_storage

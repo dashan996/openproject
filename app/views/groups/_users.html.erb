@@ -33,7 +33,7 @@ See COPYRIGHT and LICENSE files for more details.
     <% if @group.users.any? %>
       <div class="generic-table--container">
         <div id="group_users_table" class="generic-table--results-container">
-          <%= render partial: 'groups/users_table' %>
+          <%= render partial: "groups/users_table" %>
         </div>
       </div>
     <% else %>
@@ -49,20 +49,20 @@ See COPYRIGHT and LICENSE files for more details.
       <%= styled_form_tag(members_of_group_path(@group), method: :post) do %>
 
         <fieldset class="form--fieldset">
-          <legend class="form--fieldset-legend"><%=t(:label_user_new)%></legend>
+          <legend class="form--fieldset-legend"><%= t(:label_user_new) %></legend>
           <div class="form--field -vertical">
             <%=
-              angular_component_tag 'opce-user-autocompleter',
-                                  inputs: {
-                                    inputName: 'user_ids',
-                                    filters: autocompleter_filters(@group),
-                                  },
-                                  class: "new-group-members--autocomplete"
+              angular_component_tag "opce-user-autocompleter",
+                                    inputs: {
+                                      inputName: "user_ids",
+                                      filters: autocompleter_filters(@group)
+                                    },
+                                    class: "new-group-members--autocomplete"
             %>
           </div>
           <div>
             <%= styled_button_tag t(:button_add),
-                                  class: '-primary -with-icon icon-checkmark' %>
+                                  class: "-primary -with-icon icon-checkmark" %>
           </div>
         </fieldset>
       <% end %>

@@ -34,6 +34,8 @@ ka:
   enumeration_doc_categories: "Document categories"
   documents:
     label_attachment_author: "Attachment author"
+    label_categories: "Categories"
+    new_category: "New category"
   label_document_added: "დოკუმენტი დაემატა"
   label_document_new: "ახალი დოკუმენტი"
   label_document_plural: "დოკუმენტები"

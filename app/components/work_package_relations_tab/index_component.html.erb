@@ -10,10 +10,14 @@
 
         # Prevent the menu from overflowing on Safari
         action_bar.with_column(flex_shrink: 0, ml: 2) do
-          render(Primer::Alpha::ActionMenu.new(test_selector: NEW_RELATION_ACTION_MENU,
-                                               menu_id: NEW_RELATION_ACTION_MENU)) do |menu|
+          render(
+            Primer::Alpha::ActionMenu.new(
+              test_selector: NEW_RELATION_ACTION_MENU,
+              menu_id: NEW_RELATION_ACTION_MENU
+            )
+          ) do |menu|
             menu.with_show_button do |button|
-              button.with_leading_visual_icon(icon: :"plus")
+              button.with_leading_visual_icon(icon: :plus)
               button.with_trailing_action_icon(icon: :"triangle-down")
               t(:label_relation)
             end
@@ -61,11 +65,13 @@
               items: all_relations
             ) do |relation, visibility|
               # Render each relation with its visibility
-              render(WorkPackageRelationsTab::RelationComponent.new(
-                work_package: work_package,
-                relation: relation,
-                visibility: visibility
-              ))
+              render(
+                WorkPackageRelationsTab::RelationComponent.new(
+                  work_package: work_package,
+                  relation: relation,
+                  visibility: visibility
+                )
+              )
             end
           end
         end
@@ -84,10 +90,14 @@
               relation_type: :children,
               items: all_children
             ) do |child, visibility|
-              render(WorkPackageRelationsTab::RelationComponent.new(work_package:,
-                                                                    relation: nil,
-                                                                    child:,
-                                                                    visibility: visibility))
+              render(
+                WorkPackageRelationsTab::RelationComponent.new(
+                  work_package:,
+                  relation: nil,
+                  child:,
+                  visibility: visibility
+                )
+              )
             end
           end
         end

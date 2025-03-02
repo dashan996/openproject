@@ -34,6 +34,8 @@ ms:
   enumeration_doc_categories: "Kategori dokumen"
   documents:
     label_attachment_author: "Pengarang lampiran"
+    label_categories: "Categories"
+    new_category: "New category"
   label_document_added: "Dokumen ditambah"
   label_document_new: "Dokumen baru"
   label_document_plural: "Dokumen"

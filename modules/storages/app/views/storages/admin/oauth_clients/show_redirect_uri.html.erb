@@ -27,4 +27,4 @@ See COPYRIGHT and LICENSE files for more details.
 
 ++#%>
 
-<%= render(Storages::Admin::Forms::RedirectUriFormComponent.new(oauth_client: @storage.oauth_client, storage: @storage, is_complete: true)) %>
+<%= render(Storages::Admin::Forms::RedirectUriFormComponent.new(@storage, is_complete: true)) %>

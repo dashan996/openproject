@@ -54,6 +54,7 @@ module WorkPackages
           toggleable_group.pattern_input(
             name: :pattern,
             value: model.pattern,
+            input_width: :large,
             suggestions: model.suggestions,
             label: I18n.t("types.edit.subject_configuration.pattern.label"),
             caption: I18n.t("types.edit.subject_configuration.pattern.caption"),

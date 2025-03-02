@@ -36,6 +36,10 @@ class Queries::WorkPackages::Filter::BlockedFilter <
     ::Relation::TYPE_BLOCKED
   end
 
+  def human_name
+    I18n.t("work_package_relations_tab.relations.label_blocked_by_singular")
+  end
+
   private
 
   def relation_filter

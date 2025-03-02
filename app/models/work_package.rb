@@ -242,11 +242,6 @@ class WorkPackage < ApplicationRecord
       .exists?
   end
 
-  def visible_relations(user)
-    relations
-      .visible(user)
-  end
-
   def add_time_entry(attributes = {})
     attributes.reverse_merge!(
       project:,

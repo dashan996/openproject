@@ -4,9 +4,9 @@
       section.with_title { t(:label_attachment_plural) }
       section.with_description do
         if @meeting.templated?
-          I18n.t('meeting.attachments.template')
+          I18n.t("meeting.attachments.template")
         else
-          I18n.t('meeting.attachments.text')
+          I18n.t("meeting.attachments.text")
         end
       end
       section.with_counter(count: @meeting.attachments.count)
@@ -20,12 +20,14 @@
       end
 
       resource = ::API::V3::Meetings::MeetingRepresenter.new(@meeting, current_user: User.current, embed_links: false)
-      helpers.list_attachments(resource,
-                               inputs: {
-                                 allowUploading: true,
-                                 showTimestamp: false,
-                                 externalUploadButton: "#meetings-add-attachments"
-                               })
+      helpers.list_attachments(
+        resource,
+        inputs: {
+          allowUploading: true,
+          showTimestamp: false,
+          externalUploadButton: "#meetings-add-attachments"
+        }
+      )
     end
   end
 %>

@@ -155,13 +155,23 @@ class WorkPackages::SetAttributesService < BaseServices::SetAttributes
           days.duration(work_package.start_date, work_package.due_date)
         end
     when :due_date
+      return if invalid_duration?
+
       work_package.due_date = days.due_date(work_package.start_date, work_package.duration)
     when :start_date
+      return if invalid_duration?
+
       work_package.start_date = days.start_date(work_package.due_date, work_package.duration)
     end
   end
-
   # rubocop:enable Metrics/AbcSize
+
+  def invalid_duration?
+    return false if work_package.duration.nil?
+    return true unless work_package.duration.is_a?(Integer)
+
+    work_package.duration <= 0
+  end
 
   def set_default_attributes(attributes)
     set_default_priority
@@ -266,7 +276,22 @@ class WorkPackages::SetAttributesService < BaseServices::SetAttributes
 
   def update_dates
     unify_milestone_dates
+    if work_package.children.any?
+      update_dates_from_rescheduled_children
+    else
+      update_dates_from_self
+    end
+  end
 
+  def update_dates_from_rescheduled_children
+    return if work_package.schedule_manually?
+
+    # do a reschedule call to get the work package dates from the rescheduled children
+    service = WorkPackages::SetScheduleService.new(user: User.current, work_package:, switching_to_automatic_mode: [work_package])
+    service.call(work_package.changes.keys.map(&:to_sym)).result
+  end
+
+  def update_dates_from_self
     min_start = new_start_date
 
     return unless min_start
@@ -362,15 +387,16 @@ class WorkPackages::SetAttributesService < BaseServices::SetAttributes
   end
 
   def new_start_date
-    current_start_date = work_package.start_date || work_package.due_date
+    if work_package.schedule_manually?
+      # Weird rule from SetScheduleService: if the work package does not have a
+      # start date, it inherits it from the parent soonest start, regardless of
+      # scheduling mode.
+      return if work_package.start_date
 
-    return unless current_start_date && work_package.schedule_automatically?
-
-    min_start = new_start_date_from_parent || new_start_date_from_self
-    min_start = days.soonest_working_day(min_start)
-
-    if min_start && (min_start > current_start_date || work_package.schedule_manually_changed?)
-      min_start
+      days.soonest_working_day(new_start_date_from_parent)
+    else
+      min_start = new_start_date_from_parent || new_start_date_from_self
+      days.soonest_working_day(min_start)
     end
   end
 
@@ -389,7 +415,17 @@ class WorkPackages::SetAttributesService < BaseServices::SetAttributes
 
   def new_due_date(min_start)
     duration = children_duration || work_package.duration
-    days.due_date(min_start, duration)
+    return unless work_package.due_date || duration
+
+    due_date =
+      if duration
+        days.due_date(min_start, duration)
+      else
+        work_package.due_date
+      end
+
+    # if due date is before start date, then start is used as due date.
+    [min_start, due_date].max
   end
 
   def work_package

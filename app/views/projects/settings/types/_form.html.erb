@@ -83,17 +83,17 @@ See COPYRIGHT and LICENSE files for more details.
           <tr>
             <td class='center'>
               <% type_id = "project_planning_element_type_ids_#{type.id}" %>
-              <%= label_tag type_id, t('.enable_type_in_project', type: type.name), class: 'hidden-for-sighted' %>
+              <%= label_tag type_id, t(".enable_type_in_project", type: type.name), class: "hidden-for-sighted" %>
               <%= check_box_tag "project[type_ids][]",
                                 type.id,
                                 projects_types_id.include?(type.id),
                                 id: type_id,
-                                :'data-standard' => type.is_standard %>
-              <%= hidden_field_tag 'project[type_ids][]', '', :'data-for' => type_id %>
+                                "data-standard": type.is_standard %>
+              <%= hidden_field_tag "project[type_ids][]", "", "data-for": type_id %>
             </td>
             <td>
               <%= icon_for_type(type) %>
-              <%=h type.name %>
+              <%= h type.name %>
             </td>
             <td class='center'>
               <%= checked_image(type.is_in_roadmap) %>
@@ -110,5 +110,5 @@ See COPYRIGHT and LICENSE files for more details.
 </div>
 
 <div class="generic-table--action-buttons">
-  <%= styled_button_tag t(:button_save), class: '-primary -with-icon icon-checkmark' %>
+  <%= styled_button_tag t(:button_save), class: "-primary -with-icon icon-checkmark" %>
 </div>

@@ -26,14 +26,17 @@
 // See COPYRIGHT and LICENSE files for more details.
 //++
 
-import { Component } from '@angular/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
 import { DatePickerEditFieldComponent } from 'core-app/shared/components/fields/edit/field-types/date-picker-edit-field.component';
 import { WorkPackageResource } from 'core-app/features/hal/resources/work-package-resource';
 
 @Component({
   templateUrl: './combined-date-edit-field.component.html',
 })
-export class CombinedDateEditFieldComponent extends DatePickerEditFieldComponent {
+export class CombinedDateEditFieldComponent extends DatePickerEditFieldComponent implements OnInit {
   dates = '';
 
   opened = false;
@@ -46,8 +49,8 @@ export class CombinedDateEditFieldComponent extends DatePickerEditFieldComponent
     },
   };
 
-  get isMultiDate():boolean {
-    return !this.change.schema.isMilestone;
+  ngOnInit() {
+    super.ngOnInit();
   }
 
   public onInputClick(event:MouseEvent) {
@@ -55,6 +58,7 @@ export class CombinedDateEditFieldComponent extends DatePickerEditFieldComponent
   }
 
   public showDatePickerModal():void {
+    this.updateFrameSrc();
     this.opened = true;
   }
 
@@ -68,12 +72,13 @@ export class CombinedDateEditFieldComponent extends DatePickerEditFieldComponent
   }
 
   public save():void {
-    this.handler.handleUserSubmit();
-    this.onModalClosed();
+    void this.handler.handleUserSubmit();
   }
 
   public cancel():void {
-    this.handler.reset();
+    if (!this.handler.inEditMode) {
+      this.handler.reset();
+    }
     this.onModalClosed();
   }
 
@@ -107,7 +112,9 @@ export class CombinedDateEditFieldComponent extends DatePickerEditFieldComponent
   }
 
   protected current(dateAttribute:'startDate' | 'dueDate' | 'date'):string {
-    const value = (this.resource && (this.resource as WorkPackageResource)[dateAttribute]) as string|null;
+    // Since the rework of the datepicker, the milestone date field has the name 'start_date' to match the database
+    const valueReference = dateAttribute === 'date' ? 'startDate' : dateAttribute;
+    const value = (this.resource && (this.resource as WorkPackageResource)[valueReference]) as string|null;
     return (value || this.text.placeholder[dateAttribute]);
   }
 }

@@ -27,16 +27,20 @@ See COPYRIGHT and LICENSE files for more details.
 
 ++#%>
 
-<%= 
-  render(Primer::OpenProject::DangerDialog.new(
-    id:,
-    title:,
-    form_arguments: {
-      action: polymorphic_path([@project, @meeting.becomes(Meeting)]),
-      method: :delete,
-      data: { turbo: true }
-    }
-  )) do |dialog|
+<%=
+  render(
+    Primer::OpenProject::DangerDialog.new(
+      id:,
+      title:,
+      confirm_button_text:,
+      cancel_button_text:,
+      form_arguments: {
+        action: project_meeting_path(@project, @meeting, back_url: @back_url),
+        method: :delete,
+        data: { turbo: true }
+      }
+    )
+  ) do |dialog|
     dialog.with_confirmation_message do |message|
       message.with_heading(tag: :h2) { heading }
       message.with_description_content(confirmation_message)

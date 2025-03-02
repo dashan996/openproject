@@ -47,62 +47,48 @@ class Storages::Admin::OAuthClientsController < ApplicationController
 
   # Show the admin page to create a new OAuthClient object.
   def new
-    @oauth_client = ::OAuthClients::SetAttributesService
+    oauth_client = ::OAuthClients::SetAttributesService
                       .new(user: User.current,
                            model: OAuthClient.new,
                            contract_class: EmptyContract)
                       .call
                       .result
 
-    update_via_turbo_stream(component: Storages::Admin::Forms::OAuthClientFormComponent.new(oauth_client: @oauth_client,
-                                                                                            storage: @storage))
+    update_via_turbo_stream(component: Storages::Admin::Forms::OAuthClientFormComponent.new(@storage, oauth_client:))
     respond_with_turbo_streams
   end
 
-  def create # rubocop:disable Metrics/AbcSize
+  def create
     call_oauth_clients_create_service
 
     service_result.on_failure do
-      update_via_turbo_stream(component: Storages::Admin::Forms::OAuthClientFormComponent.new(oauth_client: @oauth_client,
-                                                                                              storage: @storage))
+      update_via_turbo_stream(component: Storages::Admin::Forms::OAuthClientFormComponent.new(
+        @storage,
+        oauth_client: @oauth_client,
+        in_wizard: in_wizard?
+      ))
+      respond_with_turbo_streams
     end
 
     service_result.on_success do
-      if @storage.provider_type_nextcloud?
-        prepare_storage_for_automatic_management_form
-      end
-
-      update_via_turbo_stream(component: Storages::Admin::OAuthClientInfoComponent.new(oauth_client: @oauth_client,
-                                                                                       storage: @storage))
-      update_via_turbo_stream(component: Storages::Admin::Forms::RedirectUriFormComponent.new(
-        oauth_client: @oauth_client, storage: @storage, is_complete: false
-      ))
-
-      if @storage.provider_type_nextcloud? && @storage.automatic_management_new_record?
-        update_via_turbo_stream(component: Storages::Admin::Forms::AutomaticallyManagedProjectFoldersFormComponent.new(@storage))
-      end
+      respond_for_success
     end
-
-    respond_with_turbo_streams
   end
 
   def update
     call_oauth_clients_create_service
 
     service_result.on_failure do
-      update_via_turbo_stream(component: Storages::Admin::Forms::OAuthClientFormComponent.new(oauth_client: @oauth_client,
-                                                                                              storage: @storage))
+      update_via_turbo_stream(component: Storages::Admin::Forms::OAuthClientFormComponent.new(
+        @storage,
+        oauth_client: @oauth_client
+      ))
+      respond_with_turbo_streams
     end
 
     service_result.on_success do
-      update_via_turbo_stream(component: Storages::Admin::OAuthClientInfoComponent.new(oauth_client: @oauth_client,
-                                                                                       storage: @storage))
-      update_via_turbo_stream(component: Storages::Admin::RedirectUriComponent.new(
-        oauth_client: @oauth_client, storage: @storage
-      ))
+      respond_for_success
     end
-
-    respond_with_turbo_streams
   end
 
   # Used by: admin layout
@@ -161,5 +147,18 @@ class Storages::Admin::OAuthClientsController < ApplicationController
 
   def find_storage
     @storage = ::Storages::Storage.find(params[:storage_id])
+  end
+
+  def respond_for_success
+    if in_wizard?
+      redirect_to(new_admin_settings_storage_path(continue_wizard: @storage.id), status: :see_other)
+    else
+      update_via_turbo_stream(component: Storages::Admin::OAuthClientInfoComponent.new(@storage))
+      respond_with_turbo_streams
+    end
+  end
+
+  def in_wizard?
+    params[:continue_wizard].present?
   end
 end

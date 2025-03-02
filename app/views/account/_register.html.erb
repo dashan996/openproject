@@ -31,11 +31,12 @@ See COPYRIGHT and LICENSE files for more details.
         @user,
         url: account_register_path,
         data: { turbo: false },
-        html: { class: 'form -wide-labels spot-modal' }) do |f| %>
+        html: { class: "form -wide-labels spot-modal" }
+      ) do |f| %>
     <%= back_url_hidden_field_tag use_referer: false %>
     <%= error_messages_for :user %>
     <div id="spotModalTitle" class="spot-modal--header">
-      <%= I18n.t('onboarding.welcome', app_title: Setting.app_title) %>
+      <%= I18n.t("onboarding.welcome", app_title: Setting.app_title) %>
     </div>
     <div class="spot-divider"></div>
     <div class="spot-modal--body spot-container">
@@ -64,14 +65,14 @@ See COPYRIGHT and LICENSE files for more details.
         <%= call_hook :view_account_register_after_basic_information, f: f %>
         <%= render partial: "customizable/form",
                    locals: { form: f, all_fields: false, only_required: true, wide_labels: true } %>
-        <br/>
-        <br/>
+        <br>
+        <br>
         <% if @user.change_password_allowed? %>
           <div class="form--field -required -wide-label -reduced-margin">
             <%= f.password_field :password,
                                  required: true,
                                  size: 25,
-                                 autocomplete: 'off' %>
+                                 autocomplete: "off" %>
             <div class="form--field-instructions">
               <%= password_complexity_requirements %>
             </div>
@@ -80,16 +81,16 @@ See COPYRIGHT and LICENSE files for more details.
             <%= f.password_field :password_confirmation,
                                  required: true,
                                  size: 25,
-                                 autocomplete: 'off' %>
+                                 autocomplete: "off" %>
           </div>
         <% end %>
       </section>
       <% if user_consent_required? %>
-        <hr/>
-        <%= render partial: 'account/user_consent_check' %>
+        <hr>
+        <%= render partial: "account/user_consent_check" %>
       <% end %>
-      <%= render partial: 'account/auth_providers', locals: { omniauth_title: I18n.t('account.signup_with_auth_provider'), wide: true } %>
+      <%= render partial: "account/auth_providers", locals: { omniauth_title: I18n.t("account.signup_with_auth_provider"), wide: true } %>
     </div>
-    <%= render partial: 'account/footer' %>
+    <%= render partial: "account/footer" %>
   <% end %>
 </div>

@@ -38,6 +38,9 @@ class Type < ApplicationRecord
 
   attribute :patterns, Types::Patterns::CollectionType.new
 
+  store_attribute :pdf_export_templates_config, :export_templates_disabled, :json
+  store_attribute :pdf_export_templates_config, :export_templates_order, :json
+
   before_destroy :check_integrity
 
   belongs_to :color, optional: true, class_name: "Color"
@@ -110,6 +113,10 @@ class Type < ApplicationRecord
 
   def enabled_patterns
     patterns.all_enabled
+  end
+
+  def pdf_export_templates
+    @pdf_export_templates ||= ::Type::PdfExportTemplates.new(self)
   end
 
   private

@@ -231,7 +231,7 @@ module ReportingHelper
   end
 
   ##
-  # For a given row, determine how to render it's contents according to usability and
+  # For a given row, determine how to render its contents according to usability and
   # localization rules
   def show_row(row)
     row.render { |k, v| show_field(k, v) }

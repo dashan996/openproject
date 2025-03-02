@@ -30,26 +30,29 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render(Primer::OpenProject::PageHeader.new) do |header|
     header.with_title { t(:label_document_plural) }
-    header.with_breadcrumbs([{ href: project_overview_path(@project.id), text: @project.name },
-                             t(:label_document_plural)])
+    header.with_breadcrumbs(
+      [{ href: project_overview_path(@project.id), text: @project.name },
+       t(:label_document_plural)]
+    )
   end
 %>
 
 <% if authorize_for(:documents, :new) %>
   <%=
     render(Primer::OpenProject::SubHeader.new) do |subheader|
-      subheader.with_action_button(scheme: :primary,
-                                   aria: { label: t(:label_document_new) },
-                                   title: t(:label_document_new),
-                                   tag: :a,
-                                   href: url_for({:controller => '/documents', :action => 'new', :project_id => @project})) do |button|
+      subheader.with_action_button(
+        scheme: :primary,
+        aria: { label: t(:label_document_new) },
+        title: t(:label_document_new),
+        tag: :a,
+        href: url_for({ controller: "/documents", action: "new", project_id: @project })
+      ) do |button|
         button.with_leading_visual_icon(icon: :plus)
-        t('activerecord.models.document')
+        t("activerecord.models.document")
       end
     end
   %>
 <% end %>
-
 
 <% if @grouped.empty? %>
   <%= no_results_box %>
@@ -59,32 +62,32 @@ See COPYRIGHT and LICENSE files for more details.
   <%= augmented_collapsible_section title: group do %>
     <div class="document-category--inner-section">
       <div class="form--field document-category-elements">
-        <%= render :partial => 'documents/document', :collection => @grouped[group] %>
+        <%= render partial: "documents/document", collection: @grouped[group] %>
       </div>
     </div>
   <% end %>
 <% end %>
 
 <% content_for :sidebar do %>
-  <%= form_tag({}, :method => :get, class: 'sidebar--document-sort') do %>
+  <%= form_tag({}, method: :get, class: "sidebar--document-sort") do %>
     <fieldset class="form--fieldset">
       <legend class="form--fieldset-legend"><%= t(:label_group_by) %></legend>
       <p>
-        <%= radio_button_tag 'group_by', 'category', (@group_by == 'category'), class: 'submit-this-form' %>
+        <%= radio_button_tag "group_by", "category", (@group_by == "category"), class: "submit-this-form" %>
       <label for="group_by_category">
         <%= Document.human_attribute_name(:category) %>
-      </label><br />
-        <%= radio_button_tag 'group_by', 'date', (@group_by == 'date'), class: 'submit-this-form' %>
+      </label><br>
+        <%= radio_button_tag "group_by", "date", (@group_by == "date"), class: "submit-this-form" %>
       <label for="group_by_date">
         <%= t(:label_date) %>
-      </label><br />
-        <%= radio_button_tag 'group_by', 'title', (@group_by == 'title'), class: 'submit-this-form' %>
+      </label><br>
+        <%= radio_button_tag "group_by", "title", (@group_by == "title"), class: "submit-this-form" %>
       <label for="group_by_title">
         <%= Document.human_attribute_name(:title) %>
-      </label><br />
-        <%= radio_button_tag 'group_by', 'author', (@group_by == 'author'), class: 'submit-this-form' %>
+      </label><br>
+        <%= radio_button_tag "group_by", "author", (@group_by == "author"), class: "submit-this-form" %>
       <label for="group_by_author">
-        <%= t 'documents.label_attachment_author' %>
+        <%= t "documents.label_attachment_author" %>
       </label>
       </p>
     </fieldset>

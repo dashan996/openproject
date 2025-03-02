@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -41,10 +43,11 @@
 #   package, but are necessary to accurately determine the new start and due
 #   dates of the moving work packages.
 class WorkPackages::ScheduleDependency
-  attr_accessor :dependencies
+  attr_accessor :dependencies, :switching_to_automatic_mode
 
-  def initialize(moved_work_packages)
+  def initialize(moved_work_packages, switching_to_automatic_mode: [])
     self.moved_work_packages = Array(moved_work_packages)
+    self.switching_to_automatic_mode = Array(switching_to_automatic_mode)
 
     preload_scheduling_data
 
@@ -79,13 +82,30 @@ class WorkPackages::ScheduleDependency
     @moving_work_packages_set.include?(work_package.id)
   end
 
+  def parent_of(work_package)
+    work_package_by_id(work_package.parent_id)
+  end
+
   def ancestors(work_package)
     @ancestors ||= {}
     @ancestors[work_package] ||= begin
-      parent = work_package_by_id(work_package.parent_id)
+      parent = parent_of(work_package)
 
       if parent
-        [parent] + ancestors(parent)
+        [parent, *ancestors(parent)]
+      else
+        []
+      end
+    end
+  end
+
+  def automatically_scheduled_ancestors(work_package)
+    @automatically_scheduled_ancestors ||= {}
+    @automatically_scheduled_ancestors[work_package] ||= begin
+      parent = parent_of(work_package)
+
+      if parent&.schedule_automatically?
+        [parent, *automatically_scheduled_ancestors(parent)]
       else
         []
       end
@@ -119,9 +139,9 @@ class WorkPackages::ScheduleDependency
                 :moved_work_packages
 
   def all_direct_and_indirect_follows_relations_for(work_package)
-    family = ancestors(work_package) + [work_package] + descendants(work_package)
+    self_and_automatic_ancestors = [work_package] + automatically_scheduled_ancestors(work_package)
     follows_relations_by_follower_id
-      .fetch_values(*family.pluck(:id)) { [] }
+      .fetch_values(*self_and_automatic_ancestors.pluck(:id)) { [] }
       .flatten
       .uniq
   end
@@ -131,12 +151,18 @@ class WorkPackages::ScheduleDependency
   end
 
   def create_dependencies
-    moving_work_packages.index_with { |work_package| Dependency.new(work_package, self) }
+    (moved_work_packages + moving_work_packages)
+      .filter { |work_package| automatically_scheduled?(work_package) }
+      .index_with { |work_package| Dependency.new(work_package, self) }
+  end
+
+  def automatically_scheduled?(work_package)
+    work_package.schedule_automatically? || switching_to_automatic_mode.include?(work_package)
   end
 
   def moving_work_packages
     @moving_work_packages ||= WorkPackage
-                                .for_scheduling(moved_work_packages)
+                                .for_scheduling(moved_work_packages, switching_to_automatic_mode:)
   end
 
   # All work packages preloaded during initialization.
@@ -166,6 +192,8 @@ class WorkPackages::ScheduleDependency
 
     # rehydrate the predecessors and followers of follows relations
     rehydrate_follows_relations
+
+    fix_switching_to_automatic_mode_work_packages
   end
 
   # Returns all the descendants of moved and moving work packages that are not
@@ -205,6 +233,15 @@ class WorkPackages::ScheduleDependency
     known_follows_relations.each do |relation|
       relation.from = work_package_by_id(relation.from_id)
       relation.to = work_package_by_id(relation.to_id)
+    end
+  end
+
+  def fix_switching_to_automatic_mode_work_packages
+    ids = switching_to_automatic_mode.map(&:id)
+    known_work_packages.each do |work_package|
+      if ids.include?(work_package.id)
+        work_package.schedule_manually = false
+      end
     end
   end
 end

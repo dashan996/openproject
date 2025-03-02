@@ -134,12 +134,15 @@ export class TimeEntriesWorkPackageAutocompleterComponent extends OpAutocomplete
   }
 
   protected loadWorkPackages(query:string):Observable<HalResource[]> {
-    return this
-      .opAutocompleterService
-      .loadData(query, this.resource, this.modeSpecificFilters, this.searchKey)
-      .pipe(
-        map((workPackages) => this.sortValues(workPackages)),
-      );
+    return this.opAutocompleterService
+      .loadFromUrl(
+        this.url,
+        query,
+        this.resource,
+        this.modeSpecificFilters,
+        this.searchKey,
+      )
+      .pipe(map((workPackages) => this.sortValues(workPackages)));
   }
 
   protected sortValues(availableValues:HalResource[]) {

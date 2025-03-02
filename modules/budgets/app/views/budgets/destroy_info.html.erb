@@ -32,9 +32,11 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   render Primer::OpenProject::PageHeader.new do |header|
     header.with_title { "#{t(:button_delete)} #{@budget.subject}" }
-    header.with_breadcrumbs([{href: project_overview_path(@project.identifier), text: @project.name},
-                             {href: projects_budgets_path(@project.identifier), text: I18n.t(:label_budget_plural)},
-                             "#{t(:button_delete)} #{@budget.subject}"])
+    header.with_breadcrumbs(
+      [{ href: project_overview_path(@project.identifier), text: @project.name },
+       { href: projects_budgets_path(@project.identifier), text: I18n.t(:label_budget_plural) },
+       "#{t(:button_delete)} #{@budget.subject}"]
+    )
   end
 %>
 
@@ -45,7 +47,7 @@ See COPYRIGHT and LICENSE files for more details.
     <div class="form--field">
       <label class="form--label" for="todo_delete"><%= t(:text_budget_delete) %></label>
       <div class="form--field-container">
-        <%= styled_radio_button_tag 'todo', 'delete', false %>
+        <%= styled_radio_button_tag "todo", "delete", false %>
       </div>
     </div>
 
@@ -53,19 +55,19 @@ See COPYRIGHT and LICENSE files for more details.
       <div class="form--field">
         <label class="form--label" for="todo_reassign"><%= t(:text_budget_reassign_to) %></label>
         <div class="form--field-container">
-          <%= styled_radio_button_tag 'todo', 'reassign', true %>
+          <%= styled_radio_button_tag "todo", "reassign", true %>
         </div>
 
         <%= label_tag "reassign_to_id", t(:text_budget_reassign_to), class: "hidden-for-sighted" %>
-        <%= styled_select_tag 'reassign_to_id', options_from_collection_for_select(@possible_other_budgets, 'id', 'name'), container_class: '-middle' %>
+        <%= styled_select_tag "reassign_to_id", options_from_collection_for_select(@possible_other_budgets, "id", "name"), container_class: "-middle" %>
 
-        <% csp_onclick("document.getElementById('todo_reassign').checked = true", '#reassign_to_id') %>
+        <% csp_onclick("document.getElementById('todo_reassign').checked = true", "#reassign_to_id") %>
       </div>
     <% end %>
   </section>
 
-  <%= styled_submit_tag t(:button_apply), class: '-primary' %>
+  <%= styled_submit_tag t(:button_apply), class: "-primary" %>
   <%= link_to t(:button_cancel),
               budget_path(@budget),
-              class: 'button' %>
+              class: "button" %>
 <% end %>

@@ -4,32 +4,31 @@ tr:
     description: "OmniAuth OpenID Bağlantı strateji sağlayıcılarını OpenProject'e ekler."
   logout_warning: >
     Çıkış yaptınız. Gönderdiğiniz herhangi bir formun içeriği kaybolabilir. Lütfen giriş yapın].
-  activemodel:
+  activerecord:
     attributes:
       openid_connect/provider:
         name: İsim
         slug: Unique identifier
-        display_name: Ekran adı
-        client_id: İstemci ID
-        client_secret: İstemci gizliliği
-        secret: Gizli
-        scope: kapsam
+        display_name: Görünen isim
+        client_id: Client ID
+        client_secret: Client secret
+        secret: Secret
+        scope: Scope
         grant_types_supported: Supported grant types
         limit_self_registration: Limit self registration
-        authorization_endpoint: Yetkilendirme bitiş noktası
-        userinfo_endpoint: Kullanıcı bilgisi bitiş noktası
-        token_endpoint: Gösterge bitiş noktası
-        end_session_endpoint: Oturum bitiş noktasını sonlandır
-        post_logout_redirect_uri: Oturum kapatma sonrası yönlendirme URI'si
+        authorization_endpoint: Authorization endpoint
+        userinfo_endpoint: User information endpoint
+        token_endpoint: Token endpoint
+        end_session_endpoint: End session endpoint
+        post_logout_redirect_uri: Post logout redirect URI
         jwks_uri: JWKS URI
-        issuer: Sağlayıcı
-        tenant: Müşteri
-        metadata_url: Metaveri URL'si
+        issuer: Issuer
+        tenant: Tenant
+        metadata_url: Metadata URL
         icon: Özel simge
-        claims: Bilgiler
-        acr_values: ACR değerleri
-        redirect_url: Redirect URL
-  activerecord:
+        claims: Claims
+        acr_values: ACR values
+        redirect_url: Yönlendirme bağlantısı
     errors:
       models:
         openid_connect/provider:
@@ -61,9 +60,9 @@ tr:
       client_id: OpenID Connect sağlayıcısı tarafından size verilen istemci URL'si
       client_secret: OpenID Connect sağlayıcısı tarafından size verilen gizlilik URL'si
       limit_self_registration: If enabled, users can only register using this provider if configuration on the provider's end allows it.
-      display_name: The name of the provider. This will be displayed as the login button and in the list of providers.
+      display_name: Sağlayıcının adı. Bu, oturum açma düğmesi olarak ve sağlayıcılar listesinde görüntülenecektir.
       tenant: 'Lütfen öntanımlı müşteriyi kendinizinkiyle değiştirin, mümkünse. Bu <a href=" https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc#find-your-apps-openid-configuration-document-uri"> belgeye bakın</a>.'
-      scope: If you want to request custom scopes, you can add one or multiple scope values separated by spaces here. For more information, see the [OpenID Connect documentation](docs_url).
+      scope: Özel kapsamlar talep etmek istiyorsanız, buraya boşluklarla ayrılmış bir veya birden fazla kapsam değeri ekleyebilirsiniz. Daha fazla bilgi için [OpenID Connect belgelerine](docs_url) bakın.
       post_logout_redirect_uri: OpenID Connect sağlayıcısının bir oturum kapatma isteğinden sonra yeniden yönlendirmesi gereken URL.
       claims: >
         Kullanıcı bilgisi ve id göstergesi uç noktaları için ek bilgi talebinde bulunabilirsiniz. Daha fazla bilgi için lütfen [OpenID bağlantı belgelerimize] (docs_url) bakın.
@@ -102,7 +101,7 @@ tr:
       label_automatic_configuration: Otomatik yapılandırma
       label_optional_configuration: İsteğe bağlı yapılandırma
       label_advanced_configuration: Gelişmiş yapılandırma
-      label_configuration_details: Metadata
+      label_configuration_details: Metaveri
       label_client_details: Client details
       label_attribute_mapping: Attribute mapping
       client_details_description: Configuration details of OpenProject as an OIDC client

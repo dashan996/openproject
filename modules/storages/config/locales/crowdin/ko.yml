@@ -1,11 +1,27 @@
 ko:
   activerecord:
     attributes:
+      oauth_client:
+        client_id: Client ID
+        client_secret: Client secret
+      project:
+        project_folder_type: Project folder type
       storages/file_link:
-        origin_id: 원본 ID
+        origin: Origin
+        storage: Storage
+      storages/nextcloud_storage:
+        authentication_methods:
+          oauth2_sso: Single-Sign-On through OpenID Connect Identity Provider
+          oauth2_sso_with_two_way_oauth2_fallback: Single-Sign-On with Two-Way OAuth 2.0 as fallback
+          two_way_oauth2: Two-way OAuth 2.0 authorization code flow
+        storage_audience: Storage Audience
       storages/project_storage:
+        project_folder: Project folder
+        project_folder_mode: Project folder mode
         storage: 저장소
+        storage_url: Storage URL
       storages/storage:
+        authentication_method: Authentication Method
         creator: 생성자
         drive: 드라이브 ID
         host: 호스트
@@ -74,7 +90,7 @@ ko:
         confirmation_text: 해당 사항을 이해하며 이 프로젝트에서 이 파일 저장소를 제거할 것인지 확인해 주세요
         heading_text: '%{storage}에서 프로젝트 제거'
         text: 이 작업은 되돌릴 수 없으며 이 프로젝트의 작업 패키지에서 해당 저장소의 파일 및 폴더에 대한 모든 링크를 제거합니다.
-        title: Remove project from storage
+        title: 저장소에서 프로젝트 제거
       label: 프로젝트 제거
   services:
     attributes:
@@ -199,15 +215,19 @@ ko:
         manual_management_description: 프로젝트별 폴더를 직접 수동으로 만들고 관리하세요. 관련 사용자에게 액세스 권한이 있는지 수동으로 확인해야 합니다.
         setup_incomplete: 사용자 액세스 및 폴더 생성의 관리 유형을 선택합니다.
         subtitle: 액세스 관리
-        title: 액세스 및 프로젝트 폴더
+      access_management_section: 액세스 및 프로젝트 폴더
       automatically_managed_folders: 자동으로 관리되는 폴더
       general_information: 일반 정보
-      nextcloud_oauth: Nextcloud OAuth
-      oauth_applications: OAuth 애플리케이션
+      oauth_configuration: OAuth 구성
       one_drive_oauth: Azure OAuth
       openproject_oauth: OpenProject OAuth
       project_folders: 프로젝트 폴더
       redirect_uri: 리디렉션 URI
+      storage_audience: Storage Audience
+      storage_audience_blank: No audience has been configured
+      storage_audience_description: Obtaining tokens for audience "%{audience}".
+      storage_audience_idp: Using first access token received by identity provider, regardless of audience.
+      storage_oauth: Nextcloud OAuth
       storage_provider: 저장소 공급자
     health:
       checked: '마지막 확인: %{datetime}'
@@ -222,6 +242,9 @@ ko:
         host_not_found: 구성된 호스트 URL에서 Nextcloud 서버를 찾을 수 없습니다. 구성을 확인하세요.
         missing_dependencies: '파일 저장소에 필수 종속성이 누락되었습니다. 다음 종속성을 추가하세요: %{dependency}.'
         not_configured: 연결에 대한 유효성 검사를 할 수 없습니다. 먼저 구성을 완료하세요.
+        oidc_no_token_with_required_audience: There's no OpenID Connect token with the required %{audience} audience.
+        oidc_non_oidc_user: The current user, while provisioned, wasn't provisioned by an OpenID Connect (OIDC) Identity Provider. Please re-run the check with an OIDC provisioned user.
+        oidc_non_provisioned_user: 현재 사용자는 OpenID Connect ID 공급자에 의해 제공되지 않았습니다. 제공된 사용자로 확인을 다시 실행하세요.
         placeholder: 서버에 대한 연결을 확인하세요.
         subtitle: 연결 유효성 검사
         tenant_id_wrong: 구성된 디렉터리(테넌트) ID가 잘못되었습니다. 구성을 확인하세요.
@@ -250,6 +273,7 @@ ko:
       project_folder_bulk: 프로젝트 폴더는 선택된 모든 프로젝트의 파일 업로드를 위한 기본 폴더입니다. 각 프로젝트 설정에서 이 폴더를 개별적으로 수정할 수 있습니다. 그렇지만 사용자는 다른 위치에 파일을 계속 업로드할 수 있습니다.
     instructions:
       all_available_storages_already_added: 사용 가능한 모든 저장소가 이미 프로젝트에 추가되었습니다.
+      authentication_method: The way that requests between OpenProject and the Storage are authenticated.
       automatic_folder: 이렇게 하면 이 프로젝트의 루트 폴더가 자동으로 생성되고 각 프로젝트 멤버의 액세스 권한이 관리됩니다.
       empty_project_folder_validation: 계속하려면 폴더 선택이 필수적입니다.
       existing_manual_folder: 기존 폴더를 이 프로젝트의 루트 폴더로 지정할 수 있습니다. 그러나 권한은 자동으로 관리되지 않으며, 관리자는 관련 사용자에게 액세스 권한이 있는지 수동으로 확인해야 합니다. 선택한 폴더는 여러 프로젝트에서 사용할 수 있습니다.
@@ -262,6 +286,8 @@ ko:
         integration: Nextcloud 관리/OpenProject
         oauth_configuration: '%{application_link_text}에서 이러한 값을 복사합니다.'
         provider_configuration: 설정을 수행하기 전에 Nextcloud 인스턴스에서 관리 권한이 있고 %{application_link_text}이(가) 설치되어 있는지 확인하세요.
+        storage_audience: Please enter the Client ID that the Nextcloud instance uses to communicate with the identity provider.
+        storage_audience_placeholder: e.g. nextcloud
       no_specific_folder: 기본적으로 각 사용자는 파일을 업로드할 때 고유한 홈 폴더에서 시작합니다.
       no_storage_set_up: 아직 파일 저장소가 설정되지 않았습니다.
       not_logged_into_storage: 프로젝트 폴더를 선택하려면 먼저 로그인하세요
@@ -293,6 +319,7 @@ ko:
     label_creator: 생성자
     label_delete_storage: 저장소 삭제
     label_edit_storage_access_management: 저장소 액세스 관리 편집
+    label_edit_storage_audience: Edit Storage Audience
     label_edit_storage_automatically_managed_folders: 저장소 자동 관리 폴더 편집
     label_edit_storage_host: 저장소 호스트 편집
     label_existing_manual_folder: 수동으로 관리되는 권한이 있는 기존 폴더
@@ -382,8 +409,15 @@ ko:
         name: OneDrive/SharePoint
         name_placeholder: '예: OneDrive'
     show_attachments_toggle:
-      description: '이 옵션을 비활성화하면 작업 패키지 파일 탭에서 첨부 파일 목록이 숨겨집니다. 작업 패키지 설명에 첨부된 파일은 내부 첨부 파일 저장소에 계속 업로드됩니다. '
+      description: Deactivating this option will hide the attachments list on the work packages files tab. The files attached in the description of a work package will still be uploaded in the internal attachments storage.
       label: 작업 패키지 파일 탭에 첨부 파일 표시
+    storage_audience:
+      idp:
+        helptext: OpenProject will use the first access token received by the identity provider to authenticate requests to the storage. It will not try to obtain another token.
+        label: Use first access token obtained by identity provider
+      manual:
+        helptext: Allows you to set the audience of the storage. OpenProject will try to obtain a token for the given audience from the identity provider.
+        label: Define storage audience manually
     storage_list_blank_slate:
       description: 여기에서 보려면 저장소를 추가합니다.
       heading: 아직 저장소가 없습니다.

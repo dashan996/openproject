@@ -12,8 +12,8 @@
             "Attached files are available to all meeting participants. You can also drag and drop these into agenda item notes."
           end
 
-          section.with_action_icon(icon: :pencil, 'aria-label': 'Edit')
-          section.with_footer_button(tag: :a, href: '#') do |button|
+          section.with_action_icon(icon: :pencil, "aria-label": "Edit")
+          section.with_footer_button(tag: :a, href: "#") do |button|
             button.with_leading_visual_icon(icon: :pencil)
             "Additional action"
           end
@@ -23,7 +23,7 @@
 
         panel.with_section do |section|
           section.with_title { "Without counter" }
-          section.with_action_icon(icon: :gear, 'aria-label': 'Manage')
+          section.with_action_icon(icon: :gear, "aria-label": "Manage")
 
           "Some more content here"
         end
@@ -34,7 +34,6 @@
           "Even more content here"
         end
       end
-
     end
   end
 %>
